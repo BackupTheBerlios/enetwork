@@ -62,7 +62,7 @@ December 8th, 2003 - clsk - Added Msg_N class (Token N) handler.
 
 December 11th, 2003 - clsk - Added Msg_B class (Token B) handler.
   * Added Msg_B class to handle B tokens and add channels in the network database.
-  * Organized Msg derived classes. Now each class has its own source file.
+  * Organized Msg derived classes files. Now each class has its own source file.
   * MsgParser is now a static member of Msg.
   * Fixed a bug in Msg constructor where if the source of the message happened to have the same letters 
     as the token the Parameters wouldn't work as expected.
