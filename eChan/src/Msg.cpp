@@ -30,6 +30,7 @@
 #include "Msg_S.h"
 #include "Msg_N.h"
 #include "Msg_B.h"
+#include "Msg_EB.h"
 #include "PreServerMsg.h"
 #include "Server.h"
 #include "P10Tokens.h"
@@ -144,6 +145,8 @@ Msg *Msg::MsgParser(const std::string &command)
     return new Msg_N(command, Tokens::NICK);
    else if (Token == Tokens::B)
     return new Msg_B(command, Tokens::B);
+   else if (Token == Tokens::END_OF_ACK)
+    return new Msg_EB(command, Tokens::END_OF_ACK);
    else
     return new Msg(command, Token);
 

@@ -52,7 +52,6 @@ void Msg_B::Parser()
 
    string Name = Parameters[0];
 
-   cout << "Parameters[1]: " << Parameters[1] << endl;
    if (!IsDigit(Parameters[1]))
    {
         debug << "Protocol Violation: TimeStamp should only contain digits in Msg_B::Parser()";
