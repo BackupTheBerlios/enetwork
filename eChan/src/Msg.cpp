@@ -33,6 +33,7 @@
 #include "Msg_G.h"
 #include "Msg_EB.h"
 #include "Msg_C.h"
+#include "Msg_Q.h"
 #include "PreServerMsg.h"
 #include "Server.h"
 #include "P10Tokens.h"
@@ -155,6 +156,8 @@ Msg *Msg::MsgParser(const std::string &command)
     return new Msg_G(command, Tokens::PING);
    else if (Token == Tokens::BURST)
     return new Msg_Burst(command, Tokens::BURST);
+   else if (Token == Tokens::QUIT)
+    return new Msg_Q(command, Tokens::QUIT);
    else
     return new Msg(command, Token);
 

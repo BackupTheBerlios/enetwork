@@ -39,7 +39,7 @@ struct Server;
 class Network
 {
    private:
-   	typedef std::map<std::string, Server *> ServerMapType;
+   	typedef std::map<std::string, Server *, noCaseCompare> ServerMapType;
    	typedef std::map<std::string, Client *> ClientNumericsMapType;
    	typedef std::map<std::string, Client *, noCaseCompare> ClientNickNamesMapType;
    	typedef std::map<std::string, Channel *, noCaseCompare> ChannelMapType;

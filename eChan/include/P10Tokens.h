@@ -46,6 +46,7 @@ namespace Tokens
    const std::string    END_OF_ACK         =  "EA";
    const std::string    ACCOUNT            =  "AC";
    const std::string    CREATE             =  "C";
+   const std::string    QUIT               =  "Q";
 }
 
 } // namespace eNetworks

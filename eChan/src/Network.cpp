@@ -179,6 +179,7 @@ bool Network::AddClient(const std::string &aNumeric, const std::string &aNickNam
    // if we couldn't allocate the new client or we can't insert the new user to the client map table, return false.
    if (NewClient == NULL || !ClientNumerics.insert(ClientNumericsMapType::value_type(aNumeric, NewClient)).second)
    {
+cout << "here1" << endl;
    	delete NewClient;
    	return false;
    }

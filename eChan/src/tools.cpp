@@ -23,6 +23,7 @@
 #include <fstream>
 #include <iostream>
 #include <ctime>
+#include <cmath>
 
 using std::cout;
 using std::endl;
