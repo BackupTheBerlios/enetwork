@@ -66,3 +66,7 @@ December 11th, 2003 - clsk - Added Msg_B class (Token B) handler.
   * MsgParser is now a static member of Msg.
   * Fixed a bug in Msg constructor where if the source of the message happened to have the same letters 
     as the token the Parameters wouldn't work as expected.
+
+December 12th, 2003 - clsk - Made Makefiles and Added Msg_EB class (Token EB) handler.
+  * Made a Makefile. the eChan binary now goes to bin/ and the configuration file resides there too.
+  * Added Msg_EB class (Token EB) handler and sends back EA (End of acknowledgement).
