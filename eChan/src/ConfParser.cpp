@@ -32,6 +32,7 @@
 
 #include "tools.h"
 #include "ConfParser.h" // class ConfParser declared.
+#include <iostream>
 
 using namespace std;
 
@@ -40,6 +41,7 @@ namespace eNetworks
 
 ConfParser::ConfParser(const string &file, string &errors, int &errorns) :
 nick("E"),
+numeric("AE"),
 clientinfo("/msg E help"),
 serverinfo("Electronic Channel Services"),
 servername("eChan.vodanet.org"),
@@ -104,6 +106,31 @@ void ConfParser::Parser(string &errors, int &errorns)
                        else
                         {
                           nick = empty;
+                        }
+                     }
+                  }
+
+                 else if(empty.substr(0,9) == "NUMERIC =") // got nickname? no spaces
+                  {
+                    if (empty[9] != ' ')
+                     {
+                       Send_Error(IntToString(cline), "NUMERIC", ERR_SYNTAX, NICK_SYNTAX, errors);
+                       errorns++;
+                     }
+
+                    else
+                     {
+                       empty = empty.substr(empty.find("=")+2); // We get the whole line so lets get rid of "NICK ="
+                       empty = empty.substr(0,empty.find(";")); // ignoring everything after ";"
+
+                       if (empty.find(" ") != string::npos)
+                        {
+                          Send_Error(IntToString(cline), "NUMERIC", ERR_SPACES, NICK_SYNTAX, errors);
+                          errorns++;
+                        }
+                       else
+                        {
+                          numeric = empty;
                         }
                      }
                   }

@@ -43,13 +43,13 @@ void Msg_S::Parser()
 
    if (ServerSrc == NULL)
    {
-        debug << "Protocol Violation. Token S with no source.";
+        debug << "Protocol Violation. Token S with no source." << endb;
         exit(0);
    }
 
    if (Parameters.size() < 6 && Parameters.size() > 8)
    {
-        debug << "Protocol Violation: Too Many Parameters in Msg_S::Parser()";
+        debug << "Protocol Violation: Too Many Parameters in Msg_S::Parser()" << endb;
         exit(1);
    }
 
@@ -58,7 +58,7 @@ void Msg_S::Parser()
    unsigned int HopCount;
    if (StringToInt(Parameters[1]) < 2)
    {
-        debug << "Protocol Violation: Hop Count shouldn't be less than 2 in Msg_S::Parser()";
+        debug << "Protocol Violation: Hop Count shouldn't be less than 2 in Msg_S::Parser()" << endb;
         exit(1);
    }
    else
@@ -67,7 +67,7 @@ void Msg_S::Parser()
    time_t StartTime;
    if (!IsDigit(Parameters[2]))
    {
-        debug << "Protocol Violation: StartTime should be only digit numbers in Msg_S::Parser()";
+        debug << "Protocol Violation: StartTime should be only digit numbers in Msg_S::Parser()" << endb;
         exit(1);
    }
    else
@@ -76,7 +76,7 @@ void Msg_S::Parser()
    time_t LinkTime;
    if (!IsDigit(Parameters[3]))
    {
-        debug << "Protocol Violation: LinkTime should be only digit numbers in Msg_S::Parser()";
+        debug << "Protocol Violation: LinkTime should be only digit numbers in Msg_S::Parser()" << endb;
         exit(1);
    }
    else
@@ -84,7 +84,7 @@ void Msg_S::Parser()
 
    if (Parameters[4] != "P10")
    {
-        debug << "Protocol Violation: Protocol should be P10 in Msg_S::Parser()";
+        debug << "Protocol Violation: Protocol should be P10 in Msg_S::Parser()" << endb;
         exit(1);
    }
 
@@ -106,13 +106,15 @@ void Msg_S::Parser()
 
    if (!eNetwork->AddServer(Numeric, Name, ServerSrc->GetNumeric(), Description, StartTime, LinkTime, HopCount, Flag))
    {
-        debug << "Could not add Server Name";
+        debug << "Could not add Server Name" << endb;
         exit(0);
    }
-
+ 
+   /*
    cout << "Added Server Name: " << Name << " Numeric: " << Numeric << " StartTime: " << StartTime <<
            " LinkTime: " << LinkTime << " HopCount: " << HopCount << " Flag: " << Flag << " Uplink: " <<
            ServerSrc->GetNumeric() << endl <<  "Description: " << Description << endl;
+   */
 
 }
 

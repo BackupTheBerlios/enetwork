@@ -46,7 +46,7 @@ void Msg_B::Parser()
 
    if (Parameters.size() < 3)
    {
-   	debug << "Protocol Violation: error on number of arguments in Msg_B::Parser()";
+   	debug << "Protocol Violation: error on number of arguments in Msg_B::Parser()" << endb;
    	exit(0);
    }
 
@@ -54,7 +54,7 @@ void Msg_B::Parser()
 
    if (!IsDigit(Parameters[1]))
    {
-        debug << "Protocol Violation: TimeStamp should only contain digits in Msg_B::Parser()";
+        debug << "Protocol Violation: TimeStamp should only contain digits in Msg_B::Parser()" << endb;
         exit(0);
    }
 
@@ -99,17 +99,19 @@ void Msg_B::Parser()
 
    if (!eNetwork->AddChannel(Name, "", Modes, Key, Limit, TimeStamp))
    {
-   	debug << "Could not add channel " << Name  << " in Msg_B::Parser().";
+   	debug << "Could not add channel " << Name  << " in Msg_B::Parser()." << endb;
    	exit(0);
    }
-
+   
+   /*
    cout << "Added channel with Name: " << Name << " Modes: " << Modes << " Key: " << Key << " Limit: " <<
            Limit << " TimeStamp: " << TimeStamp << endl;
+   */
 
    ChannelPtr = eNetwork->FindChannel(Name);
    if (ChannelPtr == NULL)
    {
-   	debug << "Could not find channel " << Name  << " in Msg_B::Parser().";
+   	debug << "Could not find channel " << Name  << " in Msg_B::Parser()." << endb;
    	exit(0);
    }
 
@@ -137,22 +139,26 @@ void Msg_B::ParseUsers(Channel *aChannelPtr, const std::string &UsersParameters)
    	Client * ClientPtr = eNetwork->FindClientByNumeric(Users[i].substr(0,5));
    	if (ClientPtr == NULL)
    	{
-   	   debug << "Could not add Client " << Users[i].substr(0,5) << " to channel " << aChannelPtr->GetName();
+   	   debug << "Could not add Client " << Users[i].substr(0,5) << " to channel " << aChannelPtr->GetName() << endb;
    	   exit(0);
    	}
 
    	if (Users[i].size() == 5)
    	{
    	   aChannelPtr->AddChannelClient(ClientPtr, CurrentMode);
+   	   /*
    	   cout << "Added Client " << ClientPtr->GetNickName() << " to " << aChannelPtr->GetName() << 
    	           " with mode " << CurrentMode << endl;
+   	   */
    	}
    	else if (Users[i].size() == 7 || Users[i].size() == 8)
    	{
    	   CurrentMode = Users[i].substr(6);
    	   aChannelPtr->AddChannelClient(ClientPtr, CurrentMode);
+   	   /*
    	   cout << "Added Client " << ClientPtr->GetNickName() << " to " << aChannelPtr->GetName() << 
    	           " with mode " << CurrentMode << endl;
+   	   */
    	}
    }
 } 

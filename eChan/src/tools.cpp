@@ -114,7 +114,7 @@ void CreateLocals()
    int errnos;
    ConfParser eConf("eChan.conf", errors, errnos);
 
-   LocalServer = new Server("AE", eConf.GetServerName(), "", eConf.GetServerInfo(), time(0), time(0), 1, 's');
+   LocalServer = new Server(eConf.GetNumeric(), eConf.GetServerName(), "", eConf.GetServerInfo(), time(0), time(0), 1, 's');
 
    if (LocalServer == NULL)
    {
@@ -122,8 +122,8 @@ void CreateLocals()
    	exit(0);
    }
 
-   LocalClient = new Client("AEAAA", eConf.GetNick(), "", eConf.GetUserName(), eConf.GetHostName(), "DAqAoB",
-                            "idk", eConf.GetClientInfo(), time(0), 1);
+   LocalClient = new Client(eConf.GetNumeric()+"AAC", eConf.GetNick(), "", eConf.GetUserName(), eConf.GetHostName(),
+                            "DAqAoB", "idk", eConf.GetClientInfo(), time(0), 1);
 
    if (LocalClient == NULL)
    {

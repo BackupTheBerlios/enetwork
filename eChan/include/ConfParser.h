@@ -56,6 +56,7 @@ public:
 
         // accessors
         std::string GetNick() const {return nick;}
+   	std::string GetNumeric() const {return numeric;}
         std::string GetClientInfo() const {return clientinfo;}
         std::string GetHostName() const {return hostname;}
         std::string GetServerName() const {return servername;}
@@ -75,6 +76,7 @@ private:
 
 
         std::string nick;
+   	std::string numeric;
         std::string clientinfo;
         std::string hostname;
         std::string serverinfo; 

@@ -113,7 +113,7 @@ int main()
    	   Msg *eMsg = Msg::MsgParser(command);
    	   if (eMsg == NULL)
    	   {
-   	   	debug << "Got NULL after MsgParser()";
+   	   	debug << "Got NULL after MsgParser()" << endb;
    	   	exit(0);
    	   }
 

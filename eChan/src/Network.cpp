@@ -44,6 +44,7 @@ bool Network::AddServer(const std::string &aNumeric, const std::string &aName, c
                const std::string &aDescription, const time_t &aStartTime, const time_t &aLinkTime,
                const unsigned int &aHopCount, const char &aFlag)
 {
+   // Check we don't get bogus entries. If we do return false.
    if (aUpLinkNumeric.length() > 2 || aUpLinkNumeric.find(" ") != string::npos ||
        aName.find(" ") != string::npos || aNumeric.length() > 2 ||
        aNumeric.find(" ") != string::npos || aHopCount == 0 ||
@@ -52,21 +53,27 @@ bool Network::AddServer(const std::string &aNumeric, const std::string &aName, c
         return false;
    }
 
+   // Allocate a new server on the heap.
    Server *NewServer = new Server(aNumeric, aName, aUpLinkNumeric, aDescription, aStartTime, aLinkTime, aHopCount, aFlag);
 
+   // If server could not be allocated on the heap OR there was a problem inserting the server in the
+   // Server map table, return false.
    if (NewServer == NULL || Servers.insert(ServerMapType::value_type(aNumeric, NewServer)).second == false)
    {
    	delete NewServer;
    	return false;
    }
 
+// everything went well.
 return true;
 }
 
 bool Network::DelServerByNumeric(const std::string &aNumeric)
 {
+   // try to find a server with numeric: aNumeric.
    ServerMapType::iterator ServerIter = Servers.find(aNumeric);
 
+   // if non was found return false.
    if (ServerIter == Servers.end())
    {
    	return false;
@@ -79,8 +86,18 @@ bool Network::DelServerByNumeric(const std::string &aNumeric)
    	DelClientByNumeric(i->second->Numeric);
    }
 
+   // Delete servers that are linked to this server.
+   for(ServerMapType::iterator i = Servers.begin(); i != Servers.end(); i++)
+   {
+   	if (i->second->UpLinkNumeric == ServerIter->first)
+   	{
+   	   DelServerByNumeric(i->second->Numeric);
+   	}
+   } 
 
+   // delete the Server from memory.
    delete ServerIter->second;
+   // then finally remove the server from the Server Map table.
    Servers.erase(ServerIter); 
 
 return true;
@@ -88,20 +105,13 @@ return true;
 
 bool Network::DelServerByName(const std::string &aName)
 {
+   // Search server by server who match to with this server name then call DelServerByNumeric.
+   // thus DelServerByNumeric is faster than this.
    for (ServerMapType::iterator i = Servers.begin(); i != Servers.end(); i++)
    {
    	if (i->second->Name == aName)
    	{
-   	   // Delete clients that are in this server.
-   	   for (Server::ServerClientsIterator j = i->second->ServerClients.begin();
-                j != i->second->ServerClients.end(); j++)
-   	   {
-   	   	DelClientByNumeric(j->second->Numeric);
-   	   }
-
-   	   delete i->second;
-   	   Servers.erase(i);
-   	   return true;
+   	   DelServerByNumeric(i->second->Numeric);
    	}
    }
 
@@ -122,6 +132,8 @@ Server *Network::FindServerByNumeric(const std::string &aNumeric)
 
 Server *Network::FindServerByName(const std::string &aName)
 {
+   // Search server by server to see if the server name matches.
+   // NOTE: FindServerByNumeric is faster than this.
    for (ServerMapType::iterator i = Servers.begin(); i != Servers.end(); i++)
    {
    	if (i->second->Name == aName)
@@ -148,20 +160,24 @@ bool Network::AddClient(const std::string &aNumeric, const std::string &aNickNam
        aHostName.length() == 0 || aHostName.find(" ") != string::npos || aB64IP.length() == 0 ||
        aB64IP.find(" ") != string::npos || FindServerByNumeric(aNumeric.substr(0,2)) == NULL ||
        aTimeStamp < FindServerByNumeric(aNumeric.substr(0,2))->StartTime ||
-       FindClientByNickName(aNickName) != NULL || FindClientByNumeric(aNumeric) != NULL)
+      FindClientByNickName(aNickName) != NULL || FindClientByNumeric(aNumeric) != NULL)
    {
         return false;
    }
 
+   // create the new client. Allocate memory for it on the heap.
    Client *NewClient = new Client(aNumeric, aNickName, aAccount, aUserName, aHostName, aB64IP, aModes, aUserInfo, 
                                   aTimeStamp, aHopCount);
 
+   // if we couldn't allocate the new client or we can't insert the new user to the client map table, return false.
    if (NewClient == NULL || !ClientNumerics.insert(ClientNumericsMapType::value_type(aNumeric, NewClient)).second)
    {
    	delete NewClient;
    	return false;
    }
 
+   // try to insert the new client to the user map table associated by its nicknames, if we can't delete the client,
+   // remove the client from the user map table associated by nicknames and return false.
    if(ClientNickNames.insert(ClientNickNamesMapType::value_type(aNickName, NewClient)).second == false)
    {
    	ClientNumerics.erase(aNumeric);
@@ -169,6 +185,7 @@ bool Network::AddClient(const std::string &aNumeric, const std::string &aNickNam
    	return false;
    }
 
+   // Make this user dependent of its server.
    FindServerByNumeric(aNumeric.substr(0,2))->ServerClients.insert(Server::ServerClientsType::value_type(aNumeric.substr(2),
                                                                                                          NewClient));
 

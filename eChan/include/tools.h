@@ -46,7 +46,11 @@ void login();
 
 // structs
 
-/** This struct was made by Dan Karrels.
+/** This struct was made by Dan Karrels and is NOT copyrighted to me.
+ *  Do not apply the notice at the top of this file to this struct. 
+ *  However this struct was released under the GNU GPL in a file in 
+ *  the gnuworld project.
+ *
  * Case insensitive comparison struct for use by STL structures/algorithms.
  */
 struct noCaseCompare

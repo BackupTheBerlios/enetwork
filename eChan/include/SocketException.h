@@ -36,7 +36,7 @@ class SocketException
         {};
 	~SocketException(){};
 
-	void log() const { debug << error; }
+	void log() const { debug << error << endb; }
 
 	unsigned int GetFunction() const { return function; } 
 	std::string GetError() const { return error; }

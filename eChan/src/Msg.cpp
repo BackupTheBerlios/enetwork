@@ -60,7 +60,7 @@ cout << "[IN]: " << aCommand << endl;
    } 
    else if (Token == Tokens::ERROR)
    {
-   	debug << aCommand;
+   	debug << aCommand << endb;
    	exit(0);
    }
    else
@@ -80,7 +80,7 @@ cout << "[IN]: " << aCommand << endl;
    	   Parameters = aCommand.substr(3+Token.length()+1);
    	   if (ServerSrc == NULL)
    	   {
-   	   	debug << "Can't find Server " << aCommand.substr(0,2) << " in my database";
+   	   	debug << "Can't find Server " << aCommand.substr(0,2) << " in my database" << endb;
    	   	exit(0);
    	   }
    	}
@@ -91,13 +91,13 @@ cout << "[IN]: " << aCommand << endl;
    	   Parameters = aCommand.substr(6+Token.length()+1);
    	   if (ClientSrc == NULL)
    	   {
-   	   	debug << "Can't find client " << aCommand.substr(0,5) << " in my database"; 
+   	   	debug << "Can't find client " << aCommand.substr(0,5) << " in my database" << endb; 
    	   	exit(0);
    	   }
    	}
    	else
    	{
-   	   debug << "Protocol Violation";
+   	   debug << "Protocol Violation" << endb;
    	   exit(0);
    	}
    }

@@ -18,7 +18,7 @@ void Msg_EB::Parser()
 {
    if (ServerSrc == NULL)
    {
-   	debug << "ServerSrc is NULL in Msg_EB::Parser().";
+   	debug << "ServerSrc is NULL in Msg_EB::Parser()." << endb;
    	exit(0);
    }
 

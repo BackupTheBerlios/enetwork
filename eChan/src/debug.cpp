@@ -37,8 +37,10 @@ namespace eNetworks
 const Debug &Debug::operator <<(const string &msg) const
 {
   ofstream ofs("debug.log", ios::out | ios::app);
-  ofs << msg << endl;
-  cout << msg << endl;
+  ofs << msg;
+  cout << msg;
+
+  return *this;
 }
 
 Debug debug;

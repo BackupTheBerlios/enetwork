@@ -40,15 +40,15 @@ namespace eNetworks
 void Msg_N::Parser()
 {
 
-   if (Parameters.size() < 7 || Parameters.size() > 9)
+   if (Parameters.size() < 7 || Parameters.size() > 10)
    {
-        debug << "Protocol Violation: error on number of arguments in Msg_N::Parser()";
+        debug << "Protocol Violation: error on number of arguments in Msg_N::Parser()" << endb;
         exit(0);
    }
 
    if (ServerSrc == NULL)
    {
-        debug << "Protocol Violation. Token N with no source.";
+        debug << "Protocol Violation. Token N with no source." << endb;
         exit(0);
    }
 
@@ -58,14 +58,14 @@ void Msg_N::Parser()
 
    if (HopCount < 1)
    {
-        debug << "Protocol violation: HopCount cannot be less than 1 in Msg_S::parser()";
+        debug << "Protocol violation: HopCount cannot be less than 1 in Msg_S::parser()" << endb;
         exit(0);
    }
 
    time_t TimeStamp;
    if (!IsDigit(Parameters[2]))
    {
-        debug << "TimeStamp can only have digit numbers in function Msg_S::parser()";
+        debug << "TimeStamp can only have digit numbers in function Msg_S::parser()" << endb;
         exit(0);
    }
    else
@@ -91,12 +91,15 @@ void Msg_N::Parser()
            if (Parameters.size() == 10)
             UserInfo = Parameters[9];
         }
+        else
+   	{
 
-        B64IP = Parameters[6];
-        Numeric = Parameters[7];
-        if (Parameters.size() == 9)
-         UserInfo = Parameters[8];
-   }
+           B64IP = Parameters[6];
+           Numeric = Parameters[7];
+           if (Parameters.size() == 9)
+            UserInfo = Parameters[8];
+   	}
+   } 
    else
    {
         B64IP = Parameters[5];
@@ -107,13 +110,20 @@ void Msg_N::Parser()
 
    if (!eNetwork->AddClient(Numeric, NickName, Account, UserName, HostName, B64IP, Modes, UserInfo, TimeStamp, HopCount))
    {
-        debug << "Could not add client " << NickName << " with Numeric " << Numeric;
+   	/*
+   	cout << "Numeric: " << Numeric << " NickName: " << NickName << " Account: " << Account <<
+                " UserName: " << UserName << " HostName: " << HostName << " B6IP: " << B64IP << " Modes: " << Modes
+                << " TimeStamp: " << TimeStamp << " HopCount: " << HopCount << endl << "UserInfo: " << UserInfo << endl;
+   	*/
+        debug << "Could not add client " << NickName << " with Numeric " << Numeric << endb;
         exit(0);
    }
 
+   /*
    cout << "Added Client with Numeric: " << Numeric << " NickName: " << NickName << " Account: " << Account <<
            " UserName: " << UserName << " HostName: " << HostName << " B6IP: " << B64IP << " Modes: " << Modes <<
            " TimeStamp: " << TimeStamp << " HopCount: " << HopCount << endl << "UserInfo: " << UserInfo << endl;
+   */
 
 }
 

@@ -27,6 +27,8 @@
 namespace eNetworks
 {
 
+const std::string endb = "\n"; // end debug.
+
 class Debug
 {
    public:

@@ -43,7 +43,7 @@ void PreServerMsg::Parser()
 {
    if (Parameters.size() < 6 && Parameters.size() > 8)
    {
-        debug << "Protocol Violation: Too Many Parameters in PreServerMsg::Parser()";
+        debug << "Protocol Violation: Too Many Parameters in PreServerMsg::Parser()" << endb;
         exit(1);
    }
 
@@ -52,7 +52,7 @@ void PreServerMsg::Parser()
    unsigned int HopCount;
    if (Parameters[1] != "1")
    {
-        debug << "Protocol Violation: Hop Count should be 1 in PreServerMsg::Parser()";
+        debug << "Protocol Violation: Hop Count should be 1 in PreServerMsg::Parser()" << endb;
         exit(1);
    }
    else
@@ -61,7 +61,7 @@ void PreServerMsg::Parser()
   time_t StartTime;
    if (!IsDigit(Parameters[2]))
    {
-   	debug << "Protocol Violation: StartTime should be only digit numbers in PreServerMsg::Parser()";
+   	debug << "Protocol Violation: StartTime should be only digit numbers in PreServerMsg::Parser()" << endb;
    	exit(1);
    }
    else
@@ -71,7 +71,7 @@ void PreServerMsg::Parser()
    time_t LinkTime;
    if (!IsDigit(Parameters[3]))
    {
-        debug << "Protocol Violation: LinkTime should be only digit numbers in PreServerMsg::Parser()";
+        debug << "Protocol Violation: LinkTime should be only digit numbers in PreServerMsg::Parser()" << endb;
         exit(1);
    }
    else
@@ -79,7 +79,7 @@ void PreServerMsg::Parser()
 
    if (Parameters[4] != "J10")
    {
-        debug << "Protocol Violation: Protocol should be J10 at link time in PreServerMsg::Parser()";
+        debug << "Protocol Violation: Protocol should be J10 at link time in PreServerMsg::Parser()" << endb;
         exit(1);
    }
 
@@ -101,13 +101,15 @@ void PreServerMsg::Parser()
 
    if (!eNetwork->AddServer(Numeric, Name, LocalServer->GetNumeric(), Description, StartTime, LinkTime, HopCount, Flag))
    {
-        debug << "Could not add Server Name";
+        debug << "Could not add Server Name" << endb;
         exit(0);
    }
 
+   /*
    cout << "Added Server Name: " << Name << " Numeric: " << Numeric << " StartTime: " << StartTime <<
            " LinkTime: " << LinkTime << " HopCount: " << HopCount << " Flag: " << Flag << endl <<
            "Description: " << Description << endl;
+   */
 }
 
 } // namespace eNetworks
