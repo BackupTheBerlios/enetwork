@@ -1,0 +1,70 @@
+/*
+ * eChan - Electronic Channel Services.
+ * Copyright (C) 2003 Alan Alvarez.
+ *
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License
+ * as published by the Free Software Foundation; either version 2
+ * of the License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307,
+ * USA.
+ *
+*/
+
+#ifndef ELECTRONIC_NETWORKS__TOOLS_H
+#define ELECTRONIC_NETWORKS__TOOLS_H
+
+#include <string>
+#include <vector>
+
+#include "Msg.h"
+
+namespace eNetworks
+{
+
+static const std::string b64Table = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789[]";
+
+// Casting functions.
+int StringToInt(std::string);
+std::string IntToString(const int &);
+unsigned int b64Tob10(const std::string &b64);
+
+// main parser.
+Msg *MsgParser(const std::string &command); // Message Parser.
+
+
+// Info functions
+bool IsCommand(std::string &inbuffer,  std::string &command);
+bool IsDigit(const std::string &str);
+
+// misc functions.
+
+void CreateLocals();
+void login();
+
+
+// structs
+
+/** This struct was made by Dan Karrels.
+ * Case insensitive comparison struct for use by STL structures/algorithms.
+ */
+struct noCaseCompare
+{
+inline bool operator()( const std::string& lhs, const std::string& rhs ) const
+        {
+        return (strcasecmp( lhs.c_str(), rhs.c_str() ) < 0) ;
+        }
+} ;
+
+
+} // namespace eNetworks
+
+#endif // ELECTRONIC_NETWORKS__TOOLS_H

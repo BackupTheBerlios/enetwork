@@ -1,0 +1,4 @@
+- When all channels are finished destroy the channel automatically.
+- test Network base.
+- finish Msg class and parser.
+

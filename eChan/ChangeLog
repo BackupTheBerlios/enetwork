@@ -1,0 +1,51 @@
+October 31st, 2003 - clsk - Started working on eChan.
+  * Started the Socket class. still need to finish SocketException class.
+
+November 1st, 2003 - clsk - eChan Connects to the network.
+  * Made Client and Server struct.
+  * The pseudo-server is always Servers.begin() and channel service bot is always Servers.begin().
+  * Finished the SocketException class.
+  * orginized the main function. Organized try/catch blocks.
+  * fixed the debug class.
+  * Started and almost finished Servers class. Still need to finish it.
+
+November 2nd, 2003 - clsk - Finished Clients and Servers class. (This took me the whole day!!!)
+  * Finished working on Servers.
+  * Now each Server has a list of ClientIterator(s). Now when you destroy a server the clients on that server are
+    destroyed as well automatically.
+  * Added the software license. Using GNU GPL. All (current) files are copyrighted to me (Alan Alvarez).
+
+November 3rd, 2003 - clsk - Fixed some stuff in Clients and Servers class.
+  * Added Account member to Client struct.
+  * Re-organized Contructor parameters for Client and Server structs.
+  * Added AddModesToClient and DelModeToClients methods to Clients class.
+
+November 4th, 2003 - clsk - Started Channel struct.
+  * Added a AddModes and a DelModes member to Client struct.
+  * Started working on Channel struct. Still need to work some.
+    things out about how the Channels class is going to work.
+
+November 6th, 2003 - clsk - Almost finished Channel struct, ChanneClient struct and Channels class.
+  * Worked alot on Channel struct, ChanneClient struct and Channels class.
+  * still need to fix a bug on Channel::AddClient().
+
+November 7th, 2003 - clsk - Some progress in Channels.
+  * Fixed some bugs on Channels structs/class.
+  * There is still a bug. For some reason the Modes is "magically" emptied.
+
+November 8th, 2003 - clsk - Finished Channels base.
+  * Fixed bugs on Channels base.
+  * Now when a client is destroyed it is removed from all channels.
+  * Also now when a channel becomes empty the channel is destroyed.
+  * Added BanList to channels.
+  * Clients, Channels and Servers base are finished. Next step is the Message Parser. 
+  * Fixed debug class.
+  * Fixed IsCommand and made inbuffer static.
+  * Added Flag member to Server struct.
+Decemeber 6th, 2003 - clsk - re-wrote network base.
+  * Now the network base is represented by the Network class.
+  * everything is now in the namespace eNetworks.
+  * the project was accepted today in developer.berlios.de.
+  * implemented the Msg class and the parser. For now only PreServerMsg works.
+  * Made MsgTokenizer class.
+  * Alot of changes have been made that I can't remember atm.
