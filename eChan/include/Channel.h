@@ -55,11 +55,15 @@ struct Channel
    	bool IsChannelClient(Client *aClientPtr);
    	bool IsChannelClient(const std::string &aNumeric);
 
+   	// Finds a ChannelClient when given a Client pointer or the client's numeric and 
+        // returns a pointer to a ChannelClient. If none is found returns a NULL pointer.
    	ChannelClient *FindChannelClient(Client *aClientPtr);
    	ChannelClient *FindChannelClient(const std::string &aNumeric);
 
+   	// returns the number of clients in this channel.
    	ChannelClientSizeType ChannelClientCount() const { return ChannelClientList.size(); }
 
+   	// returns true if user has mode aMode.
    	bool HasMode(const char &aMode) 
    	{ 
    	   if (Modes.find(aMode) != std::string::npos) 
@@ -68,6 +72,7 @@ struct Channel
    	    return false; 
    	}
    
+   	// returns true if mode aMode is one of the standard modes.
    	bool IsStandardMode(const char &aMode) 
    	{
    	   if (aMode == 'i' || aMode == 'n' || aMode == 't' || aMode == 'm' || aMode == 'p' || aMode == 's' || 
@@ -96,13 +101,14 @@ struct Channel
    	void UnSetMode(const char aMode) { if (HasMode(aMode)) Modes.erase(Modes.find(aMode), 1); }
 
    	void SetKey(const std::string &aKey) { if (aKey.length() == 0 ) return; SetMode_k(); Key = aKey; }
-   	void UnSetKey() { Key = ""; }
+   	void UnSetKey() { Key = ""; UnSetMode_k(); }
    	std::string GetKey() { return Key; }
 
    	void SetLimit(const unsigned int aLimit) { if (aLimit == 0 ) return; SetMode_l(); Limit = aLimit; }
-   	void UnSetLimit() { Limit = 0; }
+   	void UnSetLimit() { Limit = 0; UnSetMode_l(); }
    	unsigned int GetLimit() { return Limit; }   
 
+   	// Returns true if aBan *exactly* matches with one of this channels bans.
    	bool IsBan(const std::string &aBan) 
    	{ 
    	   for (std::list<std::string>::iterator i = BanList.begin(); i != BanList.end(); i++) 
@@ -112,12 +118,14 @@ struct Channel
    	   return false;
    	}
 
+   	// Adds a ban to this channel.
    	void AddBan(const std::string &aBan) 
    	{ 
    	   if (!IsBan(aBan)) 
    	    BanList.push_back(aBan); 
    	}
 
+   	// removes a ban from this channel.
    	void DelBan(const std::string &aBan)
    	{
    	   for (std::list<std::string>::iterator i = BanList.begin(); i != BanList.end() && BanList.size() > 0; i++)
@@ -158,17 +166,17 @@ struct Channel
 
 
    	// Channel Members.
-   	const std::string Name;
-   	std::string Topic;
+   	const std::string Name; // Channel name.
+   	std::string Topic; // Channel Topic.
 
-   	const time_t TimeStamp;
+   	const time_t TimeStamp; // Channel creation time.
 
-   	ChannelClientListType ChannelClientList;
-  	BanListType BanList;
+   	ChannelClientListType ChannelClientList; // Clients in this channel.
+  	BanListType BanList; // Ban list.
  
-   	std::string Modes;
-   	std::string Key;
-   	unsigned int Limit;   	
+   	std::string Modes; // Channel Modes.
+   	std::string Key; // Channel key.
+   	unsigned int Limit; // channel user limit.
 };
 
 } // namespace eNetworks

@@ -38,16 +38,20 @@ struct Client
 
    public:
 
+   	// Add a mode to this user.
    	void AddMode(const char &aMode) 
    	{ 
+   	   // if the mode doesn't exist then add it, Otherwise don't do anything.
    	   if (!HasMode(aMode)) 
    	   {
    	   	Modes += aMode; 
    	   } 
    	}
   
+   	// delete a mode from this user
    	void DelMode(const char &aMode)
    	{
+   	   If mode exists, remove it.
    	   if (HasMode(aMode))
    	   {
    	      Modes.erase(Modes.find(aMode), 1); // Remove Character from string.
@@ -82,6 +86,7 @@ struct Client
    	friend class Channel;
    	friend void CreateLocals();
 
+   	// type for Channel List.
    	typedef std::map<std::string, Channel *, noCaseCompare> ChannelMapType;
 
 
@@ -90,32 +95,37 @@ struct Client
                        const std::string &aUserName, const std::string &aHostName, const std::string &aB64IP,
                        const std::string &aModes, const std::string &aUserInfo, const time_t &aTimeStamp,
                        const unsigned int &aHopCount) :
-        Numeric(aNumeric), Account(aAccount), NickName(aNickName), UserName(aUserName), HostName(aHostName),
+        Numeric(aNumeric), NickName(aNickName), Account(aAccount), UserName(aUserName), HostName(aHostName),
         B64IP(aB64IP), UserInfo(aUserInfo), TimeStamp(aTimeStamp), HopCount(aHopCount), Modes(aModes), ChannelMap()
         {}
 
+   	// Add a channel to this user's Channel list.
+   	// NOTE: This function should only be called from Channel::AddChannelClient
    	bool AddChannel(Channel *aChannelPtr); 
 
+   	// Delete a channel from this user's channe list.
+   	// NOTE: This function should only be called from Channel::DelChannelClient
    	bool DelChannel(Channel *aChannelPtr);
 
    	const std::string Numeric; // Server+Client. 5 digits
-   	std::string NickName;
-   	std::string Account;
-   	std::string UserName;
-   	std::string HostName;
+   	std::string NickName; // This user's nickname
+   	std::string Account; // This user's services account
+   	std::string UserName; // this user's username
+   	std::string HostName; // this user's hostname
    	const std::string B64IP; // Base-64 IP
-   	const std::string UserInfo;
+   	const std::string UserInfo; // this user's info
 
-   	const time_t TimeStamp;
+   	const time_t TimeStamp; // this user's timestamp
 
-   	const unsigned int HopCount;
+   	const unsigned int HopCount; // this user's hopcount
 
-        std::string Modes;
+        std::string Modes; // this user's modes.
    	
-   	ChannelMapType ChannelMap; 
+   	ChannelMapType ChannelMap; // Channels this user's on.
 
 };
 
+// This is the local client.
 extern Client *LocalClient;
 
 } // namespace eNetworks

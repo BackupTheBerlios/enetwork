@@ -154,20 +154,27 @@ bool Network::AddClient(const std::string &aNumeric, const std::string &aNickNam
                         const std::string &aModes, const std::string &aUserInfo, const time_t &aTimeStamp,
                         const unsigned int &aHopCount)
 {
+
+   cout << "Numeric: " << aNumeric << " NickName: " << aNickName << " Account: " << aAccount <<
+           " UserName: " << aUserName << " HostName: " << aHostName << " B64IP: " << aB64IP << " Modes: " << aModes
+           << " TimeStamp: " << aTimeStamp << " HopCount: " << aHopCount << endl << "UserInfo: " << aUserInfo << endl;
+
    // Check we don't get bogus entries.
    if (aNickName.length() == 0 || aNickName.find(" ") != string::npos || aNumeric.length() != 5 ||
        aUserName.length() == 0 || aUserName.find(" ") != string::npos ||
        aHostName.length() == 0 || aHostName.find(" ") != string::npos || aB64IP.length() == 0 ||
        aB64IP.find(" ") != string::npos || FindServerByNumeric(aNumeric.substr(0,2)) == NULL ||
        aTimeStamp < FindServerByNumeric(aNumeric.substr(0,2))->StartTime ||
-      FindClientByNickName(aNickName) != NULL || FindClientByNumeric(aNumeric) != NULL)
+       FindClientByNickName(aNickName) != NULL || FindClientByNumeric(aNumeric) != NULL)
    {
         return false;
    }
 
+
    // create the new client. Allocate memory for it on the heap.
    Client *NewClient = new Client(aNumeric, aNickName, aAccount, aUserName, aHostName, aB64IP, aModes, aUserInfo, 
                                   aTimeStamp, aHopCount);
+
 
    // if we couldn't allocate the new client or we can't insert the new user to the client map table, return false.
    if (NewClient == NULL || !ClientNumerics.insert(ClientNumericsMapType::value_type(aNumeric, NewClient)).second)
@@ -194,26 +201,32 @@ return true;
 
 bool Network::DelClientByNickName(const std::string &aNickName)
 {
+   // Try to find the client.
    ClientNickNamesMapType::iterator ClientIter = ClientNickNames.find(aNickName);
 
+   // return false if client with this nicname doesn't exist.
    if (ClientIter == ClientNickNames.end())
    {
    	return false;
    }
 
+   // try to remove from the table associated by numerics first.
    if (ClientNumerics.erase(ClientIter->second->Numeric) != 1)
    {
    	return false;
    }
 
+   // then remove the client from the client table in the server this client is dependant on.
    FindServerByNumeric(ClientIter->second->Numeric.substr(0,2))->ServerClients.erase(ClientIter->second->Numeric.substr(2));
 
+   // remove this client from every channel it is on.
    for (Client::ChannelMapType::iterator i = ClientIter->second->ChannelMap.begin(); 
         i != ClientIter->second->ChannelMap.end(); i++)
    {
    	i->second->DelChannelClient(ClientIter->second); 
    }
 
+   // finally release memory allocated and remove from table associated by nicknames.
    delete ClientIter->second;
    ClientNickNames.erase(ClientIter);
 
@@ -222,26 +235,32 @@ return true;
 
 bool Network::DelClientByNumeric(const std::string &aNumeric)
 {
+   // try to find the client.
    ClientNumericsMapType::iterator ClientIter = ClientNumerics.find(aNumeric);
 
+   // if client doesn't exist return false.
    if (ClientIter == ClientNumerics.end())
    {
         return false;
    }
 
+   // try to erase the client from the client table associated by nicknames.
    if (ClientNickNames.erase(ClientIter->second->NickName) != 1)
    {
         return false;
    }
 
+   // then remove the client from the client table in the server this client is dependant on.
    FindServerByNumeric(aNumeric.substr(0,2))->ServerClients.erase(aNumeric.substr(2));
 
+   // remove this client from ever channel it is on.
    for (Client::ChannelMapType::iterator i = ClientIter->second->ChannelMap.begin();
         i != ClientIter->second->ChannelMap.end(); i++)
    {
    	i->second->DelChannelClient(ClientIter->second);
    }
 
+   // finally release memory allocated and remove from table associated by numerics.
    delete ClientIter->second;
    ClientNumerics.erase(ClientIter);
 
@@ -281,11 +300,15 @@ Client *Network::FindClientByNumeric(const std::string &aNumeric)
 bool Network::AddChannel(const std::string &aName, const std::string &aTopic, const std::string &aModes,
                          const std::string &aKey, const unsigned int &aLimit, const time_t &aTimeStamp)
 {
+   // check we don't get bogus entries.
    if (aName.length() == 0 || (aName[0] != '#' && aName[0] != '+'))
     return false;
 
+   // allocate memory for this channel.
    Channel *NewChannel = new Channel(aName, aTopic, aModes, aKey, aLimit, aTimeStamp);
 
+   // return false if NewChannel is null (which means no memory could be allocated) or if for some reason
+   // we can't add it to the channel table.
    if (NewChannel == NULL || !Channels.insert(ChannelMapType::value_type(aName, NewChannel)).second)
    {
    	delete NewChannel;
@@ -297,6 +320,7 @@ return true;
 
 bool Network::DelChannel(const std::string &aName)
 {
+   // If the number of deleted channels is different to 0 return false;
    if (Channels.erase(aName) == 1)
     return true;
    // else

@@ -27,6 +27,7 @@
 namespace eNetworks
 {
 
+// Tokens sent from irc servers according to the P10 protocol.
 namespace Tokens
 {
    const std::string    SERVER             =  "S";

@@ -74,8 +74,8 @@ struct ChannelClient
         ChannelClient(Client *aClientPtr, const std::string &aModes = "") :
         ClientPtr(aClientPtr), Modes(aModes) {}
 
-        Client *ClientPtr;
-        std::string Modes;
+        Client *ClientPtr; // The client this struc is representing.
+        std::string Modes; // the channel modes for this user.
 };
 
 } // namespace eNetworks

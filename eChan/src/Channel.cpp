@@ -34,13 +34,16 @@ namespace eNetworks
 // is NULL or if modes are invalid. (different to 'o' or 'v')
 bool Channel::AddChannelClient(Client *aClientPtr, const string &aModes)
 {
+   // Check we don't get bogus entries.
    if (aClientPtr == NULL || aModes.find(' ') != string::npos || IsChannelClient(aClientPtr->GetNumeric()))
     return false;
 
+   // only channel modes o and v are accepted. Return false if any other is passed.
    for(unsigned int i = 0; i < aModes.length(); i++)
     if (aModes[i] != 'o' && aModes[i] != 'v')
      return false;
 
+   // create the new channel client.
    ChannelClient *NewChannelClient = new ChannelClient(aClientPtr, aModes);
 
    // if we couldn't add the client to the client list the return false.
@@ -49,6 +52,7 @@ bool Channel::AddChannelClient(Client *aClientPtr, const string &aModes)
    	return false;
    }
 
+   // Add this channel to the channel list of this client.
    aClientPtr->AddChannel(this);
 
 return true;

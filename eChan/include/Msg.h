@@ -56,10 +56,10 @@ class Msg
 
   protected:
 
-	std::string Token;
-	Client *ClientSrc;
-	Server *ServerSrc;
-	MsgTokenizer Parameters;
+	std::string Token; // The Msg token.
+	Client *ClientSrc; // The client that sent this message. If a server sent this message, this is NULL.
+	Server *ServerSrc; // The server that sent this message. If a client sent this message, this is NULL.
+	MsgTokenizer Parameters; // These are the parameters that go after the Token all tokenized.
 };
 
 
