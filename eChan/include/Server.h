@@ -1,6 +1,6 @@
 /*
  * eChan - Electronic Channel Services.
- * Copyright (C) 2003 Alan Alvarez.
+ * Copyright (C) 2003-2005 Alan Alvarez.
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -78,7 +78,7 @@ struct Server
                const std::string &aDescription, const time_t &aStartTime, const time_t &aLinkTime, 
                const unsigned int &aHopCount, const char &aFlag) :
      	Numeric(aNumeric), Name(aName), UpLinkNumeric(aUpLinkNumeric), Description(aDescription),
-        StartTime(aStartTime), LinkTime(aLinkTime), HopCount(aHopCount), Flag(aFlag) // , ServerClients()
+        StartTime(aStartTime), LinkTime(aLinkTime), HopCount(aHopCount), Flag(aFlag), ServerClients()
      	{}
 
 };

@@ -1,6 +1,6 @@
 /*
  * eChan - Electronic Channel Services.
- * Copyright (C) 2003 Alan Alvarez.
+ * Copyright (C) 2003-2005 Alan Alvarez.
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -51,7 +51,7 @@ struct Client
    	// delete a mode from this user
    	void DelMode(const char &aMode)
    	{
-   	   If mode exists, remove it.
+   	   // If mode exists, remove it.
    	   if (HasMode(aMode))
    	   {
    	      Modes.erase(Modes.find(aMode), 1); // Remove Character from string.
@@ -69,6 +69,9 @@ struct Client
    	   	return true;
    	   }
    	}
+
+   	void ChangeNickName (const std::string &aNickName) { NickName = aNickName; }
+   	void ChangeTimeStamp (const time_t &aTimeStamp) { TimeStamp = aTimeStamp; }
 
    	std::string GetNumeric() const { return Numeric; }
    	std::string GetNickName() { return NickName; }
@@ -115,7 +118,7 @@ struct Client
    	const std::string B64IP; // Base-64 IP
    	const std::string UserInfo; // this user's info
 
-   	const time_t TimeStamp; // this user's timestamp
+   	time_t TimeStamp; // this user's timestamp
 
    	const unsigned int HopCount; // this user's hopcount
 

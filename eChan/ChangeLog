@@ -75,3 +75,7 @@ December 21st, 2003 - clsk - Delete servers linked to another server when the se
   * Now the servers linked to a server are also deleted on DelClientByNumeric.
   * DelClientByName now calls DelClientByNumeric when it finds a server.
   * Commented the code in Network.cpp a little bit. Much more to comment/document.
+
+February 17th, 2005 - clsk - Delete a channel when all clients leave.
+  * Now channels are automatically deleted when all clients leave from that channel.
+  * Extended Copyright notice to 2005. and also updated my e-mail address.

@@ -1,6 +1,6 @@
 /*
  * eChan - Electronic Channel Services.
- * Copyright (C) 2003 Alan Alvarez.
+ * Copyright (C) 2003-2005 Alan Alvarez.
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -22,6 +22,8 @@
 #include <string>
 #include <iostream>
 
+#include "Client.h"
+#include "tools.h"
 #include "Msg_N.h"
 #include "Network.h"
 #include "debug.h"
@@ -40,15 +42,37 @@ namespace eNetworks
 void Msg_N::Parser()
 {
 
+   // User Changing NickName
+   cout << Parameters.size() << endl;
+   if (Parameters.size() == 2)
+   {
+
+        if (eNetwork->FindClientByNumeric(ClientSrc->GetNumeric()) == NULL)
+        {
+           debug << "Protocol Violation: Token N with no Client source." << endb;
+           exit(0);
+        }
+
+        cout << "Changing " << ClientSrc->GetNickName() << "'s nickname to ";
+        ClientSrc->ChangeNickName(Parameters[0]);
+        cout << ClientSrc->GetNickName() << endl;
+        ClientSrc->ChangeTimeStamp(StringToInt(Parameters[1]));
+
+        return;
+   }
+
+   
+
    if (Parameters.size() < 7 || Parameters.size() > 10)
    {
         debug << "Protocol Violation: error on number of arguments in Msg_N::Parser()" << endb;
         exit(0);
    }
 
+
    if (ServerSrc == NULL)
    {
-        debug << "Protocol Violation. Token N with no source." << endb;
+        debug << "Protocol Violation: Token N with no Server source." << endb;
         exit(0);
    }
 

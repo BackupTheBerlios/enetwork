@@ -1,6 +1,6 @@
 /*
  * eChan - Electronic Channel Services.
- * Copyright (C) 2003 Alan Alvarez.
+ * Copyright (C) 2003-2005 Alan Alvarez.
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -84,7 +84,7 @@ cout << "[IN]: " << aCommand << endl;
    	   	exit(0);
    	   }
    	}
-   	else if (aCommand.find(' ') == 5)
+   	else if (aCommand.find(' ') == 5) // This Message came from a client.
    	{
    	   ClientSrc = eNetwork->FindClientByNumeric(aCommand.substr(0,5)); 
    	   ServerSrc = NULL;

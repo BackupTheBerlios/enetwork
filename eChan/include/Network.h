@@ -1,6 +1,6 @@
 /*
  * eChan - Electronic Channel Services.
- * Copyright (C) 2003 Alan Alvarez.
+ * Copyright (C) 2003-2005 Alan Alvarez.
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -40,8 +40,8 @@ class Network
 {
    private:
    	typedef std::map<std::string, Server *> ServerMapType;
-   	typedef std::map<std::string, Client *, noCaseCompare> ClientNumericsMapType;
-   	typedef std::map<std::string, Client *> ClientNickNamesMapType;
+   	typedef std::map<std::string, Client *> ClientNumericsMapType;
+   	typedef std::map<std::string, Client *, noCaseCompare> ClientNickNamesMapType;
    	typedef std::map<std::string, Channel *, noCaseCompare> ChannelMapType;
 
    public:

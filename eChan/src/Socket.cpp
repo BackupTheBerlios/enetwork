@@ -1,6 +1,6 @@
 /*
  * eChan - Electronic Channel Services.
- * Copyright (C) 2003 Alan Alvarez.
+ * Copyright (C) 2003-2005 Alan Alvarez.
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -62,13 +62,13 @@ Socket::Socket(const string &host, const int port) : sockfd(-1)
    {
 	if (errno == EISCONN)
 	 throw SocketException("This socket is already connected", SocketException::CONNECT);
-	else if (errno = ECONNREFUSED)
+	else if (errno == ECONNREFUSED)
 	 throw SocketException("Connection refused", SocketException::CONNECT);
-	else if (errno = ETIMEDOUT)
+	else if (errno == ETIMEDOUT)
 	 throw SocketException("Connection timed out", SocketException::CONNECT);
-	else if (errno = ENETUNREACH)
+	else if (errno == ENETUNREACH)
 	 throw SocketException("Network is unreachable", SocketException::CONNECT);
-	else if (errno = EADDRINUSE)
+	else if (errno == EADDRINUSE)
 	 throw SocketException("Address already in use", SocketException::CONNECT);
 
    }

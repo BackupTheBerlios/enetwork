@@ -1,6 +1,6 @@
 /*
  * eChan - Electronic Channel Services.
- * Copyright (C) 2003 Alan Alvarez.
+ * Copyright (C) 2003-2005 Alan Alvarez.
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -22,6 +22,7 @@
 #include <list>
 #include <string>
 
+#include "Network.h"
 #include "Client.h"
 #include "Channel.h"
 
@@ -73,6 +74,12 @@ bool Channel::DelChannelClient(Client *aClientPtr)
   	delete ChannelClientIter->second;
    	// TODO: when last channelclient is removed, remove the channel also.
    	ChannelClientList.erase(ChannelClientIter);
+
+   	// If that was the last User in this channel then delete the channel.
+   	if (ChannelClientList.empty())
+   	{
+   	   eNetwork->DelChannel(this->GetName());
+   	}
    }
  
 return false;

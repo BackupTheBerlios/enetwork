@@ -1,6 +1,6 @@
 /*
  * eChan - Electronic Channel Services.
- * Copyright (C) 2003 Alan Alvarez.
+ * Copyright (C) 2003-2005 Alan Alvarez.
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -103,10 +103,10 @@ void Msg_B::Parser()
    	exit(0);
    }
    
-   /*
+  
    cout << "Added channel with Name: " << Name << " Modes: " << Modes << " Key: " << Key << " Limit: " <<
            Limit << " TimeStamp: " << TimeStamp << endl;
-   */
+  
 
    ChannelPtr = eNetwork->FindChannel(Name);
    if (ChannelPtr == NULL)
@@ -146,19 +146,19 @@ void Msg_B::ParseUsers(Channel *aChannelPtr, const std::string &UsersParameters)
    	if (Users[i].size() == 5)
    	{
    	   aChannelPtr->AddChannelClient(ClientPtr, CurrentMode);
-   	   /*
+   	   
    	   cout << "Added Client " << ClientPtr->GetNickName() << " to " << aChannelPtr->GetName() << 
    	           " with mode " << CurrentMode << endl;
-   	   */
+   	   
    	}
    	else if (Users[i].size() == 7 || Users[i].size() == 8)
    	{
    	   CurrentMode = Users[i].substr(6);
    	   aChannelPtr->AddChannelClient(ClientPtr, CurrentMode);
-   	   /*
+   	   
    	   cout << "Added Client " << ClientPtr->GetNickName() << " to " << aChannelPtr->GetName() << 
    	           " with mode " << CurrentMode << endl;
-   	   */
+   	   
    	}
    }
 } 
@@ -169,6 +169,7 @@ void Msg_B::ParseBans(Channel *aChannelPtr, const std::string &BansParameters)
 
    for (unsigned int i = 0; i < Bans.size(); i++)
    {
+	cout << "Added Ban: " << Bans[i] << endl;
    	aChannelPtr->AddBan(Bans[i]);
    }
 }

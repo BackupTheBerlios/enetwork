@@ -1,6 +1,6 @@
 /*
  * eChan - Electronic Channel Services.
- * Copyright (C) 2003 Alan Alvarez.
+ * Copyright (C) 2003-2005 Alan Alvarez.
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -46,8 +46,8 @@ void login();
 
 // structs
 
-/** This struct was made by Dan Karrels and is NOT copyrighted to me.
- *  Do not apply the notice at the top of this file to this struct. 
+/** This struct was made by Dan Karrels for the GNUworld project and is NOT copyrighted to me.
+ *  The notice at the top of this file does NOT apply to this struct. 
  *  However this struct was released under the GNU GPL in a file in 
  *  the gnuworld project.
  *
