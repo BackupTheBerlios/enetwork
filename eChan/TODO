@@ -1,4 +1,7 @@
 - When all channels are finished destroy the channel automatically.
-- test Network base.
+- FULLY test Network base.
 - finish Msg class and parser.
-
+- Comment the code.
+- Write an API documentation.
+- manage TimeStamps better.
+- *this;

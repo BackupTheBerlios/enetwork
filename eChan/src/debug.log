@@ -8,3 +8,30 @@ Tue Jan 27 06:47:58 2004
 Remote server closed connection
 Protocol Violation
 Protocol Violation
+Connection refused
+Can't find client 
+ERROR
+ in my database
+Can't find client 
+ERROR
+ in my database
+Can't find Server 
+Az
+ in my database
+Can't find Server 
+Az
+ in my database
+Can't find Server 
+Az
+ in my database
+Can't find Server 
+Az
+ in my database
+Protocol Violation: Hop Count should be 1 in PreServerMsg::Parser()
+Protocol Violation: Protocol should be J10 at link time in PreServerMsg::Parser()
+Can't find client 
+AKAAA
+ in my database
+Can't find client 
+ERROR
+ in my database

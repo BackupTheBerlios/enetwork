@@ -32,6 +32,7 @@ namespace Tokens
    const std::string    SERVER             =  "S";
    const std::string    PASS               =  "PASS";
    const std::string    PRESERVER          =  "SERVER";
+   const std::string    ERROR              =  "ERROR";
    const std::string    NICK               =  "N";
    const std::string    BURST              =  "B";
    const std::string    JOIN               =  "J";

@@ -74,7 +74,7 @@ unsigned int b64Tob10(const string &b64)
         if (b64Table.find(b64[i-1]) == string::npos)
          return 0;
 
-        rv += pow((double)64, (double)j) * b64Table.find(b64[i-1]);
+        rv += static_cast<unsigned int>(pow(static_cast<double>(64), static_cast<int>(j)) * b64Table.find(b64[i-1]));
         j++;
    }
 
@@ -109,12 +109,36 @@ return false;
 
 Msg *MsgParser(const std::string &command)
 {
-   if (command.length() > 6 && command.substr(0,6) == "SERVER")
-    return new PreServerMsg(command, Tokens::PRESERVER);
-   else if (command.length() > 6 && command.substr(0,6) == "PASS :")
-    return new Msg(command, Tokens::PASS);
-   else 
-    return new Msg(command, "");   
+   string Token;
+
+   // Get the token.
+   if (command.find(" ") == 2 || command.find(" ") == 5)
+   {
+   	if (command.length() >= 7 && command.substr(0,7) == "ERROR :")
+   	{
+   	   return new Msg(command, Tokens::ERROR);
+   	}
+
+   	Token = command.substr(command.find(" ")+1); 
+   	Token = Token.substr(0, Token.find(" "));
+   }
+   else
+   {
+   	if (command.length() > 6 && command.substr(0,6) == "SERVER")
+    	 return new PreServerMsg(command, Tokens::PRESERVER);
+   	else if (command.length() > 6 && command.substr(0,6) == "PASS :")
+   	 return new Msg(command, Tokens::PASS);
+   	else 
+   	 return new Msg(command, "");   
+   }
+
+   if (Token == Tokens::SERVER)
+    return new Msg_S(command, Tokens::SERVER);
+   else if (Token == Tokens::NICK)
+    return new Msg_N(command, Tokens::NICK);
+   else
+    return new Msg(command, Token);
+
 
 return NULL; // We're not supposed to get here, but just in case.
 }
@@ -125,7 +149,7 @@ void CreateLocals()
    int errnos;
    ConfParser eConf("eChan.conf", errors, errnos);
 
-   LocalServer = new Server("AC", eConf.GetServerName(), "", eConf.GetServerInfo(), time(0), time(0), 1, 's');
+   LocalServer = new Server("AE", eConf.GetServerName(), "", eConf.GetServerInfo(), time(0), time(0), 1, 's');
 
    if (LocalServer == NULL)
    {
@@ -133,7 +157,7 @@ void CreateLocals()
    	exit(0);
    }
 
-   LocalClient = new Client("ACAAA", eConf.GetNick(), "", eConf.GetUserName(), eConf.GetHostName(), "DAqAoB",
+   LocalClient = new Client("AEAAA", eConf.GetNick(), "", eConf.GetUserName(), eConf.GetHostName(), "DAqAoB",
                             "idk", eConf.GetClientInfo(), time(0), 1);
 
    if (LocalClient == NULL)

@@ -42,6 +42,7 @@ November 8th, 2003 - clsk - Finished Channels base.
   * Fixed debug class.
   * Fixed IsCommand and made inbuffer static.
   * Added Flag member to Server struct.
+
 Decemeber 6th, 2003 - clsk - re-wrote network base.
   * Now the network base is represented by the Network class.
   * everything is now in the namespace eNetworks.
@@ -49,3 +50,12 @@ Decemeber 6th, 2003 - clsk - re-wrote network base.
   * implemented the Msg class and the parser. For now only PreServerMsg works.
   * Made MsgTokenizer class.
   * Alot of changes have been made that I can't remember atm.
+
+December 7th, 2003 - clsk - Added Msg_S class (Token S) handler.
+  * Added Msg_S class to handle S tokens and add servers in the network database.
+  * Tokens with ':' prefix in MsgTokenizer now doesn't include the prefix ':'.
+  * Removed all warnings even when compiling with -W and -Wall
+
+December 8th, 2003 - clsk - Added Msg_N class (Token N) handler.
+  * Added Msg_N class to handle N tokens and add clients in the network database.
+  * Added Tokens::ERROR handler. Still need to check for ERROR tokens coming from a defined source.
