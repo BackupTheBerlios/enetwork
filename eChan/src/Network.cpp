@@ -297,8 +297,8 @@ Client *Network::FindClientByNumeric(const std::string &aNumeric)
 //  Channels Management members.
 // -----------------------------
 
-bool Network::AddChannel(const std::string &aName, const std::string &aTopic, const std::string &aModes,
-                         const std::string &aKey, const unsigned int &aLimit, const time_t &aTimeStamp)
+bool Network::AddChannel (const std::string &aName, const time_t &aTimeStamp, const std::string &aTopic, 
+   	   	   	 const std::string &aModes, const std::string &aKey, const unsigned int &aLimit)
 {
    // check we don't get bogus entries.
    if (aName.length() == 0 || (aName[0] != '#' && aName[0] != '+'))

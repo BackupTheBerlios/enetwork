@@ -142,8 +142,8 @@ struct Channel
 
    	friend class Network;
 
-   	Channel(const std::string &aName, const std::string &aTopic, const std::string &aModes, const std::string aKey,
-                const unsigned int &aLimit, const time_t &aTimeStamp) :
+   	Channel(const std::string &aName, const std::string &aTopic, const std::string &aModes, 
+   	   	const std::string aKey, const unsigned int &aLimit, const time_t &aTimeStamp) :
    	Name(aName), Topic(aTopic), TimeStamp(aTimeStamp), Modes(aModes), Key(aKey), Limit(aLimit)
    	{
            // If a key is passed make sure +k is set. Otherwise make sure k is not set

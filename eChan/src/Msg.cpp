@@ -32,6 +32,7 @@
 #include "Msg_B.h"
 #include "Msg_G.h"
 #include "Msg_EB.h"
+#include "Msg_C.h"
 #include "PreServerMsg.h"
 #include "Server.h"
 #include "P10Tokens.h"
@@ -142,6 +143,8 @@ Msg *Msg::MsgParser(const std::string &command)
 
    if (Token == Tokens::SERVER)
     return new Msg_S(command, Tokens::SERVER);
+   else if (Token == Tokens::CREATE)
+    return new Msg_C(command, Tokens::CREATE);
    else if (Token == Tokens::NICK)
     return new Msg_N(command, Tokens::NICK);
    else if (Token == Tokens::B)

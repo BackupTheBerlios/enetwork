@@ -119,8 +119,8 @@ class Network
    	typedef ChannelMapType::size_type ChannelSizeType;
 
    	// Adds a channel to the network
-   	bool AddChannel(const std::string &aName, const std::string &aTopic, const std::string &aModes,
-                        const std::string &aKey, const unsigned int &aLimit, const time_t &aTimeStamp);
+   	bool AddChannel(const std::string &aName, const time_t &aTimeStamp, const std::string &aTopic = "", 
+   	   	   	const std::string &aModes = "", const std::string &aKey = "", const unsigned int &aLimit = 0);
 
    	// Deletes a channel from the network
    	bool DelChannel(const std::string &aName);

@@ -79,3 +79,9 @@ December 21st, 2003 - clsk - Delete servers linked to another server when the se
 February 17th, 2005 - clsk - Delete a channel when all clients leave.
   * Now channels are automatically deleted when all clients leave from that channel.
   * Extended Copyright notice to 2005. and also updated my e-mail address.
+
+February 23rd, 2005 - clsk - Created Msg_C.cpp to handle C Tokens.
+ * Created Msg.C.cpp to handle C messages.
+ * P10Tokens.h Added Tokens::CREATE
+ * now eNetwork::AddChannel uses default arguments for all its arguments except for Name and TimeStamp.
+

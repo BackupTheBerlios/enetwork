@@ -97,7 +97,7 @@ void Msg_B::Parser()
 
    }
 
-   if (!eNetwork->AddChannel(Name, "", Modes, Key, Limit, TimeStamp))
+   if (!eNetwork->AddChannel(Name, TimeStamp, "", Modes, Key, Limit))
    {
    	debug << "Could not add channel " << Name  << " in Msg_B::Parser()." << endb;
    	exit(0);
