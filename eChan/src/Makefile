@@ -1,6 +1,6 @@
 CPP = g++
 CPARAM = -W -Wall -c -I../include/
-OBJS = main.o Socket.o ConfParser.o tools.o Msg.o Msg_EB.o Msg_N.o Msg_S.o PreServerMsg.o Msg_B.o Channel.o Client.o MsgTokenizer.o Network.o Server.o SocketException.o debug.o Msg_G.o Msg_C.o Msg_Q.o
+OBJS = main.o Socket.o ConfParser.o tools.o Msg.o Msg_EB.o Msg_N.o Msg_S.o PreServerMsg.o Msg_B.o Channel.o Client.o MsgTokenizer.o Network.o Server.o SocketException.o debug.o Msg_G.o Msg_C.o Msg_Q.o InBuffer.o OutBuffer.o
 .SUFFIXES: .o .cpp
 
 .cpp.o:
@@ -71,6 +71,12 @@ Msg_C.o:
 Msg_Q.o:
 	 $(CPP) -o Msg_Q.o $(CPARAM) Msg_Q.cpp
 
+InBuffer.o: 
+	$(CPP) -o InBuffer.o $(CPARAM) InBuffer.cpp
+
+OutBuffer.o:
+	$(CPP) -o OutBuffer.o $(CPARAM) OutBuffer.cpp
+
 main.o: main.cpp
 Channel.o: Channel.cpp
 Client.o: Client.cpp
@@ -91,6 +97,8 @@ Msg_N.o: Msg_N.cpp
 Msg_G.o: Msg_G.cpp
 Msg_C.o: Msg_C.cpp
 Msg_Q.o: Msg_Q.cpp
+InBuffer.o: InBuffer.cpp
+OutBuffer.o: OutBuffer.cpp
 eChan: $(OBJS)
 
 eChan: main.o \
@@ -112,8 +120,9 @@ eChan: main.o \
        Msg_N.o \
        Msg_G.o \
        Msg_C.o \
-       Msg_Q.o
-
+       Msg_Q.o \
+       InBuffer.o \
+       OutBuffer.o
 
 clean:
 	rm -f $(OBJS)

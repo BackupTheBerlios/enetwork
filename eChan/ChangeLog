@@ -81,7 +81,15 @@ February 17th, 2005 - clsk - Delete a channel when all clients leave.
   * Extended Copyright notice to 2005. and also updated my e-mail address.
 
 February 23rd, 2005 - clsk - Created Msg_C.cpp to handle C Tokens.
- * Created Msg.C.cpp to handle C messages.
+ * Created Msg_C.cpp to handle C messages.
  * P10Tokens.h Added Tokens::CREATE
  * now eNetwork::AddChannel uses default arguments for all its arguments except for Name and TimeStamp.
+
+March 19th, 2005 - clsk - Created Msg_Q.cpp to hande Q Tokens
+ * Created Msg_Q to handle Q Messages
+ * P10Tokens.h Added Tokens::QUIT
+
+March 19th, 2005 - clsk - Started the Buffer class.
+ * New Buffer class. Still not implemented. It has no impact on software yet.
+ * New User classes are InBuffer and OutBuffer.
 
