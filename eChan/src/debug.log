@@ -35,3 +35,8 @@ AKAAA
 Can't find client 
 ERROR
  in my database
+Protocol Violation: TimeStamp should only contain digits in Msg_B::Parser()
+Protocol Violation: TimeStamp should only contain digits in Msg_B::Parser()
+Protocol Violation: TimeStamp should only contain digits in Msg_B::Parser()
+Protocol Violation: TimeStamp should only contain digits in Msg_B::Parser()
+Protocol Violation: error on number of arguments in Msg_B::Parser()

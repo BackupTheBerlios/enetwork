@@ -34,6 +34,7 @@ using std::endl;
 #include "SocketException.h"
 #include "Socket.h"
 #include "P10Tokens.h"
+#include "Msg_B.h"
 
 using namespace std;
 
@@ -105,42 +106,6 @@ bool IsCommand(string &inbuffer, string &command)
   }
 
 return false;
-}
-
-Msg *MsgParser(const std::string &command)
-{
-   string Token;
-
-   // Get the token.
-   if (command.find(" ") == 2 || command.find(" ") == 5)
-   {
-   	if (command.length() >= 7 && command.substr(0,7) == "ERROR :")
-   	{
-   	   return new Msg(command, Tokens::ERROR);
-   	}
-
-   	Token = command.substr(command.find(" ")+1); 
-   	Token = Token.substr(0, Token.find(" "));
-   }
-   else
-   {
-   	if (command.length() > 6 && command.substr(0,6) == "SERVER")
-    	 return new PreServerMsg(command, Tokens::PRESERVER);
-   	else if (command.length() > 6 && command.substr(0,6) == "PASS :")
-   	 return new Msg(command, Tokens::PASS);
-   	else 
-   	 return new Msg(command, "");   
-   }
-
-   if (Token == Tokens::SERVER)
-    return new Msg_S(command, Tokens::SERVER);
-   else if (Token == Tokens::NICK)
-    return new Msg_N(command, Tokens::NICK);
-   else
-    return new Msg(command, Token);
-
-
-return NULL; // We're not supposed to get here, but just in case.
 }
 
 void CreateLocals()

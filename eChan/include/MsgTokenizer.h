@@ -32,7 +32,7 @@ class MsgTokenizer
 {
    public:
 
-   	MsgTokenizer(const std::string &aCommand);
+   	MsgTokenizer(const std::string &aCommand, const char &Delimiter = ' ');
    	unsigned int size() { return Tokens.size(); }
    	std::string operator[](const unsigned int &position) { return Tokens[position]; }
 

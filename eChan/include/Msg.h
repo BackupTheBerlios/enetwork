@@ -52,50 +52,14 @@ class Msg
 
 	virtual void Parser();
 
+   	static Msg *MsgParser(const std::string &command);
+
   protected:
 
 	std::string Token;
 	Client *ClientSrc;
 	Server *ServerSrc;
 	MsgTokenizer Parameters;
-};
-
-
-// -------------------------------------------------------------------------------
-//                    SERVER Token. (A server introducing itself)
-// -------------------------------------------------------------------------------
-class PreServerMsg : public Msg
-{
- public: 
-	PreServerMsg(const std::string &aCommand, const std::string &aToken) : Msg(aCommand, aToken) {}     
- 	virtual ~PreServerMsg() {}						
-
-	virtual void Parser();
-        
-};
-
-// -------------------------------------------------------------------------------
-//                    S Token. (A server introducing another server)
-// -------------------------------------------------------------------------------
-class Msg_S : public Msg
-{
-   public:
-   	Msg_S(const std::string &aCommand, const std::string &aToken) : Msg(aCommand, aToken) {}
-
-   	virtual ~Msg_S() {}
-   	virtual void Parser();
-};
-
-// -------------------------------------------------------------------------------
-//                    N Token. (A server introducing a client)
-// -------------------------------------------------------------------------------
-class Msg_N : public Msg
-{
-   public:
-        Msg_N(const std::string &aCommand, const std::string &aToken) : Msg(aCommand, aToken) {}
-
-        virtual ~Msg_N() {}
-        virtual void Parser();
 };
 
 

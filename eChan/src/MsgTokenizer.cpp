@@ -32,9 +32,9 @@ using std::endl;
 namespace eNetworks
 {
 
-MsgTokenizer::MsgTokenizer(const std::string &aCommand)
+MsgTokenizer::MsgTokenizer(const std::string &aCommand, const char &Delimiter)
 {
-   const char Delimiter = ' ';
+//   const char Delimiter = ' ';
 
    // If we don't find the delimiter just push back one string abd return. if aCommand.length() == 0 just return.
    if (aCommand.find(Delimiter) == string::npos)
@@ -72,7 +72,7 @@ MsgTokenizer::MsgTokenizer(const std::string &aCommand)
 
         if (FullString[0] == ':')
         {
-   	   Tokens.push_back(FullString);
+   	   Tokens.push_back(FullString.substr(1));
    	   break;
    	}
 
@@ -105,7 +105,7 @@ MsgTokenizer::MsgTokenizer(const std::string &aCommand)
    	
    	Tokens[Tokens.size()-1] = LastString;
    }
-   
+
 }
 
 } // namespace eNetworks

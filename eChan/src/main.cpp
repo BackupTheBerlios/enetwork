@@ -110,7 +110,7 @@ int main()
 	string command = "";
 	while (IsCommand(inbuffer, command))
 	{
-   	   Msg *eMsg = MsgParser(command);
+   	   Msg *eMsg = Msg::MsgParser(command);
    	   if (eMsg == NULL)
    	   {
    	   	debug << "Got NULL after MsgParser()";

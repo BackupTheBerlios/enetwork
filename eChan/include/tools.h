@@ -25,8 +25,6 @@
 #include <string>
 #include <vector>
 
-#include "Msg.h"
-
 namespace eNetworks
 {
 
@@ -37,10 +35,6 @@ int StringToInt(std::string);
 std::string IntToString(const int &);
 unsigned int b64Tob10(const std::string &b64);
 
-// main parser.
-Msg *MsgParser(const std::string &command); // Message Parser.
-
-
 // Info functions
 bool IsCommand(std::string &inbuffer,  std::string &command);
 bool IsDigit(const std::string &str);
@@ -49,7 +43,6 @@ bool IsDigit(const std::string &str);
 
 void CreateLocals();
 void login();
-
 
 // structs
 
