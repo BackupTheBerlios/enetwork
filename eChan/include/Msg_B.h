@@ -32,7 +32,7 @@ namespace eNetworks
 // foward declaration
 struct Channel;
 // -------------------------------------------------------------------------------
-//                    N Token. (A server introducing a client)
+//                    B Token. (A server introducing a channel)
 // -------------------------------------------------------------------------------
 class Msg_B : public Msg
 {
@@ -42,11 +42,25 @@ class Msg_B : public Msg
         virtual ~Msg_B() {}
         virtual void Parser();
 
-   private:
+   protected:
    	void ParseUsers(Channel *aChannelPtr, const std::string &UsersParameters);
    	void ParseBans(Channel *aChannelPtr, const std::string &BansParameters);
 
-}; // namespace eNetworks
+};
+
+// -------------------------------------------------------------------------------
+//                    BURST Token. (Extra channel clients and bans)
+// -------------------------------------------------------------------------------
+
+class Msg_Burst : public Msg_B
+{
+   public:
+   	Msg_Burst(const std::string &aCommand, const std::string &aToken) : Msg_B(aCommand, aToken) {}
+
+   	virtual ~Msg_Burst() {}
+   	virtual void Parser();
+};
+
 
 } // namespace eNetworks
 

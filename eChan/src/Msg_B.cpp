@@ -167,4 +167,26 @@ void Msg_B::ParseBans(Channel *aChannelPtr, const std::string &BansParameters)
    }
 }
 
+// =============
+//   Msg_BURST
+// =============
+
+void Msg_Burst::Parser()
+{
+   Channel *ChannelPtr = eNetwork->FindChannel(Parameters[0]);
+
+   // if last parameter is bans '%'
+   if (Parameters[Parameters.size()-1][0] == '%')
+   {
+        ParseBans(ChannelPtr, Parameters[Parameters.size()-1]);
+        ParseUsers(ChannelPtr, Parameters[Parameters.size()-2]);
+   }
+   else
+   {
+        ParseUsers(ChannelPtr, Parameters[Parameters.size()-1]);
+   }
+
+
+}
+
 } // namespace eNetworks

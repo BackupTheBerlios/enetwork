@@ -142,9 +142,6 @@ void CreateLocals()
    }
 }
 
-  
-
-
 void login()
 {
    try
@@ -154,32 +151,32 @@ void login()
         (*eSock) << "PASS :DAPASS\r\n";
         cout << "[OUT]: PASS :DAPASS" << endl;
 
-       (*eSock) << "SERVER " << LocalServer->GetName() << " " << LocalServer->GetHopCount() <<
+       (*eSock) << Tokens::PRESERVER << " " << LocalServer->GetName() << " " << LocalServer->GetHopCount() <<
             " " << LocalServer->GetStartTime() << " " << LocalServer->GetLinkTime() <<
             " J10 " << LocalServer->GetNumeric() << "AAC" << " +" << LocalServer->GetFlag() << " :" <<
             LocalServer->GetDescription() << "\r\n";
 
-        cout << "[OUT]: SERVER " << LocalServer->GetName() << " " << LocalServer->GetHopCount() <<
-            " " << LocalServer->GetStartTime() << " " << LocalServer->GetLinkTime() <<
-            " J10 " << LocalServer->GetNumeric() << "AAC" << " +" << LocalServer->GetFlag() << " :" <<
-            LocalServer->GetDescription() << endl;
+        cout << "[OUT]: " << Tokens::PRESERVER << " " << LocalServer->GetName() << " " << 
+                LocalServer->GetHopCount() << " " << LocalServer->GetStartTime() << " " << 
+                LocalServer->GetLinkTime() << " J10 " << LocalServer->GetNumeric() << "AAC" << " +" <<
+                LocalServer->GetFlag() << " :" << LocalServer->GetDescription() << endl;
 
-        (*eSock) << LocalServer->GetNumeric() << " N " << LocalClient->GetNickName() << " " <<
+        (*eSock) << LocalServer->GetNumeric() << " " << Tokens::NICK << " " << LocalClient->GetNickName() << " " <<
             LocalClient->GetHopCount() << " " << LocalClient->GetTimeStamp() << " " <<
             LocalClient->GetUserName() << " " << LocalClient->GetHostName() << " " <<
             "+idk" << " " << LocalClient->GetB64IP() << " " << LocalClient->GetNumeric() <<
             " :" << LocalClient->GetUserInfo() << "\r\n";
 
-        cout << "[OUT]: " << LocalServer->GetNumeric() << " N " << LocalClient->GetNickName() << " " <<
-            LocalClient->GetHopCount() << " " << LocalClient->GetTimeStamp() << " " <<
-            LocalClient->GetUserName() << " " << LocalClient->GetHostName() << " " <<
-            "+idk" << " " << LocalClient->GetB64IP() << " " << LocalClient->GetNumeric() <<
-            " :" << LocalClient->GetUserInfo() << endl;
+        cout << "[OUT]: " << LocalServer->GetNumeric() << " " << Tokens::NICK << " " << 
+                LocalClient->GetNickName() << " " << LocalClient->GetHopCount() << " " << 
+                LocalClient->GetTimeStamp() << " " << LocalClient->GetUserName() << " " << 
+                LocalClient->GetHostName() << " " << "+idk" << " " << LocalClient->GetB64IP() << " " <<
+                LocalClient->GetNumeric() << " :" << LocalClient->GetUserInfo() << endl;
 
 
-        (*eSock) << LocalServer->GetNumeric() << " EB\r\n";
+        (*eSock) << LocalServer->GetNumeric() << " " << Tokens::END_OF_BURST << "\r\n";
      
-        cout << "[OUT]: " << LocalServer->GetNumeric() << " EB" << endl;
+        cout << "[OUT]: " << LocalServer->GetNumeric() << " " << Tokens::END_OF_BURST << endl;
    } catch(SocketException &sockerr)
    {
         sockerr.log();
