@@ -26,9 +26,6 @@
 namespace eNetworks
 {
 
-void OutBuffer::cut(const unsigned int &_bytes)
-{
-   buffer = buffer.substr(_bytes);
-}
+OutBuffer* eOutBuffer = NULL;
 
 } // namespace eNetworks

@@ -23,13 +23,12 @@
 #define ELECTRONIC_NETWORKS__P10TOKENS_H
 
 #include <string>
+#include <map>
 
 namespace eNetworks
 {
 
-// Tokens sent from irc servers according to the P10 protocol.
-namespace Tokens
-{
+/*
    const std::string    SERVER             =  "S";
    const std::string    PASS               =  "PASS";
    const std::string    PRESERVER          =  "SERVER";
@@ -47,7 +46,45 @@ namespace Tokens
    const std::string    ACCOUNT            =  "AC";
    const std::string    CREATE             =  "C";
    const std::string    QUIT               =  "Q";
-}
+*/
+
+class Tokens
+{
+   public:
+   	Tokens() : TokensMap() {}
+   	~Tokens() {}
+
+
+   	enum Token 
+   	{
+   	   NONE = 0, // Means invalid token. Used for GetToken().
+   	   SERVER,
+   	   NICK,
+   	   B,
+   	   BURST,
+   	   JOIN,
+   	   PART,
+   	   PING,
+   	   END_OF_BURST,
+   	   ACCOUNT,
+   	   CREATE,
+   	   QUIT,
+   	   SQUIT
+   	};
+
+   	typedef Token TokenType;
+   	typedef std::map<std::string, TokenType> TokensMapType;
+
+   	bool AddToken(const std::string& TokenString, const TokenType& _Token);
+   	TokenType GetToken(const std::string& TokenString);
+
+   private:
+   	TokensMapType TokensMap;
+
+
+};
+
+extern Tokens* eTokens;
 
 } // namespace eNetworks
 

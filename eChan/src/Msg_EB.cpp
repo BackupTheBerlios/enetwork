@@ -28,6 +28,7 @@
 #include "Socket.h"
 #include "P10Tokens.h"
 #include "Server.h"
+#include "OutBuffer.h"
 
 using std::string;
 using std::cout;
@@ -38,20 +39,16 @@ namespace eNetworks
 
 void Msg_EB::Parser()
 {
-   if (ServerSrc == NULL)
+   if (!Source.IsServer())
    {
-   	debug << "ServerSrc is NULL in Msg_EB::Parser()." << endb;
+   	debug << "Source should be a server in Msg_EB::Parser()." << endb;
    	exit(0);
    }
 
-   (*eSock) << LocalServer->GetNumeric() << " " << Tokens::END_OF_ACK << "\r\n";
-   cout << "[OUT]: " <<  LocalServer->GetNumeric() << " " << Tokens::END_OF_ACK << endl;
-
-/*
-   (*eSock) << LocalServer->GetNumeric() << " G !1071288273.976939 test.vodanet.org 1071288273.976939\r\n";
-   cout << "[OUT]: " << LocalServer->GetNumeric() << " G !1071288273.976939 test.vodanet.org 1071288273.976939" << endl;
-*/
-
+   string msg = LocalServer->GetNumeric();
+   msg += " "; 
+   msg += "EA";
+   eOutBuffer->insert(msg);
 }
 
 } // namespace eNetworks

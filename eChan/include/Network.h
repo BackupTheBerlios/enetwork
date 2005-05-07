@@ -46,7 +46,8 @@ class Network
 
    public:
 
-   	Network() : Servers(), ClientNumerics(), ClientNickNames(), Channels() {}
+   	Network();
+   	~Network() {}
 
    // ---------------------
    //  Servers Management.

@@ -22,8 +22,6 @@
 #ifndef ELECTRONIC_NETWORKS__MSG_N_H
 #define ELECTRONIC_NETWORKS__MSG_N_H
 
-#include <string>
-
 #include "Msg.h"
 
 namespace eNetworks
@@ -35,7 +33,7 @@ namespace eNetworks
 class Msg_N : public Msg
 {
    public:
-        Msg_N(const std::string &aCommand, const std::string &aToken) : Msg(aCommand, aToken) {}
+        Msg_N(const MsgSource& _Source, const MsgTokenizer& _Parameters) : Msg(_Source, _Parameters) {}
 
         virtual ~Msg_N() {}
         virtual void Parser();

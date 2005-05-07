@@ -26,6 +26,7 @@
 #include "Socket.h"
 #include "Server.h"
 #include "P10Tokens.h"
+#include "OutBuffer.h"
 
 using std::string;
 using std::cout;
@@ -40,15 +41,21 @@ void Msg_G::Parser()
 
    for (unsigned int i = 0; i < Parameters.size(); i++)
    {
-   	answer += Parameters[i];
-   	answer += " ";
+        answer += Parameters[i];
+        answer += " ";
    }
+   answer = answer.substr(0,answer.length()-1);
 
-   (*eSock) << LocalServer->GetNumeric() << " " << Tokens::PONG << " " << LocalServer->GetNumeric() << " " << 
-               answer << "\r\n";
-   cout << "[OUT]: " << LocalServer->GetNumeric() << " " << Tokens::PONG << " " << LocalServer->GetNumeric() 
-        << " " << answer << endl;
+   string msg = LocalServer->GetNumeric();
+   msg += " ";
+   msg += "Z";
+   msg += " ";
+   msg += LocalServer->GetNumeric();
+   msg += " ";
+   msg += answer;
+
+   eOutBuffer->insert(msg);
 }
 
-
 } // namespace eNetworks
+

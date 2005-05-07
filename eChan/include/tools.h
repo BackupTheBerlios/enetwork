@@ -36,12 +36,9 @@ std::string IntToString(const int &);
 unsigned int b64Tob10(const std::string &b64);
 
 // Info functions
-bool IsCommand(std::string &inbuffer,  std::string &command);
 bool IsDigit(const std::string &str);
 
 // misc functions.
-
-void CreateLocals();
 void login();
 
 // structs

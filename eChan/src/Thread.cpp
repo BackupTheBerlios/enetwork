@@ -19,40 +19,51 @@
  *
 */
 
-#include <string>
+
+#include <pthread.h>
+#include <errno.h>
 #include <iostream>
 
-#include "Msg_Q.h"
-#include "Network.h"
-#include "Server.h"
-#include "Client.h"
-#include "debug.h"
+extern int errno;
 
-using std::string;
+#include "Thread.h"
+#include "ThreadException.h"
+
 using std::cout;
 using std::endl;
 
 namespace eNetworks
 {
 
-void Msg_Q::Parser()
+#ifdef __cplusplus
+extern "C" void* NewThread(void* thread)
 {
+   Thread *eThread = static_cast<Thread*>(thread);
+   eThread->Execute();
 
-   	if (!Source.IsClient())
-   	{
-   	   debug << "Protocol Error: Only Clients can (Q)uit the network" << endb;
-   	}
-   	
-   	string name = Source.GetName();
-   	if (!eNetwork->DelClientByNumeric(Source.GetNumeric()))
-   	{
-   	   debug << "Could not delete user with numeric " << Source.GetNumeric() << endb;
-   	} 
-   	else
-   	{
-   	   cout << "User " << name << " exited IRC." << endl;
-   	}
+   return 0;
+}
+#endif
+
+bool Thread::Start()
+{
+   if (::pthread_create(&ThreadID, NULL, NewThread, static_cast<void*>(this)) != 0)
+   {
+   	throw ThreadException(ThreadException::THREAD_NO_ENOUGH_RESOURCES);   	
+   	return false;
+   }
+
+return true;
 }
 
+// Initialization of Mutexes.
+pthread_mutex_t MX_EINBUFFER = PTHREAD_MUTEX_INITIALIZER;
+pthread_mutex_t MX_EOUTBUFFER = PTHREAD_MUTEX_INITIALIZER;
+pthread_mutex_t MX_ESOCK = PTHREAD_MUTEX_INITIALIZER;
+
+// Initialization of Condition Variables.
+pthread_cond_t CV_NEW_IN_MSG = PTHREAD_COND_INITIALIZER;
+pthread_cond_t CV_NEW_OUT_MSG = PTHREAD_COND_INITIALIZER;
+pthread_cond_t CV_NEW_CMD = PTHREAD_COND_INITIALIZER;
 
 } // namespace eNetworks

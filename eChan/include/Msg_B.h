@@ -22,8 +22,6 @@
 #ifndef ELECTRONIC_NETWORKS__MSG_B_H
 #define ELECTRONIC_NETWORKS__MSG_B_H
 
-#include <string>
-
 #include "Msg.h"
 
 namespace eNetworks
@@ -37,7 +35,7 @@ struct Channel;
 class Msg_B : public Msg
 {
    public:
-        Msg_B(const std::string &aCommand, const std::string &aToken) : Msg(aCommand, aToken) {}
+        Msg_B(const MsgSource& _Source, const MsgTokenizer& _Parameters) : Msg(_Source, _Parameters) {}
 
         virtual ~Msg_B() {}
         virtual void Parser();
@@ -55,7 +53,7 @@ class Msg_B : public Msg
 class Msg_Burst : public Msg_B
 {
    public:
-   	Msg_Burst(const std::string &aCommand, const std::string &aToken) : Msg_B(aCommand, aToken) {}
+   	Msg_Burst(const MsgSource& _Source, const MsgTokenizer& _Parameters) : Msg_B(_Source, _Parameters) {}
 
    	virtual ~Msg_Burst() {}
    	virtual void Parser();

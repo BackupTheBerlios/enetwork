@@ -91,58 +91,6 @@ bool IsDigit(const string &str)
    return true;
 }
 
-bool IsCommand(string &inbuffer, string &command)
-{
-  if (inbuffer.find("\r\n") != string::npos)
-  {
-    command = inbuffer.substr(0,inbuffer.find("\r\n")); 
-    inbuffer = inbuffer.substr(inbuffer.find("\r\n")+2);
-    return true;
-  }
-  else if (inbuffer.find("\n") != string::npos)
-  {
-    command = inbuffer.substr(0,inbuffer.find("\n"));
-    inbuffer = inbuffer.substr(inbuffer.find("\n")+1);
-    return true;
-  }
-
-return false;
-}
-
-void CreateLocals()
-{ 
-   string errors;
-   int errnos;
-   ConfParser eConf("eChan.conf", errors, errnos);
-
-   LocalServer = new Server(eConf.GetNumeric(), eConf.GetServerName(), "", eConf.GetServerInfo(), time(0), time(0), 1, 's');
-
-   if (LocalServer == NULL)
-   {
-   	cout << "Could not create server: " << eConf.GetServerName() << endl;
-   	exit(0);
-   }
-
-   LocalClient = new Client(eConf.GetNumeric()+"AAC", eConf.GetNick(), "", eConf.GetUserName(), eConf.GetHostName(),
-                            "DAqAoB", "idk", eConf.GetClientInfo(), time(0), 1);
-
-   if (LocalClient == NULL)
-   {
-   	cout << "Could Not add client " << eConf.GetNick() << endl;
-        exit(0);
-   }
-
-   try
-   {
-   	eSock = new Socket(eConf.GetUpLink(), StringToInt(eConf.GetPort()));
-   }
-   catch (SocketException &sockerr)
-   {
-   	sockerr.log();
-   	sockerr.fix();
-   }
-}
-
 void login()
 {
    try
@@ -152,32 +100,32 @@ void login()
         (*eSock) << "PASS :DAPASS\r\n";
         cout << "[OUT]: PASS :DAPASS" << endl;
 
-       (*eSock) << Tokens::PRESERVER << " " << LocalServer->GetName() << " " << LocalServer->GetHopCount() <<
+       (*eSock) << "SERVER" << " " << LocalServer->GetName() << " " << LocalServer->GetHopCount() <<
             " " << LocalServer->GetStartTime() << " " << LocalServer->GetLinkTime() <<
             " J10 " << LocalServer->GetNumeric() << "AAC" << " +" << LocalServer->GetFlag() << " :" <<
             LocalServer->GetDescription() << "\r\n";
 
-        cout << "[OUT]: " << Tokens::PRESERVER << " " << LocalServer->GetName() << " " << 
+        cout << "[OUT]: " << "SERVER" << " " << LocalServer->GetName() << " " << 
                 LocalServer->GetHopCount() << " " << LocalServer->GetStartTime() << " " << 
                 LocalServer->GetLinkTime() << " J10 " << LocalServer->GetNumeric() << "AAC" << " +" <<
                 LocalServer->GetFlag() << " :" << LocalServer->GetDescription() << endl;
 
-        (*eSock) << LocalServer->GetNumeric() << " " << Tokens::NICK << " " << LocalClient->GetNickName() << " " <<
+        (*eSock) << LocalServer->GetNumeric() << " " << "N" << " " << LocalClient->GetNickName() << " " <<
             LocalClient->GetHopCount() << " " << LocalClient->GetTimeStamp() << " " <<
             LocalClient->GetUserName() << " " << LocalClient->GetHostName() << " " <<
             "+idk" << " " << LocalClient->GetB64IP() << " " << LocalClient->GetNumeric() <<
             " :" << LocalClient->GetUserInfo() << "\r\n";
 
-        cout << "[OUT]: " << LocalServer->GetNumeric() << " " << Tokens::NICK << " " << 
+        cout << "[OUT]: " << LocalServer->GetNumeric() << " " << "N" << " " << 
                 LocalClient->GetNickName() << " " << LocalClient->GetHopCount() << " " << 
                 LocalClient->GetTimeStamp() << " " << LocalClient->GetUserName() << " " << 
                 LocalClient->GetHostName() << " " << "+idk" << " " << LocalClient->GetB64IP() << " " <<
                 LocalClient->GetNumeric() << " :" << LocalClient->GetUserInfo() << endl;
 
 
-        (*eSock) << LocalServer->GetNumeric() << " " << Tokens::END_OF_BURST << "\r\n";
+        (*eSock) << LocalServer->GetNumeric() << " " << "EB" << "\r\n";
      
-        cout << "[OUT]: " << LocalServer->GetNumeric() << " " << Tokens::END_OF_BURST << endl;
+        cout << "[OUT]: " << LocalServer->GetNumeric() << " " << "EB" << endl;
    } catch(SocketException &sockerr)
    {
         sockerr.log();

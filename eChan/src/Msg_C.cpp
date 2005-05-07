@@ -29,6 +29,7 @@
 #include "tools.h"
 #include "Client.h"
 #include "Channel.h"
+#include "MsgTokenizer.h"
 
 using std::string;
 using std::cout;
@@ -43,37 +44,32 @@ namespace eNetworks
 
 void Msg_C::Parser()
 {
-   // If channel doesn't exist then create it.
-   if (eNetwork->FindChannel(Parameters[0]) == NULL)
+
+   MsgTokenizer Channels(Parameters[0], ',');
+
+   for (unsigned int i = 0; i < Channels.size(); i++)
    {
-   	if (!eNetwork->AddChannel(Parameters[0], StringToInt(Parameters[1])))
+   	if (NULL == eNetwork->FindChannel(Channels[i]))
    	{
-   	   debug << "Could not add channel " << Parameters[0] << endb;
-   	   exit(0);
+
+   	   if (!eNetwork->AddChannel(Channels[i], StringToInt(Parameters[1])))
+   	   {
+   	   	debug << "Could not add channel " << Channels[i] << endb;
+   	   	exit(0);
+   	   }
+   	   else
+   	   {
+   	   	eNetwork->FindChannel(Channels[i])->AddChannelClient(eNetwork->FindClientByNumeric(Source.GetNumeric()), "o");
+   	   	cout << "Added Channel " << Channels[i] << " to db. And set client " << Source.GetName() << " as the creator "
+   	   	     << "at TimeStamp " << Parameters[1] << endl;
+   	   }
+   	}
+   	else
+    	{
+   	   debug << "Error: Trying to create a channel that already exists." << endb;
    	}
 
-
-   	Channel *aChannel =  eNetwork->FindChannel(Parameters[0]);
-
-
-   	if (aChannel != NULL)
-   	{
-   	   // Add the client that created the channel and give +o
-   	   aChannel->AddChannelClient(eNetwork->FindClientByNumeric(ClientSrc->GetNumeric()), "o"); 
-   	}
-
-   	cout << "Added Channel " << aChannel->GetName() << " to db. and set client " 
-             << eNetwork->FindClientByNumeric(ClientSrc->GetNumeric())->GetNickName()
-   	     << " as the creator at TimeStamp: " << Parameters[1] << endl;
-
-
    }
-   else 
-   // Something went wrong here because we never create channels unless eChan is asked to join an empty channel and that has not been implemented yet.
-   {
-   	debug << "Error: Trying to create a channel that already exists." << endb;
-   }
-
 }
 
 } // namespace eNetworks

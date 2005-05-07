@@ -58,61 +58,67 @@ void Msg_B::Parser()
         exit(0);
    }
 
-   time_t TimeStamp = StringToInt(Parameters[1]);
-
-   Channel *ChannelPtr = NULL;
-   string Modes = "";
-   string Key = "";
-   unsigned int Limit = 0;
-
-   if (Parameters[2][0] == '+')
+   Channel *ChannelPtr = eNetwork->FindChannel(Name);
+   // This is a new channel.
+   if (NULL == ChannelPtr)
    {
-        Modes = Parameters[2].substr(1);
-        if (Modes.find('k') != string::npos && Modes.find('l') != string::npos)
-        {
-   	   if (Modes.find('l') < Modes.find('k'))
-   	   {
-   	   	Limit = StringToInt(Parameters[3]);
-   	   	Key = Parameters[4];
-   	   }
-   	   else
-   	   {
-   	   	Key = Parameters[3];
-   	   	Limit = StringToInt(Parameters[4]);
-   	   } 
 
-   	}   	   	   
-	else if (Modes.find('l') != string::npos || Modes.find('k') != string::npos)
+   	time_t TimeStamp = StringToInt(Parameters[1]);
+
+   	string Modes = "";
+   	string Key = "";
+   	unsigned int Limit = 0;
+
+   	if (Parameters[2][0] == '+')
    	{
-   	   if (Modes.find('l') != string::npos)
-   	   {
-   	   	Limit = StringToInt(Parameters[3]);
+           Modes = Parameters[2].substr(1);
+           if (Modes.find('k') != string::npos && Modes.find('l') != string::npos)
+           {
+   	   	if (Modes.find('l') < Modes.find('k'))
+   	   	{
+   	   	   Limit = StringToInt(Parameters[3]);
+   	   	   Key = Parameters[4];
+   	   	}
+   	   	else
+   	   	{
+   	   	   Key = Parameters[3];
+   	   	   Limit = StringToInt(Parameters[4]);
+   	   	} 
+
    	   }
-   	   else
+	   else if (Modes.find('l') != string::npos || Modes.find('k') != string::npos)
    	   {
-   	   	Key = Parameters[3];
-   	   }
+   	   	if (Modes.find('l') != string::npos)
+   	   	{
+   	   	   Limit = StringToInt(Parameters[3]);
+   	   	}
+   	   	else
+   	   	{
+   	   	   Key = Parameters[3];
+   	   	}
    	   
+   	   }
+
    	}
 
-   }
-
-   if (!eNetwork->AddChannel(Name, TimeStamp, "", Modes, Key, Limit))
-   {
-   	debug << "Could not add channel " << Name  << " in Msg_B::Parser()." << endb;
-   	exit(0);
-   }
+   	if (!eNetwork->AddChannel(Name, TimeStamp, "", Modes, Key, Limit))
+   	{
+   	   debug << "Could not add channel " << Name  << " in Msg_B::Parser()." << endb;
+   	   exit(0);
+   	}
    
   
-   cout << "Added channel with Name: " << Name << " Modes: " << Modes << " Key: " << Key << " Limit: " <<
-           Limit << " TimeStamp: " << TimeStamp << endl;
+   	cout << "Added channel with Name: " << Name << " Modes: " << Modes << " Key: " << Key << " Limit: "
+             << Limit << " TimeStamp: " << TimeStamp << endl;
   
 
-   ChannelPtr = eNetwork->FindChannel(Name);
-   if (ChannelPtr == NULL)
-   {
-   	debug << "Could not find channel " << Name  << " in Msg_B::Parser()." << endb;
-   	exit(0);
+   	ChannelPtr = eNetwork->FindChannel(Name);
+   	if (ChannelPtr == NULL)
+   	{
+   	   debug << "Could not find channel " << Name  << " in Msg_B::Parser()." << endb;
+   	   exit(0);
+   	}
+
    }
 
    // if last parameter is bans '%'

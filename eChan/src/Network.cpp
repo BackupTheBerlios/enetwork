@@ -22,11 +22,18 @@
 #include <map>
 #include <string>
 #include <iostream>
+#include <cstdlib>
+
 
 #include "Client.h"
 #include "Network.h"
 #include "Server.h"
 #include "Channel.h"
+#include "ConfParser.h"
+#include "tools.h"
+#include "Socket.h"
+#include "SocketException.h"
+#include "debug.h"
 
 using std::map;
 using std::string;
@@ -35,6 +42,42 @@ using std::endl;
 
 namespace eNetworks
 {
+
+Network::Network() : Servers(), ClientNumerics(), ClientNickNames(), Channels() 
+{
+   string errors;
+   int errnos;
+   ConfParser eConf("eChan.conf", errors, errnos);
+
+   LocalServer = new Server(eConf.GetNumeric(), eConf.GetServerName(), "", eConf.GetServerInfo(), time(0), time(0), 1, 's');
+
+   if (LocalServer == NULL)
+   {
+   	cout << "Could not create server: " << eConf.GetServerName() << endl;
+   	exit(0);
+   }
+
+   LocalClient = new Client(eConf.GetNumeric()+"AAC", eConf.GetNick(), "", eConf.GetUserName(), eConf.GetHostName(),
+                            "DAqAoB", "idk", eConf.GetClientInfo(), time(0), 1);
+
+   if (LocalClient == NULL)
+   {
+   	cout << "Could Not add client " << eConf.GetNick() << endl;
+        exit(0);
+   }
+
+   try
+   {
+   	eSock = new Socket(eConf.GetUpLink(), StringToInt(eConf.GetPort()));
+   }
+   catch (SocketException &sockerr)
+   {
+   	sockerr.log();
+   	sockerr.fix();
+   }
+}
+
+
 
 // -----------------------------
 //  Servers Management members.
@@ -73,7 +116,7 @@ bool Network::DelServerByNumeric(const std::string &aNumeric)
    // try to find a server with numeric: aNumeric.
    ServerMapType::iterator ServerIter = Servers.find(aNumeric);
 
-   // if non was found return false.
+   // if none was found return false.
    if (ServerIter == Servers.end())
    {
    	return false;
@@ -89,9 +132,15 @@ bool Network::DelServerByNumeric(const std::string &aNumeric)
    // Delete servers that are linked to this server.
    for(ServerMapType::iterator i = Servers.begin(); i != Servers.end(); i++)
    {
+   	cout << "Iterating through: " << i->second->Name << ". That has UpLink: " << i->second->UpLinkNumeric << endl;
    	if (i->second->UpLinkNumeric == ServerIter->first)
    	{
-   	   DelServerByNumeric(i->second->Numeric);
+   	   cout << "Deleting Server " << i->second->Name << endl;
+   	   if (!DelServerByNumeric(i->second->Numeric))
+   	   {
+   	   	debug << "Could not delete server within server" << endb;
+   	   	exit(0);
+   	   }
    	}
    } 
 
@@ -100,18 +149,21 @@ bool Network::DelServerByNumeric(const std::string &aNumeric)
    // then finally remove the server from the Server Map table.
    Servers.erase(ServerIter); 
 
+   cout << "Server Count: " << Servers.size() << endl;
+
 return true;
 }
 
 bool Network::DelServerByName(const std::string &aName)
 {
-   // Search server by server who match to with this server name then call DelServerByNumeric.
-   // thus DelServerByNumeric is faster than this.
+   // Search server by server name then call DelServerByNumeric.
+   // DelServerByNumeric is faster than this.
    for (ServerMapType::iterator i = Servers.begin(); i != Servers.end(); i++)
    {
    	if (i->second->Name == aName)
    	{
    	   DelServerByNumeric(i->second->Numeric);
+   	   return true;
    	}
    }
 
@@ -179,7 +231,6 @@ bool Network::AddClient(const std::string &aNumeric, const std::string &aNickNam
    // if we couldn't allocate the new client or we can't insert the new user to the client map table, return false.
    if (NewClient == NULL || !ClientNumerics.insert(ClientNumericsMapType::value_type(aNumeric, NewClient)).second)
    {
-cout << "here1" << endl;
    	delete NewClient;
    	return false;
    }
@@ -321,10 +372,10 @@ return true;
 
 bool Network::DelChannel(const std::string &aName)
 {
-   // If the number of deleted channels is different to 0 return false;
+   // return true if we deleted the channel
    if (Channels.erase(aName) == 1)
     return true;
-   // else
+   // else return false.
     return false;
 }
 
@@ -338,6 +389,6 @@ Channel *Network::FindChannel(const std::string &aName)
    return ChannelIter->second;
 }
 
-Network *eNetwork;
+Network* eNetwork;
 
 } // namespace eNetwork

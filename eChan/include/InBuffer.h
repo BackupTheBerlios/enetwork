@@ -24,28 +24,32 @@
 
 #include <string>
 #include <list>
+#include <iostream>
 
 #include "Buffer.h"
 
 using std::string;
 using std::list;
+using std::cout;
+using std::endl;
 
 namespace eNetworks {
 
 class InBuffer: public Buffer
 {
    public:
-   	InBuffer(): Buffer(), Msgs() {}
-   	InBuffer(const string &_Msg);
+   	InBuffer(): Buffer(), buffer("") {}
    	virtual ~InBuffer() {}
 
-   	const unsigned int count() { return Msgs.size(); }
-   	void Digest();
-
+   	void insert (const std::string &_Msg) { buffer += _Msg; }
+   	bool Digest();
 
    private:
-   	 list<string> Msgs; // This is a vector that olds
+   	string buffer; // The Actual buffer holding incomplete messages
+
 };
+
+extern InBuffer* eInBuffer;
 
 }
 

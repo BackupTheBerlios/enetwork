@@ -35,7 +35,6 @@ struct Client;
 
 struct Server
 {
-   friend void CreateLocals();
    friend class Network;   
 
    public:

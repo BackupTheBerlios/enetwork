@@ -26,6 +26,7 @@
 #include <sys/types.h>
 #include <sys/time.h>
 #include <unistd.h>
+#include <sys/poll.h>
 #include <ctime>
 #include <list>
 
@@ -37,6 +38,13 @@
 #include "debug.h"
 #include "ConfParser.h"
 #include "Msg.h"
+#include "InBuffer.h"
+#include "OutBuffer.h"
+#include "Thread.h"
+#include "P10Tokens.h"
+#include "InMsgSystem.h"
+#include "OutMsgSystem.h"
+#include "MsgParseSystem.h"
 
 using std::cout;
 using std::endl;
@@ -48,7 +56,8 @@ using namespace eNetworks;
 
 int main()
 {
-   // Make a child, die and let initd take care of it.
+
+   // Make a child, die and let initd take care of us. (send to background)
    if (0 == fork()) 
     setsid(); 
    else 
@@ -57,70 +66,62 @@ int main()
    eNetwork = new Network;
    if (eNetwork == NULL)
    {
-   	cout << "Could not allocate memory for Network class" << endl;
+   	debug << "Could not allocate memory for Network class" << endb;
    	exit(0);
    }
 
-   // Create LocalServer and LocalClient.
-   CreateLocals();
+   eInBuffer = new InBuffer();
+   eOutBuffer = new OutBuffer();
 
    // Login to server. Introduce the channels service bot and send EB (End of Burst). 
    login();
 
+
+   // Lets Add all the Tokens to the token map.
+   eTokens = new Tokens();
+
+   // Create Threads...
+   cout << "Creating new Threads..." << endl;
+   InMsgSystem eInMsgSystem;
+   eInMsgSystem.Start();
+
+   OutMsgSystem eOutMsgSystem;
+   eOutMsgSystem.Start();
+
+   MsgParseSystem eParseMsgSystem;
+   eParseMsgSystem.Start();
+
+   if (NULL == eTokens)
+   {
+   	debug << "Could not allocate memory for tokens" << endb;
+   }
+
+   // Register Server Messages (Tokens)
+   eTokens->AddToken("S",      Tokens::SERVER); // Server introducing another server to the network.
+   eTokens->AddToken("N",      Tokens::NICK);
+   eTokens->AddToken("B",      Tokens::B);
+   eTokens->AddToken("BURST",  Tokens::BURST);
+   eTokens->AddToken("J",      Tokens::JOIN);
+   eTokens->AddToken("L",      Tokens::PART);
+   eTokens->AddToken("G",      Tokens::PING);
+   eTokens->AddToken("EB",     Tokens::END_OF_BURST); 
+   eTokens->AddToken("AC",     Tokens::ACCOUNT);
+   eTokens->AddToken("C",      Tokens::CREATE);
+   eTokens->AddToken("Q",      Tokens::QUIT);
+   eTokens->AddToken("SQ",     Tokens::SQUIT);
+
+   pollfd PollFD;
+   PollFD.fd = eSock->GetSocket();
+   PollFD.events = POLLIN;
+
    do
    {
-	// declaring fd_sets
-	fd_set Ofds; // Original
-	fd_set Cfds; // Copy
-	// initializing them
-	FD_ZERO(&Ofds);
-	FD_ZERO(&Cfds);
-	// setting them
-	FD_SET(eSock->GetSocket(), &Ofds);
+   	if (poll(&PollFD, 1, -1) == 1 && (PollFD.revents == POLLIN || PollFD.revents == POLLPRI))
+   	{
+   	   pthread_cond_signal(&CV_NEW_IN_MSG);
+   	}
 
-	struct timeval tv;
-	tv.tv_sec = 1;
-	tv.tv_usec = 1;
-
-	Cfds = Ofds; 
-	if (select(eSock->GetSocket()+1, &Ofds, NULL, NULL, &tv) == -1)
-	{
-	   perror("select");
-	   return 0;
-	} 
-
-	static string inbuffer; // inbuffer needs a little bit of more global scope
-	if (FD_ISSET(eSock->GetSocket(), &Ofds))
-	{
-	   string tmp = "";
-	   try 
-	   {
-	   	(*eSock) >> tmp;
-	   }
-	   catch(SocketException &sockerr)
-	   {
-	   	sockerr.log();
-	   	sockerr.fix();
-	   }
-
-	   inbuffer += tmp;
-	}
-
-	// If we get a complete message: parse it.
-	string command = "";
-	while (IsCommand(inbuffer, command))
-	{
-   	   Msg *eMsg = Msg::MsgParser(command);
-   	   if (eMsg == NULL)
-   	   {
-   	   	debug << "Got NULL after MsgParser()" << endb;
-   	   	exit(0);
-   	   }
-
-   	   eMsg->Parser();
-   	   delete eMsg;
-   	   eMsg = NULL;
-	}
+   	// We're going to deal with timers here...
    } 
    while (eSock->is_valid());
 

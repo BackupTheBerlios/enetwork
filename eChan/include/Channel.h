@@ -46,7 +46,7 @@ struct Channel
    	typedef ChannelClientListType::size_type ChannelClientSizeType; 
 
    	// Adds a Client to this Channel.
-   	bool AddChannelClient(Client *aClientPtr, const std::string &aModes);
+   	bool AddChannelClient(Client *aClientPtr, const std::string &aModes = "");
 
    	// Delete a Client from this Channel.
    	bool DelChannelClient(Client *aClientPtr);

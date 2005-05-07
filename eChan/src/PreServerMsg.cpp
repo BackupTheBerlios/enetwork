@@ -41,6 +41,7 @@ namespace eNetworks
 
 void PreServerMsg::Parser()
 {
+cout << "creating new server...?" << endl;
    if (Parameters.size() < 6 && Parameters.size() > 8)
    {
         debug << "Protocol Violation: Too Many Parameters in PreServerMsg::Parser()" << endb;

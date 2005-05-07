@@ -22,8 +22,6 @@
 #ifndef ELECTRONIC_NETWORKS__PRESERVERMSG_H
 #define ELECTRONIC_NETWORKS__PRESERVERMSG_H
 
-#include <string>
-
 #include "Msg.h"
 
 namespace eNetworks
@@ -35,7 +33,7 @@ namespace eNetworks
 class PreServerMsg : public Msg
 {
  public:
-        PreServerMsg(const std::string &aCommand, const std::string &aToken) : Msg(aCommand, aToken) {}
+        PreServerMsg(const MsgSource& _Source, const MsgTokenizer& _Parameters) : Msg(_Source, _Parameters) {}
         virtual ~PreServerMsg() {}
 
         virtual void Parser();

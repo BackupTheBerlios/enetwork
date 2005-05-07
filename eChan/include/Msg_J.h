@@ -19,8 +19,26 @@
  *
 */
 
+#ifndef ELECTRONIC_NETWORKS__MSG_J_H
+#define ELECTRONIC_NETWORKS__MSG_J_H
+
+#include "Msg.h"
 
 namespace eNetworks
 {
 
+// -------------------------------------------------------------------------------
+//                    J Token. (An User joining a channel.)
+// -------------------------------------------------------------------------------
+class Msg_J : public Msg
+{
+   public:
+        Msg_J(const MsgSource& _Source, const MsgTokenizer& _Parameters) : Msg(_Source, _Parameters) {}
+
+        virtual ~Msg_J() {}
+        virtual void Parser();
+};
+
 } // namespace eNetworks
+
+#endif // ELECTRONIC_NETWORKS__MSG_J_H

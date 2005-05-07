@@ -19,8 +19,41 @@
  *
 */
 
+#ifndef ELECTRONIC_NETWORKS__THREAD_H
+#define ELECTRONIC_NETWORKS__THREAD_H
+
+#include <pthread.h>
 
 namespace eNetworks
 {
 
+class Thread
+{
+   public:
+   	Thread() : ThreadID() {}
+   	virtual ~Thread() {}
+
+   	virtual bool Start();
+   	virtual void Execute() = 0;
+ 	
+
+   private:
+   	pthread_t ThreadID;
+
+   protected:
+   	void exit(void *retrval) const { ::pthread_exit(retrval); }
+};
+
+// Mutex for these global objects.
+extern pthread_mutex_t MX_EINBUFFER;
+extern pthread_mutex_t MX_EOUTBUFFER;
+extern pthread_mutex_t MX_ESOCK;
+
+// Condition Variables.
+extern pthread_cond_t CV_NEW_IN_MSG;
+extern pthread_cond_t CV_NEW_OUT_MSG;
+extern pthread_cond_t CV_NEW_CMD;
+
 } // namespace eNetworks
+
+#endif // ELECTRONIC_NETWORKS__THREAD_H

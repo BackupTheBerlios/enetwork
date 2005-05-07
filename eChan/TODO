@@ -1,6 +1,6 @@
+- Use Singleton Design Pattern instead of what's being used right now.
 - FULLY test Network base.
 - finish Msg class and parser.
 - Comment the code.
 - Write an API documentation.
 - manage TimeStamps better.
-- *this;

@@ -23,6 +23,7 @@
 #include <iostream>
 
 #include "MsgTokenizer.h"
+#include "debug.h"
 
 using std::string;
 using std::cout;
@@ -35,7 +36,7 @@ MsgTokenizer::MsgTokenizer(const std::string &aCommand, const char &Delimiter)
 {
 //   const char Delimiter = ' ';
 
-   // If we don't find the delimiter just push back one string abd return. if aCommand.length() == 0 just return.
+   // If we don't find the delimiter just push back one string and return. if aCommand.length() == 0 just return.
    if (aCommand.find(Delimiter) == string::npos)
     if (aCommand.length() == 0)
      return;
@@ -55,11 +56,11 @@ MsgTokenizer::MsgTokenizer(const std::string &aCommand, const char &Delimiter)
      FullString = FullString.substr(1);
 
 
-   while(1)
+   while(true)
    {    // we should never get here, but just in case.
    	if (FullString.length() == 0)
    	{
-   	   cout << "reached length 0" << endl;
+   	   debug << "reached length 0 in MsgTokenizer." << endb;
    	   return;
    	}
 

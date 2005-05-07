@@ -19,47 +19,48 @@
  *
 */
 
-#ifndef ELECTRONIC_NETWORKS__BUFFER_H
-#define ELECTRONIC_NETWORKS__BUFFER_H
-
-#include <string>
-#include <list>
 #include <iostream>
 
-using std::string;
-using std::list;
+#include "Msg_L.h"
+#include "debug.h"
+#include "Network.h"
+#include "Channel.h"
+
 using std::cout;
 using std::endl;
 
 namespace eNetworks
 {
 
-class Buffer
+void Msg_L::Parser()
 {
-   public:
-   	Buffer() : Msgs() {}
 
-   	virtual ~Buffer() {}
+   if (!Source.IsClient())
+   {
+   	debug << "Error: PART Message with no Client source." << endb;
+   }
 
-   	const unsigned int count() const { return Msgs.size(); }
-   	virtual void insert (const std::string& _Msg) = 0;
-   	string pop()
+   Channel* aChannelPtr = eNetwork->FindChannel(Parameters[0]);
+
+   if (NULL != aChannelPtr)
+   {
+   	if (!aChannelPtr->DelChannelClient(eNetwork->FindClientByNumeric(Source.GetNumeric())))
    	{
-   	   if (0 < count())
-   	   {
-   	   	string retval = Msgs.front(); // Get the First Msg in the list.
-   	   	Msgs.pop_front(); // Pop it out of the list.
-   	   	return retval;
-   	   }
-   	   
-   	   return ""; // This represents an error.
+   	   debug << "Could not remove " << Source.GetName() << " from channel " << Parameters[0] << "." << endb;
    	}
+   	else
+   	{
+   	   cout << "User " << Source.GetName() << " left channel " << Parameters[0] << "." << endl;
+   	}
+   }
+   else
+   {
+   	debug << "Error: Could not remove user " << Source.GetName() << " from channel " << Parameters[0] << ". Channel Doesn't Exist" 
+              << endb;
+   }
 
-
-   protected:
-   	list<string> Msgs; // This is a list that holds a collection of messages waiting to be used.
-};
-
+return;
 }
 
-#endif // ELECTRONIC_NETWORKS__BUFFER_H
+
+} // namespace eNetworks

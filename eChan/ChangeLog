@@ -93,3 +93,46 @@ March 19th, 2005 - clsk - Started the Buffer class.
  * New Buffer class. Still not implemented. It has no impact on software yet.
  * New User classes are InBuffer and OutBuffer.
 
+March 25th, 2005 - clsk - Started Implementing new design.
+ * Buffer classes are completed.
+ * Created Mutexes and Condition Variables.
+ * Created Thread class.
+ * Created and(i think) finished InMsgSystem.
+ * Created (and haven't finished) OutMsgSystem.
+ * Need to come up with new design for the Msg Parser. (MsgParserSystem)
+ * Now, in main(), we only let InMsgSystem know that there's a new message to retrieve instead of doing all that work we did before.
+
+April 14th, 2005 - clsk - Almost done implementing Multithreading.
+ * Multithreading implementation seems to be done by now. After a week of trying to find out why pthread_create died when calling it someone
+   pointed out something kind of obvious that we already knew but it didn't make any sense. pthread_create's address was 0x0. What happened
+   was that libpthread wasn't being linked against eChan. You'd think (as I did) that this would've produced a linker error which is why
+   it didn't make any sense to even go that way. But oh well, the problem is fixed now.
+ * We've got a new "bug" now and it is that as the Msg class modified it's not working as it was before and not working as expected. I'll
+   take a look into that for the rest of the week and come up with fixes for that.
+
+April 16th, 2005 - clsk - Multithreading implementation is finally done.
+ * I'm finally done implementing multithreading. It's now going to go under performance test. If for some reason we find out
+   that performance is better for the performance of the program not to use multithreading, it will be remoced. It shouldn't
+   take any effort/time to do this. If we keep multithreading or not I have to admit it this was a good experience The design
+   is also alot better.
+ * Now also we're using poll() instead of select to monitor the socket file descriptor. select() was giving me a headache and this was
+   not the first time this had happened. poll() is a lot easier to implement and maintain. poll() is actually the same thing. Systems
+   that don't have native support for poll() normally map it to select() and vice-versa. In the future we might change to /dev/poll
+   and kqueue for freebsd systems.
+ * It finally is commit time again. I didn't want to commit anything until multithreading and the new design was completed.
+ * There is still alot to do to give the program the design I've been planning for ever since I got back. These will be implemented
+   little by little as time permits.
+
+April 17, 2005 - clsk - Added Msg_J & Msg_L handle.
+ * We now handle JOIN messages.
+ * We now handle PART messages.
+
+April 21, 2005 - clsk - Got rid of CreateLocals
+ * Got rid of function CreateLocals() in tools. The procedures in that function are now done in Networks's constructor.
+
+April 22, 2005 - clsk - Bug fixes.
+ * I've fixed a few old bugs, can't remember exactly which ones at the moment.
+ * Created method ClearChannels in Client class. This method takes care of deleting all channels from a user.
+   Mainly used when a channel sends a join 0. Could be used for other things in the future.
+ * Also created Msg_SQ. Handler for SQUIT messages.
+ * Also Msg_C and Msg_L can now handle multiple channel parameters.

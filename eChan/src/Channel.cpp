@@ -39,6 +39,10 @@ bool Channel::AddChannelClient(Client *aClientPtr, const string &aModes)
    if (aClientPtr == NULL || aModes.find(' ') != string::npos || IsChannelClient(aClientPtr->GetNumeric()))
     return false;
 
+   // Only modes o and v are accepted.
+   if (aModes.length() > 2)
+    return false;
+
    // only channel modes o and v are accepted. Return false if any other is passed.
    for(unsigned int i = 0; i < aModes.length(); i++)
     if (aModes[i] != 'o' && aModes[i] != 'v')
@@ -63,7 +67,7 @@ return true;
 // is invalid.
 bool Channel::DelChannelClient(Client *aClientPtr)
 {
-   if (aClientPtr == NULL )
+   if (aClientPtr == NULL)
     return false;
 
    ChannelClientIterator ChannelClientIter = ChannelClientList.find(aClientPtr->GetNumeric()); 
@@ -72,7 +76,6 @@ bool Channel::DelChannelClient(Client *aClientPtr)
    {
    	aClientPtr->DelChannel(this); 
   	delete ChannelClientIter->second;
-   	// TODO: when last channelclient is removed, remove the channel also.
    	ChannelClientList.erase(ChannelClientIter);
 
    	// If that was the last User in this channel then delete the channel.
@@ -80,6 +83,7 @@ bool Channel::DelChannelClient(Client *aClientPtr)
    	{
    	   eNetwork->DelChannel(this->GetName());
    	}
+   	return true;
    }
  
 return false;

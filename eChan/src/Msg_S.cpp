@@ -41,7 +41,7 @@ namespace eNetworks
 void Msg_S::Parser()
 {
 
-   if (ServerSrc == NULL)
+   if (!Source.IsServer())
    {
         debug << "Protocol Violation. Token S with no source." << endb;
         exit(0);
@@ -50,7 +50,7 @@ void Msg_S::Parser()
    if (Parameters.size() < 6 && Parameters.size() > 8)
    {
         debug << "Protocol Violation: Too Many Parameters in Msg_S::Parser()" << endb;
-        exit(1);
+        exit(0);
    }
 
    string Name = Parameters[0];
@@ -82,7 +82,7 @@ void Msg_S::Parser()
    else
     LinkTime = StringToInt(Parameters[3]);
 
-   if (Parameters[4] != "P10")
+   if (Parameters[4] != "P10" && Parameters[4] != "J10")
    {
         debug << "Protocol Violation: Protocol should be P10 in Msg_S::Parser()" << endb;
         exit(1);
@@ -104,17 +104,15 @@ void Msg_S::Parser()
    else
     Description = Parameters[6];
 
-   if (!eNetwork->AddServer(Numeric, Name, ServerSrc->GetNumeric(), Description, StartTime, LinkTime, HopCount, Flag))
+   if (!eNetwork->AddServer(Numeric, Name, Source.GetNumeric(), Description, StartTime, LinkTime, HopCount, Flag))
    {
         debug << "Could not add Server Name" << endb;
         exit(0);
    }
  
-   /*
-   cout << "Added Server Name: " << Name << " Numeric: " << Numeric << " StartTime: " << StartTime <<
-           " LinkTime: " << LinkTime << " HopCount: " << HopCount << " Flag: " << Flag << " Uplink: " <<
-           ServerSrc->GetNumeric() << endl <<  "Description: " << Description << endl;
-   */
+   debug << "Added Server Name: " << Name << " Numeric: " << Numeric << " StartTime: " << IntToString(StartTime) <<
+           " LinkTime: " << IntToString(LinkTime) << " HopCount: " << IntToString(HopCount) << " Uplink: " <<
+           Source.GetNumeric() << endb <<  "Description: " << Description << endb;
 
 }
 

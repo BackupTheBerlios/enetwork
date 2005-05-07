@@ -23,8 +23,10 @@
 #define ELECTRONIC_NETWORKS__OUTBUFFER_H
 
 #include <string>
+#include <pthread.h>
 
 #include "Buffer.h"
+#include "Thread.h"
 
 using std::string;
 
@@ -34,13 +36,12 @@ class OutBuffer : public Buffer
 {
    public:
    	OutBuffer() : Buffer() {};
-   	OutBuffer(const string &_Msg) : Buffer(_Msg) {};
+   	~OutBuffer() {}
 
-  	void cut(const unsigned int &_bytes);
-
-   private:
-
+   	void insert(const std::string& _Msg) { Msgs.push_back(_Msg); pthread_cond_signal(&CV_NEW_OUT_MSG); }
 };
+
+extern OutBuffer* eOutBuffer;
 
 }
 

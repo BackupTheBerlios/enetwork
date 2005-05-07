@@ -1,6 +1,7 @@
 CPP = g++
-CPARAM = -W -Wall -c -I../include/
-OBJS = main.o Socket.o ConfParser.o tools.o Msg.o Msg_EB.o Msg_N.o Msg_S.o PreServerMsg.o Msg_B.o Channel.o Client.o MsgTokenizer.o Network.o Server.o SocketException.o debug.o Msg_G.o Msg_C.o Msg_Q.o InBuffer.o OutBuffer.o
+CPARAM = -W -Wall -c -I../include/ -g
+OBJS = main.o Socket.o ConfParser.o tools.o Msg.o Msg_EB.o Msg_N.o Msg_S.o PreServerMsg.o Msg_B.o Channel.o Client.o MsgTokenizer.o Network.o Server.o SocketException.o debug.o Msg_G.o Msg_C.o Msg_Q.o InBuffer.o OutBuffer.o InMsgSystem.o MsgParseSystem.o OutMsgSystem.o P10Tokens.o Thread.o Msg_J.o Msg_L.o Msg_SQ.o
+
 .SUFFIXES: .o .cpp
 
 .cpp.o:
@@ -9,7 +10,7 @@ OBJS = main.o Socket.o ConfParser.o tools.o Msg.o Msg_EB.o Msg_N.o Msg_S.o PreSe
 all: eChan
 
 eChan:
-	$(CPP) $(OBJS) -W -Wall -I../include -o ../bin/eChan
+	$(CPP) $(OBJS) -W -Wall -I../include -o ../bin/eChan -lpthread
 
 main.o:
 	$(CPP) -o main.o $(CPARAM) main.cpp
@@ -77,6 +78,30 @@ InBuffer.o:
 OutBuffer.o:
 	$(CPP) -o OutBuffer.o $(CPARAM) OutBuffer.cpp
 
+InMsgSystem.o:
+	$(CPP) -o InMsgSystem.o $(CPARAM) InMsgSystem.cpp
+
+MsgParseSystem.o:
+	$(CPP) -o MsgParseSystem.o $(CPARAM) MsgParseSystem.cpp
+
+OutMsgSystem.o:
+	$(CPP) -o OutMsgSystem.o $(CPARAM) OutMsgSystem.cpp
+
+P10Tokens.o:
+	$(CPP) -o P10Tokens.o $(CPARAM) P10Tokens.cpp
+
+Thread.o:
+	$(CPP) -o Thread.o $(CPARAM) Thread.cpp
+
+Msg_J.o:
+	$(CPP) -o Msg_J.o $(CPARAM) Msg_J.cpp
+
+Msg_L.o:
+	$(CPP) -o Msg_L.o $(CPARAM) Msg_L.cpp
+
+Msg_SQ.o:
+	$(CPP) -o Msg_SQ.o $(CPARAM) Msg_SQ.cpp
+
 main.o: main.cpp
 Channel.o: Channel.cpp
 Client.o: Client.cpp
@@ -99,6 +124,15 @@ Msg_C.o: Msg_C.cpp
 Msg_Q.o: Msg_Q.cpp
 InBuffer.o: InBuffer.cpp
 OutBuffer.o: OutBuffer.cpp
+InMsgSystem.o: InMsgSystem.cpp
+MsgParseSystem.o: MsgParseSystem.cpp
+OutMsgSystem.o: OutMsgSystem.cpp
+P10Tokens.o: P10Tokens.cpp
+Thread.o: Thread.cpp
+Msg_J.o: Msg_J.cpp
+Msg_L.o: Msg_L.cpp
+Msg_SQ.o: Msg_SQ.cpp
+
 eChan: $(OBJS)
 
 eChan: main.o \
@@ -122,7 +156,16 @@ eChan: main.o \
        Msg_C.o \
        Msg_Q.o \
        InBuffer.o \
-       OutBuffer.o
+       OutBuffer.o \
+       InMsgSystem.o \
+       MsgParseSystem.o \
+       OutMsgSystem.o \
+       P10Tokens.o \
+       Thread.o \
+       Msg_J.o \
+       Msg_L.o \
+       Msg_SQ.o
+
 
 clean:
 	rm -f $(OBJS)

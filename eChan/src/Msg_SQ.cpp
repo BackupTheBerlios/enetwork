@@ -19,47 +19,47 @@
  *
 */
 
-#ifndef ELECTRONIC_NETWORKS__BUFFER_H
-#define ELECTRONIC_NETWORKS__BUFFER_H
-
 #include <string>
-#include <list>
 #include <iostream>
 
+#include "Msg_SQ.h"
+#include "Network.h"
+#include "Server.h"
+#include "Client.h"
+#include "debug.h"
+#include "tools.h"
+
 using std::string;
-using std::list;
 using std::cout;
 using std::endl;
 
 namespace eNetworks
 {
 
-class Buffer
+void Msg_SQ::Parser()
 {
-   public:
-   	Buffer() : Msgs() {}
 
-   	virtual ~Buffer() {}
+   Server* ServerPtr = eNetwork->FindServerByName(Parameters[0]);
 
-   	const unsigned int count() const { return Msgs.size(); }
-   	virtual void insert (const std::string& _Msg) = 0;
-   	string pop()
+   if (NULL == ServerPtr)
+   {
+   	debug << "Error: Trying to SQ server " << Parameters[0] << ". Server doesn't exist in db." << endb;
+   	return;
+   }
+
+   if (Parameters[1] == IntToString(ServerPtr->GetLinkTime()) || Parameters[1] == IntToString(0))
+   {
+   	if (!eNetwork->DelServerByNumeric(ServerPtr->GetNumeric()))
    	{
-   	   if (0 < count())
-   	   {
-   	   	string retval = Msgs.front(); // Get the First Msg in the list.
-   	   	Msgs.pop_front(); // Pop it out of the list.
-   	   	return retval;
-   	   }
-   	   
-   	   return ""; // This represents an error.
+   	   debug << "Could not delete server " << Parameters[0] << endb;
    	}
-
-
-   protected:
-   	list<string> Msgs; // This is a list that holds a collection of messages waiting to be used.
-};
-
+   	else
+   	{
+   	   cout << "Deleted Server " << Parameters[0] << endl;
+   	   cout << "Current ServerCount(): " << eNetwork->ServerCount() << endl;
+   	}
+   }
 }
 
-#endif // ELECTRONIC_NETWORKS__BUFFER_H
+
+} // namespace eNetworks

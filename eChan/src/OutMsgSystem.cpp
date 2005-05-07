@@ -19,8 +19,36 @@
  *
 */
 
+#include <pthread.h>
+#include <iostream>
+
+#include "Thread.h"
+#include "OutMsgSystem.h"
+#include "OutBuffer.h"
+#include "Socket.h"
+
+using std::cout;
+using std::endl;
 
 namespace eNetworks
 {
+
+void OutMsgSystem::Execute()
+{
+   do
+   {
+   	pthread_mutex_lock(&MX_EOUTBUFFER);
+   	pthread_cond_wait(&CV_NEW_OUT_MSG, &MX_EOUTBUFFER);
+   	pthread_mutex_unlock(&MX_EOUTBUFFER);
+
+   	std::string buf = eOutBuffer->pop();
+   	(*eSock) << buf << "\n";
+   	cout << "[OUT]: " << buf << endl;
+
+   } while (true);
+
+
+
+}
 
 } // namespace eNetworks

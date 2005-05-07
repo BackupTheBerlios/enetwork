@@ -19,8 +19,27 @@
  *
 */
 
+#ifndef ELECTRONIC_NETWORKS__THREADEXCEPTION_H
+#define ELECTRONIC_NETWORKS__THREADEXCEPTION_H
+
+#include <string>
+
+using std::string;
 
 namespace eNetworks
 {
 
+class ThreadException
+{
+   public:
+   	enum ID { THREAD_ALREADY_EXIST = 0, THREAD_NO_ENOUGH_RESOURCES };
+
+   	ThreadException (const ID &aID) : theID(aID) {}
+
+   private:
+   	ID theID;
+};
+
 } // namespace eNetworks
+
+#endif // ELECTRONIC_NETWORKS__THREADEXCEPTION_H

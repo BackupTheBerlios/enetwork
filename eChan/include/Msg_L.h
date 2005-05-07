@@ -19,8 +19,26 @@
  *
 */
 
+#ifndef ELECTRONIC_NETWORKS__MSG_L_H
+#define ELECTRONIC_NETWORKS__MSG_L_H
+
+#include "Msg.h"
 
 namespace eNetworks
 {
 
+// -------------------------------------------------------------------------------
+//                    L Token. (An User leaving a channel.)
+// -------------------------------------------------------------------------------
+class Msg_L : public Msg
+{
+   public:
+        Msg_L(const MsgSource& _Source, const MsgTokenizer& _Parameters) : Msg(_Source, _Parameters) {}
+
+        virtual ~Msg_L() {}
+        virtual void Parser();
+};
+
 } // namespace eNetworks
+
+#endif // ELECTRONIC_NETWORKS__MSG_L_H

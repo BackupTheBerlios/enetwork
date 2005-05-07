@@ -19,8 +19,27 @@
  *
 */
 
+#ifndef ELECTRONIC_NETWORKS__MSGPARSESYSTEM_H
+#define ELECTRONIC_NETWORKS__MSGPARSESYSTEM_H
+
+#include "Thread.h"
 
 namespace eNetworks
 {
 
+class MsgParseSystem : public Thread
+{
+
+   public:
+   	MsgParseSystem() : Thread() {}
+   	~MsgParseSystem() {}
+
+
+   	void Execute();
+
+};
+
+
 } // namespace eNetworks
+
+#endif // ELECTRONIC_NETWORKS__MSGPARSESYSTEM_H

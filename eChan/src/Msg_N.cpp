@@ -43,11 +43,11 @@ void Msg_N::Parser()
 {
 
    // User Changing NickName
-   cout << Parameters.size() << endl;
    if (Parameters.size() == 2)
    {
 
-        if (eNetwork->FindClientByNumeric(ClientSrc->GetNumeric()) == NULL)
+   	Client* ClientSrc = eNetwork->FindClientByNumeric(Source.GetNumeric());
+        if (NULL == ClientSrc)
         {
            debug << "Protocol Violation: Token N with no Client source." << endb;
            exit(0);
@@ -69,8 +69,7 @@ void Msg_N::Parser()
         exit(0);
    }
 
-
-   if (ServerSrc == NULL)
+   if (!Source.IsServer())
    {
         debug << "Protocol Violation: Token N with no Server source." << endb;
         exit(0);

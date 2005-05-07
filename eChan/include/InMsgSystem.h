@@ -19,8 +19,27 @@
  *
 */
 
+#ifndef ELECTRONIC_NETWORKS__INMSGSYSTEM_H
+#define ELECTRONIC_NETWORKS__INMSGSYSTEM_H
+
+#include <Thread.h>
 
 namespace eNetworks
 {
 
+class InMsgSystem : public Thread
+{
+   public:
+   	InMsgSystem() : Thread() {}
+
+   	void Execute();
+
+
+   private:
+
+
+};
+
 } // namespace eNetworks
+
+#endif // ELECTRONIC_NETWORKS__INMSGSYSTEM_H

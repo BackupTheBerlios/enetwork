@@ -22,23 +22,19 @@
 #ifndef ELECTRONIC_NETWORKS__MSG_H
 #define ELECTRONIC_NETWORKS__MSG_H
 
-#include <string>
-
 #include "MsgTokenizer.h"
+#include "MsgSource.h"
 
 /*
    NOTES:
 
-   Every class derived from Msg should have a overriden void Parser() function.
+   Every class derived from Msg should have an overriden void Parser() function.
 
 */
 
 namespace eNetworks
 {
 
-// foward declaration
-struct Client;
-struct Server;
 
 // -------------------------------------------------------------------------------
 //                               Base Msg Class
@@ -47,18 +43,14 @@ class Msg
 {
   public:
 	// Takes care of setting the members no matter what kind of Msg it is.
-	Msg(const std::string &command, const std::string &aToken); // constructor 
+	Msg(const MsgSource& _Source, const MsgTokenizer& _Parameters) : Source(_Source), Parameters(_Parameters) {} 
 	virtual ~Msg() {};
 
-	virtual void Parser();
-
-   	static Msg *MsgParser(const std::string &command);
+	virtual void Parser() = 0;
 
   protected:
 
-	std::string Token; // The Msg token.
-	Client *ClientSrc; // The client that sent this message. If a server sent this message, this is NULL.
-	Server *ServerSrc; // The server that sent this message. If a client sent this message, this is NULL.
+   	MsgSource Source;
 	MsgTokenizer Parameters; // These are the parameters that go after the Token all tokenized.
 };
 

@@ -19,30 +19,58 @@
  *
 */
 
-#include <fstream>
-#include <string>
 #include <iostream>
 
+#include "Msg_J.h"
+#include "Msg_C.h"
 #include "debug.h"
+#include "Network.h"
+#include "Channel.h"
 
 using std::cout;
-using std::ofstream;
-using std::string;
-using std::ios;
+using std::endl;
 
 namespace eNetworks
 {
 
-const Debug &Debug::operator <<(const string &msg) const
+void Msg_J::Parser()
 {
-  ofstream ofs("debug.log", ios::out | ios::app);
-  ofs << msg;
-  cout << msg;
 
-  return *this;
+   if (!Source.IsClient())
+   {
+   	debug << "JOIN Message with no Client source." << endb;
+   }
+
+
+   if ("0" == Parameters[0])
+   {
+   	eNetwork->FindClientByNumeric(Source.GetNumeric())->ClearChannels();
+   	return;
+   }
+   	
+
+   Channel* aChannelPtr = eNetwork->FindChannel(Parameters[0]);
+
+   if (NULL != aChannelPtr)
+   {
+   	if (!aChannelPtr->AddChannelClient(eNetwork->FindClientByNumeric(Source.GetNumeric())))
+   	{
+   	   debug << "Could not join " << Source.GetName() << " to channel " << Parameters[0] << "." << endb;
+   	}
+   	else
+   	{
+   	   cout << "User " << Source.GetName() << " Joined channel " << Parameters[0] << "." << endl;
+   	}
+   }
+   else
+   {
+   	// Treat this as a CREATE Msg.
+   	Msg_C aMsg(Source, Parameters);
+   	aMsg.Parser();
+   }
+
+return;
 }
 
-Debug debug;
-// bool DEBUG = false;
 
 } // namespace eNetworks

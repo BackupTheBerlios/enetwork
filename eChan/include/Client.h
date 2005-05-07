@@ -37,6 +37,8 @@ struct Client
 {
 
    public:
+   	// Clear all channels from this user.
+   	void ClearChannels();
 
    	// Add a mode to this user.
    	void AddMode(const char &aMode) 
@@ -87,7 +89,6 @@ struct Client
 
    	friend class Network;
    	friend class Channel;
-   	friend void CreateLocals();
 
    	// type for Channel List.
    	typedef std::map<std::string, Channel *, noCaseCompare> ChannelMapType;

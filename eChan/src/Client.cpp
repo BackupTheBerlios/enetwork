@@ -19,8 +19,13 @@
  *
 */
 
+#include <string>
+
 #include "Client.h"
 #include "Channel.h"
+#include "debug.h"
+
+using std::string;
 
 namespace eNetworks
 {
@@ -42,6 +47,19 @@ bool Client::DelChannel(Channel *aChannelPtr)
     return false;
    // else
    return true;
+}
+
+void Client::ClearChannels()
+{
+
+   for (ChannelMapType::iterator ChannelIter = ChannelMap.begin(); ChannelIter != ChannelMap.end(); ChannelIter++)
+   {
+   	string name = ChannelIter->first;
+   	if (!ChannelIter->second->DelChannelClient(this))
+   	{
+   	   debug << "Could not Delete channel " << name << " off client " << NickName << " in Client::ClearChannels()." << endb;
+   	}
+   }
 }
 
 Client *LocalClient;
