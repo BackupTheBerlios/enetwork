@@ -80,8 +80,6 @@ class Tokens
 
    private:
    	TokensMapType TokensMap;
-
-
 };
 
 extern Tokens* eTokens;
