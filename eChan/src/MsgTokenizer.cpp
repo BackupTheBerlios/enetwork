@@ -64,20 +64,17 @@ MsgTokenizer::MsgTokenizer(const std::string &aCommand, const char &Delimiter)
    	   debug << "reached length 0 in MsgTokenizer." << endb;
    	   return;
    	}
-
-   	if (FullString[0] == Delimiter)
+   	else if (FullString[0] == Delimiter)
    	{
    	   FullString.erase(0,1);
    	   continue;
    	}
-
-        if (FullString[0] == ':')
+        else if (FullString[0] == ':')
         {
    	   Tokens.push_back(FullString.substr(1));
    	   break;
    	}
-
-   	if (FullString.find(Delimiter) == string::npos)
+   	else if (FullString.find(Delimiter) == string::npos)
    	{
            Tokens.push_back(FullString);
    	   break;
