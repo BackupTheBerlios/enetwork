@@ -1,3 +1,10 @@
+- Msgs to implement in the following order:
+  - CLEARMODE
+  - JUPE
+  - GLINE
+  - OPMODE
+  - TOPIC
+
 - *URGENT* When there are serveral servers on the network and we try to delete servers some are not being taken off the map table.
 - Use Singleton Design Pattern instead of what's being used right now.
 - FULLY test Network base.

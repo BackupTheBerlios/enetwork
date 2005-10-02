@@ -19,40 +19,26 @@
  *
 */
 
-#include <fstream>
-#include <string>
-#include <iostream>
+#ifndef ELECTRONIC_NETWORKS__MSG_K_H
+#define ELECTRONIC_NETWORKS__MSG_K_H
 
-#include "debug.h"
-#include "tools.h"
-
-using std::cout;
-using std::ofstream;
-using std::string;
-using std::ios;
+#include "Msg.h"
 
 namespace eNetworks
 {
 
-const Debug &Debug::operator <<(const string &msg) const
+// -------------------------------------------------------------------------------
+//                    K Token. (An User being kicked from a channel.)
+// -------------------------------------------------------------------------------
+class Msg_K : public Msg
 {
-  ofstream ofs("debug.log", ios::out | ios::app);
-  ofs << msg;
-  cout << msg;
+   public:
+        Msg_K(const MsgSource& _Source, const MsgTokenizer& _Parameters) : Msg(_Source, _Parameters) {}
 
-  return *this;
-}
-
-const Debug &Debug::operator <<(const int &msg) const
-{
-   ofstream ofs("debug.log", ios::out | ios::app);
-   ofs << IntToString(msg);
-   cout << msg;
-
-   return *this;
-}
-
-Debug debug;
-// bool DEBUG = false;
+        virtual ~Msg_K() {}
+        virtual void Parser();
+};
 
 } // namespace eNetworks
+
+#endif // ELECTRONIC_NETWORKS__MSG_K_H

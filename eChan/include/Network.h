@@ -27,6 +27,7 @@
 #include <cstring>
 
 #include "tools.h"
+#include "ConfigParser.h"
 
 namespace eNetworks
 {
@@ -46,7 +47,7 @@ class Network
 
    public:
 
-   	Network();
+   	Network(ConfigParser& theConfigParser);
    	~Network() {}
 
    // ---------------------

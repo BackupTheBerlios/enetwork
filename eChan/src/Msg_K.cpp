@@ -19,40 +19,49 @@
  *
 */
 
-#include <fstream>
-#include <string>
 #include <iostream>
 
+#include "Msg_K.h"
 #include "debug.h"
-#include "tools.h"
+#include "Network.h"
+#include "Channel.h"
 
 using std::cout;
-using std::ofstream;
-using std::string;
-using std::ios;
+using std::endl;
 
 namespace eNetworks
 {
 
-const Debug &Debug::operator <<(const string &msg) const
+void Msg_K::Parser()
 {
-  ofstream ofs("debug.log", ios::out | ios::app);
-  ofs << msg;
-  cout << msg;
 
-  return *this;
+   if (Source.IsSourceless())
+   {
+   	debug << "Error: KICK Message with no source." << endb;
+   }
+
+   Channel* aChannelPtr = eNetwork->FindChannel(Parameters[0]);
+
+   if (NULL != aChannelPtr)
+   {
+   	if (!aChannelPtr->DelChannelClient(eNetwork->FindClientByNumeric(Parameters[1])))
+   	{
+   	   debug << "Could not remove " << Source.GetName() << " from channel " << Parameters[0] << "." << endb;
+   	}
+   	else
+   	{
+   	   cout << "User " << eNetwork->FindClientByNumeric(Parameters[1])->GetNickName() << " was kicked from channel " << Parameters[0] << " by " 
+   	   	<< Source.GetName() << "." << endl;
+   	}
+   }
+   else
+   {
+   	debug << "Error: Could not remove user " << Source.GetName() << " from channel " << Parameters[0] << ". Channel Doesn't Exist" 
+              << endb;
+   }
+
+return;
 }
 
-const Debug &Debug::operator <<(const int &msg) const
-{
-   ofstream ofs("debug.log", ios::out | ios::app);
-   ofs << IntToString(msg);
-   cout << msg;
-
-   return *this;
-}
-
-Debug debug;
-// bool DEBUG = false;
 
 } // namespace eNetworks

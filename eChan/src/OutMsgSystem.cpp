@@ -46,9 +46,6 @@ void OutMsgSystem::Execute()
    	cout << "[OUT]: " << buf << endl;
 
    } while (true);
-
-
-
 }
 
 } // namespace eNetworks

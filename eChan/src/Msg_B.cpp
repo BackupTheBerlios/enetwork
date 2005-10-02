@@ -96,7 +96,6 @@ void Msg_B::Parser()
    	   	{
    	   	   Key = Parameters[3];
    	   	}
-   	   
    	   }
 
    	}
@@ -131,7 +130,6 @@ void Msg_B::Parser()
    {
    	ParseUsers(ChannelPtr, Parameters[Parameters.size()-1]);
    }
-
 }
 
 void Msg_B::ParseUsers(Channel *aChannelPtr, const std::string &UsersParameters)

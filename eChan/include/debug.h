@@ -36,6 +36,7 @@ class Debug
    	Debug() {}
 
    	const Debug &operator <<(const std::string &msg) const;
+   	const Debug &operator <<(const int &msg) const;
 }; 
 
 extern Debug debug;

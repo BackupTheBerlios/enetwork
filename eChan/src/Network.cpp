@@ -24,12 +24,11 @@
 #include <iostream>
 #include <cstdlib>
 
-
 #include "Client.h"
 #include "Network.h"
 #include "Server.h"
 #include "Channel.h"
-#include "ConfParser.h"
+#include "ConfigParser.h"
 #include "tools.h"
 #include "Socket.h"
 #include "SocketException.h"
@@ -43,32 +42,31 @@ using std::endl;
 namespace eNetworks
 {
 
-Network::Network() : Servers(), ClientNumerics(), ClientNickNames(), Channels() 
+Network::Network(ConfigParser& theConfigParser) : Servers(), ClientNumerics(), ClientNickNames(), Channels() 
 {
-   string errors;
-   int errnos;
-   ConfParser eConf("eChan.conf", errors, errnos);
 
-   LocalServer = new Server(eConf.GetNumeric(), eConf.GetServerName(), "", eConf.GetServerInfo(), time(0), time(0), 1, 's');
+   LocalServer = new Server(theConfigParser.GetConfiguration("NUMERIC"), theConfigParser.GetConfiguration("SERVERNAME"), "", 
+   	   	   	    theConfigParser.GetConfiguration("SERVERINFO"), time(0), time(0), 1, 's');
 
    if (LocalServer == NULL)
    {
-   	cout << "Could not create server: " << eConf.GetServerName() << endl;
+   	cout << "Could not create server: " << theConfigParser.GetConfiguration("SERVERNAME") << endl;
    	exit(0);
    }
 
-   LocalClient = new Client(eConf.GetNumeric()+"AAC", eConf.GetNick(), "", eConf.GetUserName(), eConf.GetHostName(),
-                            "DAqAoB", "idk", eConf.GetClientInfo(), time(0), 1);
+   LocalClient = new Client(theConfigParser.GetConfiguration("NUMERIC")+"AAC", theConfigParser.GetConfiguration("NICK"), "", 
+   	   	   	    theConfigParser.GetConfiguration("USERNAME"), theConfigParser.GetConfiguration("HOSTNAME"),
+                            "DAqAoB", "idk", theConfigParser.GetConfiguration("CLIENTINFO"), time(0), 1);
 
    if (LocalClient == NULL)
    {
-   	cout << "Could Not add client " << eConf.GetNick() << endl;
+   	cout << "Could Not add client " << theConfigParser.GetConfiguration("NICK") << endl;
         exit(0);
    }
 
    try
    {
-   	eSock = new Socket(eConf.GetUpLink(), StringToInt(eConf.GetPort()));
+   	eSock = new Socket(theConfigParser.GetConfiguration("UPLINK"), StringToInt(theConfigParser.GetConfiguration("PORT")));
    }
    catch (SocketException &sockerr)
    {

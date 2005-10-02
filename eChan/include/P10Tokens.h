@@ -69,7 +69,9 @@ class Tokens
    	   ACCOUNT,
    	   CREATE,
    	   QUIT,
-   	   SQUIT
+   	   SQUIT,
+   	   MODE,
+   	   KICK
    	};
 
    	typedef Token TokenType;

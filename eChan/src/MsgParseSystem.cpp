@@ -30,9 +30,11 @@
 #include "Msg_EB.h"
 #include "Msg_G.h"
 #include "Msg_J.h"
+#include "Msg_K.h"
 #include "Msg_L.h"
-#include "Msg_Q.h"
+#include "Msg_M.h"
 #include "Msg_N.h"
+#include "Msg_Q.h"
 #include "Msg_S.h"
 #include "Msg_SQ.h"
 #include "PreServerMsg.h"
@@ -153,6 +155,14 @@ void MsgParseSystem::Execute()
    	   	   eMsg = new Msg_Q(Source, Parameters);
    	   	   break;
 
+   	   	case Tokens::MODE:
+   	   	   eMsg = new Msg_M(Source, Parameters);
+   	   	   break;
+
+   	   	case Tokens::KICK:
+   	   	   eMsg = new Msg_K(Source, Parameters);
+   	   	   break;
+
    	   	case Tokens::B:
    	   	   eMsg = new Msg_B(Source, Parameters);
    	   	   break;
@@ -181,6 +191,7 @@ void MsgParseSystem::Execute()
    	   	   eMsg = new Msg_SQ(Source, Parameters);
    	   	   break;
 
+
    	   	// NOT USED YET...
 
    	   	case Tokens::ACCOUNT:
@@ -204,8 +215,6 @@ void MsgParseSystem::Execute()
 
    }
    while (true); // Main thread loop...
-
-
 }
 
 

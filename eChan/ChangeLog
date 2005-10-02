@@ -136,3 +136,12 @@ April 22, 2005 - clsk - Bug fixes.
    Mainly used when a channel sends a join 0. Could be used for other things in the future.
  * Also created Msg_SQ. Handler for SQUIT messages.
  * Also Msg_C and Msg_L can now handle multiple channel parameters.
+
+October 2, 2005 - clsk - Configuration File Parser.
+ * Finished new Configuration File Parser (ConfigParser.cpp / ConfigParser.h).
+ * New ConfigParser is much more flexible and easy to use.
+ * Only difference from a user's perspective is that Configuration values are now between "'s and 
+   a semicolon (';') is no longer needed to finish the "statement".
+
+October 2, 2005 - clsk - MODE and KICK messages.
+ * Finished parsing KICK and MODE messages.

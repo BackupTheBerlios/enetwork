@@ -66,6 +66,8 @@ struct ChannelClient
             return true;
         }
 
+   	Client *ClientPtr; // The client this struc is representing.
+
    private:
         // Make Channel friend of this struct so that it can make instances of this struct.
         friend class Channel;
@@ -74,7 +76,7 @@ struct ChannelClient
         ChannelClient(Client *aClientPtr, const std::string &aModes = "") :
         ClientPtr(aClientPtr), Modes(aModes) {}
 
-        Client *ClientPtr; // The client this struc is representing.
+//        Client *ClientPtr; // The client this struc is representing.
         std::string Modes; // the channel modes for this user.
 };
 

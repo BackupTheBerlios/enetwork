@@ -36,7 +36,7 @@
 #include "Socket.h"
 #include "tools.h"
 #include "debug.h"
-#include "ConfParser.h"
+#include "ConfigParser.h"
 #include "Msg.h"
 #include "InBuffer.h"
 #include "OutBuffer.h"
@@ -63,7 +63,23 @@ int main()
    else 
     exit(0);
 
-   eNetwork = new Network;
+   ConfigParser theConfigParser;
+
+   // add configuration items.
+   theConfigParser.InsertItem("NICK");
+   theConfigParser.InsertItem("NUMERIC");
+   theConfigParser.InsertItem("USERNAME");
+   theConfigParser.InsertItem("SERVERNAME");
+   theConfigParser.InsertItem("CLIENTINFO");
+   theConfigParser.InsertItem("HOSTNAME");
+   theConfigParser.InsertItem("SERVERINFO");
+   theConfigParser.InsertItem("UPLINK");
+   theConfigParser.InsertItem("PORT");
+   theConfigParser.InsertItem("LINKPASS");
+
+   theConfigParser.ParseConfigFile();
+
+   eNetwork = new Network(theConfigParser);
    if (eNetwork == NULL)
    {
    	debug << "Could not allocate memory for Network class" << endb;
@@ -74,8 +90,7 @@ int main()
    eOutBuffer = new OutBuffer();
 
    // Login to server. Introduce the channels service bot and send EB (End of Burst). 
-   login();
-
+   login(theConfigParser);
 
    // Add all the Tokens to the token map.
    eTokens = new Tokens();
@@ -109,6 +124,8 @@ int main()
    eTokens->AddToken("C",      Tokens::CREATE);
    eTokens->AddToken("Q",      Tokens::QUIT);
    eTokens->AddToken("SQ",     Tokens::SQUIT);
+   eTokens->AddToken("M",      Tokens::MODE);
+   eTokens->AddToken("K",      Tokens::KICK);
 
    pollfd PollFD;
    PollFD.fd = eSock->GetSocket();

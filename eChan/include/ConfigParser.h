@@ -19,40 +19,38 @@
  *
 */
 
-#include <fstream>
+#ifndef ELECTRONIC_NETWORKS__CONFIGPARSER_H
+#define ELECTRONIC_NETWORKS__CONFIGPARSER_H
+
 #include <string>
-#include <iostream>
-
-#include "debug.h"
-#include "tools.h"
-
-using std::cout;
-using std::ofstream;
-using std::string;
-using std::ios;
+#include <map>
 
 namespace eNetworks
 {
 
-const Debug &Debug::operator <<(const string &msg) const
+class ConfigParser
 {
-  ofstream ofs("debug.log", ios::out | ios::app);
-  ofs << msg;
-  cout << msg;
+   public:
+   	ConfigParser(const std::string& ConfigFile = "eChan.conf");
 
-  return *this;
-}
+   	// Always UPPERCASE.    
+   	std::string GetConfiguration(const std::string& Item);
+   	bool InsertItem(const std::string& Item, const std::string& Configuration = "");
+   	void ParseConfigFile();
 
-const Debug &Debug::operator <<(const int &msg) const
-{
-   ofstream ofs("debug.log", ios::out | ios::app);
-   ofs << IntToString(msg);
-   cout << msg;
+   private:
+   	typedef std::map<std::string, std::string> ConfigMapType;
 
-   return *this;
-}
+   	ConfigMapType ConfigMap;
 
-Debug debug;
-// bool DEBUG = false;
+   protected:
+   	void SetConfiguration(const std::string &Item, const std::string& Configuration);
+   	bool IsItem(const std::string& Item);
+
+   	std::string ConfigFile;
+
+};
 
 } // namespace eNetworks
+
+#endif // ELECTRONIC_NETWORKS__CONFIGPARSER_H

@@ -30,7 +30,7 @@ using std::endl;
 
 #include "Client.h"
 #include "tools.h"
-#include "ConfParser.h"
+#include "ConfigParser.h"
 #include "Server.h"
 #include "SocketException.h"
 #include "Socket.h"
@@ -91,14 +91,14 @@ bool IsDigit(const string &str)
    return true;
 }
 
-void login()
+void login(ConfigParser& theConfigParser)
 {
    try
    {
         // loging to IRC server
         cout << "logging in" << endl;
-        (*eSock) << "PASS :DAPASS\r\n";
-        cout << "[OUT]: PASS :DAPASS" << endl;
+        (*eSock) << "PASS :" << theConfigParser.GetConfiguration("LINKPASS") << "\r\n";
+        cout << "[OUT]: PASS :" << theConfigParser.GetConfiguration("LINKPASS") << endl;
 
        (*eSock) << "SERVER" << " " << LocalServer->GetName() << " " << LocalServer->GetHopCount() <<
             " " << LocalServer->GetStartTime() << " " << LocalServer->GetLinkTime() <<
