@@ -1,6 +1,6 @@
 CPP = g++
 CPARAM = -W -Wall -c -I../include/ -g
-OBJS = main.o Socket.o ConfigParser.o tools.o Msg_EB.o Msg_N.o Msg_S.o PreServerMsg.o Msg_B.o Channel.o Client.o MsgTokenizer.o Network.o Server.o SocketException.o debug.o Msg_G.o Msg_C.o Msg_Q.o InBuffer.o OutBuffer.o InMsgSystem.o MsgParseSystem.o OutMsgSystem.o P10Tokens.o Thread.o Msg_J.o Msg_L.o Msg_SQ.o Msg_M.o Msg_K.o
+OBJS = main.o Socket.o ConfigParser.o tools.o Msg_EB.o Msg_N.o Msg_S.o PreServerMsg.o Msg_B.o Channel.o Client.o MsgTokenizer.o Network.o Server.o SocketException.o debug.o Msg_G.o Msg_C.o Msg_Q.o InBuffer.o OutBuffer.o InMsgSystem.o MsgParseSystem.o OutMsgSystem.o P10Tokens.o Thread.o Msg_J.o Msg_L.o Msg_SQ.o Msg_M.o Msg_K.o Msg_CM.o
 
 .SUFFIXES: .o .cpp
 
@@ -105,6 +105,9 @@ Msg_M.o:
 Msg_K.o:
 	$(CPP) -o Msg_K.o $(CPARAM) Msg_K.cpp
 
+Msg_CM.o:
+	$(CPP) -o Msg_CM.o $(CPARAM) Msg_CM.cpp
+
 main.o: main.cpp
 Channel.o: Channel.cpp
 Client.o: Client.cpp
@@ -136,6 +139,7 @@ Msg_L.o: Msg_L.cpp
 Msg_SQ.o: Msg_SQ.cpp
 Msg_M.o: Msg_M.cpp
 Msg_K.o: Msg_K.cpp
+Msg_CM.o: Msg_CM.cpp
 
 eChan: $(OBJS)
 
@@ -169,7 +173,8 @@ eChan: main.o \
        Msg_L.o \
        Msg_SQ.o \
        Msg_M.o \
-       Msg_K.o
+       Msg_K.o \
+       Msg_CM.o
 
 clean:
 	rm -f $(OBJS)

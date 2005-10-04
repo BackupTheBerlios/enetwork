@@ -71,7 +71,8 @@ class Tokens
    	   QUIT,
    	   SQUIT,
    	   MODE,
-   	   KICK
+   	   KICK,
+   	   CLEARMODE
    	};
 
    	typedef Token TokenType;

@@ -132,7 +132,24 @@ struct Channel
             if (aBan == (*i))
              BanList.erase(i);
    	}
-  
+
+   	void ClearBans()
+   	{
+   	   BanList.clear();
+   	}
+
+   	void ClearOps()
+   	{
+   	   for (ChannelClientIterator i = ChannelClientList.begin(); i != ChannelClientList.end(); i++)
+   	   	i->second->DelMode('o');
+   	}
+
+   	void ClearVoice()
+   	{
+   	   for (ChannelClientIterator i = ChannelClientList.begin(); i != ChannelClientList.end(); i++)
+   	   	i->second->DelMode('v');
+   	}
+ 
    	std::string GetName() { return Name; }
    	std::string GetTopic() { return Topic; }
    	time_t GetTimeStamp() { return TimeStamp; }

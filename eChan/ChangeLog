@@ -22,7 +22,7 @@ November 3rd, 2003 - clsk - Fixed some stuff in Clients and Servers class.
 
 November 4th, 2003 - clsk - Started Channel struct.
   * Added a AddModes and a DelModes member to Client struct.
-  * Started working on Channel struct. Still need to work some.
+  * Started working on Channel struct. Still need to work some
     things out about how the Channels class is going to work.
 
 November 6th, 2003 - clsk - Almost finished Channel struct, ChanneClient struct and Channels class.
@@ -145,3 +145,8 @@ October 2, 2005 - clsk - Configuration File Parser.
 
 October 2, 2005 - clsk - MODE and KICK messages.
  * Finished parsing KICK and MODE messages.
+
+October 4, 2005 - clsk - CLEARMODE message.
+ * Finished parsing CLEARMODE message.
+ * Also added ClearOps(), ClearVoice() and ClearBans() methods to Channel class.
+

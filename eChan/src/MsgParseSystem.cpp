@@ -27,6 +27,7 @@
 #include "Msg.h"
 #include "Msg_B.h"
 #include "Msg_C.h"
+#include "Msg_CM.h"
 #include "Msg_EB.h"
 #include "Msg_G.h"
 #include "Msg_J.h"
@@ -161,6 +162,10 @@ void MsgParseSystem::Execute()
 
    	   	case Tokens::KICK:
    	   	   eMsg = new Msg_K(Source, Parameters);
+   	   	   break;
+
+   	   	case Tokens::CLEARMODE:
+   	   	   eMsg = new Msg_CM(Source, Parameters);
    	   	   break;
 
    	   	case Tokens::B:
