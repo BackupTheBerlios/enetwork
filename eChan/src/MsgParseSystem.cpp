@@ -35,9 +35,11 @@
 #include "Msg_L.h"
 #include "Msg_M.h"
 #include "Msg_N.h"
+#include "Msg_OM.h"
 #include "Msg_Q.h"
 #include "Msg_S.h"
 #include "Msg_SQ.h"
+#include "Msg_T.h"
 #include "PreServerMsg.h"
 #include "Thread.h"
 #include "MsgParseSystem.h"
@@ -162,6 +164,14 @@ void MsgParseSystem::Execute()
 
    	   	case Tokens::KICK:
    	   	   eMsg = new Msg_K(Source, Parameters);
+   	   	   break;
+
+   	   	case Tokens::TOPIC:
+   	   	   eMsg = new Msg_T(Source, Parameters);
+   	   	   break;
+
+   	   	case Tokens::OPMODE:
+   	   	   eMsg = new Msg_OM(Source, Parameters);
    	   	   break;
 
    	   	case Tokens::CLEARMODE:

@@ -152,6 +152,7 @@ struct Channel
  
    	std::string GetName() { return Name; }
    	std::string GetTopic() { return Topic; }
+   	void SetTopic(const std::string& _Topic) { Topic = _Topic; }
    	time_t GetTimeStamp() { return TimeStamp; }
 
 

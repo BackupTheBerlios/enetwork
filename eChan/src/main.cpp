@@ -127,6 +127,8 @@ int main()
    eTokens->AddToken("M",      Tokens::MODE);
    eTokens->AddToken("K",      Tokens::KICK);
    eTokens->AddToken("CM",     Tokens::CLEARMODE);
+   eTokens->AddToken("T",      Tokens::TOPIC);
+   eTokens->AddToken("OM",     Tokens::OPMODE);
 
    pollfd PollFD;
    PollFD.fd = eSock->GetSocket();

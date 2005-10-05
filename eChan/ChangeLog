@@ -150,3 +150,8 @@ October 4, 2005 - clsk - CLEARMODE message.
  * Finished parsing CLEARMODE message.
  * Also added ClearOps(), ClearVoice() and ClearBans() methods to Channel class.
 
+October 4, 2005 - clsk - TOPIC message.
+ * Finished parsing TOPIC message.
+
+October 5, 2005 - clsk - OPMODE message.
+ * Finished parsing OPMODE message.

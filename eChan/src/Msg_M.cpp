@@ -46,181 +46,163 @@ namespace eNetworks
 
 void Msg_M::Parser()
 {
-   if (Source.IsClient()) // This is a client trying to set a mode.
+   if ('#' == Parameters[0][0])
    {
-   	if ('#' == Parameters[0][0])
+   	// This is a channel Mode.
+   	Channel* theChannel = eNetwork->FindChannel(Parameters[0]);
+   	if (NULL == theChannel)
+   	   debug << "Cannot find Channel " << Parameters[0] << ". in Mode message." << endb;
+
+   	bool bAdd = true;
+   	map<char, string> ParametersMap;
+   	unsigned int intCurrentParameter = 1;
+
+   	for (unsigned int i = 0; i < Parameters[1].length(); i++)
    	{
-   	   // This is a channel Mode.
-   	   Channel* theChannel = eNetwork->FindChannel(Parameters[0]);
-   	   if (NULL == theChannel)
-   	   	debug << "Cannot find Channel " << Parameters[0] << ". in Mode message." << endb;
-
-   	   bool bAdd = true;
-   	   map<char, string> ParametersMap;
-   	   unsigned int intCurrentParameter = 1;
-
-   	   for (unsigned int i = 0; i < Parameters[1].length(); i++)
+   	   ChannelClient* theChannelClient = NULL;
+   	   switch(Parameters[1][i])
    	   {
-   	   	ChannelClient* theChannelClient = NULL;
-   	   	switch(Parameters[1][i])
-   	   	{
-   	   	   case '+':
-   	   	   	bAdd = true;
-   	   	   	break;
+   	   	case '+':
+   	   	   bAdd = true;
+   	   	   break;
 
-   	   	   case '-':
-   	   	   	bAdd = false;
-   	   	   	break;
+   	   	case '-':
+   	   	   bAdd = false;
+   	   	   break;
 
-   	   	   case 'l':
-   	   	   	if (bAdd)
-   	   	   	{
-   	   	   	   theChannel->SetLimit(StringToInt(Parameters[intCurrentParameter+1]));
-   	   	   	   cout << Source.GetName() << " Sets limit " << Parameters[intCurrentParameter+1] << " in channel " 
-                                << theChannel->GetName() << "." << endl;
-   	   	   	   intCurrentParameter++;
-   	   	   	}
-   	   	   	else
-   	   	   	{
-   	   	   	   theChannel->UnSetLimit();
-   	   	   	   cout << Source.GetName() << " UnSets limit in channel " << theChannel->GetName() << "." << endl;
-   	   	   	}
-   	   	   	break;
-
-   	   	   case 'k':
-   	   	   	if (bAdd)
-   	   	   	{
-   	   	   	   theChannel->SetKey(Parameters[intCurrentParameter+1]);
-   	   	   	   cout << Source.GetName() << " Sets key " << Parameters[intCurrentParameter+1] << " in channel "
-   	   	   	   	<< theChannel->GetName() << "." << endl;
-   	   	   	   intCurrentParameter++;
-   	   	   	}
-   	   	   	else
-   	   	   	{
-   	   	   	   theChannel->UnSetKey();
-   	   	   	   cout << Source.GetName() << " UnSets key " << Parameters[intCurrentParameter+1] << " in channel "
-   	   	   	   	<< theChannel->GetName() << "." << endl;
-   	   	   	   intCurrentParameter++;
-   	   	   	}
-   	   	   	break;
-
-   	   	   case 'b':
-   	   	   	if (bAdd)
-   	   	   	{
-   	   	   	   theChannel->AddBan(Parameters[intCurrentParameter+1]);
-   	   	   	   cout << Source.GetName() << " Sets ban " << Parameters[intCurrentParameter+1] << " in channel "
-   	   	   	   	<< theChannel->GetName() << "." << endl;
-   	   	   	   intCurrentParameter++;
-   	   	   	}
-   	   	   	else
-   	   	   	{
-   	   	   	   theChannel->DelBan(Parameters[intCurrentParameter+1]);
-   	   	   	   cout << Source.GetName() << " UnSets ban " << Parameters[intCurrentParameter+1] << " in channel "
-   	   	   	   	<< theChannel->GetName() << "." << endl;
-   	   	   	   intCurrentParameter++;
-   	   	   	}
-
-   	   	   	break;
-   	   	   
-   	   	   // user modes.
-   	   	   case 'o':
-   	   	   case 'v':
-
-   	   	   	theChannelClient = theChannel->FindChannelClient(Parameters[intCurrentParameter+1]);
-   	   	   	if (NULL == theChannelClient)
-   	   	   	{
-   	   	   	   debug << "Cannot find ChannelClient " << Parameters[intCurrentParameter+1] << ". in Mode message." << endb;
-   	   	   	   break;
-   	   	   	}
-   	   	   	   
-   	   	   	if (bAdd)
-   	   	   	{
-   	   	   	   cout << Source.GetName() << " Sets +" << Parameters[1][i] << " to user " << theChannelClient->ClientPtr->GetNickName()
-   	   	   	   	<< " in channel " << theChannel->GetName() << "." << endl;
-   	   	   	   theChannelClient->AddMode(Parameters[1][i]);
-   	   	   	}
-   	   	   	else
-   	   	   	{
-   	   	   	   theChannelClient->DelMode(Parameters[1][i]);
-   	   	   	   cout << Source.GetName() << " Sets -" << Parameters[1][i] << " to user " << theChannelClient->ClientPtr->GetNickName()
-   	   	   	   	<< " in channel " << theChannel->GetName() << "." << endl;
-   	   	   	}
-   	   	    
+   	   	case 'l':
+   	   	   if (bAdd)
+   	   	   {
+   	   	   	theChannel->SetLimit(StringToInt(Parameters[intCurrentParameter+1]));
+   	   	   	cout << Source.GetName() << " Sets limit " << Parameters[intCurrentParameter+1] << " in channel " 
+                             << theChannel->GetName() << "." << endl;
    	   	   	intCurrentParameter++;
+   	   	   }
+   	   	   else
+   	   	   {
+   	   	   	theChannel->UnSetLimit();
+   	   	   	cout << Source.GetName() << " UnSets limit in channel " << theChannel->GetName() << "." << endl;
+   	   	   }
+   	   	   break;
 
-   	   	   	theChannelClient = NULL;
+   	   	case 'k':
+   	   	   if (bAdd)
+   	   	   {
+   	   	   	theChannel->SetKey(Parameters[intCurrentParameter+1]);
+   	   	   	cout << Source.GetName() << " Sets key " << Parameters[intCurrentParameter+1] << " in channel "
+   	   	   	   << theChannel->GetName() << "." << endl;
+   	   	   	intCurrentParameter++;
+   	   	   }
+   	   	   else
+   	   	   {
+   	   	   	theChannel->UnSetKey();
+   	   	   	cout << Source.GetName() << " UnSets key " << Parameters[intCurrentParameter+1] << " in channel "
+   	   	   	   << theChannel->GetName() << "." << endl;
+   	   	   	intCurrentParameter++;
+   	   	   }
    	   	   	break;
 
-   	   	   default:
-   	   	   	if (bAdd)
-   	   	   	{
-   	   	   	   cout << Source.GetName() << " Sets mode " << Parameters[1][i] << " in channel "
-   	   	   	   	<< theChannel->GetName() << "." << endl;
-   	   	   	   theChannel->SetMode(Parameters[1][i]);
-   	   	   	}
-   	   	   	else
-   	   	   	{
-   	   	   	   cout << Source.GetName() << " UnSets mode " << Parameters[1][i] << " in channel "
-   	   	   	   	<< theChannel->GetName() << "." << endl;
-   	   	   	   theChannel->UnSetMode(Parameters[1][i]);
-   	   	   	}
+   	   	case 'b':
+   	   	   if (bAdd)
+   	   	   {
+   	   	   	theChannel->AddBan(Parameters[intCurrentParameter+1]);
+   	   	   	cout << Source.GetName() << " Sets ban " << Parameters[intCurrentParameter+1] << " in channel "
+   	   	   	   << theChannel->GetName() << "." << endl;
+   	   	   	intCurrentParameter++;
+   	   	   }
+   	   	   else
+   	   	   {
+   	   	   	theChannel->DelBan(Parameters[intCurrentParameter+1]);
+   	   	   	cout << Source.GetName() << " UnSets ban " << Parameters[intCurrentParameter+1] << " in channel "
+   	   	   	   << theChannel->GetName() << "." << endl;
+   	   	   	intCurrentParameter++;
+   	   	   }
 
-   	   	   	break;
-   	   	}   
-   	   }
-   	}
-   	else
-   	{
-   	   // This is a user mode.
-   	   Client* theClient = eNetwork->FindClientByNickName(Parameters[0]);
-   	   if (NULL == theClient)
-   	   	debug << "Cannot find client " << Parameters[0] << ". in Mode message." << endb;
+   	   	   break;
+   	   	   
+   	   	// user modes.
+   	   	case 'o':
+   	   	case 'v':
 
-   	   bool bAdd = true;
-   	   for (unsigned int i = 0; i < Parameters[1].length(); i++)
-   	   {
-   	   	switch(Parameters[1][i])
-   	   	{
-   	   	   case '+':
-   	   	   	bAdd = true;
+   	   	   theChannelClient = theChannel->FindChannelClient(Parameters[intCurrentParameter+1]);
+   	   	   if (NULL == theChannelClient)
+   	   	   {
+   	   	   	debug << "Cannot find ChannelClient " << Parameters[intCurrentParameter+1] << ". in Mode message." << endb;
    	   	   	break;
+   	   	   }
+   	   	   	   
+   	   	   if (bAdd)
+   	   	   {
+   	   	   	cout << Source.GetName() << " Sets +" << Parameters[1][i] << " to user " << theChannelClient->ClientPtr->GetNickName()
+   	   	   	   << " in channel " << theChannel->GetName() << "." << endl;
+   	   	   	theChannelClient->AddMode(Parameters[1][i]);
+   	   	   }
+   	   	   else
+   	   	   {
+   	   	   	theChannelClient->DelMode(Parameters[1][i]);
+   	   	   	cout << Source.GetName() << " Sets -" << Parameters[1][i] << " to user " << theChannelClient->ClientPtr->GetNickName()
+   	   	   	   << " in channel " << theChannel->GetName() << "." << endl;
+   	   	   }
+   	   	    
+   	   	   intCurrentParameter++;
 
-   	   	   case '-':
-   	   	   	bAdd = false;
-   	   	   	break;
+   	   	   theChannelClient = NULL;
+   	   	   break;
 
-   	   	   default:
-   	   	   	cout << "User " << Parameters[0] << " sets mode ";
-  	   	   	if (bAdd)
-   	   	   	{
-   	   	   	   theClient->AddMode(Parameters[1][i]);
-   	   	   	   cout <<  "+";
-   	   	   	}
-   	   	   	else
-   	   	   	{
-   	   	   	   theClient->DelMode(Parameters[1][i]);
-   	   	   	   cout << "-";
-   	   	   	}
-   	   	   	cout << Parameters[1][i] << "." << endl;
-   	   	   	break;
-   	   	}
-   	   }
-   	}
-   }
-   else if (Source.IsServer()) // This is a server setting a mode.
-   {
-   	if ('#' == Parameters[0][0])
-   	{
-   	   // This is a channel Mode.
-   	}
-   	else
-   	{
-   	   // This is a user mode.
+   	   	default:
+   	   	   if (bAdd)
+   	   	   {
+   	   	   	cout << Source.GetName() << " Sets mode " << Parameters[1][i] << " in channel "
+   	   	   	   << theChannel->GetName() << "." << endl;
+   	   	   	theChannel->SetMode(Parameters[1][i]);
+   	   	   }
+   	   	   else
+   	   	   {
+   	   	   	cout << Source.GetName() << " UnSets mode " << Parameters[1][i] << " in channel "
+   	   	   		<< theChannel->GetName() << "." << endl;
+   	   	   	theChannel->UnSetMode(Parameters[1][i]);
+   	   	   }
+
+   	   	   break;
+   	   }   
    	}
    }
    else
    {
-   	// shouldn't get here. A mode message should not be sourceless.
+   	// This is a user mode.
+   	Client* theClient = eNetwork->FindClientByNickName(Parameters[0]);
+   	if (NULL == theClient)
+   	   debug << "Cannot find client " << Parameters[0] << ". in Mode message." << endb;
+
+   	bool bAdd = true;
+   	for (unsigned int i = 0; i < Parameters[1].length(); i++)
+   	{
+   	   switch(Parameters[1][i])
+   	   {
+   	   	case '+':
+   	   	   bAdd = true;
+   	   	   break;
+
+   	   	case '-':
+   	   	   bAdd = false;
+   	   	   break;
+
+   	   	default:
+   	   	   cout << "User " << Parameters[0] << " sets mode ";
+  	   	   if (bAdd)
+   	   	   {
+   	   	   	theClient->AddMode(Parameters[1][i]);
+   	   	   	cout <<  "+";
+   	   	   }
+   	   	   else
+   	   	   {
+   	   	   	theClient->DelMode(Parameters[1][i]);
+   	   	   	cout << "-";
+   	   	   }
+   	   	   cout << Parameters[1][i] << "." << endl;
+   	   	   break;
+   	   }
+   	}
    }
 }
 

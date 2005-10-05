@@ -72,6 +72,11 @@ struct Client
    	   }
    	}
 
+   	bool IsOper() const
+   	{
+   	   return HasMode('o');
+   	}
+
    	void ChangeNickName (const std::string &aNickName) { NickName = aNickName; }
    	void ChangeTimeStamp (const time_t &aTimeStamp) { TimeStamp = aTimeStamp; }
 

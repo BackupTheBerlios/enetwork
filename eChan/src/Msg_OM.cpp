@@ -19,21 +19,13 @@
  *
 */
 
-
 #include <string>
 #include <iostream>
-#include <cstdlib>
 
-#include "debug.h"
-#include "tools.h"
-#include "Msg_EB.h"
-#include "Socket.h"
-#include "P10Tokens.h"
-#include "Server.h"
-#include "OutBuffer.h"
+#include "Msg_M.h"
+#include "Msg_OM.h"
 #include "Network.h"
-#include "Channel.h"
-#include "Client.h"
+#include "debug.h"
 
 using std::string;
 using std::cout;
@@ -42,26 +34,18 @@ using std::endl;
 namespace eNetworks
 {
 
-void Msg_EB::Parser()
+void Msg_OM::Parser()
 {
-   if (!Source.IsServer())
+   if (Source.IsClient())
    {
-   	debug << "Source should be a server in Msg_EB::Parser()." << endb;
-   	exit(0);
+   	if (false == eNetwork->FindClientByNumeric(Source.GetNumeric())->IsOper())
+   	   debug << Source.GetName() << " issuing OPMODE but is not Oper." << endb;
    }
 
-   string msg = LocalServer->GetNumeric();
-   msg += " "; 
-   msg += "EA";
-   eOutBuffer->insert(msg);
-
-   Channel* theChannel = eNetwork->FindChannel("#cservice");
-   if (NULL == theChannel)
-   	msg = LocalClient->GetNumeric() + " J #cservice " + IntToString(time(0));
-   else
-   	msg = LocalClient->GetNumeric() + " J #cservice " + IntToString(theChannel->GetTimeStamp());
-
-   eOutBuffer->insert(msg);
+   // Treat this as a MODE message.
+   Msg_M theMsg(Source, Parameters);
+   theMsg.Parser();
 }
 
 } // namespace eNetworks
+

@@ -19,21 +19,14 @@
  *
 */
 
-
 #include <string>
 #include <iostream>
-#include <cstdlib>
 
-#include "debug.h"
-#include "tools.h"
-#include "Msg_EB.h"
-#include "Socket.h"
+#include "Msg_T.h"
 #include "P10Tokens.h"
-#include "Server.h"
-#include "OutBuffer.h"
-#include "Network.h"
 #include "Channel.h"
-#include "Client.h"
+#include "Network.h"
+#include "debug.h"
 
 using std::string;
 using std::cout;
@@ -42,26 +35,19 @@ using std::endl;
 namespace eNetworks
 {
 
-void Msg_EB::Parser()
+void Msg_T::Parser()
 {
-   if (!Source.IsServer())
+   Channel* theChannel = eNetwork->FindChannel(Parameters[0]);
+   if (NULL == theChannel)
    {
-   	debug << "Source should be a server in Msg_EB::Parser()." << endb;
+   	debug << "Cannot find channel in Topic message" << endb;
    	exit(0);
    }
 
-   string msg = LocalServer->GetNumeric();
-   msg += " "; 
-   msg += "EA";
-   eOutBuffer->insert(msg);
-
-   Channel* theChannel = eNetwork->FindChannel("#cservice");
-   if (NULL == theChannel)
-   	msg = LocalClient->GetNumeric() + " J #cservice " + IntToString(time(0));
-   else
-   	msg = LocalClient->GetNumeric() + " J #cservice " + IntToString(theChannel->GetTimeStamp());
-
-   eOutBuffer->insert(msg);
+   theChannel->SetTopic(Parameters[1]);
+   
+   cout << Source.GetName() << " has changed the topic in " << Parameters[0] << " to \"" << Parameters[1] << "\"." << endl;
 }
 
 } // namespace eNetworks
+
