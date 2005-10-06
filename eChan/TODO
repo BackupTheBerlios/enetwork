@@ -1,6 +1,6 @@
 - *URGENT* - Socket mutex is staying locked when we're trying to read a new message. look into poll().
-- *URGENT* - When there are serveral servers on the network and we try to delete servers some are not being taken off the map table.
-- Use Singleton Design Pattern instead of what's being used right now.
+- Test DelServer fix.
+- Use Singleton Design Pattern instead of what's being used right now for some classes.
 - Msgs to implement in the following order:
   - JUPE
   - GLINE

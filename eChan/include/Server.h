@@ -24,6 +24,7 @@
 
 #include <string>
 #include <map>
+#include <list>
 
 #include "Client.h"
 
@@ -52,6 +53,8 @@ struct Server
    	// Client numeric represented by CCC in contrast to SSCCC.
    	typedef std::map<std::string, Client *> ServerClientsType;
    	typedef ServerClientsType::iterator ServerClientsIterator;
+   	typedef std::list<std::string> ServerDownLinksType;
+   	typedef ServerDownLinksType::iterator ServerDownLinksIterator;
 
    	~Server()
    	{}
@@ -72,14 +75,15 @@ struct Server
    	const char Flag;
 
    	ServerClientsType ServerClients;
+
+   	ServerDownLinksType ServerDownLinks;
  
    	Server(const std::string &aNumeric, const std::string &aName, const std::string &aUpLinkNumeric, 
                const std::string &aDescription, const time_t &aStartTime, const time_t &aLinkTime, 
                const unsigned int &aHopCount, const char &aFlag) :
      	Numeric(aNumeric), Name(aName), UpLinkNumeric(aUpLinkNumeric), Description(aDescription),
-        StartTime(aStartTime), LinkTime(aLinkTime), HopCount(aHopCount), Flag(aFlag), ServerClients()
+        StartTime(aStartTime), LinkTime(aLinkTime), HopCount(aHopCount), Flag(aFlag), ServerClients(), ServerDownLinks()
      	{}
-
 };
 
 extern Server *LocalServer;

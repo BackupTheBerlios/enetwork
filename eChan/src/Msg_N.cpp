@@ -144,12 +144,9 @@ void Msg_N::Parser()
         exit(0);
    }
 
-   /*
    cout << "Added Client with Numeric: " << Numeric << " NickName: " << NickName << " Account: " << Account <<
            " UserName: " << UserName << " HostName: " << HostName << " B6IP: " << B64IP << " Modes: " << Modes <<
            " TimeStamp: " << TimeStamp << " HopCount: " << HopCount << endl << "UserInfo: " << UserInfo << endl;
-   */
-
 }
 
 } // namespace eNetworks

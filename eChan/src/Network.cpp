@@ -105,6 +105,9 @@ bool Network::AddServer(const std::string &aNumeric, const std::string &aName, c
    	return false;
    }
 
+   // Add this server to the DownLinks list of its uplink.
+   FindServerByNumeric(aUpLinkNumeric)->ServerDownLinks.push_back(aNumeric);
+
 // everything went well.
 return true;
 }
@@ -127,6 +130,7 @@ bool Network::DelServerByNumeric(const std::string &aNumeric)
    	DelClientByNumeric(i->second->Numeric);
    }
 
+/*
    // Delete servers that are linked to this server.
    for(ServerMapType::iterator i = Servers.begin(); i != Servers.end(); i++)
    {
@@ -141,6 +145,13 @@ bool Network::DelServerByNumeric(const std::string &aNumeric)
    	   }
    	}
    } 
+*/
+
+   // Delete servers that are linked to this server.
+   for (Server::ServerDownLinksIterator i = ServerIter->second->ServerDownLinks.begin(); i != ServerIter->second->ServerDownLinks.end(); i++)
+   {
+   	DelServerByNumeric(*i);
+   }
 
    // delete the Server from memory.
    delete ServerIter->second;

@@ -155,3 +155,7 @@ October 4, 2005 - clsk - TOPIC message.
 
 October 5, 2005 - clsk - OPMODE message.
  * Finished parsing OPMODE message.
+
+October 6, 2005 - clsk - DelServer bug fixed.
+ * Added ServerDownLinks member to servers to fix bug related to deleting servers on netsplits.
+   I haven't been able to test it yet, but this should solve the problem. I'll test when time permits.
