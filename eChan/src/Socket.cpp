@@ -44,6 +44,7 @@ Socket::Socket(const string &host, const int port) : sockfd(-1)
    ::memset(&m_addr, 0, sizeof(m_addr));
 
    sockfd = ::socket(AF_INET, SOCK_STREAM, 0);
+   fcntl(sockfd, F_SETFL, O_NONBLOCK);
 
    if (!is_valid())
     throw SocketException("Could not create socket", SocketException::SOCKET);

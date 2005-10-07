@@ -105,8 +105,12 @@ bool Network::AddServer(const std::string &aNumeric, const std::string &aName, c
    	return false;
    }
 
-   // Add this server to the DownLinks list of its uplink.
-   FindServerByNumeric(aUpLinkNumeric)->ServerDownLinks.push_back(aNumeric);
+   // Local server is not on ServerMap
+   if (LocalServer->GetNumeric() != aUpLinkNumeric)
+   {
+   	// Add this server to the DownLinks list of its uplink.
+   	FindServerByNumeric(aUpLinkNumeric)->ServerDownLinks.push_back(aNumeric);
+   }
 
 // everything went well.
 return true;

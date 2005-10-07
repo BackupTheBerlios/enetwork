@@ -62,6 +62,8 @@ void Msg_EB::Parser()
    	msg = LocalClient->GetNumeric() + " J #cservice " + IntToString(theChannel->GetTimeStamp());
 
    eOutBuffer->insert(msg);
+
+   cout << "sdf" << endl;
 }
 
 } // namespace eNetworks

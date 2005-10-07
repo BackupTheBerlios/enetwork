@@ -132,10 +132,12 @@ int main()
 
    pollfd PollFD;
    PollFD.fd = eSock->GetSocket();
-   PollFD.events = POLLIN;
+   PollFD.events = POLLIN|POLLPRI;
 
    do
    {
+   	PollFD.revents = NULL;
+   	cout << "test" << endl;
    	if (poll(&PollFD, 1, -1) == 1 && (PollFD.revents == POLLIN || PollFD.revents == POLLPRI))
    	{
    	   pthread_cond_signal(&CV_NEW_IN_MSG);
