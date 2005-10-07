@@ -26,7 +26,7 @@
 #include <pthread.h>
 
 #include "Buffer.h"
-#include "Thread.h"
+#include "OutMsgSystem.h"
 
 using std::string;
 
@@ -38,7 +38,7 @@ class OutBuffer : public Buffer
    	OutBuffer() : Buffer() {};
    	~OutBuffer() {}
 
-   	void insert(const std::string& _Msg) { Msgs.push_back(_Msg); pthread_cond_signal(&CV_NEW_OUT_MSG); }
+   	void insert(const std::string& _Msg) { Msgs.push_back(_Msg); OutMsgSystem::Execute(); }
 };
 
 extern OutBuffer* eOutBuffer;

@@ -95,17 +95,6 @@ int main()
    // Add all the Tokens to the token map.
    eTokens = new Tokens();
 
-   // Create Threads...
-   cout << "Creating new Threads..." << endl;
-   InMsgSystem eInMsgSystem;
-   eInMsgSystem.Start();
-
-   OutMsgSystem eOutMsgSystem;
-   eOutMsgSystem.Start();
-
-   MsgParseSystem eParseMsgSystem;
-   eParseMsgSystem.Start();
-
    if (NULL == eTokens)
    {
    	debug << "Could not allocate memory for tokens" << endb;
@@ -140,7 +129,7 @@ int main()
    	cout << "test" << endl;
    	if (poll(&PollFD, 1, -1) == 1 && (PollFD.revents == POLLIN || PollFD.revents == POLLPRI))
    	{
-   	   pthread_cond_signal(&CV_NEW_IN_MSG);
+   	   InMsgSystem::Execute();
    	}
 
    	// We're going to deal with timers here...

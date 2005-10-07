@@ -60,13 +60,6 @@ namespace eNetworks
 
 void MsgParseSystem::Execute()
 {
-   do
-   {
-   	// lock the mutex.
-   	pthread_mutex_lock(&MX_EINBUFFER); 
-   	pthread_cond_wait(&CV_NEW_CMD, &MX_EINBUFFER); // Lets wait until we get a new Complete Message.
-   	pthread_mutex_unlock(&MX_EINBUFFER);
-
    	do
    	{
    	   pthread_mutex_lock(&MX_EINBUFFER);
@@ -227,9 +220,6 @@ void MsgParseSystem::Execute()
 
    	}
    	while (0 < eInBuffer->count());
-
-   }
-   while (true); // Main thread loop...
 }
 
 

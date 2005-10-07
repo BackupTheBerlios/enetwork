@@ -159,3 +159,8 @@ October 5, 2005 - clsk - OPMODE message.
 October 6, 2005 - clsk - DelServer bug fixed.
  * Added ServerDownLinks member to servers to fix bug related to deleting servers on netsplits.
    I haven't been able to test it yet, but this should solve the problem. I'll test when time permits.
+
+October 7, 2005 - clsk - Got rid of multithreading.
+ * The base system doesn't use multithreading anymore.
+   It makes the system too complex and there's not much to gain from it.
+ * The thread class will stay in the source tree because I plan bots to run on a different thread.

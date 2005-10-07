@@ -26,6 +26,7 @@
 #include "InMsgSystem.h"
 #include "Socket.h"
 #include "InBuffer.h"
+#include "MsgParseSystem.h"
 
 using std::cout;
 using std::endl;
@@ -35,29 +36,13 @@ namespace eNetworks
 
 void InMsgSystem::Execute()
 {
-   do
+   string strBuffer;
+   (*eSock) >> strBuffer;
+   eInBuffer->insert(strBuffer);
+   if (eInBuffer->Digest())
    {
-   	pthread_mutex_lock(&MX_ESOCK);
-   	pthread_cond_wait(&CV_NEW_IN_MSG, &MX_ESOCK);
-   	string aNewMsg;
-   	(*eSock) >> aNewMsg; // put it on a tmp buffer before we give it to InBuffer.
-   	pthread_mutex_unlock(&MX_ESOCK);
-
-   	// lets give it to InBuffer.
-   	pthread_mutex_lock(&MX_EINBUFFER); // get access to InBuffer.
-   	eInBuffer->insert(aNewMsg);
-   	if (eInBuffer->Digest())
-   	{
-   	   pthread_mutex_unlock(&MX_EINBUFFER);
-   	   pthread_cond_signal(&CV_NEW_CMD);
-   	}
-   	else
-   	{
-   	   pthread_mutex_unlock(&MX_EINBUFFER);
-   	}
-
-   } while (true);
-
+   	MsgParseSystem::Execute();
+   }
 }
 
 } // namespace eNetworks

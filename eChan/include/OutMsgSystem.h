@@ -22,22 +22,21 @@
 #ifndef ELECTRONIC_NETWORKS__OUTMSGSYSTEM_H
 #define ELECTRONIC_NETWORKS__OUTMSGSYSTEM_H
 
-#include <Thread.h>
 
 namespace eNetworks
 {
 
-class OutMsgSystem : public Thread
+class OutMsgSystem
 {
    public:
-        OutMsgSystem() : Thread() {}
 
-        void Execute();
+        static void Execute();
 
    private:
-
+   	OutMsgSystem() {}
 
 };
+
 
 } // namespace eNetworks
 

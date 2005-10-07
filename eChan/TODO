@@ -1,7 +1,7 @@
-- *URGENT* - Socket mutex is staying locked when we're trying to read a new message. look into poll().
 - Test DelServer fix.
 - Use Singleton Design Pattern instead of what's being used right now for some classes.
-- Msgs to implement in the following order:
+- Design and imeplement the channel service bot.
+- Msgs to implement in the following order: (these are not really needed until we start working on the oper service bot)
   - JUPE
   - GLINE
 - FULLY test Network base.
