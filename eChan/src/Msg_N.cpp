@@ -46,7 +46,7 @@ void Msg_N::Parser()
    if (Parameters.size() == 2)
    {
 
-   	Client* ClientSrc = eNetwork->FindClientByNumeric(Source.GetNumeric());
+   	Client* ClientSrc = Network::Interface.FindClientByNumeric(Source.GetNumeric());
         if (NULL == ClientSrc)
         {
            debug << "Protocol Violation: Token N with no Client source." << endb;
@@ -131,7 +131,7 @@ void Msg_N::Parser()
          UserInfo = Parameters[7];
    }
 
-   if (!eNetwork->AddClient(Numeric, NickName, Account, UserName, HostName, B64IP, Modes, UserInfo, TimeStamp, HopCount))
+   if (!Network::Interface.AddClient(Numeric, NickName, Account, UserName, HostName, B64IP, Modes, UserInfo, TimeStamp, HopCount))
    {
 
 /*   	

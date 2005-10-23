@@ -44,16 +44,16 @@ void Msg_J::Parser()
 
    if ("0" == Parameters[0])
    {
-   	eNetwork->FindClientByNumeric(Source.GetNumeric())->ClearChannels();
+   	Network::Interface.FindClientByNumeric(Source.GetNumeric())->ClearChannels();
    	return;
    }
    	
 
-   Channel* aChannelPtr = eNetwork->FindChannel(Parameters[0]);
+   Channel* aChannelPtr = Network::Interface.FindChannel(Parameters[0]);
 
    if (NULL != aChannelPtr)
    {
-   	if (!aChannelPtr->AddChannelClient(eNetwork->FindClientByNumeric(Source.GetNumeric())))
+   	if (!aChannelPtr->AddChannelClient(Network::Interface.FindClientByNumeric(Source.GetNumeric())))
    	{
    	   debug << "Could not join " << Source.GetName() << " to channel " << Parameters[0] << "." << endb;
    	}

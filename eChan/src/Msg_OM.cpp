@@ -38,7 +38,7 @@ void Msg_OM::Parser()
 {
    if (Source.IsClient())
    {
-   	if (false == eNetwork->FindClientByNumeric(Source.GetNumeric())->IsOper())
+   	if (false == Network::Interface.FindClientByNumeric(Source.GetNumeric())->IsOper())
    	   debug << Source.GetName() << " issuing OPMODE but is not Oper." << endb;
    }
 

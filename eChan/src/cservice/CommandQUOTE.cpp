@@ -19,29 +19,50 @@
  *
 */
 
-#ifndef ELECTRONIC_NETWORKS__MSGPARSESYSTEM_H
-#define ELECTRONIC_NETWORKS__MSGPARSESYSTEM_H
+#include <iostream>
+#include <string>
 
-#include "MsgMonitor.h"
+#include "MsgTokenizer.h"
+#include "CommandQUOTE.h"
+#include "Network.h"
+#include "OutBuffer.h"
+#include "Client.h"
+
+using std::cout;
+using std::endl;
+using std::string;
 
 namespace eNetworks
 {
 
-class MsgParseSystem : public MsgMonitor
+namespace cservice
 {
 
-   public:
-   	~MsgParseSystem() {}
+CommandQUOTE::CommandQUOTE(Bot* theBot, Client* theSource, const MsgTokenizer& refParameters) : Command(theBot, theSource, refParameters)
+{
+   Syntax = "/MSG " + LocalBot->theClient.GetNickName() + " quote <valid P10 message>";
+}
 
+void CommandQUOTE::Parser()
+{
+   if (Parameters.size() <= 0)
+   {
+   	LocalBot->SendNotice(Source, "SYNTAX: " + Syntax);
+   	return;
+   }
 
-   	static void Execute();
+   string strMsg = Parameters[0];
 
-   private:
-   	MsgParseSystem() {}
+   for (unsigned int i = 1; i < Parameters.size(); i++)
+   {
+   	strMsg += " ";
+   	strMsg += Parameters[i];
+   }
 
-};
+   OutBuffer::obInstance.insert(strMsg);
 
+}
+
+} // namespace cservice
 
 } // namespace eNetworks
-
-#endif // ELECTRONIC_NETWORKS__MSGPARSESYSTEM_H

@@ -19,29 +19,34 @@
  *
 */
 
-#ifndef ELECTRONIC_NETWORKS__MSGPARSESYSTEM_H
-#define ELECTRONIC_NETWORKS__MSGPARSESYSTEM_H
+#ifndef ELECTRONIC_NETWORKS__MSGMONITOR_H
+#define ELECTRONIC_NETWORKS__MSGMONITOR_H
 
-#include "MsgMonitor.h"
+#include <list>
+#include <utility>
+
+#include "Bot.h"
+#include "MsgSource.h"
+#include "MsgTokenizer.h"
+#include "P10Tokens.h"
 
 namespace eNetworks
 {
-
-class MsgParseSystem : public MsgMonitor
+class MsgMonitor
 {
-
    public:
-   	~MsgParseSystem() {}
+   	static void AddMonitor(const Tokens::Token& _Token, Bot* _Bot);
 
-
-   	static void Execute();
+   protected:
+   	MsgMonitor() {}
+   	static void NotifyMonitors(const Tokens::Token& _Token, const MsgSource& Source, const MsgTokenizer& Parameters);
 
    private:
-   	MsgParseSystem() {}
-
+   	typedef std::pair<Tokens::Token, Bot*> MonitorType;
+   	typedef std::list<MonitorType> MonitorListType;
+   	static MonitorListType mList;
 };
-
 
 } // namespace eNetworks
 
-#endif // ELECTRONIC_NETWORKS__MSGPARSESYSTEM_H
+#endif // ELECTRONIC_NETWORKS__MSGMONITOR_H

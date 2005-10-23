@@ -32,14 +32,12 @@ class MsgTokenizer
 {
    public:
 
-   	MsgTokenizer(const std::string &aCommand, const char &Delimiter = ' ');
-   	unsigned int size() { return Tokens.size(); }
-   	std::string operator[](const unsigned int &position) { return Tokens[position]; }
-
+   	MsgTokenizer(const std::string &aCommand, const char &Terminator = ':', const char &Delimiter = ' ');
+   	unsigned int size() const { return Tokens.size(); }
+   	std::string operator[](const unsigned int &position) const { return Tokens[position]; }
 
    private:
    	std::vector<std::string> Tokens;
-
 };
 
 } // namespace eNetworks

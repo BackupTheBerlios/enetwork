@@ -49,17 +49,17 @@ void Msg_C::Parser()
 
    for (unsigned int i = 0; i < Channels.size(); i++)
    {
-   	if (NULL == eNetwork->FindChannel(Channels[i]))
+   	if (NULL == Network::Interface.FindChannel(Channels[i]))
    	{
 
-   	   if (!eNetwork->AddChannel(Channels[i], StringToInt(Parameters[1])))
+   	   if (!Network::Interface.AddChannel(Channels[i], StringToInt(Parameters[1])))
    	   {
    	   	debug << "Could not add channel " << Channels[i] << endb;
    	   	exit(0);
    	   }
    	   else
    	   {
-   	   	eNetwork->FindChannel(Channels[i])->AddChannelClient(eNetwork->FindClientByNumeric(Source.GetNumeric()), "o");
+   	   	Network::Interface.FindChannel(Channels[i])->AddChannelClient(Network::Interface.FindClientByNumeric(Source.GetNumeric()), "o");
    	   	cout << "Added Channel " << Channels[i] << " to db. And set client " << Source.GetName() << " as the creator "
    	   	     << "at TimeStamp " << Parameters[1] << endl;
    	   }

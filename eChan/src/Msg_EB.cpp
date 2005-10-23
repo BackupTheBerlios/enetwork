@@ -53,17 +53,7 @@ void Msg_EB::Parser()
    string msg = LocalServer->GetNumeric();
    msg += " "; 
    msg += "EA";
-   eOutBuffer->insert(msg);
-
-   Channel* theChannel = eNetwork->FindChannel("#cservice");
-   if (NULL == theChannel)
-   	msg = LocalClient->GetNumeric() + " J #cservice " + IntToString(time(0));
-   else
-   	msg = LocalClient->GetNumeric() + " J #cservice " + IntToString(theChannel->GetTimeStamp());
-
-   eOutBuffer->insert(msg);
-
-   cout << "sdf" << endl;
+   OutBuffer::obInstance.insert(msg);
 }
 
 } // namespace eNetworks

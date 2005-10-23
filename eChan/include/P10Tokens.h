@@ -27,27 +27,6 @@
 
 namespace eNetworks
 {
-
-/*
-   const std::string    SERVER             =  "S";
-   const std::string    PASS               =  "PASS";
-   const std::string    PRESERVER          =  "SERVER";
-   const std::string    ERROR              =  "ERROR";
-   const std::string    NICK               =  "N";
-   const std::string    B                  =  "B";
-   const std::string    BURST              =  "BURST";
-   const std::string    JOIN               =  "J";
-   const std::string    PART               =  "L";
-   const std::string    PING               =  "G";
-   const std::string    PONG               =  "Z";
-   const std::string    TOPIC              =  "T";
-   const std::string    END_OF_BURST       =  "EB";
-   const std::string    END_OF_ACK         =  "EA";
-   const std::string    ACCOUNT            =  "AC";
-   const std::string    CREATE             =  "C";
-   const std::string    QUIT               =  "Q";
-*/
-
 class Tokens
 {
    public:
@@ -74,7 +53,9 @@ class Tokens
    	   KICK,
    	   CLEARMODE,
    	   TOPIC,
-   	   OPMODE
+   	   OPMODE,
+   	   PRIVMSG,
+   	   NOTICE
    	};
 
    	typedef Token TokenType;

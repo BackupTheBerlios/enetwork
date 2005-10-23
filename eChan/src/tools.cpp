@@ -110,6 +110,7 @@ void login(ConfigParser& theConfigParser)
                 LocalServer->GetLinkTime() << " J10 " << LocalServer->GetNumeric() << "AAC" << " +" <<
                 LocalServer->GetFlag() << " :" << LocalServer->GetDescription() << endl;
 
+/*
         (*eSock) << LocalServer->GetNumeric() << " " << "N" << " " << LocalClient->GetNickName() << " " <<
             LocalClient->GetHopCount() << " " << LocalClient->GetTimeStamp() << " " <<
             LocalClient->GetUserName() << " " << LocalClient->GetHostName() << " " <<
@@ -121,7 +122,7 @@ void login(ConfigParser& theConfigParser)
                 LocalClient->GetTimeStamp() << " " << LocalClient->GetUserName() << " " << 
                 LocalClient->GetHostName() << " " << "+idk" << " " << LocalClient->GetB64IP() << " " <<
                 LocalClient->GetNumeric() << " :" << LocalClient->GetUserInfo() << endl;
-
+*/
 
         (*eSock) << LocalServer->GetNumeric() << " " << "EB" << "\r\n";
      

@@ -62,6 +62,4 @@ void Client::ClearChannels()
    }
 }
 
-Client *LocalClient;
-
 } // namespace eNetworks

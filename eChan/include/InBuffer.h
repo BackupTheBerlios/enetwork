@@ -33,23 +33,26 @@ using std::list;
 using std::cout;
 using std::endl;
 
-namespace eNetworks {
+namespace eNetworks
+{
 
+// Singleton
 class InBuffer: public Buffer
 {
    public:
-   	InBuffer(): Buffer(), buffer("") {}
    	virtual ~InBuffer() {}
 
-   	void insert (const std::string &_Msg) { buffer += _Msg; }
+   	void insert (const std::string& _Msg) { buffer += _Msg; }
    	bool Digest();
+
+   	static InBuffer ibInstance;
 
    private:
    	string buffer; // The Actual buffer holding incomplete messages
+   	InBuffer(): Buffer(), buffer("") {}
 
 };
 
-extern InBuffer* eInBuffer;
 
 }
 

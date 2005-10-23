@@ -30,18 +30,21 @@
 
 using std::string;
 
-namespace eNetworks {
+namespace eNetworks
+{
 
 class OutBuffer : public Buffer
 {
    public:
-   	OutBuffer() : Buffer() {};
    	~OutBuffer() {}
 
    	void insert(const std::string& _Msg) { Msgs.push_back(_Msg); OutMsgSystem::Execute(); }
-};
 
-extern OutBuffer* eOutBuffer;
+   	static OutBuffer obInstance;
+
+   private:
+   	OutBuffer() : Buffer() {}
+};
 
 }
 

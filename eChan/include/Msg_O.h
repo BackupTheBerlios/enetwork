@@ -19,29 +19,26 @@
  *
 */
 
-#ifndef ELECTRONIC_NETWORKS__MSGPARSESYSTEM_H
-#define ELECTRONIC_NETWORKS__MSGPARSESYSTEM_H
+#ifndef ELECTRONIC_NETWORKS__MSG_O_H
+#define ELECTRONIC_NETWORKS__MSG_O_H
 
-#include "MsgMonitor.h"
+#include "Msg.h"
 
 namespace eNetworks
 {
 
-class MsgParseSystem : public MsgMonitor
+// -------------------------------------------------------------------------------
+//                    O Token. (An user sending a private notice to a bot)
+// -------------------------------------------------------------------------------
+class Msg_O : public Msg
 {
-
    public:
-   	~MsgParseSystem() {}
+        Msg_O(const MsgSource& _Source, const MsgTokenizer& _Parameters) : Msg(_Source, _Parameters) {}
 
-
-   	static void Execute();
-
-   private:
-   	MsgParseSystem() {}
-
+        virtual ~Msg_O() {}
+        virtual void Parser();
 };
-
 
 } // namespace eNetworks
 
-#endif // ELECTRONIC_NETWORKS__MSGPARSESYSTEM_H
+#endif // ELECTRONIC_NETWORKS__MSG_O_H

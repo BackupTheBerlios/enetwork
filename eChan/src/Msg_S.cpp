@@ -104,7 +104,7 @@ void Msg_S::Parser()
    else
     Description = Parameters[6];
 
-   if (!eNetwork->AddServer(Numeric, Name, Source.GetNumeric(), Description, StartTime, LinkTime, HopCount, Flag))
+   if (!Network::Interface.AddServer(Numeric, Name, Source.GetNumeric(), Description, StartTime, LinkTime, HopCount, Flag))
    {
         debug << "Could not add Server Name" << endb;
         exit(0);

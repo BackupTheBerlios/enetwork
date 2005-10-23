@@ -45,7 +45,7 @@ void login(ConfigParser& theConfigParser);
 
 // structs
 
-/** This struct was made by Dan Karrels for the GNUworld project and is NOT copyrighted to me.
+/** This struct was made by Dan Karrels for the GNUworld project.
  *  The copyright notice at the top of this file does NOT apply to this struct. 
  *  However, this struct was released under the GNU GPL in a file in 
  *  the gnuworld project.

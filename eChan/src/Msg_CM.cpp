@@ -39,7 +39,7 @@ void Msg_CM::Parser()
    if (Source.IsSourceless())
    	debug << "Warning: CLEARMODE message without source." << endb;
 
-   Channel* theChannel = eNetwork->FindChannel(Parameters[0]);
+   Channel* theChannel = Network::Interface.FindChannel(Parameters[0]);
    if (NULL == theChannel)
    {
    	debug << "Cannot find channel " << Parameters[0] << " in CM message." << endb;

@@ -37,7 +37,7 @@ namespace eNetworks
 
 void Msg_T::Parser()
 {
-   Channel* theChannel = eNetwork->FindChannel(Parameters[0]);
+   Channel* theChannel = Network::Interface.FindChannel(Parameters[0]);
    if (NULL == theChannel)
    {
    	debug << "Cannot find channel in Topic message" << endb;

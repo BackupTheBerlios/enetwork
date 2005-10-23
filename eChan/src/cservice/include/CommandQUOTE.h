@@ -19,29 +19,31 @@
  *
 */
 
-#ifndef ELECTRONIC_NETWORKS__MSGPARSESYSTEM_H
-#define ELECTRONIC_NETWORKS__MSGPARSESYSTEM_H
+#ifndef ELECTRONIC_NETWORKS__CSERVICE_COMMANDQUOTE_H
+#define ELECTRONIC_NETWORKS__CSERVICE_COMMANDQUOTE_H
 
-#include "MsgMonitor.h"
+#include <string>
+
+#include "Command.h"
 
 namespace eNetworks
 {
 
-class MsgParseSystem : public MsgMonitor
+namespace cservice
 {
 
+class CommandQUOTE : public Command
+{
    public:
-   	~MsgParseSystem() {}
-
-
-   	static void Execute();
+   	CommandQUOTE(Bot* theBot, Client* theSource, const MsgTokenizer& refParameters);
+   	virtual ~CommandQUOTE() {}
+   	void Parser();
 
    private:
-   	MsgParseSystem() {}
-
 };
-
 
 } // namespace eNetworks
 
-#endif // ELECTRONIC_NETWORKS__MSGPARSESYSTEM_H
+} // namespace cservice
+
+#endif // ELECTRONIC_NETWORKS__CSERVICE_COMMANDQUOTE_H

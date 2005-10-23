@@ -46,9 +46,10 @@ class Network
    	typedef std::map<std::string, Channel *, noCaseCompare> ChannelMapType;
 
    public:
+   	friend int main();
+   	~Network() {};
 
-   	Network(ConfigParser& theConfigParser);
-   	~Network() {}
+   	static Network Interface;
 
    // ---------------------
    //  Servers Management.
@@ -118,6 +119,11 @@ class Network
    //  Channels Management Methods.
    // -----------------------------
 
+   	// Constructor.
+   	Network() {}
+        Network(ConfigParser& theConfigParser);
+
+
    	typedef ChannelMapType::size_type ChannelSizeType;
 
    	// Adds a channel to the network
@@ -135,7 +141,6 @@ class Network
    	ChannelSizeType ChannelCount() const { return Channels.size(); }
 
    private:
-
    // Servers Management members.
 
         // Server table organized by Server Numerics.
@@ -157,9 +162,6 @@ class Network
 
 };
 
-
-extern eNetworks::Network *eNetwork;
-   	
 } // namespace eNetworks
 
 #endif // ELECTRONIC_NETWORKS__NETWORK_H

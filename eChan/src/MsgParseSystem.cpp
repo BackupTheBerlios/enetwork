@@ -35,7 +35,9 @@
 #include "Msg_L.h"
 #include "Msg_M.h"
 #include "Msg_N.h"
+#include "Msg_O.h"
 #include "Msg_OM.h"
+#include "Msg_P.h"
 #include "Msg_Q.h"
 #include "Msg_S.h"
 #include "Msg_SQ.h"
@@ -60,166 +62,171 @@ namespace eNetworks
 
 void MsgParseSystem::Execute()
 {
-   	do
+   do
+   {
+   	string command = InBuffer::ibInstance.pop();
+   	string Token("");
+   	MsgTokenizer Parameters("");
+   	MsgSource Source;
+   	Msg* eMsg = NULL;
+
+   	cout << "[IN]: " << command << endl;
+
+   	// Get the token & Source.
+   	if (command.find(" ") == 2 || command.find(" ") == 5)
    	{
-   	   pthread_mutex_lock(&MX_EINBUFFER);
-   	   // Ok, Now that we got it lets pop it out of the buffer.
-   	   string command = eInBuffer->pop(); 
-   	   // Unlock the mutex so other threads have access to InBuffer.
-   	   pthread_mutex_unlock(&MX_EINBUFFER);
+           if (command.length() >= 7 && command.substr(0,7) == "ERROR :")
+           {
+           	debug << command << endb;
+   	   	exit(0);
+           }
 
-   	   string Token("");
-   	   MsgTokenizer Parameters("");
-   	   MsgSource Source;
-   	   Msg* eMsg = NULL;
+   	   Token = command.substr(command.find(" ")+1);
+   	   Token = Token.substr(0, Token.find(" "));
 
-   	   cout << "[IN]: " << command << endl;
+   	   if (command.find(' ') == 2) // This message came from a server.
+           {
+           	Server* ServerSrc = Network::Interface.FindServerByNumeric(command.substr(0,2));
+           	if (ServerSrc == NULL)
+           	{
+                   debug << "Can't find Server " << command.substr(0,2) << " in my database" << endb;
+                   exit(0);
+           	}
+   	   	Source = ServerSrc;
+   	   	Parameters = command.substr(3+Token.length()+1);
 
-   	   // Get the token & Source.
-   	   if (command.find(" ") == 2 || command.find(" ") == 5)
+           }
+           else if (command.find(' ') == 5) // This Message came from a client.
+           {
+           	Client* ClientSrc = Network::Interface.FindClientByNumeric(command.substr(0,5));
+           	if (ClientSrc == NULL)
+           	{
+   	   	   debug << "Can't find client " << command.substr(0,5) << " in my database" << endb;
+                   exit(0);
+           	}
+   	   	Source = ClientSrc;
+   	   	Parameters = command.substr(6+Token.length()+1);
+           }
+   	}
+   	else
+   	{  // This is our UPLINK.
+   	   if (command.length() > 6 && command.substr(0,6) == "SERVER")
    	   {
-           	if (command.length() >= 7 && command.substr(0,7) == "ERROR :")
-           	{
-           	   debug << command << endb;
-   	   	   exit(0);
-           	}
-
-   	   	Token = command.substr(command.find(" ")+1);
-   	   	Token = Token.substr(0, Token.find(" "));
-
-   	   	if (command.find(' ') == 2) // This message came from a server.
-           	{
-           	   Server* ServerSrc = eNetwork->FindServerByNumeric(command.substr(0,2));
-           	   if (ServerSrc == NULL)
-           	   {
-                   	debug << "Can't find Server " << command.substr(0,2) << " in my database" << endb;
-                   	exit(0);
-           	   }
-   	   	   Source = ServerSrc;
-   	   	   Parameters = command.substr(3+Token.length()+1);
-
-           	}
-           	else if (command.find(' ') == 5) // This Message came from a client.
-           	{
-           	   Client* ClientSrc = eNetwork->FindClientByNumeric(command.substr(0,5));
-           	   if (ClientSrc == NULL)
-           	   {
-   	   	   	debug << "Can't find client " << command.substr(0,5) << " in my database" << endb;
-                   	exit(0);
-           	   }
-   	   	   Source = ClientSrc;
-   	   	   Parameters = command.substr(6+Token.length()+1);
-           	}
+   	   	Parameters = command.substr(7);
+   	   	eMsg = new PreServerMsg (Source, Parameters);
+   	   	eMsg->Parser();
+   	   	delete eMsg;
+   	   	eMsg = NULL;
+   	   	continue;
+   	   }
+   	   else if (command.length() > 6 && command.substr(0,6) == "PASS :")
+   	   {
+   	   	continue;
    	   }
    	   else
-   	   {    // This is our UPLINK.
-   	   	if (command.length() > 6 && command.substr(0,6) == "SERVER")
-   	   	{
-   	   	   Parameters = command.substr(7);
-   	   	   eMsg = new PreServerMsg (Source, Parameters);
-   	   	   eMsg->Parser();
-   	   	   delete eMsg;
-   	   	   eMsg = NULL;
-   	   	   continue;
-   	   	}
-   	   	else if (command.length() > 6 && command.substr(0,6) == "PASS :")
-   	   	{
-   	   	   continue;
-   	   	}
-   	   	else
-   	   	{
-   	   	   debug << "Error: Protocol Violation in MsgParseSystem When Parsing the message." << endb;
-   	   	   exit(0);
-   	   	}
-   	   }
-
-   	   switch(eTokens->GetToken(Token))
    	   {
-   	   	case Tokens::PING:
-   	   	   eMsg = new Msg_G(Source, Parameters);   	   	
-   	   	   break;
-
-   	   	case Tokens::CREATE:
-   	   	   eMsg = new Msg_C(Source, Parameters);
-   	  	   break;
-
-   	   	case Tokens::NICK:
-   	   	   eMsg = new Msg_N(Source, Parameters);
-   	   	   break;
-
-   	   	case Tokens::QUIT:
-   	   	   eMsg = new Msg_Q(Source, Parameters);
-   	   	   break;
-
-   	   	case Tokens::MODE:
-   	   	   eMsg = new Msg_M(Source, Parameters);
-   	   	   break;
-
-   	   	case Tokens::KICK:
-   	   	   eMsg = new Msg_K(Source, Parameters);
-   	   	   break;
-
-   	   	case Tokens::TOPIC:
-   	   	   eMsg = new Msg_T(Source, Parameters);
-   	   	   break;
-
-   	   	case Tokens::OPMODE:
-   	   	   eMsg = new Msg_OM(Source, Parameters);
-   	   	   break;
-
-   	   	case Tokens::CLEARMODE:
-   	   	   eMsg = new Msg_CM(Source, Parameters);
-   	   	   break;
-
-   	   	case Tokens::B:
-   	   	   eMsg = new Msg_B(Source, Parameters);
-   	   	   break;
-
-   	   	case Tokens::BURST:
-   	   	   eMsg = new Msg_Burst(Source, Parameters);
-   	   	   break;
-
-   	   	case Tokens::SERVER:
-   	   	   eMsg = new Msg_S(Source, Parameters);
-   	   	   break;
-
-   	   	case Tokens::END_OF_BURST:
-   	   	   eMsg = new Msg_EB(Source, Parameters);
-   	   	   break;
-
-   	   	case Tokens::JOIN:
-   	   	   eMsg = new Msg_J(Source, Parameters);
-   	   	   break;
-
-   	   	case Tokens::PART:
-   	   	   eMsg = new Msg_L(Source, Parameters);
-   	   	   break;
-
-   	   	case Tokens::SQUIT:
-   	   	   eMsg = new Msg_SQ(Source, Parameters);
-   	   	   break;
-
-
-   	   	// NOT USED YET...
-
-   	   	case Tokens::ACCOUNT:
-   	   	   break;
-
-   	   	case Tokens::NONE:
-   	   	   // Will be used in the future when done recognicing all tokens.
-   	   	   break;
-
+   	   	debug << "Error: Protocol Violation in MsgParseSystem When Parsing the message." << endb;
+   	   	exit(0);
    	   }
+   	}
+
+   	switch(eTokens->GetToken(Token))
+   	{
+   	   case Tokens::PRIVMSG:
+   	   	eMsg = new Msg_P(Source, Parameters);
+   	   	break;
+
+   	   case Tokens::PING:
+   	   	eMsg = new Msg_G(Source, Parameters);   	   	
+   	   	break;
+
+   	   case Tokens::CREATE:
+   	   	eMsg = new Msg_C(Source, Parameters);
+   	  	break;
+
+   	   case Tokens::NICK:
+   	   	eMsg = new Msg_N(Source, Parameters);
+   	   	break;
+
+   	   case Tokens::QUIT:
+   	   	eMsg = new Msg_Q(Source, Parameters);
+   	   	break;
+
+   	   case Tokens::MODE:
+   	   	eMsg = new Msg_M(Source, Parameters);
+   	   	break;
+
+   	   case Tokens::KICK:
+   	   	eMsg = new Msg_K(Source, Parameters);
+   	   	break;
+
+   	   case Tokens::TOPIC:
+   	   	eMsg = new Msg_T(Source, Parameters);
+   	   	break;
+
+   	   case Tokens::NOTICE:
+   	   	eMsg = new Msg_O(Source, Parameters);
+   	   	break;
+
+   	   case Tokens::OPMODE:
+   	   	eMsg = new Msg_OM(Source, Parameters);
+   	   	break;
+
+   	   case Tokens::CLEARMODE:
+   	   	eMsg = new Msg_CM(Source, Parameters);
+   	   	break;
+
+   	   case Tokens::B:
+   	   	eMsg = new Msg_B(Source, Parameters);
+   	   	break;
+
+   	   case Tokens::BURST:
+   	   	eMsg = new Msg_Burst(Source, Parameters);
+   	   	break;
+
+   	   case Tokens::SERVER:
+   	   	eMsg = new Msg_S(Source, Parameters);
+   	   	break;
+
+   	   case Tokens::END_OF_BURST:
+   	   	eMsg = new Msg_EB(Source, Parameters);
+   	   	break;
+
+   	   case Tokens::JOIN:
+   	   	eMsg = new Msg_J(Source, Parameters);
+   	   	break;
+
+   	   case Tokens::PART:
+   	   	eMsg = new Msg_L(Source, Parameters);
+   	   	break;
+
+   	   case Tokens::SQUIT:
+   	   	eMsg = new Msg_SQ(Source, Parameters);
+   	   	break;
+
+
+   	   // NOT USED YET...
+
+   	   case Tokens::ACCOUNT:
+   	   	break;
+
+   	   case Tokens::NONE:
+   	   	// Will be used in the future when done recognicing all tokens.
+   	   	break;
+   	   }
+
+   	   
 
    	   if (NULL != eMsg)
     	   {
    	   	eMsg->Parser();
    	   	delete eMsg;
    	   	eMsg = NULL;
+   	   	NotifyMonitors(eTokens->GetToken(Token), Source, Parameters);
    	   }
 
    	}
-   	while (0 < eInBuffer->count());
+   	while (0 < InBuffer::ibInstance.count());
 }
 
 

@@ -54,7 +54,7 @@ void Msg_G::Parser()
    msg += " ";
    msg += answer;
 
-   eOutBuffer->insert(msg);
+   OutBuffer::obInstance.insert(msg);
 }
 
 } // namespace eNetworks

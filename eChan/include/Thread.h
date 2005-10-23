@@ -44,6 +44,7 @@ class Thread
    	void exit(void *retrval) const { ::pthread_exit(retrval); }
 };
 
+/*
 // Mutex for these global objects.
 extern pthread_mutex_t MX_EINBUFFER;
 extern pthread_mutex_t MX_EOUTBUFFER;
@@ -53,6 +54,7 @@ extern pthread_mutex_t MX_ESOCK;
 extern pthread_cond_t CV_NEW_IN_MSG;
 extern pthread_cond_t CV_NEW_OUT_MSG;
 extern pthread_cond_t CV_NEW_CMD;
+*/
 
 } // namespace eNetworks
 

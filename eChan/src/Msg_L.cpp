@@ -40,11 +40,11 @@ void Msg_L::Parser()
    	debug << "Error: PART Message with no Client source." << endb;
    }
 
-   Channel* aChannelPtr = eNetwork->FindChannel(Parameters[0]);
+   Channel* aChannelPtr = Network::Interface.FindChannel(Parameters[0]);
 
    if (NULL != aChannelPtr)
    {
-   	if (!aChannelPtr->DelChannelClient(eNetwork->FindClientByNumeric(Source.GetNumeric())))
+   	if (!aChannelPtr->DelChannelClient(Network::Interface.FindClientByNumeric(Source.GetNumeric())))
    	{
    	   debug << "Could not remove " << Source.GetName() << " from channel " << Parameters[0] << "." << endb;
    	}

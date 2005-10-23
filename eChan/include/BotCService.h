@@ -19,29 +19,29 @@
  *
 */
 
-#ifndef ELECTRONIC_NETWORKS__MSGPARSESYSTEM_H
-#define ELECTRONIC_NETWORKS__MSGPARSESYSTEM_H
+#ifndef ELECTRONIC_NETWORKS__BOTCSERVICE_H
+#define ELECTRONIC_NETWORKS__BOTCSERVICE_H
 
-#include "MsgMonitor.h"
+#include "Bot.h"
+#include "MsgSource.h"
+#include "MsgTokenizer.h"
 
 namespace eNetworks
 {
 
-class MsgParseSystem : public MsgMonitor
+class BotCService : public Bot
 {
+   public: 
+   	BotCService(ConfigParser& theParser);
 
-   public:
-   	~MsgParseSystem() {}
+   	virtual void onPRIVMSG(const MsgSource& Source, const MsgTokenizer& Parameters);
+   	virtual void onNOTICE(const MsgSource& Source, const MsgTokenizer& Parameters);
+   	virtual void onKICK(const MsgSource& Source, const MsgTokenizer& Parameters);
 
-
-   	static void Execute();
-
-   private:
-   	MsgParseSystem() {}
+   	virtual void onMsgMonitor(const MsgSource& Source, const MsgTokenizer& Parameters);
 
 };
 
-
 } // namespace eNetworks
 
-#endif // ELECTRONIC_NETWORKS__MSGPARSESYSTEM_H
+#endif // ELECTRONIC_NETWORKS__BOTCSERVICE_H

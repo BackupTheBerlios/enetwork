@@ -40,18 +40,18 @@ void Msg_K::Parser()
    	debug << "Error: KICK Message with no source." << endb;
    }
 
-   Channel* aChannelPtr = eNetwork->FindChannel(Parameters[0]);
+   Channel* aChannelPtr = Network::Interface.FindChannel(Parameters[0]);
 
    if (NULL != aChannelPtr)
    {
-   	if (!aChannelPtr->DelChannelClient(eNetwork->FindClientByNumeric(Parameters[1])))
+   	if (!aChannelPtr->DelChannelClient(Network::Interface.FindClientByNumeric(Parameters[1])))
    	{
    	   debug << "Could not remove " << Source.GetName() << " from channel " << Parameters[0] << "." << endb;
    	}
    	else
    	{
-   	   cout << "User " << eNetwork->FindClientByNumeric(Parameters[1])->GetNickName() << " was kicked from channel " << Parameters[0] << " by " 
-   	   	<< Source.GetName() << "." << endl;
+   	   cout << "User " << Network::Interface.FindClientByNumeric(Parameters[1])->GetNickName() << " was kicked from channel " << Parameters[0] 
+   	   	<< " by " << Source.GetName() << "." << endl;
    	}
    }
    else

@@ -2,6 +2,7 @@
 #include <string>
 #include <iostream>
 #include <utility>
+#include <pair>
 
 using std::map;
 using std::string;

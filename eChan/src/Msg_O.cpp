@@ -19,29 +19,28 @@
  *
 */
 
-#ifndef ELECTRONIC_NETWORKS__MSGPARSESYSTEM_H
-#define ELECTRONIC_NETWORKS__MSGPARSESYSTEM_H
+#include <string>
+#include <iostream>
 
-#include "MsgMonitor.h"
+#include "Msg_O.h"
+#include "Bot.h"
+#include "debug.h"
+
+using std::string;
+using std::cout;
+using std::endl;
 
 namespace eNetworks
 {
 
-class MsgParseSystem : public MsgMonitor
+void Msg_O::Parser()
 {
+   Bot* theBot = Bot::FindBot(Parameters[0]);
+   if (NULL == theBot)
+   	debug << "Message sent to unknown Bot." << endb;
 
-   public:
-   	~MsgParseSystem() {}
-
-
-   	static void Execute();
-
-   private:
-   	MsgParseSystem() {}
-
-};
+   theBot->onNOTICE(Source, MsgTokenizer(Parameters[1], NULL));
+}
 
 
 } // namespace eNetworks
-
-#endif // ELECTRONIC_NETWORKS__MSGPARSESYSTEM_H

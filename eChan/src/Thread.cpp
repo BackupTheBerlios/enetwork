@@ -56,6 +56,7 @@ bool Thread::Start()
 return true;
 }
 
+/*
 // Initialization of Mutexes.
 pthread_mutex_t MX_EINBUFFER = PTHREAD_MUTEX_INITIALIZER;
 pthread_mutex_t MX_EOUTBUFFER = PTHREAD_MUTEX_INITIALIZER;
@@ -65,5 +66,6 @@ pthread_mutex_t MX_ESOCK = PTHREAD_MUTEX_INITIALIZER;
 pthread_cond_t CV_NEW_IN_MSG = PTHREAD_COND_INITIALIZER;
 pthread_cond_t CV_NEW_OUT_MSG = PTHREAD_COND_INITIALIZER;
 pthread_cond_t CV_NEW_CMD = PTHREAD_COND_INITIALIZER;
+*/
 
 } // namespace eNetworks

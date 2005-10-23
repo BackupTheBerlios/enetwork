@@ -26,6 +26,6 @@
 namespace eNetworks
 {
 
-OutBuffer* eOutBuffer = NULL;
+OutBuffer OutBuffer::obInstance = OutBuffer();
 
 } // namespace eNetworks

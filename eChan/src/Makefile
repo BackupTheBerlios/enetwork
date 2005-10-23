@@ -1,6 +1,7 @@
 CPP = g++
-CPARAM = -W -Wall -c -I../include/ -g
-OBJS = main.o Socket.o ConfigParser.o tools.o Msg_EB.o Msg_N.o Msg_S.o PreServerMsg.o Msg_B.o Channel.o Client.o MsgTokenizer.o Network.o Server.o SocketException.o debug.o Msg_G.o Msg_C.o Msg_Q.o InBuffer.o OutBuffer.o InMsgSystem.o MsgParseSystem.o OutMsgSystem.o P10Tokens.o Thread.o Msg_J.o Msg_L.o Msg_SQ.o Msg_M.o Msg_K.o Msg_CM.o Msg_T.o Msg_OM.o
+CPARAM = -W -Wall -c -I../include/ -Icservice/include -g
+OBJS = main.o Socket.o ConfigParser.o tools.o Msg_EB.o Msg_N.o Msg_S.o PreServerMsg.o Msg_B.o Channel.o Client.o MsgTokenizer.o Network.o Server.o SocketException.o debug.o Msg_G.o Msg_C.o Msg_Q.o InBuffer.o OutBuffer.o InMsgSystem.o MsgParseSystem.o OutMsgSystem.o P10Tokens.o Thread.o Msg_J.o Msg_L.o Msg_SQ.o Msg_M.o Msg_K.o Msg_CM.o Msg_T.o Msg_OM.o MsgMonitor.o Bot.o BotCService.o Msg_P.o Msg_O.o
+CSERVICEOBJS = cservice/Command.o cservice/CommandWHOIS.o cservice/CommandQUOTE.o
 
 .SUFFIXES: .o .cpp
 
@@ -8,9 +9,9 @@ OBJS = main.o Socket.o ConfigParser.o tools.o Msg_EB.o Msg_N.o Msg_S.o PreServer
 	$(CPP) $< -o @$ $(CPARAM)
 
 all: eChan
-
+  
 eChan:
-	$(CPP) $(OBJS) -W -Wall -I../include -o ../bin/eChan -lpthread
+	$(CPP) $(OBJS) $(CSERVICEOBJS) -W -Wall -g -I../include -I cservice/include -o ../bin/eChan -lpthread
 
 main.o:
 	$(CPP) -o main.o $(CPARAM) main.cpp
@@ -114,6 +115,24 @@ Msg_T.o:
 Msg_OM.o:
 	$(CPP) -o Msg_OM.o $(CPARAM) Msg_OM.cpp
 
+MsgMonitor.o:
+	$(CPP) -o MsgMonitor.o $(CPARAM) MsgMonitor.cpp
+
+Bot.o:
+	$(CPP) -o Bot.o $(CPARAM) Bot.cpp
+
+BotCService.o:
+	$(CPP) -o BotCService.o  $(CPARAM) BotCService.cpp
+
+Msg_P.o:
+	$(CPP) -o Msg_P.o $(CPARAM) Msg_P.cpp
+
+Msg_O.o:
+	$(CPP) -o Msg_O.o $(CPARAM) Msg_O.cpp
+
+cservice.o:
+	make -C cservice/
+
 main.o: main.cpp
 Channel.o: Channel.cpp
 Client.o: Client.cpp
@@ -148,7 +167,11 @@ Msg_K.o: Msg_K.cpp
 Msg_CM.o: Msg_CM.cpp
 Msg_T.o: Msg_T.cpp
 Msg_OM.o: Msg_OM.cpp
-
+MsgMonitor.o: MsgMonitor.cpp
+Bot.o: Bot.cpp
+BotCService.o: BotCService.cpp
+Msg_P.o: Msg_P.cpp
+Msg_O.o: Msg_O.cpp
 
 eChan: $(OBJS)
 
@@ -185,7 +208,13 @@ eChan: main.o \
        Msg_K.o \
        Msg_CM.o \
        Msg_T.o \
-       Msg_OM.o
+       Msg_OM.o \
+       MsgMonitor.o \
+       Bot.o \
+       BotCService.o \
+       Msg_P.o \
+       Msg_O.o \
+       cservice.o
 
 clean:
-	rm -f $(OBJS)
+	rm -f $(OBJS) $(CSERVICEOBJS)

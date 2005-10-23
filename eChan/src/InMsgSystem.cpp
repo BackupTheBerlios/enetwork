@@ -38,8 +38,8 @@ void InMsgSystem::Execute()
 {
    string strBuffer;
    (*eSock) >> strBuffer;
-   eInBuffer->insert(strBuffer);
-   if (eInBuffer->Digest())
+   InBuffer::ibInstance.insert(strBuffer);
+   if (InBuffer::ibInstance.Digest())
    {
    	MsgParseSystem::Execute();
    }

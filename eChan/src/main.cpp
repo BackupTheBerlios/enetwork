@@ -30,6 +30,7 @@
 #include <ctime>
 #include <list>
 
+#include "BotCService.h"
 #include "Network.h"
 #include "tools.h"
 #include "SocketException.h"
@@ -56,7 +57,6 @@ using namespace eNetworks;
 
 int main()
 {
-
    // Make a child, die and let initd take care of us. (send to background)
    if (0 == fork()) 
     setsid(); 
@@ -79,18 +79,24 @@ int main()
 
    theConfigParser.ParseConfigFile();
 
+   Network::Interface = Network(theConfigParser);
+
+/*
    eNetwork = new Network(theConfigParser);
    if (eNetwork == NULL)
    {
-   	debug << "Could not allocate memory for Network class" << endb;
-   	exit(0);
+        debug << "Could not allocate memory for Network class" << endb;
+        exit(0);
    }
-
-   eInBuffer = new InBuffer();
-   eOutBuffer = new OutBuffer();
+*/
 
    // Login to server. Introduce the channels service bot and send EB (End of Burst). 
    login(theConfigParser);
+
+   // Create Bots...
+   {
+   	new BotCService(theConfigParser);
+   }
 
    // Add all the Tokens to the token map.
    eTokens = new Tokens();
@@ -118,6 +124,8 @@ int main()
    eTokens->AddToken("CM",     Tokens::CLEARMODE);
    eTokens->AddToken("T",      Tokens::TOPIC);
    eTokens->AddToken("OM",     Tokens::OPMODE);
+   eTokens->AddToken("P",      Tokens::PRIVMSG);
+   eTokens->AddToken("O",      Tokens::NOTICE);
 
    pollfd PollFD;
    PollFD.fd = eSock->GetSocket();
@@ -126,7 +134,6 @@ int main()
    do
    {
    	PollFD.revents = NULL;
-   	cout << "test" << endl;
    	if (poll(&PollFD, 1, -1) == 1 && (PollFD.revents == POLLIN || PollFD.revents == POLLPRI))
    	{
    	   InMsgSystem::Execute();

@@ -49,7 +49,7 @@ void Msg_M::Parser()
    if ('#' == Parameters[0][0])
    {
    	// This is a channel Mode.
-   	Channel* theChannel = eNetwork->FindChannel(Parameters[0]);
+   	Channel* theChannel = Network::Interface.FindChannel(Parameters[0]);
    	if (NULL == theChannel)
    	   debug << "Cannot find Channel " << Parameters[0] << ". in Mode message." << endb;
 
@@ -170,7 +170,7 @@ void Msg_M::Parser()
    else
    {
    	// This is a user mode.
-   	Client* theClient = eNetwork->FindClientByNickName(Parameters[0]);
+   	Client* theClient = Network::Interface.FindClientByNickName(Parameters[0]);
    	if (NULL == theClient)
    	   debug << "Cannot find client " << Parameters[0] << ". in Mode message." << endb;
 

@@ -19,15 +19,16 @@
  *
 */
 
+#include <map>
 #include <string>
 #include <iostream>
 
-#include "Msg_Q.h"
-#include "Network.h"
-#include "Server.h"
-#include "Client.h"
-#include "debug.h"
+#include "Command.h"
+#include "CommandWHOIS.h"
+#include "CommandQUOTE.h"
+#include "tools.h"
 
+using std::map;
 using std::string;
 using std::cout;
 using std::endl;
@@ -35,24 +36,44 @@ using std::endl;
 namespace eNetworks
 {
 
-void Msg_Q::Parser()
+namespace cservice
 {
 
-   	if (!Source.IsClient())
-   	{
-   	   debug << "Protocol Error: Only Clients can (Q)uit the network" << endb;
-   	}
-   	
-   	string name = Source.GetName();
-   	if (!Network::Interface.DelClientByNumeric(Source.GetNumeric()))
-   	{
-   	   debug << "Could not delete user with numeric " << Source.GetNumeric() << endb;
-   	} 
-   	else
-   	{
-   	   cout << "User " << name << " exited IRC." << endl;
-   	}
+void Command::ParseCommands(Bot* theBot, Client* theSource, const std::string& strCommand)
+{
+   string theCommand = strCommand.substr(0, strCommand.find(" "));
+   string strParameters("");
+
+   if (strCommand.find(" ") != string::npos)
+   	strParameters = strCommand.substr(strCommand.find(" ")+1);
+
+   MsgTokenizer mtTemp(strParameters, NULL);
+
+   Command* cmd = NULL;
+   switch (GetCommand(theCommand))
+   {
+   	case WHOIS:
+   	   cmd = new CommandWHOIS(theBot, theSource, mtTemp);
+   	   break;
+
+   	case QUOTE:
+   	   cmd = new CommandQUOTE(theBot, theSource, mtTemp);
+   	   break;
+
+   	case NONE:
+   	   break;
+   }
+
+   if (NULL != cmd)
+   {
+   	cmd->Parser();
+   	delete cmd;
+   	cmd = NULL;
+   }
 }
 
+map<string, Command::CommandNames, noCaseCompare> Command::CommandMap = CommandMapType();
+
+} // namespace cservice
 
 } // namespace eNetworks

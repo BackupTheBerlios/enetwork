@@ -81,7 +81,7 @@ bool Channel::DelChannelClient(Client *aClientPtr)
    	// If that was the last User in this channel then delete the channel.
    	if (ChannelClientList.empty())
    	{
-   	   eNetwork->DelChannel(this->GetName());
+   	   Network::Interface.DelChannel(this->GetName());
    	}
    	return true;
    }

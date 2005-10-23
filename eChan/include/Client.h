@@ -30,6 +30,11 @@
 namespace eNetworks
 {
 
+namespace cservice
+{
+class CommandWHOIS;
+}
+
 // foward declaration.
 struct Channel;
 
@@ -94,6 +99,8 @@ struct Client
 
    	friend class Network;
    	friend class Channel;
+   	friend class Bot;
+   	friend class cservice::CommandWHOIS;
 
    	// type for Channel List.
    	typedef std::map<std::string, Channel *, noCaseCompare> ChannelMapType;
@@ -133,9 +140,6 @@ struct Client
    	ChannelMapType ChannelMap; // Channels this user's on.
 
 };
-
-// This is the local client.
-extern Client *LocalClient;
 
 } // namespace eNetworks
 

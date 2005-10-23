@@ -54,6 +54,7 @@ Network::Network(ConfigParser& theConfigParser) : Servers(), ClientNumerics(), C
    	exit(0);
    }
 
+/*
    LocalClient = new Client(theConfigParser.GetConfiguration("NUMERIC")+"AAC", theConfigParser.GetConfiguration("NICK"), "", 
    	   	   	    theConfigParser.GetConfiguration("USERNAME"), theConfigParser.GetConfiguration("HOSTNAME"),
                             "DAqAoB", "idk", theConfigParser.GetConfiguration("CLIENTINFO"), time(0), 1);
@@ -63,6 +64,7 @@ Network::Network(ConfigParser& theConfigParser) : Servers(), ClientNumerics(), C
    	cout << "Could Not add client " << theConfigParser.GetConfiguration("NICK") << endl;
         exit(0);
    }
+*/
 
    try
    {
@@ -402,6 +404,6 @@ Channel *Network::FindChannel(const std::string &aName)
    return ChannelIter->second;
 }
 
-Network* eNetwork;
+Network Network::Interface;
 
 } // namespace eNetwork

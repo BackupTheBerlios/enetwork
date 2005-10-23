@@ -33,7 +33,7 @@ namespace eNetworks
 {
 
 // This algorithm needs to be improved...
-MsgTokenizer::MsgTokenizer(const std::string &aCommand, const char &Delimiter)
+MsgTokenizer::MsgTokenizer(const std::string &aCommand, const char &Terminator, const char &Delimiter)
 {
 //   const char Delimiter = ' ';
 
@@ -69,7 +69,7 @@ MsgTokenizer::MsgTokenizer(const std::string &aCommand, const char &Delimiter)
    	   FullString.erase(0,1);
    	   continue;
    	}
-        else if (FullString[0] == ':')
+        else if (Terminator != NULL && FullString[0] == Terminator)
         {
    	   Tokens.push_back(FullString.substr(1));
    	   break;

@@ -69,7 +69,6 @@ bool InBuffer::Digest()
 return Digested;
 }
 
-
-InBuffer* eInBuffer = NULL;
+InBuffer InBuffer::ibInstance = InBuffer();
 
 } // namespace eNetworks
