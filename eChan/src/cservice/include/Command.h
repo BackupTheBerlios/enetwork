@@ -47,7 +47,8 @@ class Command
    	{
    	   NONE = 0,
    	   WHOIS,
-   	   QUOTE
+   	   QUOTE,
+   	   LOGIN
    	};
 
    	virtual void Parser() = 0;

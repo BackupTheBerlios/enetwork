@@ -24,7 +24,6 @@
 #include "MsgTokenizer.h"
 #include "CommandWHOIS.h"
 #include "Network.h"
-#include "OutBuffer.h"
 #include "Client.h"
 #include "Server.h"
 

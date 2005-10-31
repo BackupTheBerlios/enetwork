@@ -180,3 +180,9 @@ October 19, 2005 - clsk - Added the base Command class for the CService Bot.
  * Finished the design of the CService bot. Need to implement.
  * Implemented a test whois command.
  * Implemented a QUOTE test command.
+
+October 20, 2005 - clsk - We can login to Channel Service bot.
+ * added a LOGIN command for the CService bot. It connects to the database and queries data.
+ * Also made the sql scripts for users, channels and channel access.
+ * Created class SqlUser to represent the User table in the database with mysql++'s create macro.
+ * Created SqlChannel and SqlChannelAccess classes.

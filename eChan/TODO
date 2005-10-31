@@ -1,3 +1,4 @@
+- Find out how we're going to encrypt passwords.
 - Test DelServer fix.
 - Imeplement the channel service bot.
 - Msgs to implement in the following order: (these are not really needed until we start working on the oper service bot)

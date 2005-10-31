@@ -95,6 +95,8 @@ struct Client
    	time_t GetTimeStamp() const { return TimeStamp; }
    	unsigned int GetHopCount() const { return HopCount; } 
 
+   	void SetAccount(const std::string& strAccount) { Account = strAccount; }
+
    private:
 
    	friend class Network;

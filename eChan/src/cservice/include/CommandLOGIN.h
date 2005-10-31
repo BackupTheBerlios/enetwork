@@ -19,29 +19,31 @@
  *
 */
 
-#ifndef ELECTRONIC_NETWORKS__BOTCSERVICE_H
-#define ELECTRONIC_NETWORKS__BOTCSERVICE_H
+#ifndef ELECTRONIC_NETWORKS__CSERVICE_COMMANDLOGIN_H
+#define ELECTRONIC_NETWORKS__CSERVICE_COMMANDLOGIN_H
 
-#include "Bot.h"
-#include "MsgSource.h"
-#include "MsgTokenizer.h"
+#include <string>
+
+#include "Command.h"
 
 namespace eNetworks
 {
 
-class BotCService : public Bot
+namespace cservice
 {
-   public: 
-   	BotCService(ConfigParser& theParser);
 
-   	virtual void onPRIVMSG(const MsgSource& Source, const MsgTokenizer& Parameters);
-   	virtual void onNOTICE(const MsgSource& Source, const MsgTokenizer& Parameters);
-   	virtual void onKICK(const MsgSource& Source, const MsgTokenizer& Parameters);
+class CommandLOGIN : public Command
+{
+   public:
+   	CommandLOGIN(Bot* theBot, Client* theSource, const MsgTokenizer& refParameters);
+   	virtual ~CommandLOGIN() {}
+   	void Parser();
 
-   	virtual void onMsgMonitor(const Tokens::Token& _Token, const MsgSource& Source, const MsgTokenizer& Parameters);
-
+   private:
 };
 
 } // namespace eNetworks
 
-#endif // ELECTRONIC_NETWORKS__BOTCSERVICE_H
+} // namespace cservice
+
+#endif // ELECTRONIC_NETWORKS__CSERVICE_COMMANDLOGIN_H

@@ -38,14 +38,8 @@
 #include "tools.h"
 #include "debug.h"
 #include "ConfigParser.h"
-#include "Msg.h"
-#include "InBuffer.h"
-#include "OutBuffer.h"
-#include "Thread.h"
 #include "P10Tokens.h"
 #include "InMsgSystem.h"
-#include "OutMsgSystem.h"
-#include "MsgParseSystem.h"
 
 using std::cout;
 using std::endl;
@@ -127,6 +121,7 @@ int main()
    eTokens->AddToken("P",      Tokens::PRIVMSG);
    eTokens->AddToken("O",      Tokens::NOTICE);
 
+   // Initialize poll system.
    pollfd PollFD;
    PollFD.fd = eSock->GetSocket();
    PollFD.events = POLLIN|POLLPRI;

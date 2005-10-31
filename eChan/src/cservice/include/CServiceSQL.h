@@ -19,29 +19,42 @@
  *
 */
 
-#ifndef ELECTRONIC_NETWORKS__BOTCSERVICE_H
-#define ELECTRONIC_NETWORKS__BOTCSERVICE_H
+#ifndef ELECTRONIC_NETWORKS__CSERVICE_CSERVICESQL_H
+#define ELECTRONIC_NETWORKS__CSERVICE_CSERVICESQL_H
 
-#include "Bot.h"
-#include "MsgSource.h"
-#include "MsgTokenizer.h"
+#include <mysql++/custom.h>
+
+using namespace mysqlpp;
 
 namespace eNetworks
 {
 
-class BotCService : public Bot
+namespace cservice
 {
-   public: 
-   	BotCService(ConfigParser& theParser);
+sql_create_3(SqlChannelAccess,
+             1, 3,
+             unsigned int, channelid,
+             unsigned int, usernameid,
+             unsigned int, level)
 
-   	virtual void onPRIVMSG(const MsgSource& Source, const MsgTokenizer& Parameters);
-   	virtual void onNOTICE(const MsgSource& Source, const MsgTokenizer& Parameters);
-   	virtual void onKICK(const MsgSource& Source, const MsgTokenizer& Parameters);
 
-   	virtual void onMsgMonitor(const Tokens::Token& _Token, const MsgSource& Source, const MsgTokenizer& Parameters);
+sql_create_4(SqlUser,
+             1, 4,
+             unsigned int, id,
+             string, username,
+             string, password,
+             string, email)
 
-};
+sql_create_5(SqlChannel,
+   	     1, 5,
+   	     unsigned int, id,
+   	     string, name,
+   	     string, description,
+   	     string, owner,
+   	     string, homepage)
 
 } // namespace eNetworks
 
-#endif // ELECTRONIC_NETWORKS__BOTCSERVICE_H
+} // namespace cservice
+
+#endif // ELECTRONIC_NETWORKS__CSERVICE_CSERVICESQL_H

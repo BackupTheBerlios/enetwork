@@ -35,7 +35,7 @@ void MsgMonitor::NotifyMonitors(const Tokens::Token& _Token, const MsgSource& So
    for(MonitorListType::iterator i = mList.begin(); i != mList.end(); i++)
    {
    	if (i->first == _Token)
-   	   i->second->onMsgMonitor(Source, Parameters);
+   	   i->second->onMsgMonitor(_Token, Source, Parameters);
    }
 }
 

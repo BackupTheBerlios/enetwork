@@ -25,7 +25,6 @@
 #include "MsgTokenizer.h"
 #include "CommandQUOTE.h"
 #include "Network.h"
-#include "OutBuffer.h"
 #include "Client.h"
 
 using std::cout;
@@ -59,8 +58,7 @@ void CommandQUOTE::Parser()
    	strMsg += Parameters[i];
    }
 
-   OutBuffer::obInstance.insert(strMsg);
-
+   LocalBot->RawMsg(strMsg);
 }
 
 } // namespace cservice

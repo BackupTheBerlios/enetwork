@@ -43,6 +43,7 @@ BotCService::BotCService(ConfigParser& theConfigParser) :
    MsgMonitor::AddMonitor(Tokens::END_OF_BURST, this);   
    cservice::Command::AddCommand("whois", cservice::Command::WHOIS);
    cservice::Command::AddCommand("quote", cservice::Command::QUOTE);
+   cservice::Command::AddCommand("login", cservice::Command::LOGIN);
 }
 
 void BotCService::onPRIVMSG(const MsgSource& Source, const MsgTokenizer& Parameters)
@@ -59,6 +60,13 @@ void BotCService::onPRIVMSG(const MsgSource& Source, const MsgTokenizer& Paramet
    {
    	Message += Parameters[i];
    	Message += " ";
+   }
+
+   // Reply to CTCP messages.
+   if (Parameters[Parameters.size()-1] == "\001VERSION\001")
+   {
+   	SendNotice(Network::Interface.FindClientByNumeric(Source.GetNumeric()), "\001VERSION eChan v1.0 Alpha by Alan Alvarez (clsk@IRC).\001");
+   	return;
    }
 
    Message = Message.erase(Message.length()-1, 1); // get rid of extra space character.
@@ -78,20 +86,20 @@ void BotCService::onKICK(const MsgSource& Source, const MsgTokenizer& Parameters
 {
 }
 
-void BotCService::onMsgMonitor(const MsgSource& Source, const MsgTokenizer& Parameters)
+void BotCService::onMsgMonitor(const Tokens::Token& _Token, const MsgSource& Source, const MsgTokenizer& Parameters)
 {
    Channel *theChannel = Network::Interface.FindChannel("#CService");
    if (NULL == theChannel)
    {
-   	OutBuffer::obInstance.insert(theClient.GetNumeric() + " C #CService " + IntToString(time(0)));
+   	RawMsg(theClient.GetNumeric() + " C #CService " + IntToString(time(0)));
    	Network::Interface.AddChannel("#CService", time(0));
 
    	Network::Interface.FindChannel("#CService")->AddChannelClient(&theClient);
    }
    else
    {
-   	OutBuffer::obInstance.insert(theClient.GetNumeric() + " J #CService " + IntToString(theChannel->GetTimeStamp()));
-  	 theChannel->AddChannelClient(&theClient);
+   	RawMsg(theClient.GetNumeric() + " J #CService " + IntToString(theChannel->GetTimeStamp()));
+   	theChannel->AddChannelClient(&theClient);
    }
 }
 

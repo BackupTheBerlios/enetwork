@@ -25,6 +25,7 @@
 #include <map>
 #include <cstdlib>
 
+#include "P10Tokens.h"
 #include "MsgSource.h"
 #include "Client.h"
 #include "MsgTokenizer.h"
@@ -45,7 +46,7 @@ class Bot
    	virtual void onNOTICE(const MsgSource& Source, const MsgTokenizer& Parameters) = 0;
    	virtual void onKICK(const MsgSource& Source, const MsgTokenizer& Parameters) = 0;
 
-   	virtual void onMsgMonitor(const MsgSource& Source, const MsgTokenizer& Parameters) = 0;
+   	virtual void onMsgMonitor(const Tokens::Token& _Token, const MsgSource& Source, const MsgTokenizer& Parameters) = 0;
 
    	virtual void SendNotice(Client* Target, const std::string& Msg)
    	{
@@ -55,6 +56,11 @@ class Bot
    	virtual void SendMsg(Client* Target, const std::string& Msg)
    	{
    	   OutBuffer::obInstance.insert(theClient.GetNumeric() + " P " + Target->GetNumeric() + " :" + Msg);
+   	}
+
+   	virtual void RawMsg(const std::string& Msg)
+   	{
+   	   OutBuffer::obInstance.insert(Msg);
    	}
 
    	static Bot* FindBot(const std::string& Numeric)

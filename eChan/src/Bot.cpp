@@ -67,7 +67,7 @@ Bot::Bot(const std::string& Numeric, const std::string& NickName, const std::str
    strMsg += " :";
    strMsg += UserInfo;
 
-   OutBuffer::obInstance.insert(strMsg);
+   RawMsg(strMsg);
 }
 
 map<string, Bot*> Bot::BotMap = BotMapType();
