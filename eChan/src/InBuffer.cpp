@@ -66,7 +66,7 @@ bool InBuffer::Digest()
    	}
    }
   
-return Digested;
+   return Digested;
 }
 
 InBuffer InBuffer::ibInstance = InBuffer();

@@ -97,10 +97,10 @@ void login(ConfigParser& theConfigParser)
    {
         // loging to IRC server
         cout << "logging in" << endl;
-        (*eSock) << "PASS :" << theConfigParser.GetConfiguration("LINKPASS") << "\r\n";
+        Socket::eSock << "PASS :" << theConfigParser.GetConfiguration("LINKPASS") << "\r\n";
         cout << "[OUT]: PASS :" << theConfigParser.GetConfiguration("LINKPASS") << endl;
 
-       (*eSock) << "SERVER" << " " << LocalServer->GetName() << " " << LocalServer->GetHopCount() <<
+       Socket::eSock << "SERVER" << " " << LocalServer->GetName() << " " << LocalServer->GetHopCount() <<
             " " << LocalServer->GetStartTime() << " " << LocalServer->GetLinkTime() <<
             " J10 " << LocalServer->GetNumeric() << "AAC" << " +" << LocalServer->GetFlag() << " :" <<
             LocalServer->GetDescription() << "\r\n";
@@ -124,7 +124,7 @@ void login(ConfigParser& theConfigParser)
                 LocalClient->GetNumeric() << " :" << LocalClient->GetUserInfo() << endl;
 */
 
-        (*eSock) << LocalServer->GetNumeric() << " " << "EB" << "\r\n";
+        Socket::eSock << LocalServer->GetNumeric() << " " << "EB" << "\r\n";
      
         cout << "[OUT]: " << LocalServer->GetNumeric() << " " << "EB" << endl;
    } catch(SocketException &sockerr)

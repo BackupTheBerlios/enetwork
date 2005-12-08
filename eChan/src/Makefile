@@ -1,7 +1,7 @@
 CPP = g++
 CPARAM = -W -Wall -c -I../include/ -Icservice/include -g
-OBJS = main.o Socket.o ConfigParser.o tools.o Msg_EB.o Msg_N.o Msg_S.o PreServerMsg.o Msg_B.o Channel.o Client.o MsgTokenizer.o Network.o Server.o SocketException.o debug.o Msg_G.o Msg_C.o Msg_Q.o InBuffer.o OutBuffer.o InMsgSystem.o MsgParseSystem.o OutMsgSystem.o P10Tokens.o Thread.o Msg_J.o Msg_L.o Msg_SQ.o Msg_M.o Msg_K.o Msg_CM.o Msg_T.o Msg_OM.o MsgMonitor.o Bot.o BotCService.o Msg_P.o Msg_O.o
-CSERVICEOBJS = cservice/Command.o cservice/CommandWHOIS.o cservice/CommandQUOTE.o cservice/CommandLOGIN.o
+OBJS = main.o Socket.o ConfigParser.o tools.o Msg_EB.o Msg_N.o Msg_S.o PreServerMsg.o Msg_B.o Channel.o Client.o MsgTokenizer.o Network.o Server.o SocketException.o debug.o Msg_G.o Msg_C.o Msg_Q.o InBuffer.o OutBuffer.o MsgParseSystem.o OutMsgSystem.o P10Tokens.o Thread.o Msg_J.o Msg_L.o Msg_SQ.o Msg_M.o Msg_K.o Msg_CM.o Msg_T.o Msg_OM.o MsgMonitor.o Bot.o BotCService.o Msg_P.o Msg_O.o
+CSERVICEOBJS = cservice/Command.o cservice/CommandWHOIS.o cservice/CommandQUOTE.o
 
 .SUFFIXES: .o .cpp
 
@@ -11,7 +11,7 @@ CSERVICEOBJS = cservice/Command.o cservice/CommandWHOIS.o cservice/CommandQUOTE.
 all: eChan
   
 eChan:
-	$(CPP) $(OBJS) $(CSERVICEOBJS) -W -Wall -g -L/usr/local/lib/ -o ../bin/eChan -lpthread -lmysqlpp
+	$(CPP) $(OBJS) $(CSERVICEOBJS) -W -Wall -g -L/usr/local/lib/ -o ../bin/eChan -lpthread
 
 main.o:
 	$(CPP) -o main.o $(CPARAM) main.cpp
@@ -75,9 +75,6 @@ InBuffer.o:
 
 OutBuffer.o:
 	$(CPP) -o OutBuffer.o $(CPARAM) OutBuffer.cpp
-
-InMsgSystem.o:
-	$(CPP) -o InMsgSystem.o $(CPARAM) InMsgSystem.cpp
 
 MsgParseSystem.o:
 	$(CPP) -o MsgParseSystem.o $(CPARAM) MsgParseSystem.cpp
@@ -154,7 +151,6 @@ Msg_C.o: Msg_C.cpp
 Msg_Q.o: Msg_Q.cpp
 InBuffer.o: InBuffer.cpp
 OutBuffer.o: OutBuffer.cpp
-InMsgSystem.o: InMsgSystem.cpp
 MsgParseSystem.o: MsgParseSystem.cpp
 OutMsgSystem.o: OutMsgSystem.cpp
 P10Tokens.o: P10Tokens.cpp
@@ -196,7 +192,6 @@ eChan: main.o \
        Msg_Q.o \
        InBuffer.o \
        OutBuffer.o \
-       InMsgSystem.o \
        MsgParseSystem.o \
        OutMsgSystem.o \
        P10Tokens.o \

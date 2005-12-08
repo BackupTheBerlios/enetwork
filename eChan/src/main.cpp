@@ -40,6 +40,8 @@
 #include "ConfigParser.h"
 #include "P10Tokens.h"
 #include "InMsgSystem.h"
+#include "InBuffer.h"
+#include "MsgParseSystem.h"
 
 using std::cout;
 using std::endl;
@@ -123,7 +125,7 @@ int main()
 
    // Initialize poll system.
    pollfd PollFD;
-   PollFD.fd = eSock->GetSocket();
+   PollFD.fd = Socket::eSock.GetSocket();
    PollFD.events = POLLIN|POLLPRI;
 
    do
@@ -131,12 +133,14 @@ int main()
    	PollFD.revents = NULL;
    	if (poll(&PollFD, 1, -1) == 1 && (PollFD.revents == POLLIN || PollFD.revents == POLLPRI))
    	{
-   	   InMsgSystem::Execute();
+   	   InBuffer::ibInstance.insert(Socket::eSock.recv());
+   	   if (InBuffer::ibInstance.Digest())
+   	   	MsgParseSystem::Execute();
    	}
 
    	// We're going to deal with timers here...
    } 
-   while (eSock->is_valid());
+   while (Socket::eSock.is_valid());
 
 return 0;
 }

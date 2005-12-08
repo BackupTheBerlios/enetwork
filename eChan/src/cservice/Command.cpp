@@ -53,10 +53,11 @@ void Command::ParseCommands(Bot* theBot, Client* theSource, const std::string& s
    Command* cmd = NULL;
    switch (GetCommand(theCommand))
    {
+/*
    	case LOGIN:
    	   cmd = new CommandLOGIN(theBot, theSource, mtTemp);
    	   break;
-
+*/
    	case WHOIS:
    	   cmd = new CommandWHOIS(theBot, theSource, mtTemp);
    	   break;

@@ -186,3 +186,13 @@ October 20, 2005 - clsk - We can login to Channel Service bot.
  * Also made the sql scripts for users, channels and channel access.
  * Created class SqlUser to represent the User table in the database with mysql++'s create macro.
  * Created SqlChannel and SqlChannelAccess classes.
+
+December 06, 2005 - clsk - Changes to Socket class.
+ * Added a send and recv class this way we don't have to rely on operators only.
+ * operators << and >> now call Socket::send() and Socket::recv() respectively.
+
+December 08, 2005 - clsk - More changes to Socket class.
+ * Socket's constructor doesn't try to connect now.
+ * There is a connect() function in the Socket class.
+ * There is a static instance of the Socket class (Socket::eSock).
+ * Removed class InMsgSystem.

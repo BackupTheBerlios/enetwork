@@ -65,7 +65,7 @@ void BotCService::onPRIVMSG(const MsgSource& Source, const MsgTokenizer& Paramet
    // Reply to CTCP messages.
    if (Parameters[Parameters.size()-1] == "\001VERSION\001")
    {
-   	SendNotice(Network::Interface.FindClientByNumeric(Source.GetNumeric()), "\001VERSION eChan v1.0 Alpha by Alan Alvarez (clsk@IRC).\001");
+   	SendNotice(Network::Interface.FindClientByNumeric(Source.GetNumeric()), "\001VERSION eChan v0.5.1 Alpha by Alan Alvarez (clsk@IRC).\001");
    	return;
    }
 

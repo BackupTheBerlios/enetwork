@@ -68,7 +68,7 @@ Network::Network(ConfigParser& theConfigParser) : Servers(), ClientNumerics(), C
 
    try
    {
-   	eSock = new Socket(theConfigParser.GetConfiguration("UPLINK"), StringToInt(theConfigParser.GetConfiguration("PORT")));
+   	Socket::eSock.connect(theConfigParser.GetConfiguration("UPLINK"), StringToInt(theConfigParser.GetConfiguration("PORT")));
    }
    catch (SocketException &sockerr)
    {

@@ -22,8 +22,13 @@
 #ifndef ELECTRONIC_NETWORKS__SOCKET_H
 #define ELECTRONIC_NETWORKS__SOCKET_H
 
+#include <sys/socket.h>
+#include <sys/types.h>
 #include <netinet/in.h>
 #include <string>
+
+#include "SocketException.h"
+#include "tools.h"
 
 namespace eNetworks
 {
@@ -34,23 +39,53 @@ const int MAXRECV = 800;
 class Socket
 {
    public:
-	Socket(const std::string &host, const int port);
-	~Socket();
+   	Socket() : sockfd(-1) {}; // Default constructor. 
+	~Socket()
+   	{
+   	   if (is_valid())
+   	   	close(sockfd);
+   	}
 
 	bool is_valid() const { return sockfd != -1; }
 	int GetSocket() { return sockfd; } 
 
-	const Socket &operator<<(const std::string &outbuff ) const;
-	const Socket &operator<<(const int &intbuff) const;
-	const Socket &operator>>(std::string &inbuff) const;
+   	void connect(const std::string& host, const int& port);
+   	std::string recv() const;
+
+   	void send(const std::string &msg) const
+   	{
+   	   if (::send(sockfd, msg.c_str(), msg.size(), 0) == -1)
+   	   	throw SocketException("Error while sending message", SocketException::SEND);
+   	}
+
+	const Socket &operator<<(const std::string &outbuff ) const
+   	{
+   	   send(outbuff);
+   	   return *this;
+   	}
+
+	const Socket &operator<<(const int &intbuff) const
+   	{
+   	   send(IntToString(intbuff));
+   	   return *this;
+   	}
+
+	const Socket &operator>>(std::string &inbuff) const
+   	{
+   	   inbuff = recv();
+   	   return *this;
+   	}
+
+   	static Socket eSock;
 
    private:
 
 	int sockfd;
+//   	string hostname;
+//   	string ip;
+//   	unsigned short port;
 	sockaddr_in m_addr;
 };
-
-extern Socket *eSock;
 
 } // namespace eNetworks
 

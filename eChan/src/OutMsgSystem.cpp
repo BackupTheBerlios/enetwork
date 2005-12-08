@@ -36,7 +36,7 @@ namespace eNetworks
 void OutMsgSystem::Execute()
 {
    std::string buf = OutBuffer::obInstance.pop();
-   (*eSock) << buf << "\n";
+   Socket::eSock << buf << "\n";
    cout << "[OUT]: " << buf << endl;
 }
 

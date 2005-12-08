@@ -39,7 +39,7 @@ using std::string;
 namespace eNetworks
 {
 
-Socket::Socket(const string &host, const int port) : sockfd(-1)
+void Socket::connect(const string &host, const int& port)
 {
    ::memset(&m_addr, 0, sizeof(m_addr));
 
@@ -61,62 +61,54 @@ Socket::Socket(const string &host, const int port) : sockfd(-1)
 
    if (::connect (sockfd, (sockaddr *) &m_addr, sizeof(m_addr)) == -1)
    {
-	if (errno == EISCONN)
-	 throw SocketException("This socket is already connected", SocketException::CONNECT);
-	else if (errno == ECONNREFUSED)
-	 throw SocketException("Connection refused", SocketException::CONNECT);
-	else if (errno == ETIMEDOUT)
-	 throw SocketException("Connection timed out", SocketException::CONNECT);
-	else if (errno == ENETUNREACH)
-	 throw SocketException("Network is unreachable", SocketException::CONNECT);
-	else if (errno == EADDRINUSE)
-	 throw SocketException("Address already in use", SocketException::CONNECT);
+   	switch (errno)
+   	{
+   	   case EISCONN:
+   	   	throw SocketException("This socket is already connected", SocketException::CONNECT);
+   	   	break;
 
+   	   case ECONNREFUSED:
+   	   	throw SocketException("Connection refused", SocketException::CONNECT);
+   	   	break;
+
+   	   case ETIMEDOUT:
+   	   	throw SocketException("Connection timed out", SocketException::CONNECT);
+   	   	break;
+
+   	   case ENETUNREACH:
+   	   	throw SocketException("Network is unreachable", SocketException::CONNECT);
+   	   	break;
+
+   	   case EADDRINUSE:
+   	   	throw SocketException("Address already in use", SocketException::CONNECT);
+   	   	break;
+   	}
    }
 }
 
-Socket::~Socket()
-{
-   if (is_valid())
-    ::close(sockfd);
-}
-
-const Socket &Socket::operator<<(const string &outbuff) const
-{
-   if (::send (sockfd, outbuff.c_str(), outbuff.size(), 0) == -1)
-    throw SocketException("Error while sending message", SocketException::SEND);
-
-return *this; 
-}
-
-const Socket &Socket::operator<<(const int &intbuff) const
-{
-   string outbuff = IntToString(intbuff);
-
-   if (::send (sockfd, outbuff.c_str(), outbuff.size(), 0) == -1)
-    throw SocketException("Error while sending message", SocketException::SEND);
-
-return *this;
-}
-
-
-const Socket &Socket::operator>>(string &inbuff) const
+std::string Socket::recv() const
 {
    char buf [MAXRECV+1];
    memset(buf, 0, MAXRECV + 1);
 
-   int status = ::recv (sockfd, buf, MAXRECV, 0);
+   int status = ::recv(sockfd, buf, MAXRECV, 0);
 
-   if (status == -1)
-    throw SocketException("Error while recieving from server", SocketException::RECV);
-   else if ( status == 0 )
-    throw SocketException("Remote server closed connection", SocketException::RECV);
-   else
-    inbuff = buf;
+   switch (status)
+   {
+   	case -1:
+   	   throw SocketException("Error while recieving from server", SocketException::RECV);
+   	   *buf = '\0';
+   	   break;
 
-return *this;
+   	case 0:
+   	   throw SocketException("Remote server closed connection", SocketException::RECV);
+   	   *buf = '\0';
+   	   break;
+   }
+
+   return string(buf);
 }
 
-Socket *eSock = NULL;
+Socket Socket::eSock = Socket();
 
 } // namespace eNetworks
