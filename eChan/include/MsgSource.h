@@ -33,19 +33,36 @@ using std::string;
 namespace eNetworks
 {
 
+// This class represents the source of an IRC message.
+// The interface tries to hide whether the message came
+// from an user or a server. But if needed this information
+// can be provided too.
 class MsgSource 
 {
    public:
+   	// Creates a sourceless message.
    	MsgSource() : aClient(NULL), aServer(NULL) {}
+
+   	// Sets _aClient as the source.
    	MsgSource(Client* _aClient) : aClient(_aClient), aServer(NULL) { if (NULL == aClient) exit(0); }
+
+   	// Sets _aServer as the source.
    	MsgSource(Server* _aServer) : aClient(NULL), aServer(_aServer) { if (NULL == aServer) exit(0); } 
 
+   	// returns whether the source is a Client or not.
    	bool IsClient() const { if (NULL != aClient) return true; else return false; }
+
+   	// returns wheter the source is a server or not.
    	bool IsServer() const { if (NULL != aServer) return true; else return false; }
+
+   	// returns wheter there is a set source or not.
    	bool IsSourceless() const { if (NULL == aClient && NULL == aServer) return true; else return false; }
 
-   	string GetNumeric() const { if (IsServer()) return aServer->GetNumeric(); else return aClient->GetNumeric(); }
-   	string GetName() const { if (IsServer()) return aServer->GetName(); else return aClient->GetNickName(); }
+   	// returns the numeric of the source.
+   	string GetNumeric() const { return IsServer() ? aServer->GetNumeric() : aClient->GetNumeric(); }
+
+   	// returns the Name of the Source.
+   	string GetName() const { return IsServer() ? aServer->GetName() : aClient->GetNickName(); }
 
    private:
    	Client* aClient;

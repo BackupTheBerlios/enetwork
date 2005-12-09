@@ -53,14 +53,12 @@ bool Channel::AddChannelClient(Client *aClientPtr, const string &aModes)
 
    // if we couldn't add the client to the client list the return false.
    if (!ChannelClientList.insert(ChannelClientListType::value_type(aClientPtr->GetNumeric(), NewChannelClient)).second) 
-   {
    	return false;
-   }
 
    // Add this channel to the channel list of this client.
    aClientPtr->AddChannel(this);
 
-return true;
+   return true;
 }
 
 // Delete a ChannelClient from the ChannelClientList. return false if aClientIterator
@@ -86,7 +84,7 @@ bool Channel::DelChannelClient(Client *aClientPtr)
    	return true;
    }
  
-return false;
+   return false;
 }      
 
 // Checks if the ClientIterator is in this Channel. return false if the ClientIterator is not
@@ -99,7 +97,7 @@ bool Channel::IsChannelClient(Client *aClientPtr)
    if (ChannelClientList.find(aClientPtr->GetNumeric()) == ChannelClientList.end())
     return false;
 
-return true;
+   return true;
 }
 
 bool Channel::IsChannelClient(const std::string &aNumeric)
@@ -107,7 +105,7 @@ bool Channel::IsChannelClient(const std::string &aNumeric)
    if (ChannelClientList.find(aNumeric) == ChannelClientList.end())
     return false;
 
-return true;
+   return true;
 }
 
 ChannelClient *Channel::FindChannelClient(Client *aClientPtr)
@@ -119,7 +117,7 @@ ChannelClient *Channel::FindChannelClient(Client *aClientPtr)
 
    if (ChannelClientIter == ChannelClientList.end())
     return NULL;
-   // else
+
     return ChannelClientIter->second;
 }
 
@@ -129,7 +127,7 @@ ChannelClient *Channel::FindChannelClient(const std::string &aNumeric)
  
    if (ChannelClientIter == ChannelClientList.end())
     return NULL;
-   // else
+
     return ChannelClientIter->second;
 }
 

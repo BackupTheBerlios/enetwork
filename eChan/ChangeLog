@@ -196,3 +196,6 @@ December 08, 2005 - clsk - More changes to Socket class.
  * There is a connect() function in the Socket class.
  * There is a static instance of the Socket class (Socket::eSock).
  * Removed class InMsgSystem.
+
+December 09, 2005 - clsk - Commented the code.
+ * Commented the code a little more.

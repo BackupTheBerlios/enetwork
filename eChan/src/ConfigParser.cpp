@@ -61,7 +61,7 @@ void ConfigParser::ParseConfigFile()
    	   strCurrentLine = strCurrentLine.substr(1);
    	}
 
-   	// Comment line.
+   	// Comment line. Ignore.
    	if (strCurrentLine[0] == '#')
    	   continue;
 

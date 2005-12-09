@@ -27,13 +27,15 @@
 
 namespace eNetworks
 {
+
+// This class holds P10 Tokens.
 class Tokens
 {
    public:
    	Tokens() : TokensMap() {}
    	~Tokens() {}
 
-
+   	// List of handled Tokens.
    	enum Token 
    	{
    	   NONE = 0, // Means invalid token. Used for GetToken().

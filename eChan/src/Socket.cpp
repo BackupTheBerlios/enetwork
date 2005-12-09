@@ -91,9 +91,9 @@ std::string Socket::recv() const
    char buf [MAXRECV+1];
    memset(buf, 0, MAXRECV + 1);
 
-   int status = ::recv(sockfd, buf, MAXRECV, 0);
+//   int status = ::recv(sockfd, buf, MAXRECV, 0);
 
-   switch (status)
+   switch (::recv(sockfd, buf, MAXRECV, 0))
    {
    	case -1:
    	   throw SocketException("Error while recieving from server", SocketException::RECV);

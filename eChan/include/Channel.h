@@ -34,6 +34,7 @@
 namespace eNetworks
 {
 
+// This structure represents a channel in the network.
 struct Channel
 {
    private:
@@ -133,17 +134,20 @@ struct Channel
              BanList.erase(i);
    	}
 
+   	// Remove all bans from this channel.
    	void ClearBans()
    	{
    	   BanList.clear();
    	}
 
+   	// remove mode 'v' from all users in this channel.
    	void ClearOps()
    	{
    	   for (ChannelClientIterator i = ChannelClientList.begin(); i != ChannelClientList.end(); i++)
    	   	i->second->DelMode('o');
    	}
 
+   	// removes mode 'v' from all users in this channel.
    	void ClearVoice()
    	{
    	   for (ChannelClientIterator i = ChannelClientList.begin(); i != ChannelClientList.end(); i++)
@@ -160,6 +164,9 @@ struct Channel
 
    	friend class Network;
 
+   	// Channel Constructor.
+   	// This constructor is only to be called from the Network class.
+   	// If you want to create a new channel see Network::AddChannel().
    	Channel(const std::string &aName, const std::string &aTopic, const std::string &aModes, 
    	   	const std::string aKey, const unsigned int &aLimit, const time_t &aTimeStamp) :
    	Name(aName), Topic(aTopic), TimeStamp(aTimeStamp), Modes(aModes), Key(aKey), Limit(aLimit)

@@ -46,7 +46,7 @@ int StringToInt(string str) // string to int
 {
   stringstream strm(str);
   int rint;
-  strm >> rint; // translating from string to int...
+  strm >> rint; // casting from string to int...
 
 return rint;
 }
@@ -80,7 +80,7 @@ unsigned int b64Tob10(const string &b64)
         j++;
    }
 
-return rv;
+   return rv;
 }
 
 bool IsDigit(const string &str)

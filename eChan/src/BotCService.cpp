@@ -88,6 +88,8 @@ void BotCService::onKICK(const MsgSource& Source, const MsgTokenizer& Parameters
 
 void BotCService::onMsgMonitor(const Tokens::Token& _Token, const MsgSource& Source, const MsgTokenizer& Parameters)
 {
+   // we only monitor END_OF_BURST message so don't worry about parsing other messages.
+   // This is temporary to join the Channel Service bot to a console channel for debugging.
    Channel *theChannel = Network::Interface.FindChannel("#CService");
    if (NULL == theChannel)
    {

@@ -48,8 +48,7 @@ Bot::Bot(const std::string& Numeric, const std::string& NickName, const std::str
    }
 
    string strMsg = LocalServer->GetNumeric();
-   strMsg += " ";
-   strMsg += "N ";
+   strMsg += " N ";
    strMsg += NickName;
    strMsg += " 1 ";
    strMsg += IntToString(time(0));
@@ -57,8 +56,7 @@ Bot::Bot(const std::string& Numeric, const std::string& NickName, const std::str
    strMsg += UserName;
    strMsg += " ";
    strMsg += HostName;
-   strMsg += " ";
-   strMsg += "+";
+   strMsg += " + ";
    strMsg += Modes;
    strMsg += " ";
    strMsg += B64IP;

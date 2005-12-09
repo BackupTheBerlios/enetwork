@@ -28,15 +28,27 @@
 namespace eNetworks
 {
 
+// This class will take a server message and split parameters into a std::vector of std::strings.
 class MsgTokenizer
 {
    public:
 
+   	// Constructor.
+   	// aCommand = The IRC Message you want to tokenize.
+   	// Terminator = Normally Server<->Server messages use ':' 
+   	//   	   	to specify that what follows is string that 
+   	//   	   	is to be treated as one.
+   	// Delimiter = The character that separates parameters.
    	MsgTokenizer(const std::string &aCommand, const char &Terminator = ':', const char &Delimiter = ' ');
+
+   	// returns how many tokens were collected.
    	unsigned int size() const { return Tokens.size(); }
+
+   	// returns a reference to the token stored at position.
    	std::string operator[](const unsigned int &position) const { return Tokens[position]; }
 
    private:
+   	// Vector that holds tokens.
    	std::vector<std::string> Tokens;
 };
 

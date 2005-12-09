@@ -273,15 +273,11 @@ bool Network::DelClientByNickName(const std::string &aNickName)
 
    // return false if client with this nicname doesn't exist.
    if (ClientIter == ClientNickNames.end())
-   {
    	return false;
-   }
 
    // try to remove from the table associated by numerics first.
    if (ClientNumerics.erase(ClientIter->second->Numeric) != 1)
-   {
    	return false;
-   }
 
    // then remove the client from the client table in the server this client is dependant on.
    FindServerByNumeric(ClientIter->second->Numeric.substr(0,2))->ServerClients.erase(ClientIter->second->Numeric.substr(2));
@@ -297,7 +293,7 @@ bool Network::DelClientByNickName(const std::string &aNickName)
    delete ClientIter->second;
    ClientNickNames.erase(ClientIter);
 
-return true;
+   return true;
 }
 
 bool Network::DelClientByNumeric(const std::string &aNumeric)
@@ -307,15 +303,11 @@ bool Network::DelClientByNumeric(const std::string &aNumeric)
 
    // if client doesn't exist return false.
    if (ClientIter == ClientNumerics.end())
-   {
         return false;
-   }
 
    // try to erase the client from the client table associated by nicknames.
    if (ClientNickNames.erase(ClientIter->second->NickName) != 1)
-   {
         return false;
-   }
 
    // then remove the client from the client table in the server this client is dependant on.
    FindServerByNumeric(aNumeric.substr(0,2))->ServerClients.erase(aNumeric.substr(2));
@@ -340,10 +332,8 @@ Client *Network::FindClientByNickName(const std::string &aNickName)
    ClientNickNamesMapType::iterator ClientIter = ClientNickNames.find(aNickName);
 
    if (ClientIter == ClientNickNames.end())
-   {
    	return NULL;
-   }
-   // else
+
    return ClientIter->second;
 }
 
@@ -352,10 +342,8 @@ Client *Network::FindClientByNumeric(const std::string &aNumeric)
    ClientNumericsMapType::iterator ClientIter = ClientNumerics.find(aNumeric);
 
    if (ClientIter == ClientNumerics.end())
-   {
    	return NULL;
-   }
-   // else
+
    return ClientIter->second;
 }
 
@@ -382,16 +370,12 @@ bool Network::AddChannel (const std::string &aName, const time_t &aTimeStamp, co
    	return false;
    }
 
-return true;
+   return true;
 }
 
 bool Network::DelChannel(const std::string &aName)
 {
-   // return true if we deleted the channel
-   if (Channels.erase(aName) == 1)
-    return true;
-   // else return false.
-    return false;
+   return Channels.erase(aName) ? true : false;
 }
 
 Channel *Network::FindChannel(const std::string &aName)
@@ -400,7 +384,7 @@ Channel *Network::FindChannel(const std::string &aName)
 
    if (ChannelIter == Channels.end())
     return NULL;
-   // else
+
    return ChannelIter->second;
 }
 

@@ -27,6 +27,8 @@
 namespace eNetworks
 {
 
+// This class is a wrapper of the POSIX Thread library.
+// This library is no longer in use. Here for self future reference.
 class Thread
 {
    public:

@@ -34,6 +34,7 @@ namespace eNetworks
 // foward declaration
 struct Client;
 
+// This class represents a server in the network.
 struct Server
 {
    friend class Network;   
@@ -49,7 +50,7 @@ struct Server
    	unsigned int GetHopCount() const { return HopCount; }
    	char GetFlag() const { return Flag; }
 
-   private: // only NumericServers and NameServers can touch this struct.
+   private:
    	// Client numeric represented by CCC in contrast to SSCCC.
    	typedef std::map<std::string, Client *> ServerClientsType;
    	typedef ServerClientsType::iterator ServerClientsIterator;
@@ -78,6 +79,8 @@ struct Server
 
    	ServerDownLinksType ServerDownLinks;
  
+   	// This constructor is only to be called from the Network class.
+   	// If you want to create a new server see Network::AddServer().
    	Server(const std::string &aNumeric, const std::string &aName, const std::string &aUpLinkNumeric, 
                const std::string &aDescription, const time_t &aStartTime, const time_t &aLinkTime, 
                const unsigned int &aHopCount, const char &aFlag) :

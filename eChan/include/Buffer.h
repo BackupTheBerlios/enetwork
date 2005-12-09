@@ -37,12 +37,18 @@ namespace eNetworks
 class Buffer
 {
    public:
+   	// Constructor
    	Buffer() : Msgs() {}
 
    	virtual ~Buffer() {}
 
+   	// returns size of buffer.
    	const unsigned int count() const { return Msgs.size(); }
-   	virtual void insert (const std::string& _Msg) = 0;
+
+   	// Insert message to the buffer.
+   	virtual void insert(const std::string& _Msg) = 0;
+
+   	// pop a message from the buffer.
    	string pop()
    	{
    	   if (0 < count())

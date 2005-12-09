@@ -40,18 +40,26 @@ class Socket
 {
    public:
    	Socket() : sockfd(-1) {}; // Default constructor. 
+
 	~Socket()
    	{
    	   if (is_valid())
    	   	close(sockfd);
    	}
 
+   	// return whether we're connected or not.
 	bool is_valid() const { return sockfd != -1; }
+
+   	// Get the socket file descriptor.
 	int GetSocket() { return sockfd; } 
 
+   	// connect to uplink.
    	void connect(const std::string& host, const int& port);
+
+   	// returns recieved message.
    	std::string recv() const;
 
+   	// send a message to the uplink.
    	void send(const std::string &msg) const
    	{
    	   if (::send(sockfd, msg.c_str(), msg.size(), 0) == -1)

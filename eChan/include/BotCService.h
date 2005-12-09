@@ -29,6 +29,7 @@
 namespace eNetworks
 {
 
+// This represents the Channel Service bot.
 class BotCService : public Bot
 {
    public: 
