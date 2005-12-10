@@ -21,6 +21,8 @@
 
 #include <string.h>
 #include <errno.h>
+
+#ifdef _WINDOWS
 #include <fcntl.h>
 #include <sys/types.h>
 #include <sys/socket.h>
@@ -29,6 +31,9 @@
 #include <unistd.h>
 #include <arpa/inet.h>
 #include <string>
+#else
+#include <winsock.h>
+#endif
 
 #include "tools.h"
 #include "SocketException.h"
@@ -44,7 +49,13 @@ void Socket::connect(const string &host, const int& port)
    ::memset(&m_addr, 0, sizeof(m_addr));
 
    sockfd = ::socket(AF_INET, SOCK_STREAM, 0);
+   // Set as nonblocking.
+#ifdef WIN32
+   unsigned long blocking = 0; // disable blocking
+   ioctlsocket(sockfd, FIONBIO, &blocking);
+#else
    fcntl(sockfd, F_SETFL, O_NONBLOCK);
+#endif
 
    if (!is_valid())
     throw SocketException("Could not create socket", SocketException::SOCKET);
@@ -56,11 +67,37 @@ void Socket::connect(const string &host, const int& port)
 
    m_addr.sin_family = AF_INET;
    m_addr.sin_port = ::htons(port);
+   m_addr.sin_addr.s_addr = inet_addr(host.c_str());
 
-   ::inet_pton(AF_INET, host.c_str(), &m_addr.sin_addr);
+   // ::inet_pton(AF_INET, host.c_str(), &m_addr.sin_addr);
 
    if (::connect (sockfd, (sockaddr *) &m_addr, sizeof(m_addr)) == -1)
    {
+#ifdef WIN32
+	   switch(WSAGetLastError())
+	   {
+	   
+	   case WSAEISCONN:
+		   throw SocketException("This socket is already connected", SocketException::CONNECT);
+		   break;
+
+	   case WSAECONNREFUSED:
+		   throw SocketException("Connection refused", SocketException::CONNECT);
+		   break;
+
+	   case WSAETIMEDOUT:
+		   throw SocketException("Connection timed out", SocketException::CONNECT);
+		   break;
+
+	   case WSAENETUNREACH:
+		   throw SocketException("Network is unreachable", SocketException::CONNECT);
+		   break;
+
+	   case WSAEADDRINUSE:
+		   throw SocketException("Address already in use", SocketException::CONNECT);
+		   break;
+	   }
+#else
    	switch (errno)
    	{
    	   case EISCONN:
@@ -83,6 +120,7 @@ void Socket::connect(const string &host, const int& port)
    	   	throw SocketException("Address already in use", SocketException::CONNECT);
    	   	break;
    	}
+#endif
    }
 }
 

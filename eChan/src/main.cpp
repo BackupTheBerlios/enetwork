@@ -19,14 +19,19 @@
  *
 */
 
-#include <iostream>
-#include <string>
-#include <cstdlib>
-#include <cstdio>
+#ifndef WIN32
 #include <sys/types.h>
 #include <sys/time.h>
 #include <unistd.h>
 #include <sys/poll.h>
+#else
+#include <direct.h>
+#endif
+
+#include <iostream>
+#include <string>
+#include <cstdlib>
+#include <cstdio>
 #include <ctime>
 #include <list>
 
@@ -42,6 +47,7 @@
 #include "InBuffer.h"
 #include "MsgParseSystem.h"
 
+
 using std::cout;
 using std::endl;
 using std::string;
@@ -52,11 +58,19 @@ using namespace eNetworks;
 
 int main()
 {
-   // Make a child, die and let initd take care of us. (send to background)
+#ifndef WIN32
+	// Make a child, die and let initd take care of us. (send to background)
    if (0 == fork()) 
     setsid(); 
    else 
     exit(0);
+#else
+	{
+		char dir[200];
+		cout << _getcwd(dir, 200) << endl;
+		cout << dir << endl;
+	}
+#endif
 
    ConfigParser theConfigParser;
 
@@ -122,20 +136,36 @@ int main()
    eTokens->AddToken("P",      Tokens::PRIVMSG);
    eTokens->AddToken("O",      Tokens::NOTICE);
 
-   // Initialize poll system.
-   pollfd PollFD;
-   PollFD.fd = Socket::eSock.GetSocket();
-   PollFD.events = POLLIN|POLLPRI;
-
    do
    {
-   	PollFD.revents = NULL;
-   	if (poll(&PollFD, 1, -1) == 1 && (PollFD.revents == POLLIN || PollFD.revents == POLLPRI))
-   	{
-   	   InBuffer::ibInstance.insert(Socket::eSock.recv());
-   	   if (InBuffer::ibInstance.Digest())
-   	   	MsgParseSystem::Execute();
-   	}
+	   // declaring fd_sets
+	   fd_set Ofds; // Original
+	   fd_set Cfds; // Copy
+	   // initializing them
+	   FD_ZERO(&Ofds);
+	   FD_ZERO(&Cfds);
+	   // setting them
+	   FD_SET(Socket::eSock.GetSocket(), &Ofds);
+
+	   struct timeval tv;
+	   tv.tv_sec = 1;
+	   tv.tv_usec = 1;
+	
+	   Cfds = Ofds; 
+	   if (select((SOCKET)Socket::eSock.GetSocket()+1, &Ofds, NULL, NULL, &tv) == -1)
+	   {
+		   perror("select");
+		   return 0;	
+	   } 
+
+	   static string inbuffer; // inbuffer needs a little bit of more global scope
+	   if (FD_ISSET(Socket::eSock.GetSocket(), &Ofds))
+	   {
+		   InBuffer::ibInstance.insert(Socket::eSock.recv());
+		   if (InBuffer::ibInstance.Digest())
+			   MsgParseSystem::Execute();
+	   }
+  
 
    	// We're going to deal with timers here...
    } 

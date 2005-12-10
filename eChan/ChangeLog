@@ -186,6 +186,16 @@ October 20, 2005 - clsk - We can login to Channel Service bot.
  * Also made the sql scripts for users, channels and channel access.
  * Created class SqlUser to represent the User table in the database with mysql++'s create macro.
  * Created SqlChannel and SqlChannelAccess classes.
+ 
+November 22, 2005 - clsk - Started porting eChan to Windows.
+ * I've changed alot but will try to list the most important changes.
+ * Deleted Thread.h off the project.
+ * Removed lots of old #includes for old unix headers we were not using anymore.
+ * Changed to select() instead of poll(). Windows does not implement poll. This might 
+    change in the unix version as well to make it easier to maintain both ports.
+
+November 23, 2005 - clsk - eChan Compiles in windows.
+ * eChan - 0 error(s), 0 warning(s) :)
 
 December 06, 2005 - clsk - Changes to Socket class.
  * Added a send and recv class this way we don't have to rely on operators only.

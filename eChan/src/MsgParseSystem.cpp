@@ -19,7 +19,6 @@
  *
 */
 
-#include <pthread.h>
 #include <string>
 #include <iostream>
 #include <cstdlib>
@@ -43,7 +42,6 @@
 #include "Msg_SQ.h"
 #include "Msg_T.h"
 #include "PreServerMsg.h"
-#include "Thread.h"
 #include "MsgParseSystem.h"
 #include "InBuffer.h"
 #include "MsgSource.h"

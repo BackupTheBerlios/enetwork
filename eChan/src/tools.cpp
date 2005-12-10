@@ -24,6 +24,7 @@
 #include <iostream>
 #include <ctime>
 #include <cmath>
+#include <algorithm>
 
 using std::cout;
 using std::endl;

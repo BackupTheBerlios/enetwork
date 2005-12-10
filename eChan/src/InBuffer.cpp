@@ -20,11 +20,9 @@
 */
 
 #include <string>
-#include <pthread.h>
 #include <iostream>
 #include "tools.h"
 
-#include "Thread.h"
 #include "InBuffer.h"
 #include "debug.h"
 

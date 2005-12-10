@@ -23,7 +23,6 @@
 #define ELECTRONIC_NETWORKS__OUTBUFFER_H
 
 #include <string>
-#include <pthread.h>
 
 #include "Buffer.h"
 #include "OutMsgSystem.h"

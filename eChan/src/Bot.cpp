@@ -23,6 +23,7 @@
 #include <map>
 #include <string>
 #include <cstdlib>
+#include <ctime>
 
 #include "Bot.h"
 #include "debug.h"

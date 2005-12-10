@@ -22,9 +22,14 @@
 #ifndef ELECTRONIC_NETWORKS__SOCKET_H
 #define ELECTRONIC_NETWORKS__SOCKET_H
 
+#ifdef WIN32
+#include <winsock.h>
+#else
 #include <sys/socket.h>
 #include <sys/types.h>
 #include <netinet/in.h>
+#endif
+
 #include <string>
 
 #include "SocketException.h"
@@ -39,16 +44,35 @@ const int MAXRECV = 800;
 class Socket
 {
    public:
-   	Socket() : sockfd(-1) {}; // Default constructor. 
+   	Socket() : sockfd(-1) 
+	{
+#ifdef WIN32
+		WSADATA wsaData;
+		// Start the WinSock and request v1.1
+		WSAStartup( MAKEWORD(1,1), &wsaData );
+#endif
+	} // Default constructor. 
 
 	~Socket()
    	{
    	   if (is_valid())
-   	   	close(sockfd);
-   	}
+#ifdef WIN32
+		   ::closesocket(sockfd);
+	       WSACleanup();
+#else
+		   ::close(sockfd);
+#endif
+	}
 
    	// return whether we're connected or not.
-	bool is_valid() const { return sockfd != -1; }
+	bool is_valid() const 
+	{
+#ifdef WIN32
+		return sockfd != INVALID_SOCKET;
+#else
+		return sockfd != -1;
+#endif
+	}
 
    	// Get the socket file descriptor.
 	int GetSocket() { return sockfd; } 
@@ -88,11 +112,16 @@ class Socket
 
    private:
 
+#ifdef WIN32
+	SOCKET sockfd;
+#else
 	int sockfd;
-//   	string hostname;
-//   	string ip;
-//   	unsigned short port;
+#endif
 	sockaddr_in m_addr;
+//	string hostname;
+//	string ip;
+//	unsigned short port;
+
 };
 
 } // namespace eNetworks

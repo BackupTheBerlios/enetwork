@@ -298,12 +298,19 @@ bool Network::DelClientByNickName(const std::string &aNickName)
 
 bool Network::DelClientByNumeric(const std::string &aNumeric)
 {
-   // try to find the client.
+	// try to find the client.
    ClientNumericsMapType::iterator ClientIter = ClientNumerics.find(aNumeric);
 
    // if client doesn't exist return false.
    if (ClientIter == ClientNumerics.end())
         return false;
+
+   // remove this client from every channel it is on.
+   for (Client::ChannelMapType::iterator i = ClientIter->second->ChannelMap.begin();
+        i != ClientIter->second->ChannelMap.end(); i++)
+   {
+   	i->second->DelChannelClient(ClientIter->second);
+   }
 
    // try to erase the client from the client table associated by nicknames.
    if (ClientNickNames.erase(ClientIter->second->NickName) != 1)
@@ -311,13 +318,6 @@ bool Network::DelClientByNumeric(const std::string &aNumeric)
 
    // then remove the client from the client table in the server this client is dependant on.
    FindServerByNumeric(aNumeric.substr(0,2))->ServerClients.erase(aNumeric.substr(2));
-
-   // remove this client from ever channel it is on.
-   for (Client::ChannelMapType::iterator i = ClientIter->second->ChannelMap.begin();
-        i != ClientIter->second->ChannelMap.end(); i++)
-   {
-   	i->second->DelChannelClient(ClientIter->second);
-   }
 
    // finally release memory allocated and remove from table associated by numerics.
    delete ClientIter->second;

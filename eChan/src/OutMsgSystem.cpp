@@ -19,10 +19,8 @@
  *
 */
 
-#include <pthread.h>
 #include <iostream>
 
-#include "Thread.h"
 #include "OutMsgSystem.h"
 #include "OutBuffer.h"
 #include "Socket.h"
