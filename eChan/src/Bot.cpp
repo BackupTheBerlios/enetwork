@@ -57,7 +57,7 @@ Bot::Bot(const std::string& Numeric, const std::string& NickName, const std::str
    strMsg += UserName;
    strMsg += " ";
    strMsg += HostName;
-   strMsg += " + ";
+   strMsg += " +";
    strMsg += Modes;
    strMsg += " ";
    strMsg += B64IP;
