@@ -212,3 +212,8 @@ December 09, 2005 - clsk - Commented the code.
  
 December 10, 2005 - clsk - Bug fix.
  * Check Comments in Client::ClearChannels().
+
+December 11, 2005 - clsk - Bug fix.
+ * When PRIVMSG is sent to channel but couldn't find who to pass it to so it died.
+   I modified it to where it just ignores the message. Need to add a handler for this later.
+ * Added a README file.

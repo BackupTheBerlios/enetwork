@@ -1,0 +1,24 @@
+This code currently has been tested to compile in the following operating systems:
+
+ * Linux (Fedora Core 4 using gcc 4.0.0+).
+ * FreeBSD (using gcc 4.0.0+).
+ * Microsoft Windows(tm) (using Microsoft Visual Studio 2005 (8.0) express).
+
+Compiling and running in Unix-like systems:
+ - You should've gotten the code-base by now from cvs.
+ - type make.
+ - then go to the bin directory and edit the configuration file (eChan.conf).
+ - then run by typing ./eChan inside the bin directory.
+
+Compiling and running in Microsoft Windows:
+ - You're going to need Microsoft Visual C++ 2005 express and the Platform SDK. 
+ - Download the file from cvs. (I normally use TortoiseCVS for this).
+ - Create a new Project from existing code.
+ - set the project directory to where you downloaded the files from cvs.
+ - On project properties add the include directories to directories to include.
+ - Also add the include directory from the Platform SDK.
+ - Add the lib directory to the linker directory dependencies.
+ - Add WSock32.lib to linker dependencies.
+ - Build the project.
+ - modify eChan.conf
+ - run eChan.exe

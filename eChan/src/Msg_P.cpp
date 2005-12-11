@@ -35,6 +35,10 @@ namespace eNetworks
 
 void Msg_P::Parser()
 {
+   // ignore channel messages.
+   if (Parameters[0][0] == '#')
+   	return;
+
    Bot* theBot = Bot::FindBot(Parameters[0]);
    if (NULL == theBot)
    	debug << "Message sent to unknown Bot." << endb;

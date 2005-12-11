@@ -54,18 +54,6 @@ Network::Network(ConfigParser& theConfigParser) : Servers(), ClientNumerics(), C
    	exit(0);
    }
 
-/*
-   LocalClient = new Client(theConfigParser.GetConfiguration("NUMERIC")+"AAC", theConfigParser.GetConfiguration("NICK"), "", 
-   	   	   	    theConfigParser.GetConfiguration("USERNAME"), theConfigParser.GetConfiguration("HOSTNAME"),
-                            "DAqAoB", "idk", theConfigParser.GetConfiguration("CLIENTINFO"), time(0), 1);
-
-   if (LocalClient == NULL)
-   {
-   	cout << "Could Not add client " << theConfigParser.GetConfiguration("NICK") << endl;
-        exit(0);
-   }
-*/
-
    try
    {
    	Socket::eSock.connect(theConfigParser.GetConfiguration("UPLINK"), StringToInt(theConfigParser.GetConfiguration("PORT")));
