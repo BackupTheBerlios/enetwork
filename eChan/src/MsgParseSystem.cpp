@@ -213,7 +213,6 @@ void MsgParseSystem::Execute()
    	   	break;
    	   }
 
-   	   
 
    	   if (NULL != eMsg)
     	   {

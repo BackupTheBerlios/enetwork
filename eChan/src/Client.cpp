@@ -52,13 +52,22 @@ bool Client::DelChannel(Channel *aChannelPtr)
 void Client::ClearChannels()
 {
 
-   for (ChannelMapType::iterator ChannelIter = ChannelMap.begin(); ChannelIter != ChannelMap.end(); ChannelIter++)
+   for (ChannelMapType::iterator ChannelIter = ChannelMap.begin(); 
+	   ChannelIter != ChannelMap.end(); 
+	   ChannelIter++)
    {
-   	string name = ChannelIter->first;
-   	if (!ChannelIter->second->DelChannelClient(this))
-   	{
-   	   debug << "Could not Delete channel " << name << " off client " << NickName << " in Client::ClearChannels()." << endb;
-   	}
+   	
+	   string name = ChannelIter->first;
+	   if (!ChannelIter->second->DelChannelClient(this))
+	   {
+		   debug << "Could not Delete channel " << name << " off client " << NickName << " in Client::ClearChannels()." << endb;
+	   }
+
+	   // DelChannelClient will delete the pointer to 
+	   // ChannelClient making it a bad pointer.
+	   ChannelIter = ChannelMap.begin();
+	   if ( ChannelIter == ChannelMap.end() )
+		   break;
    }
 }
 

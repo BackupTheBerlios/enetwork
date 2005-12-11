@@ -209,3 +209,6 @@ December 08, 2005 - clsk - More changes to Socket class.
 
 December 09, 2005 - clsk - Commented the code.
  * Commented the code a little more.
+ 
+December 10, 2005 - clsk - Bug fix.
+ * Check Comments in Client::ClearChannels().

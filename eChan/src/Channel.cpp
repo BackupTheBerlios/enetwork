@@ -74,6 +74,7 @@ bool Channel::DelChannelClient(Client *aClientPtr)
    {
    	aClientPtr->DelChannel(this); 
   	delete ChannelClientIter->second;
+	ChannelClientIter->second = NULL;
    	ChannelClientList.erase(ChannelClientIter);
 
    	// If that was the last User in this channel then delete the channel.
