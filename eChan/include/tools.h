@@ -57,12 +57,12 @@ struct noCaseCompare
 {
 inline bool operator()( const std::string& lhs, const std::string& rhs ) const
         {
-#ifdef _WINDOWS
-        return (strcasecmp( lhs.c_str(), rhs.c_str() ) < 0) ;
+#ifdef WIN32
+   	   	return (_strcmpi( lhs.c_str(), rhs.c_str() ) < 0) ;
 #else
-		return (_strcmpi( lhs.c_str(), rhs.c_str() ) < 0) ;
+   	   	return (strcasecmp( lhs.c_str(), rhs.c_str() ) < 0) ;
 #endif
-}
+   	}
 } ;
 
 

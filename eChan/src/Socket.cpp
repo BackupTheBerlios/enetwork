@@ -22,7 +22,7 @@
 #include <string.h>
 #include <errno.h>
 
-#ifdef _WINDOWS
+#ifndef WIN32
 #include <fcntl.h>
 #include <sys/types.h>
 #include <sys/socket.h>
@@ -30,10 +30,11 @@
 #include <netdb.h>
 #include <unistd.h>
 #include <arpa/inet.h>
-#include <string>
 #else
 #include <winsock.h>
 #endif
+
+#include <string>
 
 #include "tools.h"
 #include "SocketException.h"

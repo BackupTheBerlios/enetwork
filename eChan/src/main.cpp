@@ -152,7 +152,7 @@ int main()
 	   tv.tv_usec = 1;
 	
 	   Cfds = Ofds; 
-	   if (select((SOCKET)Socket::eSock.GetSocket()+1, &Ofds, NULL, NULL, &tv) == -1)
+	   if (select(Socket::eSock.GetSocket()+1, &Ofds, NULL, NULL, &tv) == -1)
 	   {
 		   perror("select");
 		   return 0;	

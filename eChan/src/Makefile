@@ -1,6 +1,6 @@
 CPP = g++
 CPARAM = -W -Wall -c -I../include/ -Icservice/include -g
-OBJS = main.o Socket.o ConfigParser.o tools.o Msg_EB.o Msg_N.o Msg_S.o PreServerMsg.o Msg_B.o Channel.o Client.o MsgTokenizer.o Network.o Server.o SocketException.o debug.o Msg_G.o Msg_C.o Msg_Q.o InBuffer.o OutBuffer.o MsgParseSystem.o OutMsgSystem.o P10Tokens.o Thread.o Msg_J.o Msg_L.o Msg_SQ.o Msg_M.o Msg_K.o Msg_CM.o Msg_T.o Msg_OM.o MsgMonitor.o Bot.o BotCService.o Msg_P.o Msg_O.o
+OBJS = main.o Socket.o ConfigParser.o tools.o Msg_EB.o Msg_N.o Msg_S.o PreServerMsg.o Msg_B.o Channel.o Client.o MsgTokenizer.o Network.o Server.o SocketException.o debug.o Msg_G.o Msg_C.o Msg_Q.o InBuffer.o OutBuffer.o MsgParseSystem.o OutMsgSystem.o P10Tokens.o Msg_J.o Msg_L.o Msg_SQ.o Msg_M.o Msg_K.o Msg_CM.o Msg_T.o Msg_OM.o MsgMonitor.o Bot.o BotCService.o Msg_P.o Msg_O.o
 CSERVICEOBJS = cservice/Command.o cservice/CommandWHOIS.o cservice/CommandQUOTE.o
 
 .SUFFIXES: .o .cpp
@@ -11,7 +11,7 @@ CSERVICEOBJS = cservice/Command.o cservice/CommandWHOIS.o cservice/CommandQUOTE.
 all: eChan
   
 eChan:
-	$(CPP) $(OBJS) $(CSERVICEOBJS) -W -Wall -g -L/usr/local/lib/ -o ../bin/eChan -lpthread
+	$(CPP) $(OBJS) $(CSERVICEOBJS) -W -Wall -g -L/usr/local/lib/ -o ../bin/eChan
 
 main.o:
 	$(CPP) -o main.o $(CPARAM) main.cpp
@@ -85,9 +85,6 @@ OutMsgSystem.o:
 P10Tokens.o:
 	$(CPP) -o P10Tokens.o $(CPARAM) P10Tokens.cpp
 
-Thread.o:
-	$(CPP) -o Thread.o $(CPARAM) Thread.cpp
-
 Msg_J.o:
 	$(CPP) -o Msg_J.o $(CPARAM) Msg_J.cpp
 
@@ -154,7 +151,6 @@ OutBuffer.o: OutBuffer.cpp
 MsgParseSystem.o: MsgParseSystem.cpp
 OutMsgSystem.o: OutMsgSystem.cpp
 P10Tokens.o: P10Tokens.cpp
-Thread.o: Thread.cpp
 Msg_J.o: Msg_J.cpp
 Msg_L.o: Msg_L.cpp
 Msg_SQ.o: Msg_SQ.cpp
@@ -195,7 +191,6 @@ eChan: main.o \
        MsgParseSystem.o \
        OutMsgSystem.o \
        P10Tokens.o \
-       Thread.o \
        Msg_J.o \
        Msg_L.o \
        Msg_SQ.o \
