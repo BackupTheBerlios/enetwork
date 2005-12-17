@@ -67,7 +67,7 @@ void Socket::connect(const string &host, const int& port)
     throw SocketException("Could not re-use socket address", SocketException::SETSOCKOPT);
 
    m_addr.sin_family = AF_INET;
-   m_addr.sin_port = ::htons(port);
+   m_addr.sin_port = htons(port);
    m_addr.sin_addr.s_addr = inet_addr(host.c_str());
 
    // ::inet_pton(AF_INET, host.c_str(), &m_addr.sin_addr);

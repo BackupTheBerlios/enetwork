@@ -65,6 +65,7 @@ struct Client
    	   }
    	}
 
+   	// returns whether this client has aMode.
    	bool HasMode(const char aMode) const
    	{ 
    	   if (Modes.find(aMode) == std::string::npos) 
@@ -77,12 +78,15 @@ struct Client
    	   }
    	}
 
+   	// returns whether this user is an IRC operator.
    	bool IsOper() const
    	{
    	   return HasMode('o');
    	}
 
+   	// TODO: Change Client List sorted by nicknames.
    	void ChangeNickName (const std::string &aNickName) { NickName = aNickName; }
+
    	void ChangeTimeStamp (const time_t &aTimeStamp) { TimeStamp = aTimeStamp; }
 
    	std::string GetNumeric() const { return Numeric; }

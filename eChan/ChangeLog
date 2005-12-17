@@ -217,3 +217,8 @@ December 11, 2005 - clsk - Bug fix.
  * When PRIVMSG is sent to channel but couldn't find who to pass it to so it died.
    I modified it to where it just ignores the message. Need to add a handler for this later.
  * Added a README file.
+
+December 17, 2005 - clsk - autotools build system.
+ * I implemented a new build system using autotools.
+   The main reason is that I need a portable way to check if MySQL is installed in the system.
+   This is only works for Unix-like systems of course.
