@@ -104,7 +104,7 @@ struct Client
    private:
 
    	friend class Network;
-   	friend class Channel;
+   	friend struct Channel;
    	friend class Bot;
    	friend class cservice::CommandWHOIS;
 

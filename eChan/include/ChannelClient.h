@@ -70,7 +70,7 @@ struct ChannelClient
 
    private:
         // Make Channel friend of this struct so that it can make instances of this struct.
-        friend class Channel;
+        friend struct Channel;
 
         // Make consturctor private so that users can't create instances of this class.
         ChannelClient(Client *aClientPtr, const std::string &aModes = "") :
