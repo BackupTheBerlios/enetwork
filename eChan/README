@@ -6,7 +6,9 @@ This code currently has been tested to compile in the following operating system
 
 Compiling and running in Unix-like systems:
  - You should've gotten the code-base by now from cvs.
+ - Run the configure script (Type ./configure).
  - type make.
+ - Type make install.
  - then go to the bin directory and edit the configuration file (eChan.conf).
  - then run by typing ./eChan inside the bin directory.
 
