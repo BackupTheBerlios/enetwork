@@ -64,6 +64,7 @@ int main()
     setsid(); 
    else 
     exit(0);
+
 #else
 	{
 		char dir[200];
@@ -88,16 +89,8 @@ int main()
 
    theConfigParser.ParseConfigFile();
 
-   Network::Interface = Network(theConfigParser);
 
-/*
-   eNetwork = new Network(theConfigParser);
-   if (eNetwork == NULL)
-   {
-        debug << "Could not allocate memory for Network class" << endb;
-        exit(0);
-   }
-*/
+   Network::Interface = Network(theConfigParser);
 
    // Login to server. Introduce the channels service bot and send EB (End of Burst). 
    login(theConfigParser);

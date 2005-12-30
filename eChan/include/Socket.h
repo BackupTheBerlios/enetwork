@@ -28,6 +28,7 @@
 #include <sys/socket.h>
 #include <sys/types.h>
 #include <netinet/in.h>
+#include <errno.h>
 #endif
 
 #include <string>
@@ -87,7 +88,7 @@ class Socket
    	void send(const std::string &msg) const
    	{
    	   if (::send(sockfd, msg.c_str(), msg.size(), 0) == -1)
-   	   	throw SocketException("Error while sending message", SocketException::SEND);
+   	   	throw SocketException("Error while sending message" + IntToString(errno), SocketException::SEND);
    	}
 
 	const Socket &operator<<(const std::string &outbuff ) const

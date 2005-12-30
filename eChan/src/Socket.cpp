@@ -50,13 +50,7 @@ void Socket::connect(const string &host, const int& port)
    ::memset(&m_addr, 0, sizeof(m_addr));
 
    sockfd = ::socket(AF_INET, SOCK_STREAM, 0);
-   // Set as nonblocking.
-#ifdef WIN32
-   unsigned long blocking = 0; // disable blocking
-   ioctlsocket(sockfd, FIONBIO, &blocking);
-#else
-   fcntl(sockfd, F_SETFL, O_NONBLOCK);
-#endif
+   // socket now blocks.
 
    if (!is_valid())
     throw SocketException("Could not create socket", SocketException::SOCKET);

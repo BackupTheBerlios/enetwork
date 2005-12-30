@@ -222,3 +222,10 @@ December 17, 2005 - clsk - autotools build system.
  * I implemented a new build system using autotools.
    The main reason is that I need a portable way to check if MySQL is installed in the system.
    This is only works for Unix-like systems of course.
+
+December 18, 2005 - clsk - Fixed Socket blocking bug.
+ * The program would terminate because of unhandled exception happening when the nonblocking socket
+   had to block because a message could not be sent. Since the only time we care about the socket
+   blocking is when recieving data and select() is already taking care of that I set the socket
+   to block again and that solves the problem.
+
