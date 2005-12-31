@@ -55,7 +55,7 @@ void CommandLOGIN::Parser()
    	return;
    }
 
-   Connection Conn("eChan", "localhost", "root", "23031985");
+   Connection Conn("eChan", "localhost", "root", "mypass");
 
    if (!Conn.connected())
    {
