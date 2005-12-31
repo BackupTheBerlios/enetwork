@@ -49,20 +49,26 @@ CONFIG_CLEAN_FILES =
 am__installdirs = "$(DESTDIR)$(bindir)"
 binPROGRAMS_INSTALL = $(INSTALL_PROGRAM)
 PROGRAMS = $(bin_PROGRAMS)
-am_eChan_OBJECTS = main.$(OBJEXT) Socket.$(OBJEXT) Channel.$(OBJEXT) \
-	Client.$(OBJEXT) ConfigParser.$(OBJEXT) tools.$(OBJEXT) \
-	debug.$(OBJEXT) MsgTokenizer.$(OBJEXT) Network.$(OBJEXT) \
-	Server.$(OBJEXT) SocketException.$(OBJEXT) Msg_S.$(OBJEXT) \
-	PreServerMsg.$(OBJEXT) Msg_B.$(OBJEXT) Msg_EB.$(OBJEXT) \
-	Msg_N.$(OBJEXT) Msg_G.$(OBJEXT) Msg_Q.$(OBJEXT) \
-	InBuffer.$(OBJEXT) OutBuffer.$(OBJEXT) \
-	MsgParseSystem.$(OBJEXT) OutMsgSystem.$(OBJEXT) \
-	P10Tokens.$(OBJEXT) Msg_J.$(OBJEXT) Msg_L.$(OBJEXT) \
-	Msg_SQ.$(OBJEXT) Msg_M.$(OBJEXT) Msg_K.$(OBJEXT) \
-	Msg_CM.$(OBJEXT) Msg_T.$(OBJEXT) Msg_C.$(OBJEXT) \
-	Msg_O.$(OBJEXT) Msg_P.$(OBJEXT) Msg_OM.$(OBJEXT) Bot.$(OBJEXT) \
-	BotCService.$(OBJEXT) MsgMonitor.$(OBJEXT) Command.$(OBJEXT) \
-	CommandWHOIS.$(OBJEXT) CommandQUOTE.$(OBJEXT)
+am_eChan_OBJECTS = eChan-main.$(OBJEXT) eChan-Socket.$(OBJEXT) \
+	eChan-Channel.$(OBJEXT) eChan-Client.$(OBJEXT) \
+	eChan-ConfigParser.$(OBJEXT) eChan-tools.$(OBJEXT) \
+	eChan-debug.$(OBJEXT) eChan-MsgTokenizer.$(OBJEXT) \
+	eChan-Network.$(OBJEXT) eChan-Server.$(OBJEXT) \
+	eChan-SocketException.$(OBJEXT) eChan-Msg_S.$(OBJEXT) \
+	eChan-PreServerMsg.$(OBJEXT) eChan-Msg_B.$(OBJEXT) \
+	eChan-Msg_EB.$(OBJEXT) eChan-Msg_N.$(OBJEXT) \
+	eChan-Msg_G.$(OBJEXT) eChan-Msg_Q.$(OBJEXT) \
+	eChan-InBuffer.$(OBJEXT) eChan-OutBuffer.$(OBJEXT) \
+	eChan-MsgParseSystem.$(OBJEXT) eChan-OutMsgSystem.$(OBJEXT) \
+	eChan-P10Tokens.$(OBJEXT) eChan-Msg_J.$(OBJEXT) \
+	eChan-Msg_L.$(OBJEXT) eChan-Msg_SQ.$(OBJEXT) \
+	eChan-Msg_M.$(OBJEXT) eChan-Msg_K.$(OBJEXT) \
+	eChan-Msg_CM.$(OBJEXT) eChan-Msg_T.$(OBJEXT) \
+	eChan-Msg_C.$(OBJEXT) eChan-Msg_O.$(OBJEXT) \
+	eChan-Msg_P.$(OBJEXT) eChan-Msg_OM.$(OBJEXT) \
+	eChan-Bot.$(OBJEXT) eChan-BotCService.$(OBJEXT) \
+	eChan-MsgMonitor.$(OBJEXT) eChan-Command.$(OBJEXT) \
+	eChan-CommandWHOIS.$(OBJEXT) eChan-CommandQUOTE.$(OBJEXT)
 eChan_OBJECTS = $(am_eChan_OBJECTS)
 eChan_LDADD = $(LDADD)
 DEFAULT_INCLUDES = -I. -I$(srcdir) -I$(top_builddir)
@@ -111,6 +117,8 @@ LIBOBJS = @LIBOBJS@
 LIBS = @LIBS@
 LTLIBOBJS = @LTLIBOBJS@
 MAKEINFO = @MAKEINFO@
+MYSQLPP_INCLUDE = @MYSQLPP_INCLUDE@
+MYSQLPP_LIB = @MYSQLPP_LIB@
 OBJEXT = @OBJEXT@
 PACKAGE = @PACKAGE@
 PACKAGE_BUGREPORT = @PACKAGE_BUGREPORT@
@@ -196,7 +204,8 @@ eChan_SOURCES = main.cpp \
                 cservice/CommandWHOIS.cpp \
                 cservice/CommandQUOTE.cpp
 
-INCLUDES = -I../include/ -I../ -Icservice/include/
+eChan_LDFLAGS = -L$(MYSQLPP_LIB) -lmysqlpp
+eChan_CXXFLAGS = -I../include/ -I../ -Icservice/include/ -I$(MYSQLPP_INCLUDE)
 EXTRA_DIST = cservice/CommandLOGIN.cpp \
              cservice/include/Command.h \
              cservice/include/CommandLOGIN.h \
@@ -273,46 +282,46 @@ mostlyclean-compile:
 distclean-compile:
 	-rm -f *.tab.c
 
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/Bot.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/BotCService.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/Channel.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/Client.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/Command.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/CommandQUOTE.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/CommandWHOIS.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ConfigParser.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/InBuffer.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/MsgMonitor.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/MsgParseSystem.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/MsgTokenizer.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/Msg_B.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/Msg_C.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/Msg_CM.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/Msg_EB.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/Msg_G.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/Msg_J.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/Msg_K.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/Msg_L.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/Msg_M.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/Msg_N.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/Msg_O.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/Msg_OM.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/Msg_P.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/Msg_Q.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/Msg_S.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/Msg_SQ.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/Msg_T.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/Network.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/OutBuffer.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/OutMsgSystem.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/P10Tokens.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/PreServerMsg.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/Server.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/Socket.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/SocketException.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/debug.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/main.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/tools.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/eChan-Bot.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/eChan-BotCService.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/eChan-Channel.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/eChan-Client.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/eChan-Command.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/eChan-CommandQUOTE.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/eChan-CommandWHOIS.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/eChan-ConfigParser.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/eChan-InBuffer.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/eChan-MsgMonitor.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/eChan-MsgParseSystem.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/eChan-MsgTokenizer.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/eChan-Msg_B.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/eChan-Msg_C.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/eChan-Msg_CM.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/eChan-Msg_EB.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/eChan-Msg_G.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/eChan-Msg_J.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/eChan-Msg_K.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/eChan-Msg_L.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/eChan-Msg_M.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/eChan-Msg_N.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/eChan-Msg_O.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/eChan-Msg_OM.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/eChan-Msg_P.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/eChan-Msg_Q.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/eChan-Msg_S.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/eChan-Msg_SQ.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/eChan-Msg_T.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/eChan-Network.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/eChan-OutBuffer.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/eChan-OutMsgSystem.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/eChan-P10Tokens.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/eChan-PreServerMsg.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/eChan-Server.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/eChan-Socket.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/eChan-SocketException.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/eChan-debug.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/eChan-main.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/eChan-tools.Po@am__quote@
 
 .cpp.o:
 @am__fastdepCXX_TRUE@	if $(CXXCOMPILE) -MT $@ -MD -MP -MF "$(DEPDIR)/$*.Tpo" -c -o $@ $<; \
@@ -328,47 +337,565 @@ distclean-compile:
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(CXXCOMPILE) -c -o $@ `$(CYGPATH_W) '$<'`
 
-Command.o: cservice/Command.cpp
-@am__fastdepCXX_TRUE@	if $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT Command.o -MD -MP -MF "$(DEPDIR)/Command.Tpo" -c -o Command.o `test -f 'cservice/Command.cpp' || echo '$(srcdir)/'`cservice/Command.cpp; \
-@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/Command.Tpo" "$(DEPDIR)/Command.Po"; else rm -f "$(DEPDIR)/Command.Tpo"; exit 1; fi
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='cservice/Command.cpp' object='Command.o' libtool=no @AMDEPBACKSLASH@
+eChan-main.o: main.cpp
+@am__fastdepCXX_TRUE@	if $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(eChan_CXXFLAGS) $(CXXFLAGS) -MT eChan-main.o -MD -MP -MF "$(DEPDIR)/eChan-main.Tpo" -c -o eChan-main.o `test -f 'main.cpp' || echo '$(srcdir)/'`main.cpp; \
+@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/eChan-main.Tpo" "$(DEPDIR)/eChan-main.Po"; else rm -f "$(DEPDIR)/eChan-main.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='main.cpp' object='eChan-main.o' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o Command.o `test -f 'cservice/Command.cpp' || echo '$(srcdir)/'`cservice/Command.cpp
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(eChan_CXXFLAGS) $(CXXFLAGS) -c -o eChan-main.o `test -f 'main.cpp' || echo '$(srcdir)/'`main.cpp
 
-Command.obj: cservice/Command.cpp
-@am__fastdepCXX_TRUE@	if $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT Command.obj -MD -MP -MF "$(DEPDIR)/Command.Tpo" -c -o Command.obj `if test -f 'cservice/Command.cpp'; then $(CYGPATH_W) 'cservice/Command.cpp'; else $(CYGPATH_W) '$(srcdir)/cservice/Command.cpp'; fi`; \
-@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/Command.Tpo" "$(DEPDIR)/Command.Po"; else rm -f "$(DEPDIR)/Command.Tpo"; exit 1; fi
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='cservice/Command.cpp' object='Command.obj' libtool=no @AMDEPBACKSLASH@
+eChan-main.obj: main.cpp
+@am__fastdepCXX_TRUE@	if $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(eChan_CXXFLAGS) $(CXXFLAGS) -MT eChan-main.obj -MD -MP -MF "$(DEPDIR)/eChan-main.Tpo" -c -o eChan-main.obj `if test -f 'main.cpp'; then $(CYGPATH_W) 'main.cpp'; else $(CYGPATH_W) '$(srcdir)/main.cpp'; fi`; \
+@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/eChan-main.Tpo" "$(DEPDIR)/eChan-main.Po"; else rm -f "$(DEPDIR)/eChan-main.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='main.cpp' object='eChan-main.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o Command.obj `if test -f 'cservice/Command.cpp'; then $(CYGPATH_W) 'cservice/Command.cpp'; else $(CYGPATH_W) '$(srcdir)/cservice/Command.cpp'; fi`
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(eChan_CXXFLAGS) $(CXXFLAGS) -c -o eChan-main.obj `if test -f 'main.cpp'; then $(CYGPATH_W) 'main.cpp'; else $(CYGPATH_W) '$(srcdir)/main.cpp'; fi`
 
-CommandWHOIS.o: cservice/CommandWHOIS.cpp
-@am__fastdepCXX_TRUE@	if $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT CommandWHOIS.o -MD -MP -MF "$(DEPDIR)/CommandWHOIS.Tpo" -c -o CommandWHOIS.o `test -f 'cservice/CommandWHOIS.cpp' || echo '$(srcdir)/'`cservice/CommandWHOIS.cpp; \
-@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/CommandWHOIS.Tpo" "$(DEPDIR)/CommandWHOIS.Po"; else rm -f "$(DEPDIR)/CommandWHOIS.Tpo"; exit 1; fi
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='cservice/CommandWHOIS.cpp' object='CommandWHOIS.o' libtool=no @AMDEPBACKSLASH@
+eChan-Socket.o: Socket.cpp
+@am__fastdepCXX_TRUE@	if $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(eChan_CXXFLAGS) $(CXXFLAGS) -MT eChan-Socket.o -MD -MP -MF "$(DEPDIR)/eChan-Socket.Tpo" -c -o eChan-Socket.o `test -f 'Socket.cpp' || echo '$(srcdir)/'`Socket.cpp; \
+@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/eChan-Socket.Tpo" "$(DEPDIR)/eChan-Socket.Po"; else rm -f "$(DEPDIR)/eChan-Socket.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='Socket.cpp' object='eChan-Socket.o' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o CommandWHOIS.o `test -f 'cservice/CommandWHOIS.cpp' || echo '$(srcdir)/'`cservice/CommandWHOIS.cpp
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(eChan_CXXFLAGS) $(CXXFLAGS) -c -o eChan-Socket.o `test -f 'Socket.cpp' || echo '$(srcdir)/'`Socket.cpp
 
-CommandWHOIS.obj: cservice/CommandWHOIS.cpp
-@am__fastdepCXX_TRUE@	if $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT CommandWHOIS.obj -MD -MP -MF "$(DEPDIR)/CommandWHOIS.Tpo" -c -o CommandWHOIS.obj `if test -f 'cservice/CommandWHOIS.cpp'; then $(CYGPATH_W) 'cservice/CommandWHOIS.cpp'; else $(CYGPATH_W) '$(srcdir)/cservice/CommandWHOIS.cpp'; fi`; \
-@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/CommandWHOIS.Tpo" "$(DEPDIR)/CommandWHOIS.Po"; else rm -f "$(DEPDIR)/CommandWHOIS.Tpo"; exit 1; fi
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='cservice/CommandWHOIS.cpp' object='CommandWHOIS.obj' libtool=no @AMDEPBACKSLASH@
+eChan-Socket.obj: Socket.cpp
+@am__fastdepCXX_TRUE@	if $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(eChan_CXXFLAGS) $(CXXFLAGS) -MT eChan-Socket.obj -MD -MP -MF "$(DEPDIR)/eChan-Socket.Tpo" -c -o eChan-Socket.obj `if test -f 'Socket.cpp'; then $(CYGPATH_W) 'Socket.cpp'; else $(CYGPATH_W) '$(srcdir)/Socket.cpp'; fi`; \
+@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/eChan-Socket.Tpo" "$(DEPDIR)/eChan-Socket.Po"; else rm -f "$(DEPDIR)/eChan-Socket.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='Socket.cpp' object='eChan-Socket.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o CommandWHOIS.obj `if test -f 'cservice/CommandWHOIS.cpp'; then $(CYGPATH_W) 'cservice/CommandWHOIS.cpp'; else $(CYGPATH_W) '$(srcdir)/cservice/CommandWHOIS.cpp'; fi`
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(eChan_CXXFLAGS) $(CXXFLAGS) -c -o eChan-Socket.obj `if test -f 'Socket.cpp'; then $(CYGPATH_W) 'Socket.cpp'; else $(CYGPATH_W) '$(srcdir)/Socket.cpp'; fi`
 
-CommandQUOTE.o: cservice/CommandQUOTE.cpp
-@am__fastdepCXX_TRUE@	if $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT CommandQUOTE.o -MD -MP -MF "$(DEPDIR)/CommandQUOTE.Tpo" -c -o CommandQUOTE.o `test -f 'cservice/CommandQUOTE.cpp' || echo '$(srcdir)/'`cservice/CommandQUOTE.cpp; \
-@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/CommandQUOTE.Tpo" "$(DEPDIR)/CommandQUOTE.Po"; else rm -f "$(DEPDIR)/CommandQUOTE.Tpo"; exit 1; fi
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='cservice/CommandQUOTE.cpp' object='CommandQUOTE.o' libtool=no @AMDEPBACKSLASH@
+eChan-Channel.o: Channel.cpp
+@am__fastdepCXX_TRUE@	if $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(eChan_CXXFLAGS) $(CXXFLAGS) -MT eChan-Channel.o -MD -MP -MF "$(DEPDIR)/eChan-Channel.Tpo" -c -o eChan-Channel.o `test -f 'Channel.cpp' || echo '$(srcdir)/'`Channel.cpp; \
+@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/eChan-Channel.Tpo" "$(DEPDIR)/eChan-Channel.Po"; else rm -f "$(DEPDIR)/eChan-Channel.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='Channel.cpp' object='eChan-Channel.o' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o CommandQUOTE.o `test -f 'cservice/CommandQUOTE.cpp' || echo '$(srcdir)/'`cservice/CommandQUOTE.cpp
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(eChan_CXXFLAGS) $(CXXFLAGS) -c -o eChan-Channel.o `test -f 'Channel.cpp' || echo '$(srcdir)/'`Channel.cpp
 
-CommandQUOTE.obj: cservice/CommandQUOTE.cpp
-@am__fastdepCXX_TRUE@	if $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT CommandQUOTE.obj -MD -MP -MF "$(DEPDIR)/CommandQUOTE.Tpo" -c -o CommandQUOTE.obj `if test -f 'cservice/CommandQUOTE.cpp'; then $(CYGPATH_W) 'cservice/CommandQUOTE.cpp'; else $(CYGPATH_W) '$(srcdir)/cservice/CommandQUOTE.cpp'; fi`; \
-@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/CommandQUOTE.Tpo" "$(DEPDIR)/CommandQUOTE.Po"; else rm -f "$(DEPDIR)/CommandQUOTE.Tpo"; exit 1; fi
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='cservice/CommandQUOTE.cpp' object='CommandQUOTE.obj' libtool=no @AMDEPBACKSLASH@
+eChan-Channel.obj: Channel.cpp
+@am__fastdepCXX_TRUE@	if $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(eChan_CXXFLAGS) $(CXXFLAGS) -MT eChan-Channel.obj -MD -MP -MF "$(DEPDIR)/eChan-Channel.Tpo" -c -o eChan-Channel.obj `if test -f 'Channel.cpp'; then $(CYGPATH_W) 'Channel.cpp'; else $(CYGPATH_W) '$(srcdir)/Channel.cpp'; fi`; \
+@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/eChan-Channel.Tpo" "$(DEPDIR)/eChan-Channel.Po"; else rm -f "$(DEPDIR)/eChan-Channel.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='Channel.cpp' object='eChan-Channel.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o CommandQUOTE.obj `if test -f 'cservice/CommandQUOTE.cpp'; then $(CYGPATH_W) 'cservice/CommandQUOTE.cpp'; else $(CYGPATH_W) '$(srcdir)/cservice/CommandQUOTE.cpp'; fi`
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(eChan_CXXFLAGS) $(CXXFLAGS) -c -o eChan-Channel.obj `if test -f 'Channel.cpp'; then $(CYGPATH_W) 'Channel.cpp'; else $(CYGPATH_W) '$(srcdir)/Channel.cpp'; fi`
+
+eChan-Client.o: Client.cpp
+@am__fastdepCXX_TRUE@	if $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(eChan_CXXFLAGS) $(CXXFLAGS) -MT eChan-Client.o -MD -MP -MF "$(DEPDIR)/eChan-Client.Tpo" -c -o eChan-Client.o `test -f 'Client.cpp' || echo '$(srcdir)/'`Client.cpp; \
+@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/eChan-Client.Tpo" "$(DEPDIR)/eChan-Client.Po"; else rm -f "$(DEPDIR)/eChan-Client.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='Client.cpp' object='eChan-Client.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(eChan_CXXFLAGS) $(CXXFLAGS) -c -o eChan-Client.o `test -f 'Client.cpp' || echo '$(srcdir)/'`Client.cpp
+
+eChan-Client.obj: Client.cpp
+@am__fastdepCXX_TRUE@	if $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(eChan_CXXFLAGS) $(CXXFLAGS) -MT eChan-Client.obj -MD -MP -MF "$(DEPDIR)/eChan-Client.Tpo" -c -o eChan-Client.obj `if test -f 'Client.cpp'; then $(CYGPATH_W) 'Client.cpp'; else $(CYGPATH_W) '$(srcdir)/Client.cpp'; fi`; \
+@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/eChan-Client.Tpo" "$(DEPDIR)/eChan-Client.Po"; else rm -f "$(DEPDIR)/eChan-Client.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='Client.cpp' object='eChan-Client.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(eChan_CXXFLAGS) $(CXXFLAGS) -c -o eChan-Client.obj `if test -f 'Client.cpp'; then $(CYGPATH_W) 'Client.cpp'; else $(CYGPATH_W) '$(srcdir)/Client.cpp'; fi`
+
+eChan-ConfigParser.o: ConfigParser.cpp
+@am__fastdepCXX_TRUE@	if $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(eChan_CXXFLAGS) $(CXXFLAGS) -MT eChan-ConfigParser.o -MD -MP -MF "$(DEPDIR)/eChan-ConfigParser.Tpo" -c -o eChan-ConfigParser.o `test -f 'ConfigParser.cpp' || echo '$(srcdir)/'`ConfigParser.cpp; \
+@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/eChan-ConfigParser.Tpo" "$(DEPDIR)/eChan-ConfigParser.Po"; else rm -f "$(DEPDIR)/eChan-ConfigParser.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='ConfigParser.cpp' object='eChan-ConfigParser.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(eChan_CXXFLAGS) $(CXXFLAGS) -c -o eChan-ConfigParser.o `test -f 'ConfigParser.cpp' || echo '$(srcdir)/'`ConfigParser.cpp
+
+eChan-ConfigParser.obj: ConfigParser.cpp
+@am__fastdepCXX_TRUE@	if $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(eChan_CXXFLAGS) $(CXXFLAGS) -MT eChan-ConfigParser.obj -MD -MP -MF "$(DEPDIR)/eChan-ConfigParser.Tpo" -c -o eChan-ConfigParser.obj `if test -f 'ConfigParser.cpp'; then $(CYGPATH_W) 'ConfigParser.cpp'; else $(CYGPATH_W) '$(srcdir)/ConfigParser.cpp'; fi`; \
+@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/eChan-ConfigParser.Tpo" "$(DEPDIR)/eChan-ConfigParser.Po"; else rm -f "$(DEPDIR)/eChan-ConfigParser.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='ConfigParser.cpp' object='eChan-ConfigParser.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(eChan_CXXFLAGS) $(CXXFLAGS) -c -o eChan-ConfigParser.obj `if test -f 'ConfigParser.cpp'; then $(CYGPATH_W) 'ConfigParser.cpp'; else $(CYGPATH_W) '$(srcdir)/ConfigParser.cpp'; fi`
+
+eChan-tools.o: tools.cpp
+@am__fastdepCXX_TRUE@	if $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(eChan_CXXFLAGS) $(CXXFLAGS) -MT eChan-tools.o -MD -MP -MF "$(DEPDIR)/eChan-tools.Tpo" -c -o eChan-tools.o `test -f 'tools.cpp' || echo '$(srcdir)/'`tools.cpp; \
+@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/eChan-tools.Tpo" "$(DEPDIR)/eChan-tools.Po"; else rm -f "$(DEPDIR)/eChan-tools.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='tools.cpp' object='eChan-tools.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(eChan_CXXFLAGS) $(CXXFLAGS) -c -o eChan-tools.o `test -f 'tools.cpp' || echo '$(srcdir)/'`tools.cpp
+
+eChan-tools.obj: tools.cpp
+@am__fastdepCXX_TRUE@	if $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(eChan_CXXFLAGS) $(CXXFLAGS) -MT eChan-tools.obj -MD -MP -MF "$(DEPDIR)/eChan-tools.Tpo" -c -o eChan-tools.obj `if test -f 'tools.cpp'; then $(CYGPATH_W) 'tools.cpp'; else $(CYGPATH_W) '$(srcdir)/tools.cpp'; fi`; \
+@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/eChan-tools.Tpo" "$(DEPDIR)/eChan-tools.Po"; else rm -f "$(DEPDIR)/eChan-tools.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='tools.cpp' object='eChan-tools.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(eChan_CXXFLAGS) $(CXXFLAGS) -c -o eChan-tools.obj `if test -f 'tools.cpp'; then $(CYGPATH_W) 'tools.cpp'; else $(CYGPATH_W) '$(srcdir)/tools.cpp'; fi`
+
+eChan-debug.o: debug.cpp
+@am__fastdepCXX_TRUE@	if $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(eChan_CXXFLAGS) $(CXXFLAGS) -MT eChan-debug.o -MD -MP -MF "$(DEPDIR)/eChan-debug.Tpo" -c -o eChan-debug.o `test -f 'debug.cpp' || echo '$(srcdir)/'`debug.cpp; \
+@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/eChan-debug.Tpo" "$(DEPDIR)/eChan-debug.Po"; else rm -f "$(DEPDIR)/eChan-debug.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='debug.cpp' object='eChan-debug.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(eChan_CXXFLAGS) $(CXXFLAGS) -c -o eChan-debug.o `test -f 'debug.cpp' || echo '$(srcdir)/'`debug.cpp
+
+eChan-debug.obj: debug.cpp
+@am__fastdepCXX_TRUE@	if $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(eChan_CXXFLAGS) $(CXXFLAGS) -MT eChan-debug.obj -MD -MP -MF "$(DEPDIR)/eChan-debug.Tpo" -c -o eChan-debug.obj `if test -f 'debug.cpp'; then $(CYGPATH_W) 'debug.cpp'; else $(CYGPATH_W) '$(srcdir)/debug.cpp'; fi`; \
+@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/eChan-debug.Tpo" "$(DEPDIR)/eChan-debug.Po"; else rm -f "$(DEPDIR)/eChan-debug.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='debug.cpp' object='eChan-debug.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(eChan_CXXFLAGS) $(CXXFLAGS) -c -o eChan-debug.obj `if test -f 'debug.cpp'; then $(CYGPATH_W) 'debug.cpp'; else $(CYGPATH_W) '$(srcdir)/debug.cpp'; fi`
+
+eChan-MsgTokenizer.o: MsgTokenizer.cpp
+@am__fastdepCXX_TRUE@	if $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(eChan_CXXFLAGS) $(CXXFLAGS) -MT eChan-MsgTokenizer.o -MD -MP -MF "$(DEPDIR)/eChan-MsgTokenizer.Tpo" -c -o eChan-MsgTokenizer.o `test -f 'MsgTokenizer.cpp' || echo '$(srcdir)/'`MsgTokenizer.cpp; \
+@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/eChan-MsgTokenizer.Tpo" "$(DEPDIR)/eChan-MsgTokenizer.Po"; else rm -f "$(DEPDIR)/eChan-MsgTokenizer.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='MsgTokenizer.cpp' object='eChan-MsgTokenizer.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(eChan_CXXFLAGS) $(CXXFLAGS) -c -o eChan-MsgTokenizer.o `test -f 'MsgTokenizer.cpp' || echo '$(srcdir)/'`MsgTokenizer.cpp
+
+eChan-MsgTokenizer.obj: MsgTokenizer.cpp
+@am__fastdepCXX_TRUE@	if $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(eChan_CXXFLAGS) $(CXXFLAGS) -MT eChan-MsgTokenizer.obj -MD -MP -MF "$(DEPDIR)/eChan-MsgTokenizer.Tpo" -c -o eChan-MsgTokenizer.obj `if test -f 'MsgTokenizer.cpp'; then $(CYGPATH_W) 'MsgTokenizer.cpp'; else $(CYGPATH_W) '$(srcdir)/MsgTokenizer.cpp'; fi`; \
+@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/eChan-MsgTokenizer.Tpo" "$(DEPDIR)/eChan-MsgTokenizer.Po"; else rm -f "$(DEPDIR)/eChan-MsgTokenizer.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='MsgTokenizer.cpp' object='eChan-MsgTokenizer.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(eChan_CXXFLAGS) $(CXXFLAGS) -c -o eChan-MsgTokenizer.obj `if test -f 'MsgTokenizer.cpp'; then $(CYGPATH_W) 'MsgTokenizer.cpp'; else $(CYGPATH_W) '$(srcdir)/MsgTokenizer.cpp'; fi`
+
+eChan-Network.o: Network.cpp
+@am__fastdepCXX_TRUE@	if $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(eChan_CXXFLAGS) $(CXXFLAGS) -MT eChan-Network.o -MD -MP -MF "$(DEPDIR)/eChan-Network.Tpo" -c -o eChan-Network.o `test -f 'Network.cpp' || echo '$(srcdir)/'`Network.cpp; \
+@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/eChan-Network.Tpo" "$(DEPDIR)/eChan-Network.Po"; else rm -f "$(DEPDIR)/eChan-Network.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='Network.cpp' object='eChan-Network.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(eChan_CXXFLAGS) $(CXXFLAGS) -c -o eChan-Network.o `test -f 'Network.cpp' || echo '$(srcdir)/'`Network.cpp
+
+eChan-Network.obj: Network.cpp
+@am__fastdepCXX_TRUE@	if $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(eChan_CXXFLAGS) $(CXXFLAGS) -MT eChan-Network.obj -MD -MP -MF "$(DEPDIR)/eChan-Network.Tpo" -c -o eChan-Network.obj `if test -f 'Network.cpp'; then $(CYGPATH_W) 'Network.cpp'; else $(CYGPATH_W) '$(srcdir)/Network.cpp'; fi`; \
+@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/eChan-Network.Tpo" "$(DEPDIR)/eChan-Network.Po"; else rm -f "$(DEPDIR)/eChan-Network.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='Network.cpp' object='eChan-Network.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(eChan_CXXFLAGS) $(CXXFLAGS) -c -o eChan-Network.obj `if test -f 'Network.cpp'; then $(CYGPATH_W) 'Network.cpp'; else $(CYGPATH_W) '$(srcdir)/Network.cpp'; fi`
+
+eChan-Server.o: Server.cpp
+@am__fastdepCXX_TRUE@	if $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(eChan_CXXFLAGS) $(CXXFLAGS) -MT eChan-Server.o -MD -MP -MF "$(DEPDIR)/eChan-Server.Tpo" -c -o eChan-Server.o `test -f 'Server.cpp' || echo '$(srcdir)/'`Server.cpp; \
+@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/eChan-Server.Tpo" "$(DEPDIR)/eChan-Server.Po"; else rm -f "$(DEPDIR)/eChan-Server.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='Server.cpp' object='eChan-Server.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(eChan_CXXFLAGS) $(CXXFLAGS) -c -o eChan-Server.o `test -f 'Server.cpp' || echo '$(srcdir)/'`Server.cpp
+
+eChan-Server.obj: Server.cpp
+@am__fastdepCXX_TRUE@	if $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(eChan_CXXFLAGS) $(CXXFLAGS) -MT eChan-Server.obj -MD -MP -MF "$(DEPDIR)/eChan-Server.Tpo" -c -o eChan-Server.obj `if test -f 'Server.cpp'; then $(CYGPATH_W) 'Server.cpp'; else $(CYGPATH_W) '$(srcdir)/Server.cpp'; fi`; \
+@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/eChan-Server.Tpo" "$(DEPDIR)/eChan-Server.Po"; else rm -f "$(DEPDIR)/eChan-Server.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='Server.cpp' object='eChan-Server.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(eChan_CXXFLAGS) $(CXXFLAGS) -c -o eChan-Server.obj `if test -f 'Server.cpp'; then $(CYGPATH_W) 'Server.cpp'; else $(CYGPATH_W) '$(srcdir)/Server.cpp'; fi`
+
+eChan-SocketException.o: SocketException.cpp
+@am__fastdepCXX_TRUE@	if $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(eChan_CXXFLAGS) $(CXXFLAGS) -MT eChan-SocketException.o -MD -MP -MF "$(DEPDIR)/eChan-SocketException.Tpo" -c -o eChan-SocketException.o `test -f 'SocketException.cpp' || echo '$(srcdir)/'`SocketException.cpp; \
+@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/eChan-SocketException.Tpo" "$(DEPDIR)/eChan-SocketException.Po"; else rm -f "$(DEPDIR)/eChan-SocketException.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='SocketException.cpp' object='eChan-SocketException.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(eChan_CXXFLAGS) $(CXXFLAGS) -c -o eChan-SocketException.o `test -f 'SocketException.cpp' || echo '$(srcdir)/'`SocketException.cpp
+
+eChan-SocketException.obj: SocketException.cpp
+@am__fastdepCXX_TRUE@	if $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(eChan_CXXFLAGS) $(CXXFLAGS) -MT eChan-SocketException.obj -MD -MP -MF "$(DEPDIR)/eChan-SocketException.Tpo" -c -o eChan-SocketException.obj `if test -f 'SocketException.cpp'; then $(CYGPATH_W) 'SocketException.cpp'; else $(CYGPATH_W) '$(srcdir)/SocketException.cpp'; fi`; \
+@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/eChan-SocketException.Tpo" "$(DEPDIR)/eChan-SocketException.Po"; else rm -f "$(DEPDIR)/eChan-SocketException.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='SocketException.cpp' object='eChan-SocketException.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(eChan_CXXFLAGS) $(CXXFLAGS) -c -o eChan-SocketException.obj `if test -f 'SocketException.cpp'; then $(CYGPATH_W) 'SocketException.cpp'; else $(CYGPATH_W) '$(srcdir)/SocketException.cpp'; fi`
+
+eChan-Msg_S.o: Msg_S.cpp
+@am__fastdepCXX_TRUE@	if $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(eChan_CXXFLAGS) $(CXXFLAGS) -MT eChan-Msg_S.o -MD -MP -MF "$(DEPDIR)/eChan-Msg_S.Tpo" -c -o eChan-Msg_S.o `test -f 'Msg_S.cpp' || echo '$(srcdir)/'`Msg_S.cpp; \
+@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/eChan-Msg_S.Tpo" "$(DEPDIR)/eChan-Msg_S.Po"; else rm -f "$(DEPDIR)/eChan-Msg_S.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='Msg_S.cpp' object='eChan-Msg_S.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(eChan_CXXFLAGS) $(CXXFLAGS) -c -o eChan-Msg_S.o `test -f 'Msg_S.cpp' || echo '$(srcdir)/'`Msg_S.cpp
+
+eChan-Msg_S.obj: Msg_S.cpp
+@am__fastdepCXX_TRUE@	if $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(eChan_CXXFLAGS) $(CXXFLAGS) -MT eChan-Msg_S.obj -MD -MP -MF "$(DEPDIR)/eChan-Msg_S.Tpo" -c -o eChan-Msg_S.obj `if test -f 'Msg_S.cpp'; then $(CYGPATH_W) 'Msg_S.cpp'; else $(CYGPATH_W) '$(srcdir)/Msg_S.cpp'; fi`; \
+@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/eChan-Msg_S.Tpo" "$(DEPDIR)/eChan-Msg_S.Po"; else rm -f "$(DEPDIR)/eChan-Msg_S.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='Msg_S.cpp' object='eChan-Msg_S.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(eChan_CXXFLAGS) $(CXXFLAGS) -c -o eChan-Msg_S.obj `if test -f 'Msg_S.cpp'; then $(CYGPATH_W) 'Msg_S.cpp'; else $(CYGPATH_W) '$(srcdir)/Msg_S.cpp'; fi`
+
+eChan-PreServerMsg.o: PreServerMsg.cpp
+@am__fastdepCXX_TRUE@	if $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(eChan_CXXFLAGS) $(CXXFLAGS) -MT eChan-PreServerMsg.o -MD -MP -MF "$(DEPDIR)/eChan-PreServerMsg.Tpo" -c -o eChan-PreServerMsg.o `test -f 'PreServerMsg.cpp' || echo '$(srcdir)/'`PreServerMsg.cpp; \
+@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/eChan-PreServerMsg.Tpo" "$(DEPDIR)/eChan-PreServerMsg.Po"; else rm -f "$(DEPDIR)/eChan-PreServerMsg.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='PreServerMsg.cpp' object='eChan-PreServerMsg.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(eChan_CXXFLAGS) $(CXXFLAGS) -c -o eChan-PreServerMsg.o `test -f 'PreServerMsg.cpp' || echo '$(srcdir)/'`PreServerMsg.cpp
+
+eChan-PreServerMsg.obj: PreServerMsg.cpp
+@am__fastdepCXX_TRUE@	if $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(eChan_CXXFLAGS) $(CXXFLAGS) -MT eChan-PreServerMsg.obj -MD -MP -MF "$(DEPDIR)/eChan-PreServerMsg.Tpo" -c -o eChan-PreServerMsg.obj `if test -f 'PreServerMsg.cpp'; then $(CYGPATH_W) 'PreServerMsg.cpp'; else $(CYGPATH_W) '$(srcdir)/PreServerMsg.cpp'; fi`; \
+@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/eChan-PreServerMsg.Tpo" "$(DEPDIR)/eChan-PreServerMsg.Po"; else rm -f "$(DEPDIR)/eChan-PreServerMsg.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='PreServerMsg.cpp' object='eChan-PreServerMsg.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(eChan_CXXFLAGS) $(CXXFLAGS) -c -o eChan-PreServerMsg.obj `if test -f 'PreServerMsg.cpp'; then $(CYGPATH_W) 'PreServerMsg.cpp'; else $(CYGPATH_W) '$(srcdir)/PreServerMsg.cpp'; fi`
+
+eChan-Msg_B.o: Msg_B.cpp
+@am__fastdepCXX_TRUE@	if $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(eChan_CXXFLAGS) $(CXXFLAGS) -MT eChan-Msg_B.o -MD -MP -MF "$(DEPDIR)/eChan-Msg_B.Tpo" -c -o eChan-Msg_B.o `test -f 'Msg_B.cpp' || echo '$(srcdir)/'`Msg_B.cpp; \
+@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/eChan-Msg_B.Tpo" "$(DEPDIR)/eChan-Msg_B.Po"; else rm -f "$(DEPDIR)/eChan-Msg_B.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='Msg_B.cpp' object='eChan-Msg_B.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(eChan_CXXFLAGS) $(CXXFLAGS) -c -o eChan-Msg_B.o `test -f 'Msg_B.cpp' || echo '$(srcdir)/'`Msg_B.cpp
+
+eChan-Msg_B.obj: Msg_B.cpp
+@am__fastdepCXX_TRUE@	if $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(eChan_CXXFLAGS) $(CXXFLAGS) -MT eChan-Msg_B.obj -MD -MP -MF "$(DEPDIR)/eChan-Msg_B.Tpo" -c -o eChan-Msg_B.obj `if test -f 'Msg_B.cpp'; then $(CYGPATH_W) 'Msg_B.cpp'; else $(CYGPATH_W) '$(srcdir)/Msg_B.cpp'; fi`; \
+@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/eChan-Msg_B.Tpo" "$(DEPDIR)/eChan-Msg_B.Po"; else rm -f "$(DEPDIR)/eChan-Msg_B.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='Msg_B.cpp' object='eChan-Msg_B.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(eChan_CXXFLAGS) $(CXXFLAGS) -c -o eChan-Msg_B.obj `if test -f 'Msg_B.cpp'; then $(CYGPATH_W) 'Msg_B.cpp'; else $(CYGPATH_W) '$(srcdir)/Msg_B.cpp'; fi`
+
+eChan-Msg_EB.o: Msg_EB.cpp
+@am__fastdepCXX_TRUE@	if $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(eChan_CXXFLAGS) $(CXXFLAGS) -MT eChan-Msg_EB.o -MD -MP -MF "$(DEPDIR)/eChan-Msg_EB.Tpo" -c -o eChan-Msg_EB.o `test -f 'Msg_EB.cpp' || echo '$(srcdir)/'`Msg_EB.cpp; \
+@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/eChan-Msg_EB.Tpo" "$(DEPDIR)/eChan-Msg_EB.Po"; else rm -f "$(DEPDIR)/eChan-Msg_EB.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='Msg_EB.cpp' object='eChan-Msg_EB.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(eChan_CXXFLAGS) $(CXXFLAGS) -c -o eChan-Msg_EB.o `test -f 'Msg_EB.cpp' || echo '$(srcdir)/'`Msg_EB.cpp
+
+eChan-Msg_EB.obj: Msg_EB.cpp
+@am__fastdepCXX_TRUE@	if $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(eChan_CXXFLAGS) $(CXXFLAGS) -MT eChan-Msg_EB.obj -MD -MP -MF "$(DEPDIR)/eChan-Msg_EB.Tpo" -c -o eChan-Msg_EB.obj `if test -f 'Msg_EB.cpp'; then $(CYGPATH_W) 'Msg_EB.cpp'; else $(CYGPATH_W) '$(srcdir)/Msg_EB.cpp'; fi`; \
+@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/eChan-Msg_EB.Tpo" "$(DEPDIR)/eChan-Msg_EB.Po"; else rm -f "$(DEPDIR)/eChan-Msg_EB.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='Msg_EB.cpp' object='eChan-Msg_EB.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(eChan_CXXFLAGS) $(CXXFLAGS) -c -o eChan-Msg_EB.obj `if test -f 'Msg_EB.cpp'; then $(CYGPATH_W) 'Msg_EB.cpp'; else $(CYGPATH_W) '$(srcdir)/Msg_EB.cpp'; fi`
+
+eChan-Msg_N.o: Msg_N.cpp
+@am__fastdepCXX_TRUE@	if $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(eChan_CXXFLAGS) $(CXXFLAGS) -MT eChan-Msg_N.o -MD -MP -MF "$(DEPDIR)/eChan-Msg_N.Tpo" -c -o eChan-Msg_N.o `test -f 'Msg_N.cpp' || echo '$(srcdir)/'`Msg_N.cpp; \
+@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/eChan-Msg_N.Tpo" "$(DEPDIR)/eChan-Msg_N.Po"; else rm -f "$(DEPDIR)/eChan-Msg_N.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='Msg_N.cpp' object='eChan-Msg_N.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(eChan_CXXFLAGS) $(CXXFLAGS) -c -o eChan-Msg_N.o `test -f 'Msg_N.cpp' || echo '$(srcdir)/'`Msg_N.cpp
+
+eChan-Msg_N.obj: Msg_N.cpp
+@am__fastdepCXX_TRUE@	if $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(eChan_CXXFLAGS) $(CXXFLAGS) -MT eChan-Msg_N.obj -MD -MP -MF "$(DEPDIR)/eChan-Msg_N.Tpo" -c -o eChan-Msg_N.obj `if test -f 'Msg_N.cpp'; then $(CYGPATH_W) 'Msg_N.cpp'; else $(CYGPATH_W) '$(srcdir)/Msg_N.cpp'; fi`; \
+@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/eChan-Msg_N.Tpo" "$(DEPDIR)/eChan-Msg_N.Po"; else rm -f "$(DEPDIR)/eChan-Msg_N.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='Msg_N.cpp' object='eChan-Msg_N.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(eChan_CXXFLAGS) $(CXXFLAGS) -c -o eChan-Msg_N.obj `if test -f 'Msg_N.cpp'; then $(CYGPATH_W) 'Msg_N.cpp'; else $(CYGPATH_W) '$(srcdir)/Msg_N.cpp'; fi`
+
+eChan-Msg_G.o: Msg_G.cpp
+@am__fastdepCXX_TRUE@	if $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(eChan_CXXFLAGS) $(CXXFLAGS) -MT eChan-Msg_G.o -MD -MP -MF "$(DEPDIR)/eChan-Msg_G.Tpo" -c -o eChan-Msg_G.o `test -f 'Msg_G.cpp' || echo '$(srcdir)/'`Msg_G.cpp; \
+@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/eChan-Msg_G.Tpo" "$(DEPDIR)/eChan-Msg_G.Po"; else rm -f "$(DEPDIR)/eChan-Msg_G.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='Msg_G.cpp' object='eChan-Msg_G.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(eChan_CXXFLAGS) $(CXXFLAGS) -c -o eChan-Msg_G.o `test -f 'Msg_G.cpp' || echo '$(srcdir)/'`Msg_G.cpp
+
+eChan-Msg_G.obj: Msg_G.cpp
+@am__fastdepCXX_TRUE@	if $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(eChan_CXXFLAGS) $(CXXFLAGS) -MT eChan-Msg_G.obj -MD -MP -MF "$(DEPDIR)/eChan-Msg_G.Tpo" -c -o eChan-Msg_G.obj `if test -f 'Msg_G.cpp'; then $(CYGPATH_W) 'Msg_G.cpp'; else $(CYGPATH_W) '$(srcdir)/Msg_G.cpp'; fi`; \
+@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/eChan-Msg_G.Tpo" "$(DEPDIR)/eChan-Msg_G.Po"; else rm -f "$(DEPDIR)/eChan-Msg_G.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='Msg_G.cpp' object='eChan-Msg_G.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(eChan_CXXFLAGS) $(CXXFLAGS) -c -o eChan-Msg_G.obj `if test -f 'Msg_G.cpp'; then $(CYGPATH_W) 'Msg_G.cpp'; else $(CYGPATH_W) '$(srcdir)/Msg_G.cpp'; fi`
+
+eChan-Msg_Q.o: Msg_Q.cpp
+@am__fastdepCXX_TRUE@	if $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(eChan_CXXFLAGS) $(CXXFLAGS) -MT eChan-Msg_Q.o -MD -MP -MF "$(DEPDIR)/eChan-Msg_Q.Tpo" -c -o eChan-Msg_Q.o `test -f 'Msg_Q.cpp' || echo '$(srcdir)/'`Msg_Q.cpp; \
+@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/eChan-Msg_Q.Tpo" "$(DEPDIR)/eChan-Msg_Q.Po"; else rm -f "$(DEPDIR)/eChan-Msg_Q.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='Msg_Q.cpp' object='eChan-Msg_Q.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(eChan_CXXFLAGS) $(CXXFLAGS) -c -o eChan-Msg_Q.o `test -f 'Msg_Q.cpp' || echo '$(srcdir)/'`Msg_Q.cpp
+
+eChan-Msg_Q.obj: Msg_Q.cpp
+@am__fastdepCXX_TRUE@	if $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(eChan_CXXFLAGS) $(CXXFLAGS) -MT eChan-Msg_Q.obj -MD -MP -MF "$(DEPDIR)/eChan-Msg_Q.Tpo" -c -o eChan-Msg_Q.obj `if test -f 'Msg_Q.cpp'; then $(CYGPATH_W) 'Msg_Q.cpp'; else $(CYGPATH_W) '$(srcdir)/Msg_Q.cpp'; fi`; \
+@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/eChan-Msg_Q.Tpo" "$(DEPDIR)/eChan-Msg_Q.Po"; else rm -f "$(DEPDIR)/eChan-Msg_Q.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='Msg_Q.cpp' object='eChan-Msg_Q.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(eChan_CXXFLAGS) $(CXXFLAGS) -c -o eChan-Msg_Q.obj `if test -f 'Msg_Q.cpp'; then $(CYGPATH_W) 'Msg_Q.cpp'; else $(CYGPATH_W) '$(srcdir)/Msg_Q.cpp'; fi`
+
+eChan-InBuffer.o: InBuffer.cpp
+@am__fastdepCXX_TRUE@	if $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(eChan_CXXFLAGS) $(CXXFLAGS) -MT eChan-InBuffer.o -MD -MP -MF "$(DEPDIR)/eChan-InBuffer.Tpo" -c -o eChan-InBuffer.o `test -f 'InBuffer.cpp' || echo '$(srcdir)/'`InBuffer.cpp; \
+@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/eChan-InBuffer.Tpo" "$(DEPDIR)/eChan-InBuffer.Po"; else rm -f "$(DEPDIR)/eChan-InBuffer.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='InBuffer.cpp' object='eChan-InBuffer.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(eChan_CXXFLAGS) $(CXXFLAGS) -c -o eChan-InBuffer.o `test -f 'InBuffer.cpp' || echo '$(srcdir)/'`InBuffer.cpp
+
+eChan-InBuffer.obj: InBuffer.cpp
+@am__fastdepCXX_TRUE@	if $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(eChan_CXXFLAGS) $(CXXFLAGS) -MT eChan-InBuffer.obj -MD -MP -MF "$(DEPDIR)/eChan-InBuffer.Tpo" -c -o eChan-InBuffer.obj `if test -f 'InBuffer.cpp'; then $(CYGPATH_W) 'InBuffer.cpp'; else $(CYGPATH_W) '$(srcdir)/InBuffer.cpp'; fi`; \
+@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/eChan-InBuffer.Tpo" "$(DEPDIR)/eChan-InBuffer.Po"; else rm -f "$(DEPDIR)/eChan-InBuffer.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='InBuffer.cpp' object='eChan-InBuffer.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(eChan_CXXFLAGS) $(CXXFLAGS) -c -o eChan-InBuffer.obj `if test -f 'InBuffer.cpp'; then $(CYGPATH_W) 'InBuffer.cpp'; else $(CYGPATH_W) '$(srcdir)/InBuffer.cpp'; fi`
+
+eChan-OutBuffer.o: OutBuffer.cpp
+@am__fastdepCXX_TRUE@	if $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(eChan_CXXFLAGS) $(CXXFLAGS) -MT eChan-OutBuffer.o -MD -MP -MF "$(DEPDIR)/eChan-OutBuffer.Tpo" -c -o eChan-OutBuffer.o `test -f 'OutBuffer.cpp' || echo '$(srcdir)/'`OutBuffer.cpp; \
+@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/eChan-OutBuffer.Tpo" "$(DEPDIR)/eChan-OutBuffer.Po"; else rm -f "$(DEPDIR)/eChan-OutBuffer.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='OutBuffer.cpp' object='eChan-OutBuffer.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(eChan_CXXFLAGS) $(CXXFLAGS) -c -o eChan-OutBuffer.o `test -f 'OutBuffer.cpp' || echo '$(srcdir)/'`OutBuffer.cpp
+
+eChan-OutBuffer.obj: OutBuffer.cpp
+@am__fastdepCXX_TRUE@	if $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(eChan_CXXFLAGS) $(CXXFLAGS) -MT eChan-OutBuffer.obj -MD -MP -MF "$(DEPDIR)/eChan-OutBuffer.Tpo" -c -o eChan-OutBuffer.obj `if test -f 'OutBuffer.cpp'; then $(CYGPATH_W) 'OutBuffer.cpp'; else $(CYGPATH_W) '$(srcdir)/OutBuffer.cpp'; fi`; \
+@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/eChan-OutBuffer.Tpo" "$(DEPDIR)/eChan-OutBuffer.Po"; else rm -f "$(DEPDIR)/eChan-OutBuffer.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='OutBuffer.cpp' object='eChan-OutBuffer.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(eChan_CXXFLAGS) $(CXXFLAGS) -c -o eChan-OutBuffer.obj `if test -f 'OutBuffer.cpp'; then $(CYGPATH_W) 'OutBuffer.cpp'; else $(CYGPATH_W) '$(srcdir)/OutBuffer.cpp'; fi`
+
+eChan-MsgParseSystem.o: MsgParseSystem.cpp
+@am__fastdepCXX_TRUE@	if $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(eChan_CXXFLAGS) $(CXXFLAGS) -MT eChan-MsgParseSystem.o -MD -MP -MF "$(DEPDIR)/eChan-MsgParseSystem.Tpo" -c -o eChan-MsgParseSystem.o `test -f 'MsgParseSystem.cpp' || echo '$(srcdir)/'`MsgParseSystem.cpp; \
+@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/eChan-MsgParseSystem.Tpo" "$(DEPDIR)/eChan-MsgParseSystem.Po"; else rm -f "$(DEPDIR)/eChan-MsgParseSystem.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='MsgParseSystem.cpp' object='eChan-MsgParseSystem.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(eChan_CXXFLAGS) $(CXXFLAGS) -c -o eChan-MsgParseSystem.o `test -f 'MsgParseSystem.cpp' || echo '$(srcdir)/'`MsgParseSystem.cpp
+
+eChan-MsgParseSystem.obj: MsgParseSystem.cpp
+@am__fastdepCXX_TRUE@	if $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(eChan_CXXFLAGS) $(CXXFLAGS) -MT eChan-MsgParseSystem.obj -MD -MP -MF "$(DEPDIR)/eChan-MsgParseSystem.Tpo" -c -o eChan-MsgParseSystem.obj `if test -f 'MsgParseSystem.cpp'; then $(CYGPATH_W) 'MsgParseSystem.cpp'; else $(CYGPATH_W) '$(srcdir)/MsgParseSystem.cpp'; fi`; \
+@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/eChan-MsgParseSystem.Tpo" "$(DEPDIR)/eChan-MsgParseSystem.Po"; else rm -f "$(DEPDIR)/eChan-MsgParseSystem.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='MsgParseSystem.cpp' object='eChan-MsgParseSystem.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(eChan_CXXFLAGS) $(CXXFLAGS) -c -o eChan-MsgParseSystem.obj `if test -f 'MsgParseSystem.cpp'; then $(CYGPATH_W) 'MsgParseSystem.cpp'; else $(CYGPATH_W) '$(srcdir)/MsgParseSystem.cpp'; fi`
+
+eChan-OutMsgSystem.o: OutMsgSystem.cpp
+@am__fastdepCXX_TRUE@	if $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(eChan_CXXFLAGS) $(CXXFLAGS) -MT eChan-OutMsgSystem.o -MD -MP -MF "$(DEPDIR)/eChan-OutMsgSystem.Tpo" -c -o eChan-OutMsgSystem.o `test -f 'OutMsgSystem.cpp' || echo '$(srcdir)/'`OutMsgSystem.cpp; \
+@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/eChan-OutMsgSystem.Tpo" "$(DEPDIR)/eChan-OutMsgSystem.Po"; else rm -f "$(DEPDIR)/eChan-OutMsgSystem.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='OutMsgSystem.cpp' object='eChan-OutMsgSystem.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(eChan_CXXFLAGS) $(CXXFLAGS) -c -o eChan-OutMsgSystem.o `test -f 'OutMsgSystem.cpp' || echo '$(srcdir)/'`OutMsgSystem.cpp
+
+eChan-OutMsgSystem.obj: OutMsgSystem.cpp
+@am__fastdepCXX_TRUE@	if $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(eChan_CXXFLAGS) $(CXXFLAGS) -MT eChan-OutMsgSystem.obj -MD -MP -MF "$(DEPDIR)/eChan-OutMsgSystem.Tpo" -c -o eChan-OutMsgSystem.obj `if test -f 'OutMsgSystem.cpp'; then $(CYGPATH_W) 'OutMsgSystem.cpp'; else $(CYGPATH_W) '$(srcdir)/OutMsgSystem.cpp'; fi`; \
+@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/eChan-OutMsgSystem.Tpo" "$(DEPDIR)/eChan-OutMsgSystem.Po"; else rm -f "$(DEPDIR)/eChan-OutMsgSystem.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='OutMsgSystem.cpp' object='eChan-OutMsgSystem.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(eChan_CXXFLAGS) $(CXXFLAGS) -c -o eChan-OutMsgSystem.obj `if test -f 'OutMsgSystem.cpp'; then $(CYGPATH_W) 'OutMsgSystem.cpp'; else $(CYGPATH_W) '$(srcdir)/OutMsgSystem.cpp'; fi`
+
+eChan-P10Tokens.o: P10Tokens.cpp
+@am__fastdepCXX_TRUE@	if $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(eChan_CXXFLAGS) $(CXXFLAGS) -MT eChan-P10Tokens.o -MD -MP -MF "$(DEPDIR)/eChan-P10Tokens.Tpo" -c -o eChan-P10Tokens.o `test -f 'P10Tokens.cpp' || echo '$(srcdir)/'`P10Tokens.cpp; \
+@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/eChan-P10Tokens.Tpo" "$(DEPDIR)/eChan-P10Tokens.Po"; else rm -f "$(DEPDIR)/eChan-P10Tokens.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='P10Tokens.cpp' object='eChan-P10Tokens.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(eChan_CXXFLAGS) $(CXXFLAGS) -c -o eChan-P10Tokens.o `test -f 'P10Tokens.cpp' || echo '$(srcdir)/'`P10Tokens.cpp
+
+eChan-P10Tokens.obj: P10Tokens.cpp
+@am__fastdepCXX_TRUE@	if $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(eChan_CXXFLAGS) $(CXXFLAGS) -MT eChan-P10Tokens.obj -MD -MP -MF "$(DEPDIR)/eChan-P10Tokens.Tpo" -c -o eChan-P10Tokens.obj `if test -f 'P10Tokens.cpp'; then $(CYGPATH_W) 'P10Tokens.cpp'; else $(CYGPATH_W) '$(srcdir)/P10Tokens.cpp'; fi`; \
+@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/eChan-P10Tokens.Tpo" "$(DEPDIR)/eChan-P10Tokens.Po"; else rm -f "$(DEPDIR)/eChan-P10Tokens.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='P10Tokens.cpp' object='eChan-P10Tokens.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(eChan_CXXFLAGS) $(CXXFLAGS) -c -o eChan-P10Tokens.obj `if test -f 'P10Tokens.cpp'; then $(CYGPATH_W) 'P10Tokens.cpp'; else $(CYGPATH_W) '$(srcdir)/P10Tokens.cpp'; fi`
+
+eChan-Msg_J.o: Msg_J.cpp
+@am__fastdepCXX_TRUE@	if $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(eChan_CXXFLAGS) $(CXXFLAGS) -MT eChan-Msg_J.o -MD -MP -MF "$(DEPDIR)/eChan-Msg_J.Tpo" -c -o eChan-Msg_J.o `test -f 'Msg_J.cpp' || echo '$(srcdir)/'`Msg_J.cpp; \
+@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/eChan-Msg_J.Tpo" "$(DEPDIR)/eChan-Msg_J.Po"; else rm -f "$(DEPDIR)/eChan-Msg_J.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='Msg_J.cpp' object='eChan-Msg_J.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(eChan_CXXFLAGS) $(CXXFLAGS) -c -o eChan-Msg_J.o `test -f 'Msg_J.cpp' || echo '$(srcdir)/'`Msg_J.cpp
+
+eChan-Msg_J.obj: Msg_J.cpp
+@am__fastdepCXX_TRUE@	if $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(eChan_CXXFLAGS) $(CXXFLAGS) -MT eChan-Msg_J.obj -MD -MP -MF "$(DEPDIR)/eChan-Msg_J.Tpo" -c -o eChan-Msg_J.obj `if test -f 'Msg_J.cpp'; then $(CYGPATH_W) 'Msg_J.cpp'; else $(CYGPATH_W) '$(srcdir)/Msg_J.cpp'; fi`; \
+@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/eChan-Msg_J.Tpo" "$(DEPDIR)/eChan-Msg_J.Po"; else rm -f "$(DEPDIR)/eChan-Msg_J.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='Msg_J.cpp' object='eChan-Msg_J.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(eChan_CXXFLAGS) $(CXXFLAGS) -c -o eChan-Msg_J.obj `if test -f 'Msg_J.cpp'; then $(CYGPATH_W) 'Msg_J.cpp'; else $(CYGPATH_W) '$(srcdir)/Msg_J.cpp'; fi`
+
+eChan-Msg_L.o: Msg_L.cpp
+@am__fastdepCXX_TRUE@	if $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(eChan_CXXFLAGS) $(CXXFLAGS) -MT eChan-Msg_L.o -MD -MP -MF "$(DEPDIR)/eChan-Msg_L.Tpo" -c -o eChan-Msg_L.o `test -f 'Msg_L.cpp' || echo '$(srcdir)/'`Msg_L.cpp; \
+@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/eChan-Msg_L.Tpo" "$(DEPDIR)/eChan-Msg_L.Po"; else rm -f "$(DEPDIR)/eChan-Msg_L.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='Msg_L.cpp' object='eChan-Msg_L.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(eChan_CXXFLAGS) $(CXXFLAGS) -c -o eChan-Msg_L.o `test -f 'Msg_L.cpp' || echo '$(srcdir)/'`Msg_L.cpp
+
+eChan-Msg_L.obj: Msg_L.cpp
+@am__fastdepCXX_TRUE@	if $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(eChan_CXXFLAGS) $(CXXFLAGS) -MT eChan-Msg_L.obj -MD -MP -MF "$(DEPDIR)/eChan-Msg_L.Tpo" -c -o eChan-Msg_L.obj `if test -f 'Msg_L.cpp'; then $(CYGPATH_W) 'Msg_L.cpp'; else $(CYGPATH_W) '$(srcdir)/Msg_L.cpp'; fi`; \
+@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/eChan-Msg_L.Tpo" "$(DEPDIR)/eChan-Msg_L.Po"; else rm -f "$(DEPDIR)/eChan-Msg_L.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='Msg_L.cpp' object='eChan-Msg_L.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(eChan_CXXFLAGS) $(CXXFLAGS) -c -o eChan-Msg_L.obj `if test -f 'Msg_L.cpp'; then $(CYGPATH_W) 'Msg_L.cpp'; else $(CYGPATH_W) '$(srcdir)/Msg_L.cpp'; fi`
+
+eChan-Msg_SQ.o: Msg_SQ.cpp
+@am__fastdepCXX_TRUE@	if $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(eChan_CXXFLAGS) $(CXXFLAGS) -MT eChan-Msg_SQ.o -MD -MP -MF "$(DEPDIR)/eChan-Msg_SQ.Tpo" -c -o eChan-Msg_SQ.o `test -f 'Msg_SQ.cpp' || echo '$(srcdir)/'`Msg_SQ.cpp; \
+@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/eChan-Msg_SQ.Tpo" "$(DEPDIR)/eChan-Msg_SQ.Po"; else rm -f "$(DEPDIR)/eChan-Msg_SQ.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='Msg_SQ.cpp' object='eChan-Msg_SQ.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(eChan_CXXFLAGS) $(CXXFLAGS) -c -o eChan-Msg_SQ.o `test -f 'Msg_SQ.cpp' || echo '$(srcdir)/'`Msg_SQ.cpp
+
+eChan-Msg_SQ.obj: Msg_SQ.cpp
+@am__fastdepCXX_TRUE@	if $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(eChan_CXXFLAGS) $(CXXFLAGS) -MT eChan-Msg_SQ.obj -MD -MP -MF "$(DEPDIR)/eChan-Msg_SQ.Tpo" -c -o eChan-Msg_SQ.obj `if test -f 'Msg_SQ.cpp'; then $(CYGPATH_W) 'Msg_SQ.cpp'; else $(CYGPATH_W) '$(srcdir)/Msg_SQ.cpp'; fi`; \
+@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/eChan-Msg_SQ.Tpo" "$(DEPDIR)/eChan-Msg_SQ.Po"; else rm -f "$(DEPDIR)/eChan-Msg_SQ.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='Msg_SQ.cpp' object='eChan-Msg_SQ.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(eChan_CXXFLAGS) $(CXXFLAGS) -c -o eChan-Msg_SQ.obj `if test -f 'Msg_SQ.cpp'; then $(CYGPATH_W) 'Msg_SQ.cpp'; else $(CYGPATH_W) '$(srcdir)/Msg_SQ.cpp'; fi`
+
+eChan-Msg_M.o: Msg_M.cpp
+@am__fastdepCXX_TRUE@	if $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(eChan_CXXFLAGS) $(CXXFLAGS) -MT eChan-Msg_M.o -MD -MP -MF "$(DEPDIR)/eChan-Msg_M.Tpo" -c -o eChan-Msg_M.o `test -f 'Msg_M.cpp' || echo '$(srcdir)/'`Msg_M.cpp; \
+@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/eChan-Msg_M.Tpo" "$(DEPDIR)/eChan-Msg_M.Po"; else rm -f "$(DEPDIR)/eChan-Msg_M.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='Msg_M.cpp' object='eChan-Msg_M.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(eChan_CXXFLAGS) $(CXXFLAGS) -c -o eChan-Msg_M.o `test -f 'Msg_M.cpp' || echo '$(srcdir)/'`Msg_M.cpp
+
+eChan-Msg_M.obj: Msg_M.cpp
+@am__fastdepCXX_TRUE@	if $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(eChan_CXXFLAGS) $(CXXFLAGS) -MT eChan-Msg_M.obj -MD -MP -MF "$(DEPDIR)/eChan-Msg_M.Tpo" -c -o eChan-Msg_M.obj `if test -f 'Msg_M.cpp'; then $(CYGPATH_W) 'Msg_M.cpp'; else $(CYGPATH_W) '$(srcdir)/Msg_M.cpp'; fi`; \
+@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/eChan-Msg_M.Tpo" "$(DEPDIR)/eChan-Msg_M.Po"; else rm -f "$(DEPDIR)/eChan-Msg_M.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='Msg_M.cpp' object='eChan-Msg_M.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(eChan_CXXFLAGS) $(CXXFLAGS) -c -o eChan-Msg_M.obj `if test -f 'Msg_M.cpp'; then $(CYGPATH_W) 'Msg_M.cpp'; else $(CYGPATH_W) '$(srcdir)/Msg_M.cpp'; fi`
+
+eChan-Msg_K.o: Msg_K.cpp
+@am__fastdepCXX_TRUE@	if $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(eChan_CXXFLAGS) $(CXXFLAGS) -MT eChan-Msg_K.o -MD -MP -MF "$(DEPDIR)/eChan-Msg_K.Tpo" -c -o eChan-Msg_K.o `test -f 'Msg_K.cpp' || echo '$(srcdir)/'`Msg_K.cpp; \
+@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/eChan-Msg_K.Tpo" "$(DEPDIR)/eChan-Msg_K.Po"; else rm -f "$(DEPDIR)/eChan-Msg_K.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='Msg_K.cpp' object='eChan-Msg_K.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(eChan_CXXFLAGS) $(CXXFLAGS) -c -o eChan-Msg_K.o `test -f 'Msg_K.cpp' || echo '$(srcdir)/'`Msg_K.cpp
+
+eChan-Msg_K.obj: Msg_K.cpp
+@am__fastdepCXX_TRUE@	if $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(eChan_CXXFLAGS) $(CXXFLAGS) -MT eChan-Msg_K.obj -MD -MP -MF "$(DEPDIR)/eChan-Msg_K.Tpo" -c -o eChan-Msg_K.obj `if test -f 'Msg_K.cpp'; then $(CYGPATH_W) 'Msg_K.cpp'; else $(CYGPATH_W) '$(srcdir)/Msg_K.cpp'; fi`; \
+@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/eChan-Msg_K.Tpo" "$(DEPDIR)/eChan-Msg_K.Po"; else rm -f "$(DEPDIR)/eChan-Msg_K.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='Msg_K.cpp' object='eChan-Msg_K.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(eChan_CXXFLAGS) $(CXXFLAGS) -c -o eChan-Msg_K.obj `if test -f 'Msg_K.cpp'; then $(CYGPATH_W) 'Msg_K.cpp'; else $(CYGPATH_W) '$(srcdir)/Msg_K.cpp'; fi`
+
+eChan-Msg_CM.o: Msg_CM.cpp
+@am__fastdepCXX_TRUE@	if $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(eChan_CXXFLAGS) $(CXXFLAGS) -MT eChan-Msg_CM.o -MD -MP -MF "$(DEPDIR)/eChan-Msg_CM.Tpo" -c -o eChan-Msg_CM.o `test -f 'Msg_CM.cpp' || echo '$(srcdir)/'`Msg_CM.cpp; \
+@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/eChan-Msg_CM.Tpo" "$(DEPDIR)/eChan-Msg_CM.Po"; else rm -f "$(DEPDIR)/eChan-Msg_CM.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='Msg_CM.cpp' object='eChan-Msg_CM.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(eChan_CXXFLAGS) $(CXXFLAGS) -c -o eChan-Msg_CM.o `test -f 'Msg_CM.cpp' || echo '$(srcdir)/'`Msg_CM.cpp
+
+eChan-Msg_CM.obj: Msg_CM.cpp
+@am__fastdepCXX_TRUE@	if $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(eChan_CXXFLAGS) $(CXXFLAGS) -MT eChan-Msg_CM.obj -MD -MP -MF "$(DEPDIR)/eChan-Msg_CM.Tpo" -c -o eChan-Msg_CM.obj `if test -f 'Msg_CM.cpp'; then $(CYGPATH_W) 'Msg_CM.cpp'; else $(CYGPATH_W) '$(srcdir)/Msg_CM.cpp'; fi`; \
+@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/eChan-Msg_CM.Tpo" "$(DEPDIR)/eChan-Msg_CM.Po"; else rm -f "$(DEPDIR)/eChan-Msg_CM.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='Msg_CM.cpp' object='eChan-Msg_CM.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(eChan_CXXFLAGS) $(CXXFLAGS) -c -o eChan-Msg_CM.obj `if test -f 'Msg_CM.cpp'; then $(CYGPATH_W) 'Msg_CM.cpp'; else $(CYGPATH_W) '$(srcdir)/Msg_CM.cpp'; fi`
+
+eChan-Msg_T.o: Msg_T.cpp
+@am__fastdepCXX_TRUE@	if $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(eChan_CXXFLAGS) $(CXXFLAGS) -MT eChan-Msg_T.o -MD -MP -MF "$(DEPDIR)/eChan-Msg_T.Tpo" -c -o eChan-Msg_T.o `test -f 'Msg_T.cpp' || echo '$(srcdir)/'`Msg_T.cpp; \
+@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/eChan-Msg_T.Tpo" "$(DEPDIR)/eChan-Msg_T.Po"; else rm -f "$(DEPDIR)/eChan-Msg_T.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='Msg_T.cpp' object='eChan-Msg_T.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(eChan_CXXFLAGS) $(CXXFLAGS) -c -o eChan-Msg_T.o `test -f 'Msg_T.cpp' || echo '$(srcdir)/'`Msg_T.cpp
+
+eChan-Msg_T.obj: Msg_T.cpp
+@am__fastdepCXX_TRUE@	if $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(eChan_CXXFLAGS) $(CXXFLAGS) -MT eChan-Msg_T.obj -MD -MP -MF "$(DEPDIR)/eChan-Msg_T.Tpo" -c -o eChan-Msg_T.obj `if test -f 'Msg_T.cpp'; then $(CYGPATH_W) 'Msg_T.cpp'; else $(CYGPATH_W) '$(srcdir)/Msg_T.cpp'; fi`; \
+@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/eChan-Msg_T.Tpo" "$(DEPDIR)/eChan-Msg_T.Po"; else rm -f "$(DEPDIR)/eChan-Msg_T.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='Msg_T.cpp' object='eChan-Msg_T.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(eChan_CXXFLAGS) $(CXXFLAGS) -c -o eChan-Msg_T.obj `if test -f 'Msg_T.cpp'; then $(CYGPATH_W) 'Msg_T.cpp'; else $(CYGPATH_W) '$(srcdir)/Msg_T.cpp'; fi`
+
+eChan-Msg_C.o: Msg_C.cpp
+@am__fastdepCXX_TRUE@	if $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(eChan_CXXFLAGS) $(CXXFLAGS) -MT eChan-Msg_C.o -MD -MP -MF "$(DEPDIR)/eChan-Msg_C.Tpo" -c -o eChan-Msg_C.o `test -f 'Msg_C.cpp' || echo '$(srcdir)/'`Msg_C.cpp; \
+@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/eChan-Msg_C.Tpo" "$(DEPDIR)/eChan-Msg_C.Po"; else rm -f "$(DEPDIR)/eChan-Msg_C.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='Msg_C.cpp' object='eChan-Msg_C.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(eChan_CXXFLAGS) $(CXXFLAGS) -c -o eChan-Msg_C.o `test -f 'Msg_C.cpp' || echo '$(srcdir)/'`Msg_C.cpp
+
+eChan-Msg_C.obj: Msg_C.cpp
+@am__fastdepCXX_TRUE@	if $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(eChan_CXXFLAGS) $(CXXFLAGS) -MT eChan-Msg_C.obj -MD -MP -MF "$(DEPDIR)/eChan-Msg_C.Tpo" -c -o eChan-Msg_C.obj `if test -f 'Msg_C.cpp'; then $(CYGPATH_W) 'Msg_C.cpp'; else $(CYGPATH_W) '$(srcdir)/Msg_C.cpp'; fi`; \
+@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/eChan-Msg_C.Tpo" "$(DEPDIR)/eChan-Msg_C.Po"; else rm -f "$(DEPDIR)/eChan-Msg_C.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='Msg_C.cpp' object='eChan-Msg_C.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(eChan_CXXFLAGS) $(CXXFLAGS) -c -o eChan-Msg_C.obj `if test -f 'Msg_C.cpp'; then $(CYGPATH_W) 'Msg_C.cpp'; else $(CYGPATH_W) '$(srcdir)/Msg_C.cpp'; fi`
+
+eChan-Msg_O.o: Msg_O.cpp
+@am__fastdepCXX_TRUE@	if $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(eChan_CXXFLAGS) $(CXXFLAGS) -MT eChan-Msg_O.o -MD -MP -MF "$(DEPDIR)/eChan-Msg_O.Tpo" -c -o eChan-Msg_O.o `test -f 'Msg_O.cpp' || echo '$(srcdir)/'`Msg_O.cpp; \
+@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/eChan-Msg_O.Tpo" "$(DEPDIR)/eChan-Msg_O.Po"; else rm -f "$(DEPDIR)/eChan-Msg_O.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='Msg_O.cpp' object='eChan-Msg_O.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(eChan_CXXFLAGS) $(CXXFLAGS) -c -o eChan-Msg_O.o `test -f 'Msg_O.cpp' || echo '$(srcdir)/'`Msg_O.cpp
+
+eChan-Msg_O.obj: Msg_O.cpp
+@am__fastdepCXX_TRUE@	if $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(eChan_CXXFLAGS) $(CXXFLAGS) -MT eChan-Msg_O.obj -MD -MP -MF "$(DEPDIR)/eChan-Msg_O.Tpo" -c -o eChan-Msg_O.obj `if test -f 'Msg_O.cpp'; then $(CYGPATH_W) 'Msg_O.cpp'; else $(CYGPATH_W) '$(srcdir)/Msg_O.cpp'; fi`; \
+@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/eChan-Msg_O.Tpo" "$(DEPDIR)/eChan-Msg_O.Po"; else rm -f "$(DEPDIR)/eChan-Msg_O.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='Msg_O.cpp' object='eChan-Msg_O.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(eChan_CXXFLAGS) $(CXXFLAGS) -c -o eChan-Msg_O.obj `if test -f 'Msg_O.cpp'; then $(CYGPATH_W) 'Msg_O.cpp'; else $(CYGPATH_W) '$(srcdir)/Msg_O.cpp'; fi`
+
+eChan-Msg_P.o: Msg_P.cpp
+@am__fastdepCXX_TRUE@	if $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(eChan_CXXFLAGS) $(CXXFLAGS) -MT eChan-Msg_P.o -MD -MP -MF "$(DEPDIR)/eChan-Msg_P.Tpo" -c -o eChan-Msg_P.o `test -f 'Msg_P.cpp' || echo '$(srcdir)/'`Msg_P.cpp; \
+@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/eChan-Msg_P.Tpo" "$(DEPDIR)/eChan-Msg_P.Po"; else rm -f "$(DEPDIR)/eChan-Msg_P.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='Msg_P.cpp' object='eChan-Msg_P.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(eChan_CXXFLAGS) $(CXXFLAGS) -c -o eChan-Msg_P.o `test -f 'Msg_P.cpp' || echo '$(srcdir)/'`Msg_P.cpp
+
+eChan-Msg_P.obj: Msg_P.cpp
+@am__fastdepCXX_TRUE@	if $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(eChan_CXXFLAGS) $(CXXFLAGS) -MT eChan-Msg_P.obj -MD -MP -MF "$(DEPDIR)/eChan-Msg_P.Tpo" -c -o eChan-Msg_P.obj `if test -f 'Msg_P.cpp'; then $(CYGPATH_W) 'Msg_P.cpp'; else $(CYGPATH_W) '$(srcdir)/Msg_P.cpp'; fi`; \
+@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/eChan-Msg_P.Tpo" "$(DEPDIR)/eChan-Msg_P.Po"; else rm -f "$(DEPDIR)/eChan-Msg_P.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='Msg_P.cpp' object='eChan-Msg_P.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(eChan_CXXFLAGS) $(CXXFLAGS) -c -o eChan-Msg_P.obj `if test -f 'Msg_P.cpp'; then $(CYGPATH_W) 'Msg_P.cpp'; else $(CYGPATH_W) '$(srcdir)/Msg_P.cpp'; fi`
+
+eChan-Msg_OM.o: Msg_OM.cpp
+@am__fastdepCXX_TRUE@	if $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(eChan_CXXFLAGS) $(CXXFLAGS) -MT eChan-Msg_OM.o -MD -MP -MF "$(DEPDIR)/eChan-Msg_OM.Tpo" -c -o eChan-Msg_OM.o `test -f 'Msg_OM.cpp' || echo '$(srcdir)/'`Msg_OM.cpp; \
+@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/eChan-Msg_OM.Tpo" "$(DEPDIR)/eChan-Msg_OM.Po"; else rm -f "$(DEPDIR)/eChan-Msg_OM.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='Msg_OM.cpp' object='eChan-Msg_OM.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(eChan_CXXFLAGS) $(CXXFLAGS) -c -o eChan-Msg_OM.o `test -f 'Msg_OM.cpp' || echo '$(srcdir)/'`Msg_OM.cpp
+
+eChan-Msg_OM.obj: Msg_OM.cpp
+@am__fastdepCXX_TRUE@	if $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(eChan_CXXFLAGS) $(CXXFLAGS) -MT eChan-Msg_OM.obj -MD -MP -MF "$(DEPDIR)/eChan-Msg_OM.Tpo" -c -o eChan-Msg_OM.obj `if test -f 'Msg_OM.cpp'; then $(CYGPATH_W) 'Msg_OM.cpp'; else $(CYGPATH_W) '$(srcdir)/Msg_OM.cpp'; fi`; \
+@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/eChan-Msg_OM.Tpo" "$(DEPDIR)/eChan-Msg_OM.Po"; else rm -f "$(DEPDIR)/eChan-Msg_OM.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='Msg_OM.cpp' object='eChan-Msg_OM.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(eChan_CXXFLAGS) $(CXXFLAGS) -c -o eChan-Msg_OM.obj `if test -f 'Msg_OM.cpp'; then $(CYGPATH_W) 'Msg_OM.cpp'; else $(CYGPATH_W) '$(srcdir)/Msg_OM.cpp'; fi`
+
+eChan-Bot.o: Bot.cpp
+@am__fastdepCXX_TRUE@	if $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(eChan_CXXFLAGS) $(CXXFLAGS) -MT eChan-Bot.o -MD -MP -MF "$(DEPDIR)/eChan-Bot.Tpo" -c -o eChan-Bot.o `test -f 'Bot.cpp' || echo '$(srcdir)/'`Bot.cpp; \
+@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/eChan-Bot.Tpo" "$(DEPDIR)/eChan-Bot.Po"; else rm -f "$(DEPDIR)/eChan-Bot.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='Bot.cpp' object='eChan-Bot.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(eChan_CXXFLAGS) $(CXXFLAGS) -c -o eChan-Bot.o `test -f 'Bot.cpp' || echo '$(srcdir)/'`Bot.cpp
+
+eChan-Bot.obj: Bot.cpp
+@am__fastdepCXX_TRUE@	if $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(eChan_CXXFLAGS) $(CXXFLAGS) -MT eChan-Bot.obj -MD -MP -MF "$(DEPDIR)/eChan-Bot.Tpo" -c -o eChan-Bot.obj `if test -f 'Bot.cpp'; then $(CYGPATH_W) 'Bot.cpp'; else $(CYGPATH_W) '$(srcdir)/Bot.cpp'; fi`; \
+@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/eChan-Bot.Tpo" "$(DEPDIR)/eChan-Bot.Po"; else rm -f "$(DEPDIR)/eChan-Bot.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='Bot.cpp' object='eChan-Bot.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(eChan_CXXFLAGS) $(CXXFLAGS) -c -o eChan-Bot.obj `if test -f 'Bot.cpp'; then $(CYGPATH_W) 'Bot.cpp'; else $(CYGPATH_W) '$(srcdir)/Bot.cpp'; fi`
+
+eChan-BotCService.o: BotCService.cpp
+@am__fastdepCXX_TRUE@	if $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(eChan_CXXFLAGS) $(CXXFLAGS) -MT eChan-BotCService.o -MD -MP -MF "$(DEPDIR)/eChan-BotCService.Tpo" -c -o eChan-BotCService.o `test -f 'BotCService.cpp' || echo '$(srcdir)/'`BotCService.cpp; \
+@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/eChan-BotCService.Tpo" "$(DEPDIR)/eChan-BotCService.Po"; else rm -f "$(DEPDIR)/eChan-BotCService.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='BotCService.cpp' object='eChan-BotCService.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(eChan_CXXFLAGS) $(CXXFLAGS) -c -o eChan-BotCService.o `test -f 'BotCService.cpp' || echo '$(srcdir)/'`BotCService.cpp
+
+eChan-BotCService.obj: BotCService.cpp
+@am__fastdepCXX_TRUE@	if $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(eChan_CXXFLAGS) $(CXXFLAGS) -MT eChan-BotCService.obj -MD -MP -MF "$(DEPDIR)/eChan-BotCService.Tpo" -c -o eChan-BotCService.obj `if test -f 'BotCService.cpp'; then $(CYGPATH_W) 'BotCService.cpp'; else $(CYGPATH_W) '$(srcdir)/BotCService.cpp'; fi`; \
+@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/eChan-BotCService.Tpo" "$(DEPDIR)/eChan-BotCService.Po"; else rm -f "$(DEPDIR)/eChan-BotCService.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='BotCService.cpp' object='eChan-BotCService.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(eChan_CXXFLAGS) $(CXXFLAGS) -c -o eChan-BotCService.obj `if test -f 'BotCService.cpp'; then $(CYGPATH_W) 'BotCService.cpp'; else $(CYGPATH_W) '$(srcdir)/BotCService.cpp'; fi`
+
+eChan-MsgMonitor.o: MsgMonitor.cpp
+@am__fastdepCXX_TRUE@	if $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(eChan_CXXFLAGS) $(CXXFLAGS) -MT eChan-MsgMonitor.o -MD -MP -MF "$(DEPDIR)/eChan-MsgMonitor.Tpo" -c -o eChan-MsgMonitor.o `test -f 'MsgMonitor.cpp' || echo '$(srcdir)/'`MsgMonitor.cpp; \
+@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/eChan-MsgMonitor.Tpo" "$(DEPDIR)/eChan-MsgMonitor.Po"; else rm -f "$(DEPDIR)/eChan-MsgMonitor.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='MsgMonitor.cpp' object='eChan-MsgMonitor.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(eChan_CXXFLAGS) $(CXXFLAGS) -c -o eChan-MsgMonitor.o `test -f 'MsgMonitor.cpp' || echo '$(srcdir)/'`MsgMonitor.cpp
+
+eChan-MsgMonitor.obj: MsgMonitor.cpp
+@am__fastdepCXX_TRUE@	if $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(eChan_CXXFLAGS) $(CXXFLAGS) -MT eChan-MsgMonitor.obj -MD -MP -MF "$(DEPDIR)/eChan-MsgMonitor.Tpo" -c -o eChan-MsgMonitor.obj `if test -f 'MsgMonitor.cpp'; then $(CYGPATH_W) 'MsgMonitor.cpp'; else $(CYGPATH_W) '$(srcdir)/MsgMonitor.cpp'; fi`; \
+@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/eChan-MsgMonitor.Tpo" "$(DEPDIR)/eChan-MsgMonitor.Po"; else rm -f "$(DEPDIR)/eChan-MsgMonitor.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='MsgMonitor.cpp' object='eChan-MsgMonitor.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(eChan_CXXFLAGS) $(CXXFLAGS) -c -o eChan-MsgMonitor.obj `if test -f 'MsgMonitor.cpp'; then $(CYGPATH_W) 'MsgMonitor.cpp'; else $(CYGPATH_W) '$(srcdir)/MsgMonitor.cpp'; fi`
+
+eChan-Command.o: cservice/Command.cpp
+@am__fastdepCXX_TRUE@	if $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(eChan_CXXFLAGS) $(CXXFLAGS) -MT eChan-Command.o -MD -MP -MF "$(DEPDIR)/eChan-Command.Tpo" -c -o eChan-Command.o `test -f 'cservice/Command.cpp' || echo '$(srcdir)/'`cservice/Command.cpp; \
+@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/eChan-Command.Tpo" "$(DEPDIR)/eChan-Command.Po"; else rm -f "$(DEPDIR)/eChan-Command.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='cservice/Command.cpp' object='eChan-Command.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(eChan_CXXFLAGS) $(CXXFLAGS) -c -o eChan-Command.o `test -f 'cservice/Command.cpp' || echo '$(srcdir)/'`cservice/Command.cpp
+
+eChan-Command.obj: cservice/Command.cpp
+@am__fastdepCXX_TRUE@	if $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(eChan_CXXFLAGS) $(CXXFLAGS) -MT eChan-Command.obj -MD -MP -MF "$(DEPDIR)/eChan-Command.Tpo" -c -o eChan-Command.obj `if test -f 'cservice/Command.cpp'; then $(CYGPATH_W) 'cservice/Command.cpp'; else $(CYGPATH_W) '$(srcdir)/cservice/Command.cpp'; fi`; \
+@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/eChan-Command.Tpo" "$(DEPDIR)/eChan-Command.Po"; else rm -f "$(DEPDIR)/eChan-Command.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='cservice/Command.cpp' object='eChan-Command.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(eChan_CXXFLAGS) $(CXXFLAGS) -c -o eChan-Command.obj `if test -f 'cservice/Command.cpp'; then $(CYGPATH_W) 'cservice/Command.cpp'; else $(CYGPATH_W) '$(srcdir)/cservice/Command.cpp'; fi`
+
+eChan-CommandWHOIS.o: cservice/CommandWHOIS.cpp
+@am__fastdepCXX_TRUE@	if $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(eChan_CXXFLAGS) $(CXXFLAGS) -MT eChan-CommandWHOIS.o -MD -MP -MF "$(DEPDIR)/eChan-CommandWHOIS.Tpo" -c -o eChan-CommandWHOIS.o `test -f 'cservice/CommandWHOIS.cpp' || echo '$(srcdir)/'`cservice/CommandWHOIS.cpp; \
+@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/eChan-CommandWHOIS.Tpo" "$(DEPDIR)/eChan-CommandWHOIS.Po"; else rm -f "$(DEPDIR)/eChan-CommandWHOIS.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='cservice/CommandWHOIS.cpp' object='eChan-CommandWHOIS.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(eChan_CXXFLAGS) $(CXXFLAGS) -c -o eChan-CommandWHOIS.o `test -f 'cservice/CommandWHOIS.cpp' || echo '$(srcdir)/'`cservice/CommandWHOIS.cpp
+
+eChan-CommandWHOIS.obj: cservice/CommandWHOIS.cpp
+@am__fastdepCXX_TRUE@	if $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(eChan_CXXFLAGS) $(CXXFLAGS) -MT eChan-CommandWHOIS.obj -MD -MP -MF "$(DEPDIR)/eChan-CommandWHOIS.Tpo" -c -o eChan-CommandWHOIS.obj `if test -f 'cservice/CommandWHOIS.cpp'; then $(CYGPATH_W) 'cservice/CommandWHOIS.cpp'; else $(CYGPATH_W) '$(srcdir)/cservice/CommandWHOIS.cpp'; fi`; \
+@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/eChan-CommandWHOIS.Tpo" "$(DEPDIR)/eChan-CommandWHOIS.Po"; else rm -f "$(DEPDIR)/eChan-CommandWHOIS.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='cservice/CommandWHOIS.cpp' object='eChan-CommandWHOIS.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(eChan_CXXFLAGS) $(CXXFLAGS) -c -o eChan-CommandWHOIS.obj `if test -f 'cservice/CommandWHOIS.cpp'; then $(CYGPATH_W) 'cservice/CommandWHOIS.cpp'; else $(CYGPATH_W) '$(srcdir)/cservice/CommandWHOIS.cpp'; fi`
+
+eChan-CommandQUOTE.o: cservice/CommandQUOTE.cpp
+@am__fastdepCXX_TRUE@	if $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(eChan_CXXFLAGS) $(CXXFLAGS) -MT eChan-CommandQUOTE.o -MD -MP -MF "$(DEPDIR)/eChan-CommandQUOTE.Tpo" -c -o eChan-CommandQUOTE.o `test -f 'cservice/CommandQUOTE.cpp' || echo '$(srcdir)/'`cservice/CommandQUOTE.cpp; \
+@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/eChan-CommandQUOTE.Tpo" "$(DEPDIR)/eChan-CommandQUOTE.Po"; else rm -f "$(DEPDIR)/eChan-CommandQUOTE.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='cservice/CommandQUOTE.cpp' object='eChan-CommandQUOTE.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(eChan_CXXFLAGS) $(CXXFLAGS) -c -o eChan-CommandQUOTE.o `test -f 'cservice/CommandQUOTE.cpp' || echo '$(srcdir)/'`cservice/CommandQUOTE.cpp
+
+eChan-CommandQUOTE.obj: cservice/CommandQUOTE.cpp
+@am__fastdepCXX_TRUE@	if $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(eChan_CXXFLAGS) $(CXXFLAGS) -MT eChan-CommandQUOTE.obj -MD -MP -MF "$(DEPDIR)/eChan-CommandQUOTE.Tpo" -c -o eChan-CommandQUOTE.obj `if test -f 'cservice/CommandQUOTE.cpp'; then $(CYGPATH_W) 'cservice/CommandQUOTE.cpp'; else $(CYGPATH_W) '$(srcdir)/cservice/CommandQUOTE.cpp'; fi`; \
+@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/eChan-CommandQUOTE.Tpo" "$(DEPDIR)/eChan-CommandQUOTE.Po"; else rm -f "$(DEPDIR)/eChan-CommandQUOTE.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='cservice/CommandQUOTE.cpp' object='eChan-CommandQUOTE.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(eChan_CXXFLAGS) $(CXXFLAGS) -c -o eChan-CommandQUOTE.obj `if test -f 'cservice/CommandQUOTE.cpp'; then $(CYGPATH_W) 'cservice/CommandQUOTE.cpp'; else $(CYGPATH_W) '$(srcdir)/cservice/CommandQUOTE.cpp'; fi`
 uninstall-info-am:
 
 ID: $(HEADERS) $(SOURCES) $(LISP) $(TAGS_FILES)

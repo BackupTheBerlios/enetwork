@@ -229,3 +229,7 @@ December 18, 2005 - clsk - Fixed Socket blocking bug.
    blocking is when recieving data and select() is already taking care of that I set the socket
    to block again and that solves the problem.
 
+December 31, 2005 - clsk - Check for MySQL++.
+ * the configure script now checks for mysql++.h header and libmysqlpp.so.
+ * Check ./configure --help for options on how to change the default directory 
+   where the script looks for these files.
