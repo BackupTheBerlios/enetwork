@@ -36,6 +36,8 @@ eChan_SOURCES = main.cpp \
                 Bot.cpp \
                 BotCService.cpp \
                 MsgMonitor.cpp \
+                MD5.cpp \
+                Crypto.cpp \
                 cservice/Command.cpp \
                 cservice/CommandWHOIS.cpp \
                 cservice/CommandQUOTE.cpp \

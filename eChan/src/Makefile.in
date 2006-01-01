@@ -67,7 +67,8 @@ am_eChan_OBJECTS = eChan-main.$(OBJEXT) eChan-Socket.$(OBJEXT) \
 	eChan-Msg_C.$(OBJEXT) eChan-Msg_O.$(OBJEXT) \
 	eChan-Msg_P.$(OBJEXT) eChan-Msg_OM.$(OBJEXT) \
 	eChan-Bot.$(OBJEXT) eChan-BotCService.$(OBJEXT) \
-	eChan-MsgMonitor.$(OBJEXT) eChan-Command.$(OBJEXT) \
+	eChan-MsgMonitor.$(OBJEXT) eChan-MD5.$(OBJEXT) \
+	eChan-Crypto.$(OBJEXT) eChan-Command.$(OBJEXT) \
 	eChan-CommandWHOIS.$(OBJEXT) eChan-CommandQUOTE.$(OBJEXT) \
 	eChan-CommandLOGIN.$(OBJEXT)
 eChan_OBJECTS = $(am_eChan_OBJECTS)
@@ -202,6 +203,8 @@ eChan_SOURCES = main.cpp \
                 Bot.cpp \
                 BotCService.cpp \
                 MsgMonitor.cpp \
+                MD5.cpp \
+                Crypto.cpp \
                 cservice/Command.cpp \
                 cservice/CommandWHOIS.cpp \
                 cservice/CommandQUOTE.cpp \
@@ -293,7 +296,9 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/eChan-CommandQUOTE.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/eChan-CommandWHOIS.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/eChan-ConfigParser.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/eChan-Crypto.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/eChan-InBuffer.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/eChan-MD5.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/eChan-MsgMonitor.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/eChan-MsgParseSystem.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/eChan-MsgTokenizer.Po@am__quote@
@@ -857,6 +862,34 @@ eChan-MsgMonitor.obj: MsgMonitor.cpp
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='MsgMonitor.cpp' object='eChan-MsgMonitor.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(eChan_CXXFLAGS) $(CXXFLAGS) -c -o eChan-MsgMonitor.obj `if test -f 'MsgMonitor.cpp'; then $(CYGPATH_W) 'MsgMonitor.cpp'; else $(CYGPATH_W) '$(srcdir)/MsgMonitor.cpp'; fi`
+
+eChan-MD5.o: MD5.cpp
+@am__fastdepCXX_TRUE@	if $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(eChan_CXXFLAGS) $(CXXFLAGS) -MT eChan-MD5.o -MD -MP -MF "$(DEPDIR)/eChan-MD5.Tpo" -c -o eChan-MD5.o `test -f 'MD5.cpp' || echo '$(srcdir)/'`MD5.cpp; \
+@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/eChan-MD5.Tpo" "$(DEPDIR)/eChan-MD5.Po"; else rm -f "$(DEPDIR)/eChan-MD5.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='MD5.cpp' object='eChan-MD5.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(eChan_CXXFLAGS) $(CXXFLAGS) -c -o eChan-MD5.o `test -f 'MD5.cpp' || echo '$(srcdir)/'`MD5.cpp
+
+eChan-MD5.obj: MD5.cpp
+@am__fastdepCXX_TRUE@	if $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(eChan_CXXFLAGS) $(CXXFLAGS) -MT eChan-MD5.obj -MD -MP -MF "$(DEPDIR)/eChan-MD5.Tpo" -c -o eChan-MD5.obj `if test -f 'MD5.cpp'; then $(CYGPATH_W) 'MD5.cpp'; else $(CYGPATH_W) '$(srcdir)/MD5.cpp'; fi`; \
+@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/eChan-MD5.Tpo" "$(DEPDIR)/eChan-MD5.Po"; else rm -f "$(DEPDIR)/eChan-MD5.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='MD5.cpp' object='eChan-MD5.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(eChan_CXXFLAGS) $(CXXFLAGS) -c -o eChan-MD5.obj `if test -f 'MD5.cpp'; then $(CYGPATH_W) 'MD5.cpp'; else $(CYGPATH_W) '$(srcdir)/MD5.cpp'; fi`
+
+eChan-Crypto.o: Crypto.cpp
+@am__fastdepCXX_TRUE@	if $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(eChan_CXXFLAGS) $(CXXFLAGS) -MT eChan-Crypto.o -MD -MP -MF "$(DEPDIR)/eChan-Crypto.Tpo" -c -o eChan-Crypto.o `test -f 'Crypto.cpp' || echo '$(srcdir)/'`Crypto.cpp; \
+@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/eChan-Crypto.Tpo" "$(DEPDIR)/eChan-Crypto.Po"; else rm -f "$(DEPDIR)/eChan-Crypto.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='Crypto.cpp' object='eChan-Crypto.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(eChan_CXXFLAGS) $(CXXFLAGS) -c -o eChan-Crypto.o `test -f 'Crypto.cpp' || echo '$(srcdir)/'`Crypto.cpp
+
+eChan-Crypto.obj: Crypto.cpp
+@am__fastdepCXX_TRUE@	if $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(eChan_CXXFLAGS) $(CXXFLAGS) -MT eChan-Crypto.obj -MD -MP -MF "$(DEPDIR)/eChan-Crypto.Tpo" -c -o eChan-Crypto.obj `if test -f 'Crypto.cpp'; then $(CYGPATH_W) 'Crypto.cpp'; else $(CYGPATH_W) '$(srcdir)/Crypto.cpp'; fi`; \
+@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/eChan-Crypto.Tpo" "$(DEPDIR)/eChan-Crypto.Po"; else rm -f "$(DEPDIR)/eChan-Crypto.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='Crypto.cpp' object='eChan-Crypto.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(eChan_CXXFLAGS) $(CXXFLAGS) -c -o eChan-Crypto.obj `if test -f 'Crypto.cpp'; then $(CYGPATH_W) 'Crypto.cpp'; else $(CYGPATH_W) '$(srcdir)/Crypto.cpp'; fi`
 
 eChan-Command.o: cservice/Command.cpp
 @am__fastdepCXX_TRUE@	if $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(eChan_CXXFLAGS) $(CXXFLAGS) -MT eChan-Command.o -MD -MP -MF "$(DEPDIR)/eChan-Command.Tpo" -c -o eChan-Command.o `test -f 'cservice/Command.cpp' || echo '$(srcdir)/'`cservice/Command.cpp; \

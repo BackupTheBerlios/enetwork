@@ -236,3 +236,8 @@ December 31, 2005 - clsk - Check for MySQL++.
 
 January 1, 2005 - clsk - Check for MySQL API header.
  * Find where the MySQL API header (mysql.h) is and add it to the list of include directories.
+
+January 1, 2005 - clsk - Added crypto functionalities.
+ * Added MD5.cpp and MD5.h.
+ * Created Crypt class to server as an interface to crypto functionalities.
+

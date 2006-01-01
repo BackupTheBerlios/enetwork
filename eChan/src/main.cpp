@@ -59,7 +59,7 @@ using namespace eNetworks;
 int main()
 {
 #ifndef WIN32
-	// Make a child, die and let initd take care of us. (send to background)
+   // Make a child, die and let initd take care of us. (send to background)
    if (0 == fork()) 
     setsid(); 
    else 
@@ -72,6 +72,9 @@ int main()
 		cout << dir << endl;
 	}
 #endif
+
+   // Inialize random seed.
+   srand((clock() + time(0)) * 1000000);
 
    ConfigParser theConfigParser;
 

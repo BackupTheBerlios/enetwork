@@ -1,3 +1,4 @@
+- SqlManager class.
 - Log how many bytes were sent to OutBuffer.
 - Find out how we're going to encrypt passwords.
 - Test DelServer fix.

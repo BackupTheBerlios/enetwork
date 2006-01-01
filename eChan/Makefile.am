@@ -43,6 +43,8 @@ EXTRA_DIST = bin/eChan.conf \
              include/ThreadException.h \
              include/Thread.h \
              include/tools.h \
+             include/MD5.h \
+             include/Crypto.h \
              docs/bewarep10.txt \
              docs/p10.html \
              src/Thread.cpp

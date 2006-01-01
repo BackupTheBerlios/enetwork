@@ -22,6 +22,7 @@
 #include <sstream>
 #include <fstream>
 #include <iostream>
+#include <iomanip>
 #include <ctime>
 #include <cmath>
 #include <algorithm>
@@ -37,6 +38,7 @@ using std::endl;
 #include "Socket.h"
 #include "P10Tokens.h"
 #include "Msg_B.h"
+#include "MD5.h"
 
 using namespace std;
 
