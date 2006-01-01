@@ -2,7 +2,23 @@ This code currently has been tested to compile in the following operating system
 
  * Linux (Fedora Core 4 using gcc 4.0.0+).
  * FreeBSD (using gcc 4.0.0+).
- * Microsoft Windows(tm) (using Microsoft Visual Studio 2005 (8.0) express).
+ * Microsoft(r) Windows(tm) (using Microsoft Visual Studio 2005 (8.0) express).
+
+The code should compile on many other systems as well. If you get to compile it in 
+other systems you may e-mail me so I can add other operating systems to this list.
+
+NOTE: - You will need to have mysql and mysql++ installed on your system.
+
+        - mysql as you probably already know is a database system.
+          - You will also need the mysql API header and library files.
+          - If you installed mysql from a binary package you might have
+            to install the mysql-dev package too.
+        For more info on mysql database system please visit http://www.mysql.com.
+
+        - mysql++ is a free c++ wrapper for MySQL's C API used to interact with
+          the MySQL database server.
+          - This library is released under the GPL license as this program is.
+        For more info on mysql++ please visit http://tangentsoft.net/mysql++.
 
 Compiling and running in Unix-like systems:
  - You should've gotten the code-base by now from cvs.
@@ -14,6 +30,9 @@ Compiling and running in Unix-like systems:
 
 Compiling and running in Microsoft Windows:
  - You're going to need Microsoft Visual C++ 2005 express and the Platform SDK. 
+ - You'll also need to build mysql++. I know this is possible to do in windows.
+   I might provide instructions on how to do this at a later time. Look for
+   mysql++'s documentation.
  - Download the file from cvs. (I normally use TortoiseCVS for this).
  - Create a new Project from existing code.
  - set the project directory to where you downloaded the files from cvs.

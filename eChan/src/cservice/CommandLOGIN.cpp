@@ -21,7 +21,7 @@
 
 #include <iostream>
 #include <string>
-#include <mysql++/mysql++.h>
+#include <mysql++.h>
 
 #include "MsgTokenizer.h"
 #include "CommandLOGIN.h"

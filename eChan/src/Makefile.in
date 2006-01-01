@@ -68,7 +68,8 @@ am_eChan_OBJECTS = eChan-main.$(OBJEXT) eChan-Socket.$(OBJEXT) \
 	eChan-Msg_P.$(OBJEXT) eChan-Msg_OM.$(OBJEXT) \
 	eChan-Bot.$(OBJEXT) eChan-BotCService.$(OBJEXT) \
 	eChan-MsgMonitor.$(OBJEXT) eChan-Command.$(OBJEXT) \
-	eChan-CommandWHOIS.$(OBJEXT) eChan-CommandQUOTE.$(OBJEXT)
+	eChan-CommandWHOIS.$(OBJEXT) eChan-CommandQUOTE.$(OBJEXT) \
+	eChan-CommandLOGIN.$(OBJEXT)
 eChan_OBJECTS = $(am_eChan_OBJECTS)
 eChan_LDADD = $(LDADD)
 DEFAULT_INCLUDES = -I. -I$(srcdir) -I$(top_builddir)
@@ -119,6 +120,7 @@ LTLIBOBJS = @LTLIBOBJS@
 MAKEINFO = @MAKEINFO@
 MYSQLPP_INCLUDE = @MYSQLPP_INCLUDE@
 MYSQLPP_LIB = @MYSQLPP_LIB@
+MYSQL_INCLUDE = @MYSQL_INCLUDE@
 OBJEXT = @OBJEXT@
 PACKAGE = @PACKAGE@
 PACKAGE_BUGREPORT = @PACKAGE_BUGREPORT@
@@ -202,12 +204,12 @@ eChan_SOURCES = main.cpp \
                 MsgMonitor.cpp \
                 cservice/Command.cpp \
                 cservice/CommandWHOIS.cpp \
-                cservice/CommandQUOTE.cpp
+                cservice/CommandQUOTE.cpp \
+                cservice/CommandLOGIN.cpp
 
 eChan_LDFLAGS = -L$(MYSQLPP_LIB) -lmysqlpp
-eChan_CXXFLAGS = -I../include/ -I../ -Icservice/include/ -I$(MYSQLPP_INCLUDE)
-EXTRA_DIST = cservice/CommandLOGIN.cpp \
-             cservice/include/Command.h \
+eChan_CXXFLAGS = -I../include/ -I../ -Icservice/include/ -I$(MYSQLPP_INCLUDE) -I$(MYSQL_INCLUDE)
+EXTRA_DIST = cservice/include/Command.h \
              cservice/include/CommandLOGIN.h \
              cservice/include/CommandQUOTE.h \
              cservice/include/CommandWHOIS.h \
@@ -287,6 +289,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/eChan-Channel.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/eChan-Client.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/eChan-Command.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/eChan-CommandLOGIN.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/eChan-CommandQUOTE.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/eChan-CommandWHOIS.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/eChan-ConfigParser.Po@am__quote@
@@ -896,6 +899,20 @@ eChan-CommandQUOTE.obj: cservice/CommandQUOTE.cpp
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='cservice/CommandQUOTE.cpp' object='eChan-CommandQUOTE.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(eChan_CXXFLAGS) $(CXXFLAGS) -c -o eChan-CommandQUOTE.obj `if test -f 'cservice/CommandQUOTE.cpp'; then $(CYGPATH_W) 'cservice/CommandQUOTE.cpp'; else $(CYGPATH_W) '$(srcdir)/cservice/CommandQUOTE.cpp'; fi`
+
+eChan-CommandLOGIN.o: cservice/CommandLOGIN.cpp
+@am__fastdepCXX_TRUE@	if $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(eChan_CXXFLAGS) $(CXXFLAGS) -MT eChan-CommandLOGIN.o -MD -MP -MF "$(DEPDIR)/eChan-CommandLOGIN.Tpo" -c -o eChan-CommandLOGIN.o `test -f 'cservice/CommandLOGIN.cpp' || echo '$(srcdir)/'`cservice/CommandLOGIN.cpp; \
+@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/eChan-CommandLOGIN.Tpo" "$(DEPDIR)/eChan-CommandLOGIN.Po"; else rm -f "$(DEPDIR)/eChan-CommandLOGIN.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='cservice/CommandLOGIN.cpp' object='eChan-CommandLOGIN.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(eChan_CXXFLAGS) $(CXXFLAGS) -c -o eChan-CommandLOGIN.o `test -f 'cservice/CommandLOGIN.cpp' || echo '$(srcdir)/'`cservice/CommandLOGIN.cpp
+
+eChan-CommandLOGIN.obj: cservice/CommandLOGIN.cpp
+@am__fastdepCXX_TRUE@	if $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(eChan_CXXFLAGS) $(CXXFLAGS) -MT eChan-CommandLOGIN.obj -MD -MP -MF "$(DEPDIR)/eChan-CommandLOGIN.Tpo" -c -o eChan-CommandLOGIN.obj `if test -f 'cservice/CommandLOGIN.cpp'; then $(CYGPATH_W) 'cservice/CommandLOGIN.cpp'; else $(CYGPATH_W) '$(srcdir)/cservice/CommandLOGIN.cpp'; fi`; \
+@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/eChan-CommandLOGIN.Tpo" "$(DEPDIR)/eChan-CommandLOGIN.Po"; else rm -f "$(DEPDIR)/eChan-CommandLOGIN.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='cservice/CommandLOGIN.cpp' object='eChan-CommandLOGIN.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(eChan_CXXFLAGS) $(CXXFLAGS) -c -o eChan-CommandLOGIN.obj `if test -f 'cservice/CommandLOGIN.cpp'; then $(CYGPATH_W) 'cservice/CommandLOGIN.cpp'; else $(CYGPATH_W) '$(srcdir)/cservice/CommandLOGIN.cpp'; fi`
 uninstall-info-am:
 
 ID: $(HEADERS) $(SOURCES) $(LISP) $(TAGS_FILES)
@@ -947,7 +964,7 @@ distclean-tags:
 	-rm -f TAGS ID GTAGS GRTAGS GSYMS GPATH tags
 
 distdir: $(DISTFILES)
-	$(mkdir_p) $(distdir)/cservice $(distdir)/cservice/include $(distdir)/cservice/sql
+	$(mkdir_p) $(distdir)/cservice/include $(distdir)/cservice/sql
 	@srcdirstrip=`echo "$(srcdir)" | sed 's|.|.|g'`; \
 	topsrcdirstrip=`echo "$(top_srcdir)" | sed 's|.|.|g'`; \
 	list='$(DISTFILES)'; for file in $$list; do \

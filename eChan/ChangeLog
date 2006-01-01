@@ -233,3 +233,6 @@ December 31, 2005 - clsk - Check for MySQL++.
  * the configure script now checks for mysql++.h header and libmysqlpp.so.
  * Check ./configure --help for options on how to change the default directory 
    where the script looks for these files.
+
+January 1, 2005 - clsk - Check for MySQL API header.
+ * Find where the MySQL API header (mysql.h) is and add it to the list of include directories.

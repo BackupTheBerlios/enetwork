@@ -1,5 +1,4 @@
 - Log how many bytes were sent to OutBuffer.
-- Modify code base to compile in Windows too.
 - Find out how we're going to encrypt passwords.
 - Test DelServer fix.
 - Imeplement the channel service bot.

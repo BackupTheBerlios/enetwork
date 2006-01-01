@@ -38,13 +38,13 @@ eChan_SOURCES = main.cpp \
                 MsgMonitor.cpp \
                 cservice/Command.cpp \
                 cservice/CommandWHOIS.cpp \
-                cservice/CommandQUOTE.cpp
+                cservice/CommandQUOTE.cpp \
+                cservice/CommandLOGIN.cpp
 
 eChan_LDFLAGS = -L$(MYSQLPP_LIB) -lmysqlpp
-eChan_CXXFLAGS = -I../include/ -I../ -Icservice/include/ -I$(MYSQLPP_INCLUDE)
+eChan_CXXFLAGS = -I../include/ -I../ -Icservice/include/ -I$(MYSQLPP_INCLUDE) -I$(MYSQL_INCLUDE)
 
-EXTRA_DIST = cservice/CommandLOGIN.cpp \
-             cservice/include/Command.h \
+EXTRA_DIST = cservice/include/Command.h \
              cservice/include/CommandLOGIN.h \
              cservice/include/CommandQUOTE.h \
              cservice/include/CommandWHOIS.h \

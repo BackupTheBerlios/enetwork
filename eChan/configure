@@ -311,7 +311,7 @@ ac_includes_default="\
 # include <unistd.h>
 #endif"
 
-ac_subst_vars='SHELL PATH_SEPARATOR PACKAGE_NAME PACKAGE_TARNAME PACKAGE_VERSION PACKAGE_STRING PACKAGE_BUGREPORT exec_prefix prefix program_transform_name bindir sbindir libexecdir datadir sysconfdir sharedstatedir localstatedir libdir includedir oldincludedir infodir mandir build_alias host_alias target_alias DEFS ECHO_C ECHO_N ECHO_T LIBS INSTALL_PROGRAM INSTALL_SCRIPT INSTALL_DATA CYGPATH_W PACKAGE VERSION ACLOCAL AUTOCONF AUTOMAKE AUTOHEADER MAKEINFO install_sh STRIP ac_ct_STRIP INSTALL_STRIP_PROGRAM mkdir_p AWK SET_MAKE am__leading_dot AMTAR am__tar am__untar CXX CXXFLAGS LDFLAGS CPPFLAGS ac_ct_CXX EXEEXT OBJEXT DEPDIR am__include am__quote AMDEP_TRUE AMDEP_FALSE AMDEPBACKSLASH CXXDEPMODE am__fastdepCXX_TRUE am__fastdepCXX_FALSE CC CFLAGS ac_ct_CC CCDEPMODE am__fastdepCC_TRUE am__fastdepCC_FALSE CPP EGREP LIBOBJS MYSQLPP_INCLUDE MYSQLPP_LIB LTLIBOBJS'
+ac_subst_vars='SHELL PATH_SEPARATOR PACKAGE_NAME PACKAGE_TARNAME PACKAGE_VERSION PACKAGE_STRING PACKAGE_BUGREPORT exec_prefix prefix program_transform_name bindir sbindir libexecdir datadir sysconfdir sharedstatedir localstatedir libdir includedir oldincludedir infodir mandir build_alias host_alias target_alias DEFS ECHO_C ECHO_N ECHO_T LIBS INSTALL_PROGRAM INSTALL_SCRIPT INSTALL_DATA CYGPATH_W PACKAGE VERSION ACLOCAL AUTOCONF AUTOMAKE AUTOHEADER MAKEINFO install_sh STRIP ac_ct_STRIP INSTALL_STRIP_PROGRAM mkdir_p AWK SET_MAKE am__leading_dot AMTAR am__tar am__untar CXX CXXFLAGS LDFLAGS CPPFLAGS ac_ct_CXX EXEEXT OBJEXT DEPDIR am__include am__quote AMDEP_TRUE AMDEP_FALSE AMDEPBACKSLASH CXXDEPMODE am__fastdepCXX_TRUE am__fastdepCXX_FALSE CC CFLAGS ac_ct_CC CCDEPMODE am__fastdepCC_TRUE am__fastdepCC_FALSE CPP EGREP LIBOBJS MYSQL_INCLUDE MYSQLPP_INCLUDE MYSQLPP_LIB LTLIBOBJS'
 ac_subst_files=''
 
 # Initialize some variables set by options.
@@ -863,6 +863,9 @@ Optional Features:
 Optional Packages:
   --with-PACKAGE[=ARG]    use PACKAGE [ARG=yes]
   --without-PACKAGE       do not use PACKAGE (same as --with-PACKAGE=no)
+  --with-mysql-include=MYSQLINCLUDEDIR
+                          Specify location to find mysql.h, default is
+                          /usr/local/mysql/include/mysql
   --with-mysqlpp-lib=MYSQLPPLIBDIR
                           Specify location to find libmysqlpp.so, default is
                           /usr/local/lib
@@ -5389,6 +5392,16 @@ fi
 done
 
 
+MYSQL_INCLUDE=/usr/local/mysql/include/mysql
+
+# Check whether --with-mysql-include or --without-mysql-include was given.
+if test "${with_mysql_include+set}" = set; then
+  withval="$with_mysql_include"
+  MYSQLPP_INCLUDE=$withval
+
+fi;
+
+
 MYSQLPP_LIB=/usr/local/lib
 
 # Check whether --with-mysqlpp-lib or --without-mysqlpp-lib was given.
@@ -5398,7 +5411,7 @@ if test "${with_mysqlpp_lib+set}" = set; then
 
 fi;
 
-MYSQLPP_INCLUDE=/usr/local/include/mysql++/
+MYSQLPP_INCLUDE=/usr/local/include/mysql++
 
 # Check whether --with-mysqlpp-include or --without-mysqlpp-include was given.
 if test "${with_mysqlpp_include+set}" = set; then
@@ -5406,6 +5419,26 @@ if test "${with_mysqlpp_include+set}" = set; then
   MYSQLPP_INCLUDE=$withval
 
 fi;
+
+echo "$as_me:$LINENO: checking for mysql.h" >&5
+echo $ECHO_N "checking for mysql.h... $ECHO_C" >&6
+if test -f "$MYSQL_INCLUDE/mysql.h"; then
+	/bin/true
+elif test -f "/usr/local/include/mysql/mysql.h"; then
+	MYSQL_INCLUDE=/usr/local/include/mysql
+elif test -f "/usr/local/include/mysql.h"; then
+	MYSQL_INCLUDE=/usr/local/include
+elif test -f "/usr/include/mysql/mysql.h"; then
+	MYSQL_INCLUDE=/usr/include/mysql
+elif test -f "/usr/include/mysql.h"; then
+	MYSQL_INCLUDE=/usr/include
+else
+	{ { echo "$as_me:$LINENO: error: Unable to find mysql.h " >&5
+echo "$as_me: error: Unable to find mysql.h " >&2;}
+   { (exit 1); exit 1; }; }
+fi
+echo "$as_me:$LINENO: result: yes" >&5
+echo "${ECHO_T}yes" >&6
 
 echo "$as_me:$LINENO: checking for mysql++.h" >&5
 echo $ECHO_N "checking for mysql++.h... $ECHO_C" >&6
@@ -5442,6 +5475,7 @@ echo "$as_me: error: Unable to find libmysqlpp.so" >&2;}
 fi
 echo "$as_me:$LINENO: result: yes" >&5
 echo "${ECHO_T}yes" >&6
+
 
 
 
@@ -6140,6 +6174,7 @@ s,@am__fastdepCC_FALSE@,$am__fastdepCC_FALSE,;t t
 s,@CPP@,$CPP,;t t
 s,@EGREP@,$EGREP,;t t
 s,@LIBOBJS@,$LIBOBJS,;t t
+s,@MYSQL_INCLUDE@,$MYSQL_INCLUDE,;t t
 s,@MYSQLPP_INCLUDE@,$MYSQLPP_INCLUDE,;t t
 s,@MYSQLPP_LIB@,$MYSQLPP_LIB,;t t
 s,@LTLIBOBJS@,$LTLIBOBJS,;t t

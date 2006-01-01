@@ -86,6 +86,9 @@ int main()
    theConfigParser.InsertItem("UPLINK");
    theConfigParser.InsertItem("PORT");
    theConfigParser.InsertItem("LINKPASS");
+   theConfigParser.InsertItem("MYSQLHOST");
+   theConfigParser.InsertItem("MYSQLUSER");
+   theConfigParser.InsertItem("MYSQLPASS");
 
    theConfigParser.ParseConfigFile();
 
