@@ -89,7 +89,8 @@ int main()
    theConfigParser.InsertItem("MYSQLHOST");
    theConfigParser.InsertItem("MYSQLUSER");
    theConfigParser.InsertItem("MYSQLPASS");
-
+   theConfigParser.InsertItem("MYSQLDB");
+ 
    theConfigParser.ParseConfigFile();
 
 
