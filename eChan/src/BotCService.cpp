@@ -20,6 +20,7 @@
 */
 
 #include <iostream>
+#include <mysql++.h>
 
 #include "BotCService.h"
 #include "Network.h"
@@ -29,9 +30,12 @@
 #include "Channel.h"
 #include "Command.h"
 #include "CommandWHOIS.h"
+#include "SqlManager.h"
 
 using std::cout;
 using std::endl;
+using mysqlpp::Query;
+using mysqlpp::Result;
 
 namespace eNetworks
 {
@@ -65,7 +69,7 @@ void BotCService::onPRIVMSG(const MsgSource& Source, const MsgTokenizer& Paramet
    // Reply to CTCP messages.
    if (Parameters[Parameters.size()-1] == "\001VERSION\001")
    {
-   	SendNotice(Network::Interface.FindClientByNumeric(Source.GetNumeric()), "\001VERSION eChan v0.5.1 Alpha by Alan Alvarez (clsk@IRC).\001");
+   	SendNotice(Network::Interface.FindClientByNumeric(Source.GetNumeric()), "\001VERSION eChan v0.5.2 Alpha by Alan Alvarez (clsk@IRC).\001");
    	return;
    }
 
@@ -82,6 +86,7 @@ void BotCService::onNOTICE(const MsgSource& Source, const MsgTokenizer& Paramete
    cout << endl;
 }
 
+// We shouldn't be getting kicked in the first place.
 void BotCService::onKICK(const MsgSource& Source, const MsgTokenizer& Parameters)
 {
 }
@@ -89,20 +94,35 @@ void BotCService::onKICK(const MsgSource& Source, const MsgTokenizer& Parameters
 void BotCService::onMsgMonitor(const Tokens::Token& _Token, const MsgSource& Source, const MsgTokenizer& Parameters)
 {
    // we only monitor END_OF_BURST message so don't worry about parsing other messages.
-   // This is temporary to join the Channel Service bot to a console channel for debugging.
-   Channel *theChannel = Network::Interface.FindChannel("#CService");
-   if (NULL == theChannel)
-   {
-   	RawMsg(theClient.GetNumeric() + " C #CService " + IntToString(time(0)));
-   	Network::Interface.AddChannel("#CService", time(0));
+   // Lets JOIN to all registered channels.
+   Query query = SqlManager::query();
+   query << "SELECT SqlChannel.name FROM SqlChannel";
 
-   	Network::Interface.FindChannel("#CService")->AddChannelClient(&theClient);
-   }
-   else
+   Result result = query.store();
+
+   Channel* theChannel = NULL;
+   for (Result::iterator Iter = result.begin(); Iter != result.end(); Iter++)
    {
-   	RawMsg(theClient.GetNumeric() + " J #CService " + IntToString(theChannel->GetTimeStamp()));
-   	theChannel->AddChannelClient(&theClient);
+   	string strChannel = (*Iter).at(0).c_str();
+   	if (strChannel[0] != '#') // Check for special channels.
+   	   continue;
+
+   	theChannel = Network::Interface.FindChannel(strChannel);
+   	if (NULL == theChannel) // if channel doesn't exist, create it.
+   	{
+   	   RawMsg(theClient.GetNumeric() + " C " + strChannel + " " + IntToString(time(0)));
+   	   Network::Interface.AddChannel(strChannel, time(0));
+
+   	   Network::Interface.FindChannel(strChannel)->AddChannelClient(&theClient);
+   	}
+   	else
+   	{
+   	   RawMsg(theClient.GetNumeric() + " J " + strChannel + " " + IntToString(theChannel->GetTimeStamp()));
+   	   theChannel->AddChannelClient(&theClient);
+   	}
+   	// OP the bot.
+   	RawMsg(theClient.GetNumeric().substr(0,2) + " M " + strChannel + " +o " + theClient.GetNumeric());
    }
 }
 
-}
+} // namespace eNetworks

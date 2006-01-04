@@ -43,3 +43,7 @@ Compiling and running in Microsoft Windows:
  - Build the project.
  - modify eChan.conf
  - run eChan.exe
+
+*** Post-Installation Notes ***
+ - Make sure you add Ulines for eChan in your ircd configuration file.
+ - Make sure you run the mysql scripts located at src/cservice/sql.

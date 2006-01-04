@@ -239,5 +239,9 @@ January 1, 2005 - clsk - Check for MySQL API header.
 
 January 1, 2005 - clsk - Added crypto functionalities.
  * Added MD5.cpp and MD5.h.
- * Created Crypt class to server as an interface to crypto functionalities.
+ * Created Crypto class to serve as an interface to crypto functionalities.
 
+January 4, 2005 - clsk - Added login functionalities.
+ * We can now log in to the bot.
+ * Also the bot joins registered channels on start-up.
+ * The bot also ops itself after joining the channel.

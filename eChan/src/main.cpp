@@ -46,7 +46,7 @@
 #include "P10Tokens.h"
 #include "InBuffer.h"
 #include "MsgParseSystem.h"
-
+#include "SqlManager.h"
 
 using std::cout;
 using std::endl;
@@ -59,6 +59,7 @@ using namespace eNetworks;
 int main()
 {
 #ifndef WIN32
+
    // Make a child, die and let initd take care of us. (send to background)
    if (0 == fork()) 
     setsid(); 
@@ -72,9 +73,6 @@ int main()
 		cout << dir << endl;
 	}
 #endif
-
-   // Inialize random seed.
-   srand((clock() + time(0)) * 1000000);
 
    ConfigParser theConfigParser;
 
@@ -96,6 +94,11 @@ int main()
  
    theConfigParser.ParseConfigFile();
 
+   // Connect to database server.
+   SqlManager::connect( theConfigParser.GetConfiguration("MYSQLDB"),
+   	   	   	theConfigParser.GetConfiguration("MYSQLHOST"),
+   	   	   	theConfigParser.GetConfiguration("MYSQLUSER"),
+   	   	   	theConfigParser.GetConfiguration("MYSQLPASS") );
 
    Network::Interface = Network(theConfigParser);
 
@@ -135,6 +138,9 @@ int main()
    eTokens->AddToken("OM",     Tokens::OPMODE);
    eTokens->AddToken("P",      Tokens::PRIVMSG);
    eTokens->AddToken("O",      Tokens::NOTICE);
+
+   // Inialize random seed.
+   srand((clock() + time(0)) * 1000000);
 
    do
    {

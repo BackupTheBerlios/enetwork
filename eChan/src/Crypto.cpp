@@ -22,6 +22,7 @@
 #include <string>
 #include <sstream>
 #include <iomanip>
+#include <iostream>
 
 #include "Crypto.h"
 #include "MD5.h"
@@ -29,6 +30,8 @@
 using std::string;
 using std::stringstream;
 using std::ends;
+using std::cout;
+using std::endl;
 
 namespace eNetworks
 {
@@ -36,20 +39,19 @@ namespace eNetworks
 string Crypto::GenerateSalt()
 {
 const char validChars[] = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789.$*_";
-
-string salt;
+string salt = "";
 for( unsigned short int i = 0 ; i < 8 ; ++i )
         {
         int randNo = 1 + (int) (64.0 * rand() / (RAND_MAX + 1.0) );
         salt += validChars[ randNo ] ;
         }
-
 return salt;
 }
 
 // Extracted from gnuworld project cservice::CryptPass.
 string Crypto::Encrypt(const string& plaintext, const string& salt)
 {
+
 /* Work out a MD5 hash of our salt + password */
 md5             hash; // MD5 hash algorithm object.
 md5Digest       digest; // MD5Digest algorithm object.
@@ -77,7 +79,7 @@ for( size_t ii = 0; ii < MD5_DIGEST_LENGTH; ii++ )
         }
 output << ends;
 
-return string( salt + output.str()  );
+return output.str();
 }
 
 } // namespace eNetworks

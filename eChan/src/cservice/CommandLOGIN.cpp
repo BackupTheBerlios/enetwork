@@ -26,7 +26,8 @@
 #include "MsgTokenizer.h"
 #include "CommandLOGIN.h"
 #include "Client.h"
-#include "CServiceSQL.h"
+#include "SqlManager.h"
+#include "Crypto.h"
 
 using std::cout;
 using std::endl;
@@ -35,6 +36,8 @@ using std::string;
 using mysqlpp::Connection;
 using mysqlpp::Query;
 using mysqlpp::Result;
+using mysqlpp::Exception;
+using mysqlpp::BadQuery;
 
 namespace eNetworks
 {
@@ -55,34 +58,52 @@ void CommandLOGIN::Parser()
    	return;
    }
 
-   Connection Conn("eChan", "localhost", "root", "mypass");
-
-   if (!Conn.connected())
+   if (Source->HasAccount())
    {
-   	LocalBot->SendNotice(Source, "Error: Cannot connect to database. Please contact a CService Administrator");
+   	LocalBot->SendNotice(Source, "Sorry, you're already logged in as " + Source->GetAccount() + ".");
    	return;
    }
-
-   Query query = Conn.query();
-   query << "SELECT SqlUser.id FROM SqlUser WHERE SqlUser.username=%0q:username AND SqlUser.password=%1q:password";
+ 
+   Query query = SqlManager::query();
+   query << "SELECT * FROM SqlUser WHERE SqlUser.username=%0q:username";
    query.parse();
 
    query.def["username"] = Parameters[0];
-   query.def["password"] = Parameters[1];
 
    cout << "Query: " << query.preview() << endl;
 
-   Result result = query.store();
-
-   if (result.size() != 1)
+   Result result;
+   try
    {
+   	result = query.store();
+   }
+   catch(const BadQuery& e_error)
+   {
+   	cout << "Query Error: " << e_error.what() << endl;
+   }
+   catch(const Exception& e_error)
+   {
+   	cout << "Error: " << e_error.what() << endl;
+   }
+
+   if (result.rows() != 1)
+   {
+   	cout << "ere" << endl;
    	LocalBot->SendNotice(Source, "Failed to login as " + Parameters[0] + ".");
    }
    else
    {
-   	Source->SetAccount(Parameters[0]);
-   	LocalBot->RawMsg(LocalBot->theClient.GetNumeric().substr(0,2) + " AC " + Source->GetNumeric() + " " + Parameters[0]);
-   	LocalBot->SendNotice(Source, "You are now logged in as " + Parameters[0] + ".");
+   	// kind of nasty. Had to go throug mysql++'s code to figure this out.
+   	if (Crypto::MatchPassword(Parameters[1], result.fetch_row()["password"].c_str() ))
+   	{
+   	   Source->SetAccount(Parameters[0]);
+   	   LocalBot->RawMsg(LocalBot->theClient.GetNumeric().substr(0,2) + " AC " + Source->GetNumeric() + " " + Parameters[0]);
+   	   LocalBot->SendNotice(Source, "You are now logged in as " + Parameters[0] + ".");
+   	}
+   	else
+   	{
+   	   LocalBot->SendNotice(Source, "Failed to login as " + Parameters[0] + ".");
+   	}
    }
 }
 

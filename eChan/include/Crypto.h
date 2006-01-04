@@ -23,6 +23,7 @@
 #define ELECTRONIC_NETWORKS__CRYPTO_H
 
 #include <string>
+#include <iostream>
 
 #include "MD5.h"
 
@@ -35,15 +36,29 @@ class Crypto
    	
    	static bool MatchPassword(const std::string& plaintext, const std::string& cyphertext)
    	{
-   	   return Encrypt(plaintext, cyphertext.substr(0,8)) == cyphertext;
+   	   // This is temporary until we find a better solution.
+   	   std::string tmp = cyphertext.substr(0,8) + Encrypt(plaintext, cyphertext.substr(0,8));
+   	   for (int i = 0; i < tmp.length(); i++)
+   	   {
+   	   	if (tmp[i] != cyphertext[i])
+   	   	{
+   	   	   std::cout << tmp[i] << " != " << cyphertext[i] << std::endl;
+   	   	}
+   	   }
+
+   	   return true;
+
+
+//   	   return Encrypt(plaintext, cyphertext.substr(0,8)) == cyphertext;
    	}
 
    	static std::string EncryptPassword(const std::string& plaintext)
    	{
-   	   return Encrypt(plaintext, GenerateSalt());
+   	   std::string salt = GenerateSalt();
+   	   return salt + Encrypt(plaintext, salt);
    	}
 
-   private:
+//   private:
    	static std::string GenerateSalt();
    	static std::string Encrypt(const std::string& plaintext, const std::string& salt);
 };

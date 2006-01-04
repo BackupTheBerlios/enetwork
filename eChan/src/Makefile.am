@@ -38,6 +38,7 @@ eChan_SOURCES = main.cpp \
                 MsgMonitor.cpp \
                 MD5.cpp \
                 Crypto.cpp \
+                SqlManager.cpp \
                 cservice/Command.cpp \
                 cservice/CommandWHOIS.cpp \
                 cservice/CommandQUOTE.cpp \

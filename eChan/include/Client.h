@@ -101,6 +101,8 @@ struct Client
 
    	void SetAccount(const std::string& strAccount) { Account = strAccount; }
 
+   	bool HasAccount() const { return Account != ""; }
+
    private:
 
    	friend class Network;
