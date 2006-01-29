@@ -1,6 +1,6 @@
 /*
  * eChan - Electronic Channel Services.
- * Copyright (C) 2003-2005 Alan Alvarez.
+ * Copyright (C) 2003-2006 Alan Alvarez.
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -42,6 +42,7 @@ class MsgMonitor
    	static void NotifyMonitors(const Tokens::Token& _Token, const MsgSource& Source, const MsgTokenizer& Parameters);
 
    private:
+   	// TODO: improve by using std::multimap instead of std::list.
    	typedef std::pair<Tokens::Token, Bot*> MonitorType;
    	typedef std::list<MonitorType> MonitorListType;
    	static MonitorListType mList;

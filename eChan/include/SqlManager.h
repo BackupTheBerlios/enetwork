@@ -19,26 +19,24 @@
  *
 */
 
-#ifndef ELECTRONIC_NETWORKS__MSG_M_H
-#define ELECTRONIC_NETWORKS__MSG_M_H
+#ifndef ELECTRONIC_NETWORKS__SQLMANAGER_H
+#define ELECTRONIC_NETWORKS__SQLMANAGER_H
 
-#include "Msg.h"
+#include <mysql++.h>
 
 namespace eNetworks
 {
 
-// -------------------------------------------------------------------------------
-//                    M Token. (A server or user setting Modes)
-// -------------------------------------------------------------------------------
-class Msg_M : public Msg
+class SqlManager
 {
    public:
-        Msg_M(const MsgSource& _Source, const MsgTokenizer& _Parameters) : Msg(_Source, _Parameters) {}
+   	static void connect(const std::string& p_DB, const std::string& p_hostname, const std::string& p_username, const std::string& p_password);
+   	static mysqlpp::Query query() { return SqlManager::M_Connection->query(); }
 
-        virtual ~Msg_M() {}
-        virtual void Parser();
+   private:
+   	static mysqlpp::Connection* M_Connection;
 };
 
 } // namespace eNetworks
 
-#endif // ELECTRONIC_NETWORKS__MSG_M_H
+#endif // ELECTRONIC_NETWORKS__SQLMANAGER_H

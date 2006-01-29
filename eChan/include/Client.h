@@ -1,6 +1,6 @@
 /*
  * eChan - Electronic Channel Services.
- * Copyright (C) 2003-2005 Alan Alvarez.
+ * Copyright (C) 2003-2006 Alan Alvarez.
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -25,6 +25,7 @@
 #include <string>
 #include <map>
 
+#include "Network.h"
 #include "tools.h"
 
 namespace eNetworks
@@ -84,8 +85,18 @@ struct Client
    	   return HasMode('o');
    	}
 
-   	// TODO: Change Client List sorted by nicknames.
-   	void ChangeNickName (const std::string &aNickName) { NickName = aNickName; }
+   	void ChangeNickName (const std::string &aNickName) 
+    	{ 
+   	   // Change NickName in map sorted by nickname.
+   	   Network::ClientNickNamesMapType::iterator Iter = Network::Interface.ClientNickNames.find(NickName);
+   	   if (Iter != Network::Interface.ClientNickNames.end())
+   	   {
+   	   	Network::Interface.ClientNickNames.erase(Iter);
+   	   	Network::Interface.ClientNickNames.insert(Network::ClientNickNamesMapType::value_type(aNickName, this));
+   	   }
+
+   	   NickName = aNickName;
+   	}
 
    	void ChangeTimeStamp (const time_t &aTimeStamp) { TimeStamp = aTimeStamp; }
 
@@ -100,8 +111,10 @@ struct Client
    	unsigned int GetHopCount() const { return HopCount; } 
 
    	void SetAccount(const std::string& strAccount) { Account = strAccount; }
+   	void SetID(const int& theID) { id = theID; }
 
    	bool HasAccount() const { return Account != ""; }
+   	bool IsLogged() const { return id != -1; }
 
    private:
 
@@ -120,7 +133,7 @@ struct Client
                        const std::string &aModes, const std::string &aUserInfo, const time_t &aTimeStamp,
                        const unsigned int &aHopCount) :
         Numeric(aNumeric), NickName(aNickName), Account(aAccount), UserName(aUserName), HostName(aHostName),
-        B64IP(aB64IP), UserInfo(aUserInfo), TimeStamp(aTimeStamp), HopCount(aHopCount), Modes(aModes), ChannelMap()
+        B64IP(aB64IP), UserInfo(aUserInfo), TimeStamp(aTimeStamp), HopCount(aHopCount), Modes(aModes), ChannelMap(), id(-1)
         {}
 
    	// Add a channel to this user's Channel list.
@@ -146,6 +159,8 @@ struct Client
         std::string Modes; // this user's modes.
    	
    	ChannelMapType ChannelMap; // Channels this user's on.
+
+   	int id;
 
 };
 
