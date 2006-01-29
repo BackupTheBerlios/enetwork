@@ -21,23 +21,17 @@
 
 #include <iostream>
 #include <string>
-#include <mysql++.h>
 
 #include "MsgTokenizer.h"
 #include "CommandLOGIN.h"
 #include "Client.h"
-#include "SqlManager.h"
 #include "Crypto.h"
+#include "SqlUser.h"
+#include "SQL.h"
 
 using std::cout;
 using std::endl;
 using std::string;
-
-using mysqlpp::Connection;
-using mysqlpp::Query;
-using mysqlpp::Result;
-using mysqlpp::Exception;
-using mysqlpp::BadQuery;
 
 namespace eNetworks
 {
@@ -64,47 +58,17 @@ void CommandLOGIN::Parser()
    	return;
    }
  
-   Query query = SqlManager::query();
-   query << "SELECT * FROM SqlUser WHERE SqlUser.username=%0q:username";
-   query.parse();
-
-   query.def["username"] = Parameters[0];
-
-   cout << "Query: " << query.preview() << endl;
-
-   Result result;
-   try
+   SqlUser* l_SqlUser = SQL::Interface.login(Parameters[0], Parameters[1]);
+   if (NULL != l_SqlUser)
    {
-   	result = query.store();
-   }
-   catch(const BadQuery& e_error)
-   {
-   	cout << "Query Error: " << e_error.what() << endl;
-   }
-   catch(const Exception& e_error)
-   {
-   	cout << "Error: " << e_error.what() << endl;
+   	Source->SetAccount(Parameters[0]);
+   	Source->SetID(l_SqlUser->getID());
+   	LocalBot->RawMsg(LocalBot->theClient.GetNumeric().substr(0,2) + " AC " + Source->GetNumeric() + " " + Parameters[0]);
+   	LocalBot->SendNotice(Source, "You are now logged in as " + Parameters[0] + ".");
+   	return;
    }
 
-   if (result.rows() != 1)
-   {
-   	cout << "ere" << endl;
-   	LocalBot->SendNotice(Source, "Failed to login as " + Parameters[0] + ".");
-   }
-   else
-   {
-   	// kind of nasty. Had to go throug mysql++'s code to figure this out.
-   	if (Crypto::MatchPassword(Parameters[1], result.fetch_row()["password"].c_str() ))
-   	{
-   	   Source->SetAccount(Parameters[0]);
-   	   LocalBot->RawMsg(LocalBot->theClient.GetNumeric().substr(0,2) + " AC " + Source->GetNumeric() + " " + Parameters[0]);
-   	   LocalBot->SendNotice(Source, "You are now logged in as " + Parameters[0] + ".");
-   	}
-   	else
-   	{
-   	   LocalBot->SendNotice(Source, "Failed to login as " + Parameters[0] + ".");
-   	}
-   }
+   LocalBot->SendNotice(Source, "Failed to login as " + Parameters[0] + ".");
 }
 
 } // namespace cservice

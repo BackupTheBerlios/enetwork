@@ -244,4 +244,12 @@ January 1, 2005 - clsk - Added crypto functionalities.
 January 4, 2005 - clsk - Added login functionalities.
  * We can now log in to the bot.
  * Also the bot joins registered channels on start-up.
- * The bot also ops itself after joining the channel.
+ * The bot also ops itself immidietly after joining the channel.
+
+January 29, 2005 - clsk - Added Cache class.
+ * Added Cache class to cache SQL data. This is a generic class that could be used
+   to cache any type of data.
+ * Created cservice::SQL class to manage SQL queries.
+ * Created SqlUser and SqlChannel structs.
+ * Changed date in copyright notice.
+ 

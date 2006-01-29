@@ -1,6 +1,6 @@
 /*
  * eChan - Electronic Channel Services.
- * Copyright (C) 2003-2005 Alan Alvarez.
+ * Copyright (C) 2003-2006 Alan Alvarez.
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -123,23 +123,6 @@ bool Network::DelServerByNumeric(const std::string &aNumeric)
    {
    	DelClientByNumeric(i->second->Numeric);
    }
-
-/*
-   // Delete servers that are linked to this server.
-   for(ServerMapType::iterator i = Servers.begin(); i != Servers.end(); i++)
-   {
-   	cout << "Iterating through: " << i->second->Name << ". That has UpLink: " << i->second->UpLinkNumeric << endl;
-   	if (i->second->UpLinkNumeric == ServerIter->first)
-   	{
-   	   cout << "Deleting Server " << i->second->Name << endl;
-   	   if (!DelServerByNumeric(i->second->Numeric))
-   	   {
-   	   	debug << "Could not delete server within server" << endb;
-   	   	exit(0);
-   	   }
-   	}
-   } 
-*/
 
    // Delete servers that are linked to this server.
    for (Server::ServerDownLinksIterator i = ServerIter->second->ServerDownLinks.begin(); i != ServerIter->second->ServerDownLinks.end(); i++)
@@ -282,7 +265,7 @@ bool Network::DelClientByNickName(const std::string &aNickName)
 
 bool Network::DelClientByNumeric(const std::string &aNumeric)
 {
-	// try to find the client.
+   // try to find the client.
    ClientNumericsMapType::iterator ClientIter = ClientNumerics.find(aNumeric);
 
    // if client doesn't exist return false.

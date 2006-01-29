@@ -46,6 +46,7 @@ EXTRA_DIST = bin/eChan.conf \
              include/MD5.h \
              include/Crypto.h \
              include/SqlManager.h \
+             include/Cache.h \
              docs/bewarep10.txt \
              docs/p10.html \
              src/Thread.cpp

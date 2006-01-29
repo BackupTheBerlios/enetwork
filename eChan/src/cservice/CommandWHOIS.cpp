@@ -43,13 +43,13 @@ CommandWHOIS::CommandWHOIS(Bot* theBot, Client* theSource, const MsgTokenizer& r
 
 void CommandWHOIS::Parser()
 {
-   if (Parameters.size() == 1)
-   	ClientTarget = Network::Interface.FindClientByNickName(Parameters[0]);
-   else
+   if (Parameters.size() != 1)
    {
    	LocalBot->SendNotice(Source, "SYNTAX: " + Syntax);
    	return;
    }
+
+   ClientTarget = Network::Interface.FindClientByNickName(Parameters[0]);
 
    if (NULL == ClientTarget)
    {

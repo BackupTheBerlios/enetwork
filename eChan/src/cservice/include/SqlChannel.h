@@ -19,42 +19,33 @@
  *
 */
 
-#ifndef ELECTRONIC_NETWORKS__CSERVICE_CSERVICESQL_H
-#define ELECTRONIC_NETWORKS__CSERVICE_CSERVICESQL_H
-
-#include <mysql++/custom.h>
-
-using namespace mysqlpp;
+#ifndef ELECTRONIC_NETWORKS__CSERVICE_SQLCHANNEL_H
+#define ELECTRONIC_NETWORKS__CSERVICE_SQLCHANNEL_H
 
 namespace eNetworks
 {
 
 namespace cservice
 {
-sql_create_3(SqlChannelAccess,
-             1, 3,
-             unsigned int, channelid,
-             unsigned int, usernameid,
-             unsigned int, level)
 
+struct SqlChannel
+{
+   	SqlChannel(const unsigned int& id, const std::string& name, std::string& description, 
+  	   	   const std::string& homepage) : M_id(id), M_name(name), M_description(description),
+  	   	   M_homepage(homepage)
+   	{
+   	}
 
-sql_create_4(SqlUser,
-             1, 4,
-             unsigned int, id,
-             string, username,
-             string, password,
-             string, email)
-
-sql_create_5(SqlChannel,
-   	     1, 5,
-   	     unsigned int, id,
-   	     string, name,
-   	     string, description,
-   	     string, owner,
-   	     string, homepage)
+   	SqlChannel() {}
+   
+   	unsigned int M_id;
+   	std::string M_name;
+   	std::string M_description;
+   	std::string M_homepage;
+};
 
 } // namespace eNetworks
 
 } // namespace cservice
 
-#endif // ELECTRONIC_NETWORKS__CSERVICE_CSERVICESQL_H
+#endif // ELECTRONIC_NETWORKS__CSERVICE_SQLCHANNEL_H

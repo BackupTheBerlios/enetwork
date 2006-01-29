@@ -19,31 +19,29 @@
  *
 */
 
-#include <map>
 #include <string>
+#include <mysql++.h>
 
-#include "P10Tokens.h"
+#include "debug.h"
+#include "SqlManager.h"
+
+using mysqlpp::Connection;
+using std::string;
 
 namespace eNetworks
 {
 
-bool Tokens::AddToken(const std::string& TokenString, const TokenType& _Token)
+void SqlManager::connect(const string& p_DB, const string& p_hostname, const string& p_username, const string& p_password)
 {
-   return TokensMap.insert(TokensMapType::value_type(TokenString, _Token)).second == false;
+   SqlManager::M_Connection = new Connection(p_DB.c_str(), p_hostname.c_str(), p_username.c_str(), p_password.c_str());
+
+   if (!M_Connection->connected())
+   {
+   	debug << "Cannot connect to database server." << endb;
+   	exit(1);
+   }
 }
 
-Tokens::TokenType Tokens::GetToken(const std::string& TokenString)
-{
-   // try to find the token.
-   TokensMapType::iterator iterTokensMap = TokensMap.find(TokenString);
-
-   // If we can't find it return Tokens::NONE
-   if (TokensMap.end() == iterTokensMap)
-    return Tokens::NONE;
-
-   return iterTokensMap->second;
-}
-
-Tokens* eTokens = 0;
+mysqlpp::Connection* SqlManager::M_Connection = NULL;
 
 } // namespace eNetworks

@@ -77,8 +77,12 @@ void Command::ParseCommands(Bot* theBot, Client* theSource, const std::string& s
    }
 }
 
-map<string, Command::CommandNames, noCaseCompare> Command::CommandMap = CommandMapType();
+const unsigned int Command::Level::LOGIN = 0;
+const unsigned int Command::Level::WHOIS = 600;
+const unsigned int Command::Level::QUOTE = 999;
 
+map<string, Command::CommandName, noCaseCompare> Command::CommandMap = CommandMapType();
+map<Command::CommandName, unsigned int> Command::CommandLevels = CommandLevelsType();
 } // namespace cservice
 
 } // namespace eNetworks

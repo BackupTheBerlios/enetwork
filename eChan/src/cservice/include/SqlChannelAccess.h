@@ -1,6 +1,6 @@
 /*
  * eChan - Electronic Channel Services.
- * Copyright (C) 2003-2006 Alan Alvarez.
+ * Copyright (C) 2003-2005 Alan Alvarez.
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -19,31 +19,24 @@
  *
 */
 
-#include <map>
-#include <string>
-
-#include "P10Tokens.h"
+#ifndef ELECTRONIC_NETWORKS__CSERVICE_SQLCHANNELACCESS_H
+#define ELECTRONIC_NETWORKS__CSERVICE_SQLCHANNELACCESS_H
 
 namespace eNetworks
 {
 
-bool Tokens::AddToken(const std::string& TokenString, const TokenType& _Token)
+namespace cservice
 {
-   return TokensMap.insert(TokensMapType::value_type(TokenString, _Token)).second == false;
-}
 
-Tokens::TokenType Tokens::GetToken(const std::string& TokenString)
+struct SqlChannelAccess
 {
-   // try to find the token.
-   TokensMapType::iterator iterTokensMap = TokensMap.find(TokenString);
-
-   // If we can't find it return Tokens::NONE
-   if (TokensMap.end() == iterTokensMap)
-    return Tokens::NONE;
-
-   return iterTokensMap->second;
-}
-
-Tokens* eTokens = 0;
+   	unsigned int channel_id;
+   	unsigned int username_id;
+   	unsigned short level;
+};
 
 } // namespace eNetworks
+
+} // namespace cservice
+
+#endif // ELECTRONIC_NETWORKS__CSERVICE_SQLCHANNELACCESS_H

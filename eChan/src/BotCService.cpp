@@ -44,10 +44,10 @@ BotCService::BotCService(ConfigParser& theConfigParser) :
                  theConfigParser.GetConfiguration("USERNAME"), theConfigParser.GetConfiguration("HOSTNAME"), 
     	   	 "DAqAoB", "idk", theConfigParser.GetConfiguration("CLIENTINFO"))
 {
-   MsgMonitor::AddMonitor(Tokens::END_OF_BURST, this);   
-   cservice::Command::AddCommand("whois", cservice::Command::WHOIS);
-   cservice::Command::AddCommand("quote", cservice::Command::QUOTE);
-   cservice::Command::AddCommand("login", cservice::Command::LOGIN);
+   MsgMonitor::AddMonitor(Tokens::END_OF_BURST, this);
+   cservice::Command::AddCommand("whois", cservice::Command::WHOIS, cservice::Command::Level::WHOIS);
+   cservice::Command::AddCommand("quote", cservice::Command::QUOTE, cservice::Command::Level::QUOTE);
+   cservice::Command::AddCommand("login", cservice::Command::LOGIN, cservice::Command::Level::LOGIN);
 }
 
 void BotCService::onPRIVMSG(const MsgSource& Source, const MsgTokenizer& Parameters)

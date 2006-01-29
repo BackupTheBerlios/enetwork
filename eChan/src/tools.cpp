@@ -1,6 +1,6 @@
 /*
  * eChan - Electronic Channel Services.
- * Copyright (C) 2003-2005 Alan Alvarez.
+ * Copyright (C) 2003-2006 Alan Alvarez.
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -103,12 +103,12 @@ void login(ConfigParser& theConfigParser)
         Socket::eSock << "PASS :" << theConfigParser.GetConfiguration("LINKPASS") << "\r\n";
         cout << "[OUT]: PASS :" << theConfigParser.GetConfiguration("LINKPASS") << endl;
 
-       Socket::eSock << "SERVER" << " " << LocalServer->GetName() << " " << LocalServer->GetHopCount() <<
+       Socket::eSock << "SERVER " << LocalServer->GetName() << " " << LocalServer->GetHopCount() <<
             " " << LocalServer->GetStartTime() << " " << LocalServer->GetLinkTime() <<
             " J10 " << LocalServer->GetNumeric() << "AAC" << " +" << LocalServer->GetFlag() << " :" <<
             LocalServer->GetDescription() << "\r\n";
 
-        cout << "[OUT]: " << "SERVER" << " " << LocalServer->GetName() << " " << 
+        cout << "[OUT]: " << "SERVER " << LocalServer->GetName() << " " << 
                 LocalServer->GetHopCount() << " " << LocalServer->GetStartTime() << " " << 
                 LocalServer->GetLinkTime() << " J10 " << LocalServer->GetNumeric() << "AAC" << " +" <<
                 LocalServer->GetFlag() << " :" << LocalServer->GetDescription() << endl;

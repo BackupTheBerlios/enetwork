@@ -43,7 +43,7 @@ class Command
    	{}
 
    	virtual ~Command() {}
-   	enum CommandNames
+   	enum CommandName
    	{
    	   NONE = 0,
    	   WHOIS,
@@ -51,11 +51,20 @@ class Command
    	   LOGIN
    	};
 
+
+   	struct Level
+   	{
+   	   static const unsigned int LOGIN;
+   	   static const unsigned int WHOIS;
+   	   static const unsigned int QUOTE;
+   	};
+
    	virtual void Parser() = 0;
 
-   	static bool AddCommand(const std::string& CommandName, const CommandNames& theCommand)
+   	static void AddCommand(const std::string& CommandName, const CommandName& theCommand, unsigned int p_Level)
    	{
-   	   return CommandMap.insert(CommandMapType::value_type(CommandName, theCommand)).second;
+   	   CommandMap.insert(CommandMapType::value_type(CommandName, theCommand));
+   	   CommandLevels.insert(CommandLevelsType::value_type(theCommand, p_Level));
    	}
 
    	static void ParseCommands(Bot* theBot, Client* theSource, const std::string& strCommand);
@@ -69,9 +78,9 @@ class Command
    	Bot* LocalBot;
 
    private:
-   	static CommandNames GetCommand(const std::string& CommandName)
+   	static CommandName GetCommand(const std::string& p_CommandName)
    	{
-   	   CommandMapType::iterator iterCommand = CommandMap.find(CommandName);
+   	   CommandMapType::iterator iterCommand = CommandMap.find(p_CommandName);
 
    	   if (CommandMap.end() == iterCommand)
    	   	return NONE;
@@ -79,8 +88,11 @@ class Command
    	   return iterCommand->second;
    	}
 
-   	typedef std::map<std::string, CommandNames, noCaseCompare> CommandMapType;
+   	typedef std::map<std::string, CommandName, noCaseCompare> CommandMapType;
    	static CommandMapType CommandMap;
+
+   	typedef std::map<CommandName, unsigned int> CommandLevelsType;
+   	static CommandLevelsType CommandLevels;
 };
 
 } // namespace eNetworks
