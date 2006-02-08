@@ -253,3 +253,7 @@ January 29, 2005 - clsk - Added Cache class.
  * Created SqlUser and SqlChannel structs.
  * Changed date in copyright notice.
  
+February 9, 2005 - clsk - Bug fixing.
+ * Fixed bugs in Cache class.
+ * Finished SQL::QueryDB.
+

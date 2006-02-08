@@ -22,6 +22,7 @@
 #ifndef ELECTRONIC_NETWORKS__CACHE_H
 #define ELECTRONIC_NETWORKS__CACHE_H
 
+#include <iostream>
 #include <vector>
 #include <cstdlib>
 
@@ -159,6 +160,8 @@ class CacheIterator
  *
  *  Once initialized this cache is intended very fast to maintain.
  *
+ *  This class does no memory reallocation.
+ *
  *  Search speed depends upon continuous calls of clean_up().
  *  Also on what the MaxSize is and How long MaxIdleTime is set to be.
  *
@@ -193,7 +196,7 @@ class Cache
    	   // Get copy of free memory.
    	   M_free.reserve(MaxSize); // Tell std::vector to allocate all the memory at once.
    	   for (size_t i = 0; i < MaxSize; i++)
-   	   	M_free[i] = (M_start_allocated + i);
+   	   	M_free.push_back(M_start_allocated + i);
    	}
 
    	virtual ~Cache()
@@ -215,7 +218,7 @@ class Cache
    	void insert(const value_type& object)
    	{
    	   node* l_node = new_object();
-   	   l_node->M_object = object;
+   	   l_node->M_object = value_type(object);
    	   put_front(l_node);
    	}
 
@@ -242,7 +245,7 @@ class Cache
    	   while(M_end != M_start)
    	   {
    	   	// Get rid of nodes that have been idling for too long.
-   	   	if ((time(0) - M_end->M_idle) > max_size())
+   	   	if ((time(0) - M_end->M_idle) > M_MaxIdleTime)
    	   	{
    	   	   M_end = M_end->M_previous;
    	   	   pop_back();
@@ -254,8 +257,8 @@ class Cache
    	   }
    	}   	
 
-   	// Get size of objects being cached.
-   	size_t size() const { return M_free.size(); }
+   	// Get amount of objects being cached.
+   	size_t size() const { return max_size() - M_free.size(); }
 
    	// Get amount of memory allocated on heap.
    	size_t max_size() const { return M_end_allocated - M_start_allocated; }
@@ -266,7 +269,7 @@ class Cache
    	// Get a space from the allocated heap for a new object.
    	node* new_object()
    	{
-   	   if (M_free.size() >= max_size())
+   	   if (size() >=  max_size())
    	   	pop_back();
    	  
    	   node* l_node = M_free.back();
@@ -286,7 +289,8 @@ class Cache
    	{
    	   object->M_next = M_start;
    	   object->M_previous = NULL;
-   	   M_start->M_previous = object;
+   	   if (M_start != NULL)
+   	   	M_start->M_previous = object;
    	   M_start = object;
    	   object->hit();
    	}
@@ -316,10 +320,9 @@ class Cache
    	time_t M_MaxIdleTime; // Maximum Idle time for objects.
    	node* M_start_allocated; // start point of allocated memory on heap.
    	node* M_end_allocated; // end point of allocated memory on heap.
-
-   	friend class CacheIterator<value_type>;
 };
 
 }
 
 #endif // ELECTRONIC_NETWORKS__CACHE_H
+

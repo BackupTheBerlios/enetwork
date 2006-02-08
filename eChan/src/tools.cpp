@@ -45,7 +45,7 @@ using namespace std;
 namespace eNetworks
 {
 
-int StringToInt(string str) // string to int
+int StringToInt(const string &str) // string to int
 {
   stringstream strm(str);
   int rint;

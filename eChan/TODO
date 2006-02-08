@@ -1,9 +1,8 @@
-CService SQL Cache.
-- If possible try to implement this with templates or in such a way that it can be used by other modules.
-- Sql Objects Cache. 1 std::map<unsigned int (id), SqlObject> 1 std::multimap<unsigned int (hits), SqlObject>
-  - Maybe use mysql++ SqlObjects and hold an instance of them in local objects for easy extraction of data.?
-  - How long is the max amount of time data can be in the cache before it can be deleted? Is this necessary?
-  - How long and how to check for data that shouldn't be in cache anymore? (delete data that hasn't been getting hits off cache).
+- How to get access:
+  bool HasEnoughAcces(Client* theClient, Channel* theChannel, unsigned int level);
+- Finish SqlChannelAccess.
+- Create a SQL::GetAccessLevel(Client* theClient, Channel* theChannel); method.
+- Add update method for SqlUser, SqlChannel and SqlChannelAccess.
 
 - Check issue with Crypto::MatchPassword().
 - Log how many bytes were sent to OutBuffer.

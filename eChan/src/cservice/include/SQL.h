@@ -23,11 +23,15 @@
 #define ELECTRONIC_NETWORKS__CSERVICE_SQL_H
 
 #include <string>
+#include <mysql++.h>
 
 #include "SqlUser.h"
 #include "SqlChannel.h"
 // #include "SqlChannelAccess.h"
 #include "Cache.h"
+#include "Client.h"
+#include "Channel.h"
+#include "SqlManager.h"
 
 namespace eNetworks
 {
@@ -38,6 +42,7 @@ namespace cservice
 class SQL
 {
    public:
+   	// TODO: Get these values from configuration file.
    	SQL() : M_UserCache(50, 10000), M_ChannelCache(50, 10000)
    	{}
 
@@ -45,10 +50,10 @@ class SQL
    	typedef Cache<unsigned int, SqlChannel> ChannelCache;
 //   	bool HasEnoughAccess(const std::string& username, const std::string& channel, unsigned int level);
    	
-   	SqlUser* FindUser(const unsigned int& id);
+   	SqlUser* FindUser(Client* p_Client);
 //   	SqlUser FindUser(const std::string& username);
 
-//   	SqlChannel FindChannel(const unsigned int& id);
+//   	SqlChannel FindChannel(Channel* p_Channel);
 //   	SqlChannel FindChannel(const std::string& channel);
 
    	SqlUser* login(const std::string& username, const std::string& password);
@@ -57,6 +62,9 @@ class SQL
 
    private:
 //   	typedef Cache<unsigned int, ChannelAccess> ChannelAccesCache;
+
+   	// Have to return a pointer because Result destruct members not sure why.
+   	bool QueryDB(const std::string& table, const std::string& variables, const std::string values, mysqlpp::Result& p_result);
 
    	UserCache M_UserCache;
    	ChannelCache M_ChannelCache;

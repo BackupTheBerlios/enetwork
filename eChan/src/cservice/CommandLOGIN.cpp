@@ -57,7 +57,7 @@ void CommandLOGIN::Parser()
    	LocalBot->SendNotice(Source, "Sorry, you're already logged in as " + Source->GetAccount() + ".");
    	return;
    }
- 
+
    SqlUser* l_SqlUser = SQL::Interface.login(Parameters[0], Parameters[1]);
    if (NULL != l_SqlUser)
    {

@@ -112,7 +112,7 @@ struct Client
 
    	void SetAccount(const std::string& strAccount) { Account = strAccount; }
    	void SetID(const int& theID) { id = theID; }
-
+   	int GetID() { return id; }
    	bool HasAccount() const { return Account != ""; }
    	bool IsLogged() const { return id != -1; }
 

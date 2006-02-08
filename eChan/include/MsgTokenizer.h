@@ -36,8 +36,9 @@ class MsgTokenizer
    	// Constructor.
    	// aCommand = The IRC Message you want to tokenize.
    	// Terminator = Normally Server<->Server messages use ':' 
-   	//   	   	to specify that what follows is string that 
-   	//   	   	is to be treated as one.
+   	//   	   	to specify that what follows is a string that 
+   	//   	   	is to be treated as one token. Specify NULL to
+        //              tell the parser to ignore this. 
    	// Delimiter = The character that separates parameters.
    	MsgTokenizer(const std::string &aCommand, const char &Terminator = ':', const char &Delimiter = ' ');
 

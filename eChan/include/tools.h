@@ -33,7 +33,7 @@ namespace eNetworks
 static const std::string b64Table = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789[]";
 
 // Casting functions.
-int StringToInt(std::string);
+int StringToInt(const std::string&);
 std::string IntToString(const int &);
 unsigned int b64Tob10(const std::string &b64);
 

@@ -60,11 +60,13 @@ int main()
 {
 #ifndef WIN32
 
+/*
    // Make a child, die and let initd take care of us. (send to background)
    if (0 == fork()) 
     setsid(); 
    else 
     exit(0);
+*/
 
 #else
 	{

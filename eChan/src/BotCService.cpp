@@ -98,6 +98,7 @@ void BotCService::onMsgMonitor(const Tokens::Token& _Token, const MsgSource& Sou
    Query query = SqlManager::query();
    query << "SELECT SqlChannel.name FROM SqlChannel";
 
+   // TODO: Use a ResUse container here instead of Result.
    Result result = query.store();
 
    Channel* theChannel = NULL;
