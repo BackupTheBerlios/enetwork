@@ -105,7 +105,7 @@ March 25th, 2005 - clsk - Started Implementing new design.
 April 14th, 2005 - clsk - Almost done implementing Multithreading.
  * Multithreading implementation seems to be done by now. After a week of trying to find out why pthread_create died when calling it someone
    pointed out something kind of obvious that we already knew but it didn't make any sense. pthread_create's address was 0x0. What happened
-   was that libpthread wasn't being linked against eChan. You'd think (as I did) that this would've produced a linker error which is why
+   was that libpthread wasn't being linked against eChan. You'd think (as I did) that this would've produced a link-time error which is why
    it didn't make any sense to even go that way. But oh well, the problem is fixed now.
  * We've got a new "bug" now and it is that as the Msg class modified it's not working as it was before and not working as expected. I'll
    take a look into that for the rest of the week and come up with fixes for that.
@@ -257,3 +257,5 @@ February 9, 2005 - clsk - Bug fixing.
  * Fixed bugs in Cache class.
  * Finished SQL::QueryDB.
 
+February 10, 2005 - clsk - More bug fixes.
+ * More bug fixes to Cache class.

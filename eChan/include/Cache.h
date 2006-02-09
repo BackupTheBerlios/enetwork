@@ -22,7 +22,6 @@
 #ifndef ELECTRONIC_NETWORKS__CACHE_H
 #define ELECTRONIC_NETWORKS__CACHE_H
 
-#include <iostream>
 #include <vector>
 #include <cstdlib>
 
@@ -222,12 +221,11 @@ class Cache
    	   put_front(l_node);
    	}
 
-   	// TODO: Return a copy of the object?
-   	// returns a pointer to an object if the object is in the cache.
-   	// returns NULL otherwise.
+   	// returns an iterator to an object if the object is in the cache.
+   	// returns end() otherwise.
    	iterator find(const Key& key)
    	{
-   	   for (node* l_node = M_start; l_node != M_end; l_node++)
+   	   for (node* l_node = M_start; l_node != NULL; l_node = l_node->M_next)
    	   {
    	   	if (l_node->M_object.first == key)
    	   	{
@@ -247,7 +245,6 @@ class Cache
    	   	// Get rid of nodes that have been idling for too long.
    	   	if ((time(0) - M_end->M_idle) > M_MaxIdleTime)
    	   	{
-   	   	   M_end = M_end->M_previous;
    	   	   pop_back();
    	   	   continue;
    	   	}
@@ -287,10 +284,22 @@ class Cache
    	// put an object in the front of the list.
    	void put_front(node* object)
    	{
-   	   object->M_next = M_start;
-   	   object->M_previous = NULL;
+   	   // Is this object in the front already?
+   	   if (M_start == object)
+   	   	return;
+
    	   if (M_start != NULL)
+   	   {
+   	   	object->M_next = M_start;
    	   	M_start->M_previous = object;
+   	   }
+   	   else
+   	   {
+   	   	// assume M_end is NULL too.
+   	   	M_end = object;
+   	   	object->M_next = NULL;
+   	   }
+   	   object->M_previous = NULL;
    	   M_start = object;
    	   object->hit();
    	}
@@ -308,7 +317,6 @@ class Cache
    	void pop_back()
    	{
    	   node* l_node = M_end->M_previous;
-   	   l_node->M_previous = NULL;
    	   free_object(M_end);
    	   M_end = l_node;
    	}
