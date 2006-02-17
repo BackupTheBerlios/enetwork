@@ -19,24 +19,34 @@
  *
 */
 
-#include <utility>
+#include <string>
+#include <iostream>
 
-#include "MsgMonitor.h"
+#include "Msg_D.h"
+#include "Network.h"
+#include "Server.h"
+#include "Client.h"
+#include "debug.h"
+
+using std::string;
+using std::cout;
+using std::endl;
 
 namespace eNetworks
 {
-void MsgMonitor::AddMonitor(const Tokens::Token& _Token, Bot* _Bot)
+
+void Msg_D::Parser()
 {
-   mList.insert(MonitorListType::value_type(_Token, _Bot));
+   	string l_target = Network::Interface.FindClientByNumeric(Parameters[0])->GetNickName();
+   	if (!Network::Interface.DelClientByNumeric(Parameters[0]))
+   	{
+   	   debug << "Could not delete user with numeric " << Source.GetNumeric() << " on kill message." << endb;
+   	} 
+   	else
+   	{
+   	   debug << Source.GetName() << " killed " << l_target << "." << endb;
+   	}
 }
 
-void MsgMonitor::NotifyMonitors(const Tokens::Token& _Token, const MsgSource& Source, const MsgTokenizer& Parameters)
-{
-   MonitorListType::iterator l_Iter = mList.find(_Token);
-   if (l_Iter != mList.end())
-   	l_Iter->second->onMsgMonitor(_Token, Source, Parameters);
-}
-
-std::map<Tokens::Token, Bot*> MsgMonitor::mList = MonitorListType();
 
 } // namespace eNetworks

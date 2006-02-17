@@ -32,7 +32,7 @@ using std::endl;
 namespace eNetworks
 {
 
-// This algorithm needs to be improved...
+// TODO: This algorithm needs to be improved...
 MsgTokenizer::MsgTokenizer(const std::string &aCommand, const char &Terminator, const char &Delimiter)
 {
 //   const char Delimiter = ' ';

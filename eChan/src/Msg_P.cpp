@@ -35,7 +35,8 @@ namespace eNetworks
 
 void Msg_P::Parser()
 {
-   // ignore channel messages.
+   // TODO: Parse and send channel messages to bots.
+   // ignore channel messages for now.
    if (Parameters[0][0] == '#')
    	return;
 

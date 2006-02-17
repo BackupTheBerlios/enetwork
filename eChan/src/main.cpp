@@ -140,6 +140,7 @@ int main()
    eTokens->AddToken("OM",     Tokens::OPMODE);
    eTokens->AddToken("P",      Tokens::PRIVMSG);
    eTokens->AddToken("O",      Tokens::NOTICE);
+   eTokens->AddToken("D",      Tokens::KILL);
 
    // Inialize random seed.
    srand((clock() + time(0)) * 1000000);

@@ -38,7 +38,7 @@ namespace eNetworks
 
 string Crypto::GenerateSalt()
 {
-const char validChars[] = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789.$*_";
+static const char validChars[] = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789.$*_";
 string salt = "";
 for( unsigned short int i = 0 ; i < 8 ; ++i )
         {

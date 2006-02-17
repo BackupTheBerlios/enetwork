@@ -19,24 +19,26 @@
  *
 */
 
-#include <utility>
+#ifndef ELECTRONIC_NETWORKS__MSG_D_H
+#define ELECTRONIC_NETWORKS__MSG_D_H
 
-#include "MsgMonitor.h"
+#include "Msg.h"
 
 namespace eNetworks
 {
-void MsgMonitor::AddMonitor(const Tokens::Token& _Token, Bot* _Bot)
-{
-   mList.insert(MonitorListType::value_type(_Token, _Bot));
-}
 
-void MsgMonitor::NotifyMonitors(const Tokens::Token& _Token, const MsgSource& Source, const MsgTokenizer& Parameters)
+// -------------------------------------------------------------------------------
+//                    D Token. (A user killing another user in the network.)
+// -------------------------------------------------------------------------------
+class Msg_D : public Msg
 {
-   MonitorListType::iterator l_Iter = mList.find(_Token);
-   if (l_Iter != mList.end())
-   	l_Iter->second->onMsgMonitor(_Token, Source, Parameters);
-}
+   public:
+        Msg_D(const MsgSource& _Source, const MsgTokenizer& _Parameters) : Msg(_Source, _Parameters) {}
 
-std::map<Tokens::Token, Bot*> MsgMonitor::mList = MonitorListType();
+        virtual ~Msg_D() {}
+        virtual void Parser();
+};
 
 } // namespace eNetworks
+
+#endif // ELECTRONIC_NETWORKS__MSG_D_H

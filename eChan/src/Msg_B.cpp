@@ -107,8 +107,8 @@ void Msg_B::Parser()
    	}
    
   
-   	cout << "Added channel with Name: " << Name << " Modes: " << Modes << " Key: " << Key << " Limit: "
-             << Limit << " TimeStamp: " << TimeStamp << endl;
+   	debug << "Added channel with Name: " << Name << " Modes: " << Modes << " Key: " << Key << " Limit: "
+             << Limit << " TimeStamp: " << TimeStamp << endb;
   
 
    	ChannelPtr = Network::Interface.FindChannel(Name);
@@ -136,11 +136,12 @@ void Msg_B::ParseUsers(Channel *aChannelPtr, const std::string &UsersParameters)
 {
    string CurrentMode;
 
-   MsgTokenizer Users(UsersParameters,',');
+   MsgTokenizer Users(UsersParameters, NULL, ',');
 
    for (unsigned int i = 0; i < Users.size(); i++)
    {
-   	Client * ClientPtr = Network::Interface.FindClientByNumeric(Users[i].substr(0,5));
+   	debug << "Users[" << i << "]: " << Users[i] << endb;
+   	Client* ClientPtr = Network::Interface.FindClientByNumeric(Users[i].substr(0,5));
    	if (ClientPtr == NULL)
    	{
    	   debug << "Could not add Client " << Users[i].substr(0,5) << " to channel " << aChannelPtr->GetName() << endb;
@@ -151,8 +152,8 @@ void Msg_B::ParseUsers(Channel *aChannelPtr, const std::string &UsersParameters)
    	{
    	   aChannelPtr->AddChannelClient(ClientPtr, CurrentMode);
    	   
-   	   cout << "Added Client " << ClientPtr->GetNickName() << " to " << aChannelPtr->GetName() << 
-   	           " with mode " << CurrentMode << endl;
+   	   debug << "Added Client " << ClientPtr->GetNickName() << " to " << aChannelPtr->GetName() << 
+   	           " with mode " << CurrentMode << endb;
    	   
    	}
    	else if (Users[i].size() == 7 || Users[i].size() == 8)
@@ -160,10 +161,12 @@ void Msg_B::ParseUsers(Channel *aChannelPtr, const std::string &UsersParameters)
    	   CurrentMode = Users[i].substr(6);
    	   aChannelPtr->AddChannelClient(ClientPtr, CurrentMode);
    	   
-   	   cout << "Added Client " << ClientPtr->GetNickName() << " to " << aChannelPtr->GetName() << 
-   	           " with mode " << CurrentMode << endl;
+   	   debug << "Added Client " << ClientPtr->GetNickName() << " to " << aChannelPtr->GetName() << 
+   	           " with mode " << CurrentMode << endb;
    	   
    	}
+   	else
+   	   debug << "Error: Users have " << Users[i].size() << " number of parameters in Burst message." << endb;
    }
 } 
 
@@ -173,7 +176,7 @@ void Msg_B::ParseBans(Channel *aChannelPtr, const std::string &BansParameters)
 
    for (unsigned int i = 0; i < Bans.size(); i++)
    {
-	cout << "Added Ban: " << Bans[i] << endl;
+	debug << "Added Ban: " << Bans[i] << endb;
    	aChannelPtr->AddBan(Bans[i]);
    }
 }

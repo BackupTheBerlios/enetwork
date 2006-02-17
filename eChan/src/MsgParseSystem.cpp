@@ -28,6 +28,7 @@
 #include "Msg_C.h"
 #include "Msg_CM.h"
 #include "Msg_EB.h"
+#include "Msg_D.h"
 #include "Msg_G.h"
 #include "Msg_J.h"
 #include "Msg_K.h"
@@ -68,7 +69,7 @@ void MsgParseSystem::Execute()
    	MsgSource Source;
    	Msg* eMsg = NULL;
 
-   	cout << "[IN]: " << command << endl;
+   	debug << "[IN]: " << command << endb;
 
    	// Get the token & Source.
    	if (command.find(" ") == 2 || command.find(" ") == 5)
@@ -138,6 +139,14 @@ void MsgParseSystem::Execute()
    	   	eMsg = new Msg_G(Source, Parameters);   	   	
    	   	break;
 
+           case Tokens::JOIN:
+                eMsg = new Msg_J(Source, Parameters);
+                break;
+
+           case Tokens::PART:
+                eMsg = new Msg_L(Source, Parameters);
+                break;
+
    	   case Tokens::CREATE:
    	   	eMsg = new Msg_C(Source, Parameters);
    	  	break;
@@ -166,6 +175,10 @@ void MsgParseSystem::Execute()
    	   	eMsg = new Msg_O(Source, Parameters);
    	   	break;
 
+   	   case Tokens::KILL:
+   	   	eMsg = new Msg_D(Source, Parameters);
+   	   	break;
+
    	   case Tokens::OPMODE:
    	   	eMsg = new Msg_OM(Source, Parameters);
    	   	break;
@@ -188,14 +201,6 @@ void MsgParseSystem::Execute()
 
    	   case Tokens::END_OF_BURST:
    	   	eMsg = new Msg_EB(Source, Parameters);
-   	   	break;
-
-   	   case Tokens::JOIN:
-   	   	eMsg = new Msg_J(Source, Parameters);
-   	   	break;
-
-   	   case Tokens::PART:
-   	   	eMsg = new Msg_L(Source, Parameters);
    	   	break;
 
    	   case Tokens::SQUIT:

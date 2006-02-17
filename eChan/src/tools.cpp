@@ -108,10 +108,10 @@ void login(ConfigParser& theConfigParser)
             " J10 " << LocalServer->GetNumeric() << "AAC" << " +" << LocalServer->GetFlag() << " :" <<
             LocalServer->GetDescription() << "\r\n";
 
-        cout << "[OUT]: " << "SERVER " << LocalServer->GetName() << " " << 
-                LocalServer->GetHopCount() << " " << LocalServer->GetStartTime() << " " << 
-                LocalServer->GetLinkTime() << " J10 " << LocalServer->GetNumeric() << "AAC" << " +" <<
-                LocalServer->GetFlag() << " :" << LocalServer->GetDescription() << endl;
+       cout << "SERVER " << LocalServer->GetName() << " " << LocalServer->GetHopCount() <<
+            " " << LocalServer->GetStartTime() << " " << LocalServer->GetLinkTime() <<
+            " J10 " << LocalServer->GetNumeric() << "AAC" << " +" << LocalServer->GetFlag() << " :" <<
+            LocalServer->GetDescription() << endl;
 
 /*
         (*eSock) << LocalServer->GetNumeric() << " " << "N" << " " << LocalClient->GetNickName() << " " <<

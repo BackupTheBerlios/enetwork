@@ -42,9 +42,7 @@ class MsgMonitor
    	static void NotifyMonitors(const Tokens::Token& _Token, const MsgSource& Source, const MsgTokenizer& Parameters);
 
    private:
-   	// TODO: improve by using std::multimap instead of std::list.
-   	typedef std::pair<Tokens::Token, Bot*> MonitorType;
-   	typedef std::list<MonitorType> MonitorListType;
+   	typedef std::map<Tokens::Token, Bot*> MonitorListType;
    	static MonitorListType mList;
 };
 

@@ -35,7 +35,6 @@ namespace eNetworks
 
 void Msg_J::Parser()
 {
-
    if (!Source.IsClient())
    {
    	debug << "JOIN Message with no Client source." << endb;
@@ -48,7 +47,6 @@ void Msg_J::Parser()
    	return;
    }
    	
-
    Channel* aChannelPtr = Network::Interface.FindChannel(Parameters[0]);
 
    if (NULL != aChannelPtr)

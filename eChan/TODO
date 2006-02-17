@@ -1,9 +1,10 @@
+- Parse D Tokens (KILLS).
 - How to get access:
   bool HasEnoughAcces(Client* theClient, Channel* theChannel, unsigned int level);
 - Finish SqlChannelAccess.
 - Create a SQL::GetAccessLevel(Client* theClient, Channel* theChannel); method.
 - Add update method for SqlUser, SqlChannel and SqlChannelAccess.
-- do Cache CleanUp().
+- do Cache clean_up().
 
 - Check issue with Crypto::MatchPassword().
 - Log how many bytes were sent to OutBuffer.

@@ -57,7 +57,8 @@ class Tokens
    	   TOPIC,
    	   OPMODE,
    	   PRIVMSG,
-   	   NOTICE
+   	   NOTICE,
+   	   KILL
    	};
 
    	typedef Token TokenType;

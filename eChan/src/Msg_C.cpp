@@ -45,7 +45,7 @@ namespace eNetworks
 void Msg_C::Parser()
 {
 
-   MsgTokenizer Channels(Parameters[0], ',');
+   MsgTokenizer Channels(Parameters[0], NULL, ',');
 
    for (unsigned int i = 0; i < Channels.size(); i++)
    {

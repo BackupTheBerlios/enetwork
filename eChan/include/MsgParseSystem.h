@@ -29,16 +29,13 @@ namespace eNetworks
 
 class MsgParseSystem : public MsgMonitor
 {
-
    public:
    	~MsgParseSystem() {}
-
 
    	static void Execute();
 
    private:
    	MsgParseSystem() {}
-
 };
 
 

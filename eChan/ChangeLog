@@ -259,3 +259,7 @@ February 9, 2005 - clsk - Bug fixing.
 
 February 10, 2005 - clsk - More bug fixes.
  * More bug fixes to Cache class.
+
+February 17, 2005 - clsk - D Message Handle.
+ * Made a Msg_D class to handle kill messages.
+ * Fixed a bug in Channel::DelBan.

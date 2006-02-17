@@ -106,7 +106,7 @@ void Msg_S::Parser()
 
    if (!Network::Interface.AddServer(Numeric, Name, Source.GetNumeric(), Description, StartTime, LinkTime, HopCount, Flag))
    {
-        debug << "Could not add Server Name" << endb;
+        debug << "Could not add Server Name " << Name << endb;
         exit(0);
    }
  

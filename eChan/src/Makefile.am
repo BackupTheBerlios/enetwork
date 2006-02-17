@@ -32,6 +32,7 @@ eChan_SOURCES = main.cpp \
                 Msg_C.cpp \
                 Msg_O.cpp \
                 Msg_P.cpp \
+                Msg_D.cpp \
                 Msg_OM.cpp \
                 Bot.cpp \
                 BotCService.cpp \

@@ -84,13 +84,22 @@ bool Network::AddServer(const std::string &aNumeric, const std::string &aName, c
         return false;
    }
 
+   cout << "Passed Construction test..." << endl;
+
    // Allocate a new server on the heap.
    Server *NewServer = new Server(aNumeric, aName, aUpLinkNumeric, aDescription, aStartTime, aLinkTime, aHopCount, aFlag);
 
    // If server could not be allocated on the heap OR there was a problem inserting the server in the
    // Server map table, return false.
-   if (NewServer == NULL || Servers.insert(ServerMapType::value_type(aNumeric, NewServer)).second == false)
+   if (NewServer == NULL)
    {
+   	debug << "Could not allocate memory for server..." << endb;
+   	return false;
+   }
+
+   if (Servers.insert(ServerMapType::value_type(aNumeric, NewServer)).second == false)
+   {
+   	debug << "Could not add server to ServerMapType..." << endb;
    	delete NewServer;
    	return false;
    }

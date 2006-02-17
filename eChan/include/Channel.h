@@ -30,6 +30,7 @@
 
 #include "ChannelClient.h"
 #include "Client.h"
+#include "debug.h"
 
 namespace eNetworks
 {
@@ -129,9 +130,14 @@ struct Channel
    	// removes a ban from this channel.
    	void DelBan(const std::string &aBan)
    	{
-   	   for (std::list<std::string>::iterator i = BanList.begin(); i != BanList.end() && BanList.size() > 0; i++)
-            if (aBan == (*i))
-             BanList.erase(i);
+   	   for (std::list<std::string>::iterator i = BanList.begin(); i != BanList.end(); i++)
+   	   {
+           	if (aBan == (*i))
+   	   	{
+   	   	   BanList.erase(i);
+   	   	   return;
+   	   	}
+   	   }
    	}
 
    	// Remove all bans from this channel.

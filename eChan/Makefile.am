@@ -13,6 +13,7 @@ EXTRA_DIST = bin/eChan.conf \
              include/Msg_B.h \
              include/Msg_C.h \
              include/Msg_CM.h \
+             include/Msg_D.h \
              include/Msg_EB.h \
              include/Msg_G.h \
              include/Msg.h \
