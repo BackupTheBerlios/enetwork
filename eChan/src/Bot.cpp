@@ -30,6 +30,12 @@
 #include "OutBuffer.h"
 #include "Server.h"
 #include "tools.h"
+#include "MsgTokenizer.h"
+#include "Network.h"
+#include "Client.h"
+#include "Channel.h"
+#include "ChannelClient.h"
+
 
 using std::map;
 using std::string;
@@ -68,6 +74,55 @@ Bot::Bot(const std::string& Numeric, const std::string& NickName, const std::str
 
    RawMsg(strMsg);
 }
+
+void Bot::ChangeChannelMode(Channel* p_channel, const MsgTokenizer& p_nicknames, const char& p_mode, const bool& give)
+{
+   if (NULL == p_channel)
+   	return;
+
+   string l_msg = theClient.GetNumeric() + " M " + p_channel->GetName(); 
+
+   // Give or take mode?
+   if (give)
+   	l_msg += " +";
+   else
+   	l_msg += " -";
+
+   string l_modes("");
+   string l_numerics("");
+   for (unsigned int i = 0; i < p_nicknames.size(); i++)
+   {
+   	Client* l_Client = Network::Interface.FindClientByNickName(p_nicknames[i]);
+   	ChannelClient* l_ChannelClient = p_channel->FindChannelClient(l_Client);
+   	unsigned int l_count;
+   	if (NULL != l_ChannelClient)
+   	{
+   	   l_ChannelClient->AddMode(p_mode);
+   	   l_modes += p_mode;
+   	   l_numerics += l_Client->GetNumeric();
+   	   l_numerics += " ";
+   	   l_count++;
+   	}
+
+   	if ((l_count == 6 || p_nicknames.size() - i < 6) && l_modes.length() > 0)
+   	{
+   	   // keep parsing nicks if we haven't gotten to the last one.
+   	   if (p_nicknames.size()-1 != i)
+   	   	continue;
+ 
+   	   string l_send = l_msg;
+           l_send += l_modes;
+           l_send += " ";
+           // erase last space.
+           l_numerics.erase(l_numerics.length()-1,1);
+           l_send += l_numerics;
+           RawMsg(l_send);
+   	   // restart count.
+   	   l_count = 0;
+   	}
+   }
+}
+
 
 map<string, Bot*> Bot::BotMap = BotMapType();
 

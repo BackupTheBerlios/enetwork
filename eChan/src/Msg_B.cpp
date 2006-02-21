@@ -140,7 +140,6 @@ void Msg_B::ParseUsers(Channel *aChannelPtr, const std::string &UsersParameters)
 
    for (unsigned int i = 0; i < Users.size(); i++)
    {
-   	debug << "Users[" << i << "]: " << Users[i] << endb;
    	Client* ClientPtr = Network::Interface.FindClientByNumeric(Users[i].substr(0,5));
    	if (ClientPtr == NULL)
    	{
@@ -152,17 +151,11 @@ void Msg_B::ParseUsers(Channel *aChannelPtr, const std::string &UsersParameters)
    	{
    	   aChannelPtr->AddChannelClient(ClientPtr, CurrentMode);
    	   
-   	   debug << "Added Client " << ClientPtr->GetNickName() << " to " << aChannelPtr->GetName() << 
-   	           " with mode " << CurrentMode << endb;
-   	   
    	}
    	else if (Users[i].size() == 7 || Users[i].size() == 8)
    	{
    	   CurrentMode = Users[i].substr(6);
    	   aChannelPtr->AddChannelClient(ClientPtr, CurrentMode);
-   	   
-   	   debug << "Added Client " << ClientPtr->GetNickName() << " to " << aChannelPtr->GetName() << 
-   	           " with mode " << CurrentMode << endb;
    	   
    	}
    	else

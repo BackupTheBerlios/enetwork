@@ -50,14 +50,7 @@ void Msg_SQ::Parser()
    if (Parameters[1] == IntToString(ServerPtr->GetLinkTime()) || Parameters[1] == IntToString(0))
    {
    	if (!Network::Interface.DelServerByNumeric(ServerPtr->GetNumeric()))
-   	{
    	   debug << "Could not delete server " << Parameters[0] << endb;
-   	}
-   	else
-   	{
-   	   cout << "Deleted Server " << Parameters[0] << endl;
-   	   cout << "Current ServerCount(): " << Network::Interface.ServerCount() << endl;
-   	}
    }
 }
 

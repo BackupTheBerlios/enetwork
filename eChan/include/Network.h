@@ -120,9 +120,7 @@ class Network
    // -----------------------------
 
    	// Constructor.
-   	Network() {}
-        Network(ConfigParser& theConfigParser);
-
+        Network();
 
    	typedef ChannelMapType::size_type ChannelSizeType;
 

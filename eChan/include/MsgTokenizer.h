@@ -24,6 +24,7 @@
 
 #include <string>
 #include <vector>
+#include <iostream>
 
 namespace eNetworks
 {
@@ -47,6 +48,21 @@ class MsgTokenizer
 
    	// returns a reference to the token stored at position.
    	std::string operator[](const unsigned int &position) const { return Tokens[position]; }
+
+   	std::string assamble(const unsigned int& position)
+   	{
+   	   std::string l_return("");
+   	   for (unsigned int i = position; i < Tokens.size(); i++)
+   	   {
+   	   	l_return += Tokens[i];
+   	   	l_return += " ";
+   	   }
+
+   	   if (l_return.length() > 0)
+   	   	l_return.erase(l_return.length()-1,1);
+
+   	   return l_return;
+   	}
 
    private:
    	// Vector that holds tokens.

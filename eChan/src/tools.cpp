@@ -94,14 +94,14 @@ bool IsDigit(const string &str)
    return true;
 }
 
-void login(ConfigParser& theConfigParser)
+void login()
 {
    try
    {
         // loging to IRC server
         cout << "logging in" << endl;
-        Socket::eSock << "PASS :" << theConfigParser.GetConfiguration("LINKPASS") << "\r\n";
-        cout << "[OUT]: PASS :" << theConfigParser.GetConfiguration("LINKPASS") << endl;
+        Socket::eSock << "PASS :" << ConfigFile.GetConfiguration("LINKPASS") << "\r\n";
+        cout << "[OUT]: PASS :" << ConfigFile.GetConfiguration("LINKPASS") << endl;
 
        Socket::eSock << "SERVER " << LocalServer->GetName() << " " << LocalServer->GetHopCount() <<
             " " << LocalServer->GetStartTime() << " " << LocalServer->GetLinkTime() <<

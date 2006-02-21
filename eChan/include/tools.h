@@ -42,7 +42,7 @@ bool IsDigit(const std::string &str);
 
 // misc functions.
 // Introduce Local Server to the uplink and IRC Network.
-void login(ConfigParser& theConfigParser);
+void login();
 
 // structs
 

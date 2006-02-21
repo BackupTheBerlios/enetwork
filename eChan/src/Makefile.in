@@ -58,18 +58,22 @@ am_eChan_OBJECTS = eChan-main.$(OBJEXT) eChan-Socket.$(OBJEXT) \
 	eChan-Msg_G.$(OBJEXT) eChan-Msg_Q.$(OBJEXT) \
 	eChan-InBuffer.$(OBJEXT) eChan-OutBuffer.$(OBJEXT) \
 	eChan-MsgParseSystem.$(OBJEXT) eChan-OutMsgSystem.$(OBJEXT) \
-	eChan-P10Tokens.$(OBJEXT) eChan-Msg_J.$(OBJEXT) \
-	eChan-Msg_L.$(OBJEXT) eChan-Msg_SQ.$(OBJEXT) \
-	eChan-Msg_M.$(OBJEXT) eChan-Msg_K.$(OBJEXT) \
-	eChan-Msg_CM.$(OBJEXT) eChan-Msg_T.$(OBJEXT) \
-	eChan-Msg_C.$(OBJEXT) eChan-Msg_O.$(OBJEXT) \
-	eChan-Msg_P.$(OBJEXT) eChan-Msg_D.$(OBJEXT) \
-	eChan-Msg_OM.$(OBJEXT) eChan-Bot.$(OBJEXT) \
-	eChan-BotCService.$(OBJEXT) eChan-MsgMonitor.$(OBJEXT) \
-	eChan-MD5.$(OBJEXT) eChan-Crypto.$(OBJEXT) \
-	eChan-SqlManager.$(OBJEXT) eChan-Command.$(OBJEXT) \
-	eChan-CommandWHOIS.$(OBJEXT) eChan-CommandQUOTE.$(OBJEXT) \
-	eChan-CommandLOGIN.$(OBJEXT) eChan-SQL.$(OBJEXT)
+	eChan-P10Tokens.$(OBJEXT) eChan-Msg_AC.$(OBJEXT) \
+	eChan-Msg_J.$(OBJEXT) eChan-Msg_L.$(OBJEXT) \
+	eChan-Msg_SQ.$(OBJEXT) eChan-Msg_M.$(OBJEXT) \
+	eChan-Msg_K.$(OBJEXT) eChan-Msg_CM.$(OBJEXT) \
+	eChan-Msg_T.$(OBJEXT) eChan-Msg_C.$(OBJEXT) \
+	eChan-Msg_O.$(OBJEXT) eChan-Msg_P.$(OBJEXT) \
+	eChan-Msg_D.$(OBJEXT) eChan-Msg_OM.$(OBJEXT) \
+	eChan-Bot.$(OBJEXT) eChan-BotCService.$(OBJEXT) \
+	eChan-MsgMonitor.$(OBJEXT) eChan-MD5.$(OBJEXT) \
+	eChan-Crypto.$(OBJEXT) eChan-SqlManager.$(OBJEXT) \
+	eChan-Command.$(OBJEXT) eChan-CommandWHOIS.$(OBJEXT) \
+	eChan-CommandQUOTE.$(OBJEXT) eChan-CommandLOGIN.$(OBJEXT) \
+	eChan-CommandUP.$(OBJEXT) eChan-CommandDOWN.$(OBJEXT) \
+	eChan-CommandOP.$(OBJEXT) eChan-CommandDEOP.$(OBJEXT) \
+	eChan-CommandVOICE.$(OBJEXT) eChan-CommandDEVOICE.$(OBJEXT) \
+	eChan-SQL.$(OBJEXT)
 eChan_OBJECTS = $(am_eChan_OBJECTS)
 eChan_LDADD = $(LDADD)
 DEFAULT_INCLUDES = -I. -I$(srcdir) -I$(top_builddir)
@@ -188,6 +192,7 @@ eChan_SOURCES = main.cpp \
                 MsgParseSystem.cpp \
                 OutMsgSystem.cpp \
                 P10Tokens.cpp \
+                Msg_AC.cpp \
                 Msg_J.cpp \
                 Msg_L.cpp \
                 Msg_SQ.cpp \
@@ -210,6 +215,12 @@ eChan_SOURCES = main.cpp \
                 cservice/CommandWHOIS.cpp \
                 cservice/CommandQUOTE.cpp \
                 cservice/CommandLOGIN.cpp \
+                cservice/CommandUP.cpp \
+                cservice/CommandDOWN.cpp \
+                cservice/CommandOP.cpp \
+                cservice/CommandDEOP.cpp \
+                cservice/CommandVOICE.cpp \
+                cservice/CommandDEVOICE.cpp \
                 cservice/SQL.cpp
 
 eChan_LDFLAGS = -L$(MYSQLPP_LIB) -lmysqlpp
@@ -218,9 +229,16 @@ EXTRA_DIST = cservice/include/Command.h \
              cservice/include/CommandLOGIN.h \
              cservice/include/CommandQUOTE.h \
              cservice/include/CommandWHOIS.h \
+             cservice/include/CommandUP.h \
+             cservice/include/CommandDOWN.h \
+             cservice/include/CommandOP.h \
+             cservice/include/CommandDEOP.h \
+             cservice/include/CommandVOICE.h \
+             cservice/include/CommandDEVOICE.h \
              cservice/include/SQL.h \
              cservice/include/SqlUser.h \
              cservice/include/SqlChannel.h \
+             cservice/include/SqlChannelAccess.h \
              cservice/sql/channelaccess.sql \
              cservice/sql/channels.sql \
              cservice/sql/users.sql
@@ -296,8 +314,14 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/eChan-Channel.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/eChan-Client.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/eChan-Command.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/eChan-CommandDEOP.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/eChan-CommandDEVOICE.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/eChan-CommandDOWN.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/eChan-CommandLOGIN.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/eChan-CommandOP.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/eChan-CommandQUOTE.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/eChan-CommandUP.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/eChan-CommandVOICE.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/eChan-CommandWHOIS.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/eChan-ConfigParser.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/eChan-Crypto.Po@am__quote@
@@ -306,6 +330,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/eChan-MsgMonitor.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/eChan-MsgParseSystem.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/eChan-MsgTokenizer.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/eChan-Msg_AC.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/eChan-Msg_B.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/eChan-Msg_C.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/eChan-Msg_CM.Po@am__quote@
@@ -674,6 +699,20 @@ eChan-P10Tokens.obj: P10Tokens.cpp
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(eChan_CXXFLAGS) $(CXXFLAGS) -c -o eChan-P10Tokens.obj `if test -f 'P10Tokens.cpp'; then $(CYGPATH_W) 'P10Tokens.cpp'; else $(CYGPATH_W) '$(srcdir)/P10Tokens.cpp'; fi`
 
+eChan-Msg_AC.o: Msg_AC.cpp
+@am__fastdepCXX_TRUE@	if $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(eChan_CXXFLAGS) $(CXXFLAGS) -MT eChan-Msg_AC.o -MD -MP -MF "$(DEPDIR)/eChan-Msg_AC.Tpo" -c -o eChan-Msg_AC.o `test -f 'Msg_AC.cpp' || echo '$(srcdir)/'`Msg_AC.cpp; \
+@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/eChan-Msg_AC.Tpo" "$(DEPDIR)/eChan-Msg_AC.Po"; else rm -f "$(DEPDIR)/eChan-Msg_AC.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='Msg_AC.cpp' object='eChan-Msg_AC.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(eChan_CXXFLAGS) $(CXXFLAGS) -c -o eChan-Msg_AC.o `test -f 'Msg_AC.cpp' || echo '$(srcdir)/'`Msg_AC.cpp
+
+eChan-Msg_AC.obj: Msg_AC.cpp
+@am__fastdepCXX_TRUE@	if $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(eChan_CXXFLAGS) $(CXXFLAGS) -MT eChan-Msg_AC.obj -MD -MP -MF "$(DEPDIR)/eChan-Msg_AC.Tpo" -c -o eChan-Msg_AC.obj `if test -f 'Msg_AC.cpp'; then $(CYGPATH_W) 'Msg_AC.cpp'; else $(CYGPATH_W) '$(srcdir)/Msg_AC.cpp'; fi`; \
+@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/eChan-Msg_AC.Tpo" "$(DEPDIR)/eChan-Msg_AC.Po"; else rm -f "$(DEPDIR)/eChan-Msg_AC.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='Msg_AC.cpp' object='eChan-Msg_AC.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(eChan_CXXFLAGS) $(CXXFLAGS) -c -o eChan-Msg_AC.obj `if test -f 'Msg_AC.cpp'; then $(CYGPATH_W) 'Msg_AC.cpp'; else $(CYGPATH_W) '$(srcdir)/Msg_AC.cpp'; fi`
+
 eChan-Msg_J.o: Msg_J.cpp
 @am__fastdepCXX_TRUE@	if $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(eChan_CXXFLAGS) $(CXXFLAGS) -MT eChan-Msg_J.o -MD -MP -MF "$(DEPDIR)/eChan-Msg_J.Tpo" -c -o eChan-Msg_J.o `test -f 'Msg_J.cpp' || echo '$(srcdir)/'`Msg_J.cpp; \
 @am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/eChan-Msg_J.Tpo" "$(DEPDIR)/eChan-Msg_J.Po"; else rm -f "$(DEPDIR)/eChan-Msg_J.Tpo"; exit 1; fi
@@ -981,6 +1020,90 @@ eChan-CommandLOGIN.obj: cservice/CommandLOGIN.cpp
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='cservice/CommandLOGIN.cpp' object='eChan-CommandLOGIN.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(eChan_CXXFLAGS) $(CXXFLAGS) -c -o eChan-CommandLOGIN.obj `if test -f 'cservice/CommandLOGIN.cpp'; then $(CYGPATH_W) 'cservice/CommandLOGIN.cpp'; else $(CYGPATH_W) '$(srcdir)/cservice/CommandLOGIN.cpp'; fi`
+
+eChan-CommandUP.o: cservice/CommandUP.cpp
+@am__fastdepCXX_TRUE@	if $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(eChan_CXXFLAGS) $(CXXFLAGS) -MT eChan-CommandUP.o -MD -MP -MF "$(DEPDIR)/eChan-CommandUP.Tpo" -c -o eChan-CommandUP.o `test -f 'cservice/CommandUP.cpp' || echo '$(srcdir)/'`cservice/CommandUP.cpp; \
+@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/eChan-CommandUP.Tpo" "$(DEPDIR)/eChan-CommandUP.Po"; else rm -f "$(DEPDIR)/eChan-CommandUP.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='cservice/CommandUP.cpp' object='eChan-CommandUP.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(eChan_CXXFLAGS) $(CXXFLAGS) -c -o eChan-CommandUP.o `test -f 'cservice/CommandUP.cpp' || echo '$(srcdir)/'`cservice/CommandUP.cpp
+
+eChan-CommandUP.obj: cservice/CommandUP.cpp
+@am__fastdepCXX_TRUE@	if $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(eChan_CXXFLAGS) $(CXXFLAGS) -MT eChan-CommandUP.obj -MD -MP -MF "$(DEPDIR)/eChan-CommandUP.Tpo" -c -o eChan-CommandUP.obj `if test -f 'cservice/CommandUP.cpp'; then $(CYGPATH_W) 'cservice/CommandUP.cpp'; else $(CYGPATH_W) '$(srcdir)/cservice/CommandUP.cpp'; fi`; \
+@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/eChan-CommandUP.Tpo" "$(DEPDIR)/eChan-CommandUP.Po"; else rm -f "$(DEPDIR)/eChan-CommandUP.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='cservice/CommandUP.cpp' object='eChan-CommandUP.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(eChan_CXXFLAGS) $(CXXFLAGS) -c -o eChan-CommandUP.obj `if test -f 'cservice/CommandUP.cpp'; then $(CYGPATH_W) 'cservice/CommandUP.cpp'; else $(CYGPATH_W) '$(srcdir)/cservice/CommandUP.cpp'; fi`
+
+eChan-CommandDOWN.o: cservice/CommandDOWN.cpp
+@am__fastdepCXX_TRUE@	if $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(eChan_CXXFLAGS) $(CXXFLAGS) -MT eChan-CommandDOWN.o -MD -MP -MF "$(DEPDIR)/eChan-CommandDOWN.Tpo" -c -o eChan-CommandDOWN.o `test -f 'cservice/CommandDOWN.cpp' || echo '$(srcdir)/'`cservice/CommandDOWN.cpp; \
+@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/eChan-CommandDOWN.Tpo" "$(DEPDIR)/eChan-CommandDOWN.Po"; else rm -f "$(DEPDIR)/eChan-CommandDOWN.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='cservice/CommandDOWN.cpp' object='eChan-CommandDOWN.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(eChan_CXXFLAGS) $(CXXFLAGS) -c -o eChan-CommandDOWN.o `test -f 'cservice/CommandDOWN.cpp' || echo '$(srcdir)/'`cservice/CommandDOWN.cpp
+
+eChan-CommandDOWN.obj: cservice/CommandDOWN.cpp
+@am__fastdepCXX_TRUE@	if $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(eChan_CXXFLAGS) $(CXXFLAGS) -MT eChan-CommandDOWN.obj -MD -MP -MF "$(DEPDIR)/eChan-CommandDOWN.Tpo" -c -o eChan-CommandDOWN.obj `if test -f 'cservice/CommandDOWN.cpp'; then $(CYGPATH_W) 'cservice/CommandDOWN.cpp'; else $(CYGPATH_W) '$(srcdir)/cservice/CommandDOWN.cpp'; fi`; \
+@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/eChan-CommandDOWN.Tpo" "$(DEPDIR)/eChan-CommandDOWN.Po"; else rm -f "$(DEPDIR)/eChan-CommandDOWN.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='cservice/CommandDOWN.cpp' object='eChan-CommandDOWN.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(eChan_CXXFLAGS) $(CXXFLAGS) -c -o eChan-CommandDOWN.obj `if test -f 'cservice/CommandDOWN.cpp'; then $(CYGPATH_W) 'cservice/CommandDOWN.cpp'; else $(CYGPATH_W) '$(srcdir)/cservice/CommandDOWN.cpp'; fi`
+
+eChan-CommandOP.o: cservice/CommandOP.cpp
+@am__fastdepCXX_TRUE@	if $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(eChan_CXXFLAGS) $(CXXFLAGS) -MT eChan-CommandOP.o -MD -MP -MF "$(DEPDIR)/eChan-CommandOP.Tpo" -c -o eChan-CommandOP.o `test -f 'cservice/CommandOP.cpp' || echo '$(srcdir)/'`cservice/CommandOP.cpp; \
+@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/eChan-CommandOP.Tpo" "$(DEPDIR)/eChan-CommandOP.Po"; else rm -f "$(DEPDIR)/eChan-CommandOP.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='cservice/CommandOP.cpp' object='eChan-CommandOP.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(eChan_CXXFLAGS) $(CXXFLAGS) -c -o eChan-CommandOP.o `test -f 'cservice/CommandOP.cpp' || echo '$(srcdir)/'`cservice/CommandOP.cpp
+
+eChan-CommandOP.obj: cservice/CommandOP.cpp
+@am__fastdepCXX_TRUE@	if $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(eChan_CXXFLAGS) $(CXXFLAGS) -MT eChan-CommandOP.obj -MD -MP -MF "$(DEPDIR)/eChan-CommandOP.Tpo" -c -o eChan-CommandOP.obj `if test -f 'cservice/CommandOP.cpp'; then $(CYGPATH_W) 'cservice/CommandOP.cpp'; else $(CYGPATH_W) '$(srcdir)/cservice/CommandOP.cpp'; fi`; \
+@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/eChan-CommandOP.Tpo" "$(DEPDIR)/eChan-CommandOP.Po"; else rm -f "$(DEPDIR)/eChan-CommandOP.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='cservice/CommandOP.cpp' object='eChan-CommandOP.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(eChan_CXXFLAGS) $(CXXFLAGS) -c -o eChan-CommandOP.obj `if test -f 'cservice/CommandOP.cpp'; then $(CYGPATH_W) 'cservice/CommandOP.cpp'; else $(CYGPATH_W) '$(srcdir)/cservice/CommandOP.cpp'; fi`
+
+eChan-CommandDEOP.o: cservice/CommandDEOP.cpp
+@am__fastdepCXX_TRUE@	if $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(eChan_CXXFLAGS) $(CXXFLAGS) -MT eChan-CommandDEOP.o -MD -MP -MF "$(DEPDIR)/eChan-CommandDEOP.Tpo" -c -o eChan-CommandDEOP.o `test -f 'cservice/CommandDEOP.cpp' || echo '$(srcdir)/'`cservice/CommandDEOP.cpp; \
+@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/eChan-CommandDEOP.Tpo" "$(DEPDIR)/eChan-CommandDEOP.Po"; else rm -f "$(DEPDIR)/eChan-CommandDEOP.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='cservice/CommandDEOP.cpp' object='eChan-CommandDEOP.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(eChan_CXXFLAGS) $(CXXFLAGS) -c -o eChan-CommandDEOP.o `test -f 'cservice/CommandDEOP.cpp' || echo '$(srcdir)/'`cservice/CommandDEOP.cpp
+
+eChan-CommandDEOP.obj: cservice/CommandDEOP.cpp
+@am__fastdepCXX_TRUE@	if $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(eChan_CXXFLAGS) $(CXXFLAGS) -MT eChan-CommandDEOP.obj -MD -MP -MF "$(DEPDIR)/eChan-CommandDEOP.Tpo" -c -o eChan-CommandDEOP.obj `if test -f 'cservice/CommandDEOP.cpp'; then $(CYGPATH_W) 'cservice/CommandDEOP.cpp'; else $(CYGPATH_W) '$(srcdir)/cservice/CommandDEOP.cpp'; fi`; \
+@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/eChan-CommandDEOP.Tpo" "$(DEPDIR)/eChan-CommandDEOP.Po"; else rm -f "$(DEPDIR)/eChan-CommandDEOP.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='cservice/CommandDEOP.cpp' object='eChan-CommandDEOP.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(eChan_CXXFLAGS) $(CXXFLAGS) -c -o eChan-CommandDEOP.obj `if test -f 'cservice/CommandDEOP.cpp'; then $(CYGPATH_W) 'cservice/CommandDEOP.cpp'; else $(CYGPATH_W) '$(srcdir)/cservice/CommandDEOP.cpp'; fi`
+
+eChan-CommandVOICE.o: cservice/CommandVOICE.cpp
+@am__fastdepCXX_TRUE@	if $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(eChan_CXXFLAGS) $(CXXFLAGS) -MT eChan-CommandVOICE.o -MD -MP -MF "$(DEPDIR)/eChan-CommandVOICE.Tpo" -c -o eChan-CommandVOICE.o `test -f 'cservice/CommandVOICE.cpp' || echo '$(srcdir)/'`cservice/CommandVOICE.cpp; \
+@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/eChan-CommandVOICE.Tpo" "$(DEPDIR)/eChan-CommandVOICE.Po"; else rm -f "$(DEPDIR)/eChan-CommandVOICE.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='cservice/CommandVOICE.cpp' object='eChan-CommandVOICE.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(eChan_CXXFLAGS) $(CXXFLAGS) -c -o eChan-CommandVOICE.o `test -f 'cservice/CommandVOICE.cpp' || echo '$(srcdir)/'`cservice/CommandVOICE.cpp
+
+eChan-CommandVOICE.obj: cservice/CommandVOICE.cpp
+@am__fastdepCXX_TRUE@	if $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(eChan_CXXFLAGS) $(CXXFLAGS) -MT eChan-CommandVOICE.obj -MD -MP -MF "$(DEPDIR)/eChan-CommandVOICE.Tpo" -c -o eChan-CommandVOICE.obj `if test -f 'cservice/CommandVOICE.cpp'; then $(CYGPATH_W) 'cservice/CommandVOICE.cpp'; else $(CYGPATH_W) '$(srcdir)/cservice/CommandVOICE.cpp'; fi`; \
+@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/eChan-CommandVOICE.Tpo" "$(DEPDIR)/eChan-CommandVOICE.Po"; else rm -f "$(DEPDIR)/eChan-CommandVOICE.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='cservice/CommandVOICE.cpp' object='eChan-CommandVOICE.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(eChan_CXXFLAGS) $(CXXFLAGS) -c -o eChan-CommandVOICE.obj `if test -f 'cservice/CommandVOICE.cpp'; then $(CYGPATH_W) 'cservice/CommandVOICE.cpp'; else $(CYGPATH_W) '$(srcdir)/cservice/CommandVOICE.cpp'; fi`
+
+eChan-CommandDEVOICE.o: cservice/CommandDEVOICE.cpp
+@am__fastdepCXX_TRUE@	if $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(eChan_CXXFLAGS) $(CXXFLAGS) -MT eChan-CommandDEVOICE.o -MD -MP -MF "$(DEPDIR)/eChan-CommandDEVOICE.Tpo" -c -o eChan-CommandDEVOICE.o `test -f 'cservice/CommandDEVOICE.cpp' || echo '$(srcdir)/'`cservice/CommandDEVOICE.cpp; \
+@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/eChan-CommandDEVOICE.Tpo" "$(DEPDIR)/eChan-CommandDEVOICE.Po"; else rm -f "$(DEPDIR)/eChan-CommandDEVOICE.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='cservice/CommandDEVOICE.cpp' object='eChan-CommandDEVOICE.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(eChan_CXXFLAGS) $(CXXFLAGS) -c -o eChan-CommandDEVOICE.o `test -f 'cservice/CommandDEVOICE.cpp' || echo '$(srcdir)/'`cservice/CommandDEVOICE.cpp
+
+eChan-CommandDEVOICE.obj: cservice/CommandDEVOICE.cpp
+@am__fastdepCXX_TRUE@	if $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(eChan_CXXFLAGS) $(CXXFLAGS) -MT eChan-CommandDEVOICE.obj -MD -MP -MF "$(DEPDIR)/eChan-CommandDEVOICE.Tpo" -c -o eChan-CommandDEVOICE.obj `if test -f 'cservice/CommandDEVOICE.cpp'; then $(CYGPATH_W) 'cservice/CommandDEVOICE.cpp'; else $(CYGPATH_W) '$(srcdir)/cservice/CommandDEVOICE.cpp'; fi`; \
+@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/eChan-CommandDEVOICE.Tpo" "$(DEPDIR)/eChan-CommandDEVOICE.Po"; else rm -f "$(DEPDIR)/eChan-CommandDEVOICE.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='cservice/CommandDEVOICE.cpp' object='eChan-CommandDEVOICE.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(eChan_CXXFLAGS) $(CXXFLAGS) -c -o eChan-CommandDEVOICE.obj `if test -f 'cservice/CommandDEVOICE.cpp'; then $(CYGPATH_W) 'cservice/CommandDEVOICE.cpp'; else $(CYGPATH_W) '$(srcdir)/cservice/CommandDEVOICE.cpp'; fi`
 
 eChan-SQL.o: cservice/SQL.cpp
 @am__fastdepCXX_TRUE@	if $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(eChan_CXXFLAGS) $(CXXFLAGS) -MT eChan-SQL.o -MD -MP -MF "$(DEPDIR)/eChan-SQL.Tpo" -c -o eChan-SQL.o `test -f 'cservice/SQL.cpp' || echo '$(srcdir)/'`cservice/SQL.cpp; \

@@ -45,15 +45,15 @@ struct ChannelClient
            if (HasMode(aMode) || (aMode != 'o' && aMode != 'v'))
             return;
 
-           Modes += aMode;
+   	   // Only add mode if user doesn't already have this mode.
+   	   if (!HasMode(aMode))
+            Modes += aMode;
         }
 
         // Deletes a mode from this channel user if the mode already exists.
         void DelMode(const char &aMode)
         {
-           if (!HasMode(aMode))
-            return;
-           else
+           if (HasMode(aMode))
             Modes.erase(Modes.find(aMode), 1);
         }
 

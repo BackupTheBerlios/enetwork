@@ -45,8 +45,6 @@ void Msg_T::Parser()
    }
 
    theChannel->SetTopic(Parameters[1]);
-   
-   cout << Source.GetName() << " has changed the topic in " << Parameters[0] << " to \"" << Parameters[1] << "\"." << endl;
 }
 
 } // namespace eNetworks

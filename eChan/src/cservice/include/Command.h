@@ -23,6 +23,7 @@
 #define ELECTRONIC_NETWORKS__CSERVICE_COMMAND_H
 
 #include <string>
+#include <utility>
 
 #include "Client.h"
 #include "Channel.h"
@@ -48,7 +49,13 @@ class Command
    	   NONE = 0,
    	   WHOIS,
    	   QUOTE,
-   	   LOGIN
+   	   LOGIN,
+   	   UP,
+   	   DOWN,
+   	   OP,
+   	   DEOP,
+   	   VOICE,
+   	   DEVOICE
    	};
 
 
@@ -57,14 +64,19 @@ class Command
    	   static const unsigned int LOGIN;
    	   static const unsigned int WHOIS;
    	   static const unsigned int QUOTE;
+   	   static const unsigned int UP;
+   	   static const unsigned int DOWN;
+   	   static const unsigned int OP;
+   	   static const unsigned int DEOP;
+   	   static const unsigned int VOICE;
+   	   static const unsigned int DEVOICE;
    	};
 
    	virtual void Parser() = 0;
 
-   	static void AddCommand(const std::string& CommandName, const CommandName& theCommand, unsigned int p_Level)
+   	static void AddCommand(const std::string& CommandName, const CommandName& theCommand)
    	{
    	   CommandMap.insert(CommandMapType::value_type(CommandName, theCommand));
-   	   CommandLevels.insert(CommandLevelsType::value_type(theCommand, p_Level));
    	}
 
    	static void ParseCommands(Bot* theBot, Client* theSource, const std::string& strCommand);
@@ -90,9 +102,6 @@ class Command
 
    	typedef std::map<std::string, CommandName, noCaseCompare> CommandMapType;
    	static CommandMapType CommandMap;
-
-   	typedef std::map<CommandName, unsigned int> CommandLevelsType;
-   	static CommandLevelsType CommandLevels;
 };
 
 } // namespace eNetworks

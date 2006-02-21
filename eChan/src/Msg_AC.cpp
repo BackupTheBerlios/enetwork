@@ -19,55 +19,37 @@
  *
 */
 
-#include <iostream>
 #include <string>
+#include <iostream>
 
-#include "MsgTokenizer.h"
-#include "CommandQUOTE.h"
+#include "Msg_AC.h"
 #include "Network.h"
+#include "Server.h"
 #include "Client.h"
-#include "SQL.h"
+#include "debug.h"
 
+using std::string;
 using std::cout;
 using std::endl;
-using std::string;
 
 namespace eNetworks
 {
 
-namespace cservice
+void Msg_AC::Parser()
 {
+   	if (!Source.IsServer())
+   	{
+   	   debug << "Protocol Error: Client sending AC Token" << endb;
+   	}
+   	
+   	Client* l_Client = Network::Interface.FindClientByNumeric(Parameters[0]);
+   	if (NULL == l_Client)
+   	{
+   	   debug << "Error: Could not find client with Token (" << Parameters[0] << ") in database from AC Token MSG" << endb;
+   	} 
 
-CommandQUOTE::CommandQUOTE(Bot* theBot, Client* theSource, const MsgTokenizer& refParameters) : Command(theBot, theSource, refParameters)
-{
-   Syntax = "/msg " + LocalBot->theClient.GetNickName() + " quote <valid P10 message>";
+   	l_Client->SetAccount(Parameters[1]);
 }
 
-void CommandQUOTE::Parser()
-{
-   if (!SQL::Interface.HasEnoughAccess(Source, "*", 1000))
-   {
-   	LocalBot->SendNotice(Source, "You don't have enough access to perform this command.");
-   	return;
-   }
-
-   if (Parameters.size() <= 0)
-   {
-   	LocalBot->SendNotice(Source, "SYNTAX: " + Syntax);
-   	return;
-   }
-
-   string strMsg = Parameters[0];
-
-   for (unsigned int i = 1; i < Parameters.size(); i++)
-   {
-   	strMsg += " ";
-   	strMsg += Parameters[i];
-   }
-
-   LocalBot->RawMsg(strMsg);
-}
-
-} // namespace cservice
 
 } // namespace eNetworks

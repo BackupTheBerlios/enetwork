@@ -263,3 +263,21 @@ February 10, 2005 - clsk - More bug fixes.
 February 17, 2005 - clsk - D Message Handle.
  * Made a Msg_D class to handle kill messages.
  * Fixed a bug in Channel::DelBan.
+
+February 19, 2005 - clsk - Look for cached users on login.
+ * Look for Cached SqlUser in login before going to database.
+ * If password doesn't mach go to database in case the password
+   was changed from somewhere else.
+
+February 19, 2005 - clsk - SQL class.
+ * Did some more work on cservice::SQL class (looking good so far).
+ * Finished FindUser().
+ * Finished GetAccessLevel() (to be tested tomorrow).
+
+February 21, 2005 - clsk - Created various commands.
+ * Created the following Commands:
+   UP, DOWN, OP, DEOP, VOICE, DEVOICE.
+   as well as functions to support these commands.
+ 
+ * Finished cservice::SQL class.
+ * Alot more changes have been made that I can't recall since last commit.

@@ -41,7 +41,7 @@ namespace cservice
 
 CommandLOGIN::CommandLOGIN(Bot* theBot, Client* theSource, const MsgTokenizer& refParameters) : Command(theBot, theSource, refParameters)
 {
-   Syntax = "/MSG " + LocalBot->theClient.GetNickName() + " login <username> <password>";
+   Syntax = "/msg " + LocalBot->theClient.GetNickName() + " login <username> <password>";
 }
 
 void CommandLOGIN::Parser()

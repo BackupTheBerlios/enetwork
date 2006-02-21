@@ -27,9 +27,12 @@
 
 #include "P10Tokens.h"
 #include "MsgSource.h"
-#include "Client.h"
 #include "MsgTokenizer.h"
 #include "OutBuffer.h"
+#include "Network.h"
+#include "Client.h"
+#include "Channel.h"
+#include "ChannelClient.h"
 
 namespace eNetworks
 {
@@ -75,6 +78,46 @@ class Bot
    	   OutBuffer::obInstance.insert(Msg);
    	}
 
+   	virtual void GiveOP(Channel* p_channel, const MsgTokenizer& p_nicknames)
+   	{
+   	   GiveChannelMode(p_channel, p_nicknames, 'o');
+   	}
+
+   	virtual void GiveOP(const std::string& channel, const MsgTokenizer& p_nicknames)
+   	{
+   	   GiveOP(Network::Interface.FindChannel(channel), p_nicknames);
+   	}
+
+   	virtual void TakeOP(Channel* p_channel, const MsgTokenizer& p_nicknames)
+   	{
+   	   TakeChannelMode(p_channel, p_nicknames, 'o');
+   	}
+
+   	virtual void TakeOP(const std::string& channel, const MsgTokenizer& p_nicknames)
+   	{
+   	   TakeOP(Network::Interface.FindChannel(channel), p_nicknames);
+   	}
+
+   	virtual void GiveVoice(Channel* p_channel, const MsgTokenizer& p_nicknames)
+   	{
+   	   GiveChannelMode(p_channel, p_nicknames, 'v');
+   	}
+
+   	virtual void GiveVoice(const std::string& channel, const MsgTokenizer& p_nicknames)
+   	{
+   	   GiveVoice(Network::Interface.FindChannel(channel), p_nicknames);
+   	}
+
+   	virtual void TakeVoice(Channel* p_channel, const MsgTokenizer& p_nicknames)   	
+   	{
+   	   TakeChannelMode(p_channel, p_nicknames, 'v');
+   	}
+
+   	virtual void TakeVoice(const std::string& channel, const MsgTokenizer& p_nicknames)
+   	{
+   	   TakeVoice(Network::Interface.FindChannel(channel), p_nicknames);
+   	}
+
    	// find a registered bot.
    	static Bot* FindBot(const std::string& Numeric)
    	{
@@ -100,6 +143,16 @@ class Bot
    	// List of bots associated by numeric.
    	typedef std::map<std::string, Bot*> BotMapType;
    	static BotMapType BotMap;
+   	void ChangeChannelMode(Channel* p_channel, const MsgTokenizer& p_nicknames, const char& p_mode, const bool& give);
+   	void GiveChannelMode(Channel* p_channel, const MsgTokenizer& p_nicknames, const char& p_mode)
+   	{
+   	   ChangeChannelMode(p_channel, p_nicknames, p_mode, true);
+   	}
+
+   	void TakeChannelMode(Channel* p_channel, const MsgTokenizer& p_nicknames, const char& p_mode)
+   	{
+   	   ChangeChannelMode(p_channel, p_nicknames, p_mode, false);
+   	}
 };
 
 

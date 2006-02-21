@@ -19,45 +19,31 @@
  *
 */
 
+#ifndef ELECTRONIC_NETWORKS__CSERVICE_COMMANDVOICE_H
+#define ELECTRONIC_NETWORKS__CSERVICE_COMMANDVOICE_H
 
 #include <string>
-#include <iostream>
-#include <cstdlib>
 
-#include "debug.h"
-#include "tools.h"
-#include "Msg_EB.h"
-#include "Socket.h"
-#include "P10Tokens.h"
-#include "Server.h"
-#include "OutBuffer.h"
-#include "Network.h"
-#include "Channel.h"
-#include "Client.h"
-
-using std::string;
-using std::cout;
-using std::endl;
+#include "Command.h"
 
 namespace eNetworks
 {
 
-void Msg_EB::Parser()
+namespace cservice
 {
-   // Only send END_OF_ACKNOWLEDGEMENT when uplink server sends END_OF_BURST.
-   if (Network::Interface.FindServerByNumeric(Source.GetNumeric())->GetUpLink() != LocalServer->GetNumeric())
-   	return;
 
-   if (!Source.IsServer())
-   {
-   	debug << "Source should be a server in Msg_EB::Parser()." << endb;
-   	exit(0);
-   }
+class CommandVOICE : public Command
+{
+   public:
+   	CommandVOICE(Bot* theBot, Client* theSource, const MsgTokenizer& refParameters);
+   	virtual ~CommandVOICE() {}
+   	void Parser();
 
-   string msg = LocalServer->GetNumeric();
-   msg += " "; 
-   msg += "EA";
-   OutBuffer::obInstance.insert(msg);
-}
+   private:
+};
 
 } // namespace eNetworks
+
+} // namespace cservice
+
+#endif // ELECTRONIC_NETWORKS__CSERVICE_COMMANDVOICE_H

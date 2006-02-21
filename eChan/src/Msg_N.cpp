@@ -53,9 +53,7 @@ void Msg_N::Parser()
            exit(0);
         }
 
-        cout << "Changing " << ClientSrc->GetNickName() << "'s nickname to ";
         ClientSrc->ChangeNickName(Parameters[0]);
-        cout << ClientSrc->GetNickName() << endl;
         ClientSrc->ChangeTimeStamp(StringToInt(Parameters[1]));
 
         return;
@@ -144,9 +142,11 @@ void Msg_N::Parser()
         exit(0);
    }
 
+/*
    cout << "Added Client with Numeric: " << Numeric << " NickName: " << NickName << " Account: " << Account <<
            " UserName: " << UserName << " HostName: " << HostName << " B6IP: " << B64IP << " Modes: " << Modes <<
            " TimeStamp: " << TimeStamp << " HopCount: " << HopCount << endl << "UserInfo: " << UserInfo << endl;
+*/
 }
 
 } // namespace eNetworks

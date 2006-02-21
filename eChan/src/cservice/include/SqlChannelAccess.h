@@ -30,9 +30,34 @@ namespace cservice
 
 struct SqlChannelAccess
 {
-   	unsigned int channel_id;
-   	unsigned int username_id;
-   	unsigned short level;
+   public:
+
+   	SqlChannelAccess(const unsigned int& username_id, const unsigned int& channel_id, 
+                         const unsigned short& level) :
+   	M_channel_id(channel_id), M_username_id(username_id), M_level(level)
+   	{
+   	}
+
+   	SqlChannelAccess() : M_modified(false)
+   	{
+   	}
+
+   	unsigned int getUsernameID() const { return M_username_id; }
+   	unsigned int getChannelID() const { return M_channel_id; }
+   	unsigned short getLevel() const { return M_level; }
+
+   	void setLevel(const unsigned  short& level)
+   	{
+   	   M_level = level;
+   	   M_modified = true;
+   	}
+
+   private:
+   	unsigned int M_username_id;
+   	unsigned int M_channel_id;
+   	unsigned short M_level;
+
+   	bool M_modified;
 };
 
 } // namespace eNetworks

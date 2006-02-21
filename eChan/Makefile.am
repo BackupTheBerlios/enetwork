@@ -10,6 +10,7 @@ EXTRA_DIST = bin/eChan.conf \
              include/ConfigParser.h \
              include/debug.h \
              include/InBuffer.h \
+             include/Msg_AC.h \
              include/Msg_B.h \
              include/Msg_C.h \
              include/Msg_CM.h \

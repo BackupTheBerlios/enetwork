@@ -19,45 +19,26 @@
  *
 */
 
+#ifndef ELECTRONIC_NETWORKS__MSG_AC_H
+#define ELECTRONIC_NETWORKS__MSG_AC_H
 
-#include <string>
-#include <iostream>
-#include <cstdlib>
-
-#include "debug.h"
-#include "tools.h"
-#include "Msg_EB.h"
-#include "Socket.h"
-#include "P10Tokens.h"
-#include "Server.h"
-#include "OutBuffer.h"
-#include "Network.h"
-#include "Channel.h"
-#include "Client.h"
-
-using std::string;
-using std::cout;
-using std::endl;
+#include "Msg.h"
 
 namespace eNetworks
 {
 
-void Msg_EB::Parser()
+// -------------------------------------------------------------------------------
+//         AC Token. (A server (normally services sending a Client's username)
+// -------------------------------------------------------------------------------
+class Msg_AC : public Msg
 {
-   // Only send END_OF_ACKNOWLEDGEMENT when uplink server sends END_OF_BURST.
-   if (Network::Interface.FindServerByNumeric(Source.GetNumeric())->GetUpLink() != LocalServer->GetNumeric())
-   	return;
+   public:
+        Msg_AC(const MsgSource& _Source, const MsgTokenizer& _Parameters) : Msg(_Source, _Parameters) {}
 
-   if (!Source.IsServer())
-   {
-   	debug << "Source should be a server in Msg_EB::Parser()." << endb;
-   	exit(0);
-   }
-
-   string msg = LocalServer->GetNumeric();
-   msg += " "; 
-   msg += "EA";
-   OutBuffer::obInstance.insert(msg);
-}
+        virtual ~Msg_AC() {}
+        virtual void Parser();
+};
 
 } // namespace eNetworks
+
+#endif // ELECTRONIC_NETWORKS__MSG_AC_H

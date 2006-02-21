@@ -33,7 +33,7 @@ using std::ifstream;
 namespace eNetworks
 {
 
-ConfigParser::ConfigParser(const std::string& _ConfigFile) : ConfigMap(), ConfigFile(_ConfigFile)
+ConfigParser::ConfigParser(const std::string& _ConfigFile) : ConfigMap(), ConfigFile(_ConfigFile), M_parsed(false)
 {
 }
 
@@ -122,6 +122,7 @@ void ConfigParser::ParseConfigFile()
    }
  
    ifsConfigFile.close();
+   M_parsed = true;
 }
 
 
@@ -158,5 +159,7 @@ bool ConfigParser::InsertItem(const string& Item, const string& Configuration)
 {
    return ConfigMap.insert(ConfigMapType::value_type(Item,Configuration)).second;
 }
+
+ConfigParser ConfigFile = ConfigParser();
 
 } // namespace eNetworks

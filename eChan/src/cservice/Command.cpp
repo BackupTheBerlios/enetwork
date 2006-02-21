@@ -27,6 +27,12 @@
 #include "CommandWHOIS.h"
 #include "CommandQUOTE.h"
 #include "CommandLOGIN.h"
+#include "CommandUP.h"
+#include "CommandDOWN.h"
+#include "CommandOP.h"
+#include "CommandDEOP.h"
+#include "CommandVOICE.h"
+#include "CommandDEVOICE.h"
 #include "tools.h"
 
 using std::map;
@@ -57,6 +63,30 @@ void Command::ParseCommands(Bot* theBot, Client* theSource, const std::string& s
    	   cmd = new CommandLOGIN(theBot, theSource, mtTemp);
    	   break;
 
+   	case OP:
+   	   cmd = new CommandOP(theBot, theSource, mtTemp);
+   	   break;
+
+   	case DEOP:
+   	   cmd = new CommandDEOP(theBot, theSource, mtTemp);
+   	   break;
+
+   	case VOICE:
+   	   cmd = new CommandVOICE(theBot, theSource, mtTemp);
+   	   break;
+
+   	case DEVOICE:
+   	   cmd = new CommandDEVOICE(theBot, theSource, mtTemp);
+   	   break;
+
+   	case UP:
+   	   cmd = new CommandUP(theBot, theSource, mtTemp);
+   	   break;
+
+   	case DOWN:
+   	   cmd = new CommandDOWN(theBot, theSource, mtTemp);
+   	   break;
+
    	case WHOIS:
    	   cmd = new CommandWHOIS(theBot, theSource, mtTemp);
    	   break;
@@ -79,10 +109,14 @@ void Command::ParseCommands(Bot* theBot, Client* theSource, const std::string& s
 
 const unsigned int Command::Level::LOGIN = 0;
 const unsigned int Command::Level::WHOIS = 600;
-const unsigned int Command::Level::QUOTE = 999;
+const unsigned int Command::Level::QUOTE = 1000;
+const unsigned int Command::Level::UP = 100;
+const unsigned int Command::Level::DOWN = 100;
+const unsigned int Command::Level::VOICE = 25;
+const unsigned int Command::Level::DEVOICE = 25;
+
 
 map<string, Command::CommandName, noCaseCompare> Command::CommandMap = CommandMapType();
-map<Command::CommandName, unsigned int> Command::CommandLevels = CommandLevelsType();
 } // namespace cservice
 
 } // namespace eNetworks

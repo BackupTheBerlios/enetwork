@@ -1,8 +1,8 @@
 This code currently has been tested to compile in the following operating systems:
 
- * Linux (Fedora Core 4 using gcc 4.0.0+).
- * FreeBSD (using gcc 4.0.0+).
- * Microsoft(r) Windows(tm) (using Microsoft Visual Studio 2005 (8.0) express).
+ * Linux
+ * FreeBSD
+ * Microsoft(r) Windows(tm) (using Microsoft Visual C++ 2005 (8.0) express).
 
 The code should compile on many other systems as well. If you get to compile it in 
 other systems you may e-mail me so I can add other operating systems to this list.
@@ -47,3 +47,7 @@ Compiling and running in Microsoft Windows:
 *** Post-Installation Notes ***
  - Make sure you add Ulines for eChan in your ircd configuration file.
  - Make sure you run the mysql scripts located at src/cservice/sql.
+
+NOTE: eChan is still in pre-alpha state and is not mature enough for a production network.
+
+Please report bugs, feedback, patches, etc... to alan.alvarez@us.army.mil

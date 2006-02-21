@@ -22,6 +22,7 @@ eChan_SOURCES = main.cpp \
                 MsgParseSystem.cpp \
                 OutMsgSystem.cpp \
                 P10Tokens.cpp \
+                Msg_AC.cpp \
                 Msg_J.cpp \
                 Msg_L.cpp \
                 Msg_SQ.cpp \
@@ -44,6 +45,12 @@ eChan_SOURCES = main.cpp \
                 cservice/CommandWHOIS.cpp \
                 cservice/CommandQUOTE.cpp \
                 cservice/CommandLOGIN.cpp \
+                cservice/CommandUP.cpp \
+                cservice/CommandDOWN.cpp \
+                cservice/CommandOP.cpp \
+                cservice/CommandDEOP.cpp \
+                cservice/CommandVOICE.cpp \
+                cservice/CommandDEVOICE.cpp \
                 cservice/SQL.cpp
 
 eChan_LDFLAGS = -L$(MYSQLPP_LIB) -lmysqlpp
@@ -53,9 +60,16 @@ EXTRA_DIST = cservice/include/Command.h \
              cservice/include/CommandLOGIN.h \
              cservice/include/CommandQUOTE.h \
              cservice/include/CommandWHOIS.h \
+             cservice/include/CommandUP.h \
+             cservice/include/CommandDOWN.h \
+             cservice/include/CommandOP.h \
+             cservice/include/CommandDEOP.h \
+             cservice/include/CommandVOICE.h \
+             cservice/include/CommandDEVOICE.h \
              cservice/include/SQL.h \
              cservice/include/SqlUser.h \
              cservice/include/SqlChannel.h \
+             cservice/include/SqlChannelAccess.h \
              cservice/sql/channelaccess.sql \
              cservice/sql/channels.sql \
              cservice/sql/users.sql

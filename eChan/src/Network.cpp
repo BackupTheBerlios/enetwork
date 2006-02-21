@@ -33,6 +33,7 @@
 #include "Socket.h"
 #include "SocketException.h"
 #include "debug.h"
+#include "ConfigParser.h"
 
 using std::map;
 using std::string;
@@ -42,21 +43,25 @@ using std::endl;
 namespace eNetworks
 {
 
-Network::Network(ConfigParser& theConfigParser) : Servers(), ClientNumerics(), ClientNickNames(), Channels() 
+Network::Network() : Servers(), ClientNumerics(), ClientNickNames(), Channels() 
 {
+   if (!ConfigFile.IsParsed())
+   	return;
 
-   LocalServer = new Server(theConfigParser.GetConfiguration("NUMERIC"), theConfigParser.GetConfiguration("SERVERNAME"), "", 
-   	   	   	    theConfigParser.GetConfiguration("SERVERINFO"), time(0), time(0), 1, 's');
+   LocalServer = new Server(ConfigFile.GetConfiguration("NUMERIC"), ConfigFile.GetConfiguration("SERVERNAME"), "", 
+   	   	   	    ConfigFile.GetConfiguration("SERVERINFO"), time(0), time(0), 1, 's');
 
    if (LocalServer == NULL)
    {
-   	cout << "Could not create server: " << theConfigParser.GetConfiguration("SERVERNAME") << endl;
+   	cout << "Could not create server: " << ConfigFile.GetConfiguration("SERVERNAME") << endl;
    	exit(0);
    }
 
+   cout << "Config File from Network: " << ConfigFile.GetConfiguration("UPLINK") << endl;
+
    try
    {
-   	Socket::eSock.connect(theConfigParser.GetConfiguration("UPLINK"), StringToInt(theConfigParser.GetConfiguration("PORT")));
+   	Socket::eSock.connect(ConfigFile.GetConfiguration("UPLINK"), StringToInt(ConfigFile.GetConfiguration("PORT")));
    }
    catch (SocketException &sockerr)
    {
@@ -83,8 +88,6 @@ bool Network::AddServer(const std::string &aNumeric, const std::string &aName, c
    {
         return false;
    }
-
-   cout << "Passed Construction test..." << endl;
 
    // Allocate a new server on the heap.
    Server *NewServer = new Server(aNumeric, aName, aUpLinkNumeric, aDescription, aStartTime, aLinkTime, aHopCount, aFlag);
@@ -143,8 +146,6 @@ bool Network::DelServerByNumeric(const std::string &aNumeric)
    delete ServerIter->second;
    // then finally remove the server from the Server Map table.
    Servers.erase(ServerIter); 
-
-   cout << "Server Count: " << Servers.size() << endl;
 
 return true;
 }

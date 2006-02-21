@@ -76,40 +76,40 @@ int main()
 	}
 #endif
 
-   ConfigParser theConfigParser;
-
    // add configuration items.
-   theConfigParser.InsertItem("NICK");
-   theConfigParser.InsertItem("NUMERIC");
-   theConfigParser.InsertItem("USERNAME");
-   theConfigParser.InsertItem("SERVERNAME");
-   theConfigParser.InsertItem("CLIENTINFO");
-   theConfigParser.InsertItem("HOSTNAME");
-   theConfigParser.InsertItem("SERVERINFO");
-   theConfigParser.InsertItem("UPLINK");
-   theConfigParser.InsertItem("PORT");
-   theConfigParser.InsertItem("LINKPASS");
-   theConfigParser.InsertItem("MYSQLHOST");
-   theConfigParser.InsertItem("MYSQLUSER");
-   theConfigParser.InsertItem("MYSQLPASS");
-   theConfigParser.InsertItem("MYSQLDB");
+   ConfigFile.InsertItem("NICK");
+   ConfigFile.InsertItem("NUMERIC");
+   ConfigFile.InsertItem("USERNAME");
+   ConfigFile.InsertItem("SERVERNAME");
+   ConfigFile.InsertItem("CLIENTINFO");
+   ConfigFile.InsertItem("HOSTNAME");
+   ConfigFile.InsertItem("SERVERINFO");
+   ConfigFile.InsertItem("UPLINK");
+   ConfigFile.InsertItem("PORT");
+   ConfigFile.InsertItem("LINKPASS");
+   ConfigFile.InsertItem("MYSQLHOST");
+   ConfigFile.InsertItem("MYSQLUSER");
+   ConfigFile.InsertItem("MYSQLPASS");
+   ConfigFile.InsertItem("MYSQLDB");
  
-   theConfigParser.ParseConfigFile();
+   ConfigFile.ParseConfigFile();
+
+   cout << "Config File from main: " << ConfigFile.GetConfiguration("UPLINK") << endl;
 
    // Connect to database server.
-   SqlManager::connect( theConfigParser.GetConfiguration("MYSQLDB"),
-   	   	   	theConfigParser.GetConfiguration("MYSQLHOST"),
-   	   	   	theConfigParser.GetConfiguration("MYSQLUSER"),
-   	   	   	theConfigParser.GetConfiguration("MYSQLPASS") );
+   SqlManager::connect( ConfigFile.GetConfiguration("MYSQLDB"),
+   	   	   	ConfigFile.GetConfiguration("MYSQLHOST"),
+   	   	   	ConfigFile.GetConfiguration("MYSQLUSER"),
+   	   	   	ConfigFile.GetConfiguration("MYSQLPASS") );
 
-   Network::Interface = Network(theConfigParser);
+   Network::Interface = Network();
 
    // Login to server. Introduce the channels service bot and send EB (End of Burst). 
-   login(theConfigParser);
+   login();
 
    // Create Bots...
    {
-   	new BotCService(theConfigParser);
+   	new BotCService();
    }
 
    // Add all the Tokens to the token map.

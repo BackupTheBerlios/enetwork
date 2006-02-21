@@ -24,6 +24,7 @@
 #include <cstdlib>
 
 #include "Msg.h"
+#include "Msg_AC.h"
 #include "Msg_B.h"
 #include "Msg_C.h"
 #include "Msg_CM.h"
@@ -179,6 +180,10 @@ void MsgParseSystem::Execute()
    	   	eMsg = new Msg_D(Source, Parameters);
    	   	break;
 
+   	   case Tokens::ACCOUNT:
+   	   	eMsg = new Msg_AC(Source, Parameters);
+   	   	break;
+
    	   case Tokens::OPMODE:
    	   	eMsg = new Msg_OM(Source, Parameters);
    	   	break;
@@ -207,15 +212,10 @@ void MsgParseSystem::Execute()
    	   	eMsg = new Msg_SQ(Source, Parameters);
    	   	break;
 
-
-   	   // NOT USED YET...
-
-   	   case Tokens::ACCOUNT:
-   	   	break;
-
-   	   case Tokens::NONE:
+/*   	   case Tokens::NONE:
    	   	// Will be used in the future when done recognicing all tokens.
    	   	break;
+*/
    	   }
 
 

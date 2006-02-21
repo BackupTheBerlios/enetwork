@@ -37,19 +37,23 @@ class ConfigParser
    	std::string GetConfiguration(const std::string& Item);
    	bool InsertItem(const std::string& Item, const std::string& Configuration = "");
    	void ParseConfigFile();
+   	bool IsParsed() const { return M_parsed; }
 
    private:
    	typedef std::map<std::string, std::string> ConfigMapType;
 
    	ConfigMapType ConfigMap;
+   	bool M_parsed;   	
 
    protected:
    	void SetConfiguration(const std::string &Item, const std::string& Configuration);
    	bool IsItem(const std::string& Item);
 
    	std::string ConfigFile;
-
 };
+
+// Main configuration file.
+extern ConfigParser ConfigFile;
 
 } // namespace eNetworks
 

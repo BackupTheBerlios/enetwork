@@ -26,6 +26,7 @@
 #include "Network.h"
 #include "Client.h"
 #include "Server.h"
+#include "SQL.h"
 
 using std::cout;
 using std::endl;
@@ -38,7 +39,7 @@ namespace cservice
 
 CommandWHOIS::CommandWHOIS(Bot* theBot, Client* theSource, const MsgTokenizer& refParameters) : Command(theBot, theSource, refParameters)
 {
-   Syntax = "/MSG " + LocalBot->theClient.GetNickName() + " whois <nick>";
+   Syntax = "/msg " + LocalBot->theClient.GetNickName() + " whois <nick>";
 }
 
 void CommandWHOIS::Parser()
@@ -49,12 +50,23 @@ void CommandWHOIS::Parser()
    	return;
    }
 
+   if (!SQL::Interface.HasEnoughAccess(Source, "*", 700))
+   {
+   	LocalBot->SendNotice(Source, "You don't have enough access to perform this command.");
+   	return;
+   }
+
    ClientTarget = Network::Interface.FindClientByNickName(Parameters[0]);
 
    if (NULL == ClientTarget)
    {
-        if (Parameters[0] == LocalBot->theClient.GetNickName())
-           LocalBot->SendNotice(Source, "I'm right here.");
+// Got to love windows support :).
+#ifdef WIN32
+   	if (_strcmpi(Parameters[0].c_str(), LocalBot->theClient.GetNickName().c_str() ) == 0)
+#else
+   	if (strcasecmp(Parameters[0].c_str(), LocalBot->theClient.GetNickName().c_str() ) == 0)
+#endif
+           LocalBot->SendNotice(Source, "I am the revolution.");
         else
            LocalBot->SendNotice(Source, "Can't find user " + Parameters[0] + ".");
 

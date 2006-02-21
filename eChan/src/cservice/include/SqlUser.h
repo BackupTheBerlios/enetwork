@@ -34,24 +34,53 @@ struct SqlUser
 {
    public:
    	SqlUser(const unsigned int& id, const std::string& username,
-   	   	const std::string& password, const std::string& email) :
-   	   	M_id(id), M_username(username), M_password(password), M_email(email)
+   	   	const std::string& password, const std::string& email, const bool& modified = false) :
+   	   	M_id(id), M_username(username), M_password(password), M_email(email), M_modified(modified)
    	{
    	}
 
-   	SqlUser() {}
+   	SqlUser() : M_modified(false) {}
+
+   	// copy constructor.
+   	SqlUser(const SqlUser& rhs)
+   	{
+   	   M_id = rhs.M_id;
+   	   M_username = rhs.M_username;
+   	   M_password = rhs.M_password;
+   	   M_email = rhs.M_email;
+   	   M_modified = true;
+   	}
 
    	unsigned int getID() const { return M_id; }
    	std::string getUsername() const { return M_username; }
    	std::string getPassword() const { return M_password; }
    	std::string getEmail() const { return M_email; }
 
+   	void setUsername(const std::string& username)
+    	{
+   	   M_username = username;
+   	   M_modified = true;
+   	}
+
+   	void setPassword(const std::string& password)
+   	{
+   	   M_password = password;
+   	   M_modified = true;
+   	}
+
+   	void setEmail(const std::string& email)
+    	{
+   	   M_email = email;
+   	   M_modified = true;
+   	}
 
    private:
    	unsigned int M_id;
    	std::string M_username;
    	std::string M_password; // encrypted
    	std::string M_email;
+
+   	bool M_modified;
 };
 
 } // namespace eNetworks

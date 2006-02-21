@@ -31,6 +31,7 @@
 #include "Command.h"
 #include "CommandWHOIS.h"
 #include "SqlManager.h"
+#include "ConfigParser.h"
 
 using std::cout;
 using std::endl;
@@ -39,15 +40,21 @@ using mysqlpp::Result;
 
 namespace eNetworks
 {
-BotCService::BotCService(ConfigParser& theConfigParser) : 
-   	     Bot(theConfigParser.GetConfiguration("NUMERIC")+"AAA", theConfigParser.GetConfiguration("NICK"), "", 
-                 theConfigParser.GetConfiguration("USERNAME"), theConfigParser.GetConfiguration("HOSTNAME"), 
-    	   	 "DAqAoB", "idk", theConfigParser.GetConfiguration("CLIENTINFO"))
+BotCService::BotCService() : 
+   	     Bot(ConfigFile.GetConfiguration("NUMERIC")+"AAA", ConfigFile.GetConfiguration("NICK"), "", 
+                 ConfigFile.GetConfiguration("USERNAME"), ConfigFile.GetConfiguration("HOSTNAME"), 
+    	   	 "DAqAoB", "idk", ConfigFile.GetConfiguration("CLIENTINFO"))
 {
    MsgMonitor::AddMonitor(Tokens::END_OF_BURST, this);
-   cservice::Command::AddCommand("whois", cservice::Command::WHOIS, cservice::Command::Level::WHOIS);
-   cservice::Command::AddCommand("quote", cservice::Command::QUOTE, cservice::Command::Level::QUOTE);
-   cservice::Command::AddCommand("login", cservice::Command::LOGIN, cservice::Command::Level::LOGIN);
+   cservice::Command::AddCommand("whois", cservice::Command::WHOIS);
+   cservice::Command::AddCommand("quote", cservice::Command::QUOTE);
+   cservice::Command::AddCommand("login", cservice::Command::LOGIN);
+   cservice::Command::AddCommand("up", cservice::Command::UP);
+   cservice::Command::AddCommand("down", cservice::Command::DOWN);
+   cservice::Command::AddCommand("op", cservice::Command::OP);
+   cservice::Command::AddCommand("deop", cservice::Command::DEOP);
+   cservice::Command::AddCommand("voice", cservice::Command::VOICE);
+   cservice::Command::AddCommand("devoice", cservice::Command::DEVOICE);
 }
 
 void BotCService::onPRIVMSG(const MsgSource& Source, const MsgTokenizer& Parameters)
@@ -94,6 +101,11 @@ void BotCService::onKICK(const MsgSource& Source, const MsgTokenizer& Parameters
 void BotCService::onMsgMonitor(const Tokens::Token& _Token, const MsgSource& Source, const MsgTokenizer& Parameters)
 {
    // we only monitor END_OF_BURST message so don't worry about parsing other messages.
+
+   // Only join registered channels when recieving EB from uplink server.
+   if (Network::Interface.FindServerByNumeric(Source.GetNumeric())->GetUpLink() != LocalServer->GetNumeric())
+        return;
+
    // Lets JOIN to all registered channels.
    Query query = SqlManager::query();
    query << "SELECT SqlChannel.name FROM SqlChannel";

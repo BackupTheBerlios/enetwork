@@ -33,14 +33,13 @@ namespace eNetworks
 class BotCService : public Bot
 {
    public: 
-   	BotCService(ConfigParser& theParser);
+   	BotCService();
 
    	virtual void onPRIVMSG(const MsgSource& Source, const MsgTokenizer& Parameters);
    	virtual void onNOTICE(const MsgSource& Source, const MsgTokenizer& Parameters);
    	virtual void onKICK(const MsgSource& Source, const MsgTokenizer& Parameters);
 
    	virtual void onMsgMonitor(const Tokens::Token& _Token, const MsgSource& Source, const MsgTokenizer& Parameters);
-
 };
 
 } // namespace eNetworks
