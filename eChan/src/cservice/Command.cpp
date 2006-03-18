@@ -26,6 +26,7 @@
 #include "Command.h"
 #include "CommandWHOIS.h"
 #include "CommandQUOTE.h"
+#include "CommandHELLO.h"
 #include "CommandLOGIN.h"
 #include "CommandUP.h"
 #include "CommandDOWN.h"
@@ -33,6 +34,7 @@
 #include "CommandDEOP.h"
 #include "CommandVOICE.h"
 #include "CommandDEVOICE.h"
+#include "CommandREGISTER.h"
 #include "tools.h"
 
 using std::map;
@@ -87,6 +89,14 @@ void Command::ParseCommands(Bot* theBot, Client* theSource, const std::string& s
    	   cmd = new CommandDOWN(theBot, theSource, mtTemp);
    	   break;
 
+   	case HELLO:
+   	   cmd = new CommandHELLO(theBot, theSource, mtTemp);
+   	   break;
+
+   	case REGISTER:
+   	   cmd = new CommandREGISTER(theBot, theSource, mtTemp);
+   	   break;
+ 
    	case WHOIS:
    	   cmd = new CommandWHOIS(theBot, theSource, mtTemp);
    	   break;
@@ -114,7 +124,8 @@ const unsigned int Command::Level::UP = 100;
 const unsigned int Command::Level::DOWN = 100;
 const unsigned int Command::Level::VOICE = 25;
 const unsigned int Command::Level::DEVOICE = 25;
-
+const unsigned int Command::Level::HELLO = 0;
+const unsigned int Command::Level::REGISTER = 700;
 
 map<string, Command::CommandName, noCaseCompare> Command::CommandMap = CommandMapType();
 } // namespace cservice

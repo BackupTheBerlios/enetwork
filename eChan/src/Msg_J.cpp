@@ -55,10 +55,12 @@ void Msg_J::Parser()
    	{
    	   debug << "Could not join " << Source.GetName() << " to channel " << Parameters[0] << "." << endb;
    	}
+/*
    	else
    	{
    	   cout << "User " << Source.GetName() << " Joined channel " << Parameters[0] << "." << endl;
    	}
+*/
    }
    else
    {

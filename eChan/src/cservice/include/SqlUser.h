@@ -1,6 +1,6 @@
 /*
  * eChan - Electronic Channel Services.
- * Copyright (C) 2003-2005 Alan Alvarez.
+ * Copyright (C) 2003-2006 Alan Alvarez.
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -23,6 +23,9 @@
 #define ELECTRONIC_NETWORKS__CSERVICE_SQLUSER_H
 
 #include <string>
+#include <iostream>
+
+#include "SqlManager.h"
 
 namespace eNetworks
 {
@@ -34,53 +37,45 @@ struct SqlUser
 {
    public:
    	SqlUser(const unsigned int& id, const std::string& username,
-   	   	const std::string& password, const std::string& email, const bool& modified = false) :
-   	   	M_id(id), M_username(username), M_password(password), M_email(email), M_modified(modified)
-   	{
-   	}
+   	   	const std::string& password, const std::string& email) :
+   	   	M_id(id), M_username(username), M_password(password), M_email(email)
+   	{}
 
-   	SqlUser() : M_modified(false) {}
-
-   	// copy constructor.
-   	SqlUser(const SqlUser& rhs)
-   	{
-   	   M_id = rhs.M_id;
-   	   M_username = rhs.M_username;
-   	   M_password = rhs.M_password;
-   	   M_email = rhs.M_email;
-   	   M_modified = true;
-   	}
+   	SqlUser() : M_id(0), M_username("NULL"), M_password("NULL"), M_email("NULL")
+   	{}
 
    	unsigned int getID() const { return M_id; }
    	std::string getUsername() const { return M_username; }
    	std::string getPassword() const { return M_password; }
    	std::string getEmail() const { return M_email; }
 
+   	void setID(const unsigned int& id)
+   	{
+   	   M_id = id;
+   	}
+
    	void setUsername(const std::string& username)
     	{
    	   M_username = username;
-   	   M_modified = true;
    	}
 
    	void setPassword(const std::string& password)
    	{
    	   M_password = password;
-   	   M_modified = true;
    	}
 
    	void setEmail(const std::string& email)
     	{
    	   M_email = email;
-   	   M_modified = true;
    	}
+
+   	void update();
 
    private:
    	unsigned int M_id;
    	std::string M_username;
    	std::string M_password; // encrypted
    	std::string M_email;
-
-   	bool M_modified;
 };
 
 } // namespace eNetworks

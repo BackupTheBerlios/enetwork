@@ -54,7 +54,6 @@ void Msg_M::Parser()
    	   debug << "Cannot find Channel " << Parameters[0] << ". in Mode message." << endb;
 
    	bool bAdd = true;
-   	map<char, string> ParametersMap;
    	unsigned int intCurrentParameter = 1;
 
    	for (unsigned int i = 0; i < Parameters[1].length(); i++)
@@ -73,15 +72,12 @@ void Msg_M::Parser()
    	   	case 'l':
    	   	   if (bAdd)
    	   	   {
-   	   	   	theChannel->SetLimit(StringToInt(Parameters[intCurrentParameter+1]));
-   	   	   	cout << Source.GetName() << " Sets limit " << Parameters[intCurrentParameter+1] << " in channel " 
-                             << theChannel->GetName() << "." << endl;
-   	   	   	intCurrentParameter++;
+   	   	   	theChannel->SetLimit(StringToInt(Parameters[++intCurrentParameter]));
+   	   	   	// intCurrentParameter++;
    	   	   }
    	   	   else
    	   	   {
    	   	   	theChannel->UnSetLimit();
-   	   	   	cout << Source.GetName() << " UnSets limit in channel " << theChannel->GetName() << "." << endl;
    	   	   }
    	   	   break;
 
@@ -89,15 +85,11 @@ void Msg_M::Parser()
    	   	   if (bAdd)
    	   	   {
    	   	   	theChannel->SetKey(Parameters[intCurrentParameter+1]);
-   	   	   	cout << Source.GetName() << " Sets key " << Parameters[intCurrentParameter+1] << " in channel "
-   	   	   	   << theChannel->GetName() << "." << endl;
    	   	   	intCurrentParameter++;
    	   	   }
    	   	   else
    	   	   {
    	   	   	theChannel->UnSetKey();
-   	   	   	cout << Source.GetName() << " UnSets key " << Parameters[intCurrentParameter+1] << " in channel "
-   	   	   	   << theChannel->GetName() << "." << endl;
    	   	   	intCurrentParameter++;
    	   	   }
    	   	   	break;
@@ -105,17 +97,13 @@ void Msg_M::Parser()
    	   	case 'b':
    	   	   if (bAdd)
    	   	   {
-   	   	   	theChannel->AddBan(Parameters[intCurrentParameter+1]);
-   	   	   	cout << Source.GetName() << " Sets ban " << Parameters[intCurrentParameter+1] << " in channel "
-   	   	   	   << theChannel->GetName() << "." << endl;
-   	   	   	intCurrentParameter++;
+   	   	   	theChannel->AddBan(Parameters[++intCurrentParameter]);
+   	   	   	// intCurrentParameter++;
    	   	   }
    	   	   else
    	   	   {
-   	   	   	theChannel->DelBan(Parameters[intCurrentParameter+1]);
-   	   	   	cout << Source.GetName() << " UnSets ban " << Parameters[intCurrentParameter+1] << " in channel "
-   	   	   	   << theChannel->GetName() << "." << endl;
-   	   	   	intCurrentParameter++;
+   	   	   	theChannel->DelBan(Parameters[++intCurrentParameter]);
+   	   	   	// intCurrentParameter++;
    	   	   }
 
    	   	   break;
@@ -133,15 +121,11 @@ void Msg_M::Parser()
    	   	   	   
    	   	   if (bAdd)
    	   	   {
-   	   	   	cout << Source.GetName() << " Sets +" << Parameters[1][i] << " to user " << theChannelClient->ClientPtr->GetNickName()
-   	   	   	   << " in channel " << theChannel->GetName() << "." << endl;
    	   	   	theChannelClient->AddMode(Parameters[1][i]);
    	   	   }
    	   	   else
    	   	   {
    	   	   	theChannelClient->DelMode(Parameters[1][i]);
-   	   	   	cout << Source.GetName() << " Sets -" << Parameters[1][i] << " to user " << theChannelClient->ClientPtr->GetNickName()
-   	   	   	   << " in channel " << theChannel->GetName() << "." << endl;
    	   	   }
    	   	    
    	   	   intCurrentParameter++;
@@ -152,14 +136,10 @@ void Msg_M::Parser()
    	   	default:
    	   	   if (bAdd)
    	   	   {
-   	   	   	cout << Source.GetName() << " Sets mode " << Parameters[1][i] << " in channel "
-   	   	   	   << theChannel->GetName() << "." << endl;
    	   	   	theChannel->SetMode(Parameters[1][i]);
    	   	   }
    	   	   else
    	   	   {
-   	   	   	cout << Source.GetName() << " UnSets mode " << Parameters[1][i] << " in channel "
-   	   	   		<< theChannel->GetName() << "." << endl;
    	   	   	theChannel->UnSetMode(Parameters[1][i]);
    	   	   }
 
@@ -188,18 +168,14 @@ void Msg_M::Parser()
    	   	   break;
 
    	   	default:
-   	   	   cout << "User " << Parameters[0] << " sets mode ";
   	   	   if (bAdd)
    	   	   {
    	   	   	theClient->AddMode(Parameters[1][i]);
-   	   	   	cout <<  "+";
    	   	   }
    	   	   else
    	   	   {
    	   	   	theClient->DelMode(Parameters[1][i]);
-   	   	   	cout << "-";
    	   	   }
-   	   	   cout << Parameters[1][i] << "." << endl;
    	   	   break;
    	   }
    	}

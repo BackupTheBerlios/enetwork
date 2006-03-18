@@ -68,12 +68,14 @@ am_eChan_OBJECTS = eChan-main.$(OBJEXT) eChan-Socket.$(OBJEXT) \
 	eChan-Bot.$(OBJEXT) eChan-BotCService.$(OBJEXT) \
 	eChan-MsgMonitor.$(OBJEXT) eChan-MD5.$(OBJEXT) \
 	eChan-Crypto.$(OBJEXT) eChan-SqlManager.$(OBJEXT) \
-	eChan-Command.$(OBJEXT) eChan-CommandWHOIS.$(OBJEXT) \
-	eChan-CommandQUOTE.$(OBJEXT) eChan-CommandLOGIN.$(OBJEXT) \
-	eChan-CommandUP.$(OBJEXT) eChan-CommandDOWN.$(OBJEXT) \
-	eChan-CommandOP.$(OBJEXT) eChan-CommandDEOP.$(OBJEXT) \
-	eChan-CommandVOICE.$(OBJEXT) eChan-CommandDEVOICE.$(OBJEXT) \
-	eChan-SQL.$(OBJEXT)
+	eChan-SqlChannelAccess.$(OBJEXT) eChan-SqlUser.$(OBJEXT) \
+	eChan-SqlChannel.$(OBJEXT) eChan-Command.$(OBJEXT) \
+	eChan-CommandWHOIS.$(OBJEXT) eChan-CommandQUOTE.$(OBJEXT) \
+	eChan-CommandLOGIN.$(OBJEXT) eChan-CommandUP.$(OBJEXT) \
+	eChan-CommandDOWN.$(OBJEXT) eChan-CommandOP.$(OBJEXT) \
+	eChan-CommandDEOP.$(OBJEXT) eChan-CommandVOICE.$(OBJEXT) \
+	eChan-CommandDEVOICE.$(OBJEXT) eChan-CommandHELLO.$(OBJEXT) \
+	eChan-CommandREGISTER.$(OBJEXT) eChan-SQL.$(OBJEXT)
 eChan_OBJECTS = $(am_eChan_OBJECTS)
 eChan_LDADD = $(LDADD)
 DEFAULT_INCLUDES = -I. -I$(srcdir) -I$(top_builddir)
@@ -211,6 +213,9 @@ eChan_SOURCES = main.cpp \
                 MD5.cpp \
                 Crypto.cpp \
                 SqlManager.cpp \
+                cservice/SqlChannelAccess.cpp \
+                cservice/SqlUser.cpp \
+                cservice/SqlChannel.cpp \
                 cservice/Command.cpp \
                 cservice/CommandWHOIS.cpp \
                 cservice/CommandQUOTE.cpp \
@@ -221,6 +226,8 @@ eChan_SOURCES = main.cpp \
                 cservice/CommandDEOP.cpp \
                 cservice/CommandVOICE.cpp \
                 cservice/CommandDEVOICE.cpp \
+                cservice/CommandHELLO.cpp \
+                cservice/CommandREGISTER.cpp \
                 cservice/SQL.cpp
 
 eChan_LDFLAGS = -L$(MYSQLPP_LIB) -lmysqlpp
@@ -235,6 +242,7 @@ EXTRA_DIST = cservice/include/Command.h \
              cservice/include/CommandDEOP.h \
              cservice/include/CommandVOICE.h \
              cservice/include/CommandDEVOICE.h \
+             cservice/include/CommandHELLO.h \
              cservice/include/SQL.h \
              cservice/include/SqlUser.h \
              cservice/include/SqlChannel.h \
@@ -317,9 +325,11 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/eChan-CommandDEOP.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/eChan-CommandDEVOICE.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/eChan-CommandDOWN.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/eChan-CommandHELLO.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/eChan-CommandLOGIN.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/eChan-CommandOP.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/eChan-CommandQUOTE.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/eChan-CommandREGISTER.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/eChan-CommandUP.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/eChan-CommandVOICE.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/eChan-CommandWHOIS.Po@am__quote@
@@ -358,7 +368,10 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/eChan-Server.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/eChan-Socket.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/eChan-SocketException.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/eChan-SqlChannel.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/eChan-SqlChannelAccess.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/eChan-SqlManager.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/eChan-SqlUser.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/eChan-debug.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/eChan-main.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/eChan-tools.Po@am__quote@
@@ -965,6 +978,48 @@ eChan-SqlManager.obj: SqlManager.cpp
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(eChan_CXXFLAGS) $(CXXFLAGS) -c -o eChan-SqlManager.obj `if test -f 'SqlManager.cpp'; then $(CYGPATH_W) 'SqlManager.cpp'; else $(CYGPATH_W) '$(srcdir)/SqlManager.cpp'; fi`
 
+eChan-SqlChannelAccess.o: cservice/SqlChannelAccess.cpp
+@am__fastdepCXX_TRUE@	if $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(eChan_CXXFLAGS) $(CXXFLAGS) -MT eChan-SqlChannelAccess.o -MD -MP -MF "$(DEPDIR)/eChan-SqlChannelAccess.Tpo" -c -o eChan-SqlChannelAccess.o `test -f 'cservice/SqlChannelAccess.cpp' || echo '$(srcdir)/'`cservice/SqlChannelAccess.cpp; \
+@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/eChan-SqlChannelAccess.Tpo" "$(DEPDIR)/eChan-SqlChannelAccess.Po"; else rm -f "$(DEPDIR)/eChan-SqlChannelAccess.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='cservice/SqlChannelAccess.cpp' object='eChan-SqlChannelAccess.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(eChan_CXXFLAGS) $(CXXFLAGS) -c -o eChan-SqlChannelAccess.o `test -f 'cservice/SqlChannelAccess.cpp' || echo '$(srcdir)/'`cservice/SqlChannelAccess.cpp
+
+eChan-SqlChannelAccess.obj: cservice/SqlChannelAccess.cpp
+@am__fastdepCXX_TRUE@	if $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(eChan_CXXFLAGS) $(CXXFLAGS) -MT eChan-SqlChannelAccess.obj -MD -MP -MF "$(DEPDIR)/eChan-SqlChannelAccess.Tpo" -c -o eChan-SqlChannelAccess.obj `if test -f 'cservice/SqlChannelAccess.cpp'; then $(CYGPATH_W) 'cservice/SqlChannelAccess.cpp'; else $(CYGPATH_W) '$(srcdir)/cservice/SqlChannelAccess.cpp'; fi`; \
+@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/eChan-SqlChannelAccess.Tpo" "$(DEPDIR)/eChan-SqlChannelAccess.Po"; else rm -f "$(DEPDIR)/eChan-SqlChannelAccess.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='cservice/SqlChannelAccess.cpp' object='eChan-SqlChannelAccess.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(eChan_CXXFLAGS) $(CXXFLAGS) -c -o eChan-SqlChannelAccess.obj `if test -f 'cservice/SqlChannelAccess.cpp'; then $(CYGPATH_W) 'cservice/SqlChannelAccess.cpp'; else $(CYGPATH_W) '$(srcdir)/cservice/SqlChannelAccess.cpp'; fi`
+
+eChan-SqlUser.o: cservice/SqlUser.cpp
+@am__fastdepCXX_TRUE@	if $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(eChan_CXXFLAGS) $(CXXFLAGS) -MT eChan-SqlUser.o -MD -MP -MF "$(DEPDIR)/eChan-SqlUser.Tpo" -c -o eChan-SqlUser.o `test -f 'cservice/SqlUser.cpp' || echo '$(srcdir)/'`cservice/SqlUser.cpp; \
+@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/eChan-SqlUser.Tpo" "$(DEPDIR)/eChan-SqlUser.Po"; else rm -f "$(DEPDIR)/eChan-SqlUser.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='cservice/SqlUser.cpp' object='eChan-SqlUser.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(eChan_CXXFLAGS) $(CXXFLAGS) -c -o eChan-SqlUser.o `test -f 'cservice/SqlUser.cpp' || echo '$(srcdir)/'`cservice/SqlUser.cpp
+
+eChan-SqlUser.obj: cservice/SqlUser.cpp
+@am__fastdepCXX_TRUE@	if $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(eChan_CXXFLAGS) $(CXXFLAGS) -MT eChan-SqlUser.obj -MD -MP -MF "$(DEPDIR)/eChan-SqlUser.Tpo" -c -o eChan-SqlUser.obj `if test -f 'cservice/SqlUser.cpp'; then $(CYGPATH_W) 'cservice/SqlUser.cpp'; else $(CYGPATH_W) '$(srcdir)/cservice/SqlUser.cpp'; fi`; \
+@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/eChan-SqlUser.Tpo" "$(DEPDIR)/eChan-SqlUser.Po"; else rm -f "$(DEPDIR)/eChan-SqlUser.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='cservice/SqlUser.cpp' object='eChan-SqlUser.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(eChan_CXXFLAGS) $(CXXFLAGS) -c -o eChan-SqlUser.obj `if test -f 'cservice/SqlUser.cpp'; then $(CYGPATH_W) 'cservice/SqlUser.cpp'; else $(CYGPATH_W) '$(srcdir)/cservice/SqlUser.cpp'; fi`
+
+eChan-SqlChannel.o: cservice/SqlChannel.cpp
+@am__fastdepCXX_TRUE@	if $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(eChan_CXXFLAGS) $(CXXFLAGS) -MT eChan-SqlChannel.o -MD -MP -MF "$(DEPDIR)/eChan-SqlChannel.Tpo" -c -o eChan-SqlChannel.o `test -f 'cservice/SqlChannel.cpp' || echo '$(srcdir)/'`cservice/SqlChannel.cpp; \
+@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/eChan-SqlChannel.Tpo" "$(DEPDIR)/eChan-SqlChannel.Po"; else rm -f "$(DEPDIR)/eChan-SqlChannel.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='cservice/SqlChannel.cpp' object='eChan-SqlChannel.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(eChan_CXXFLAGS) $(CXXFLAGS) -c -o eChan-SqlChannel.o `test -f 'cservice/SqlChannel.cpp' || echo '$(srcdir)/'`cservice/SqlChannel.cpp
+
+eChan-SqlChannel.obj: cservice/SqlChannel.cpp
+@am__fastdepCXX_TRUE@	if $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(eChan_CXXFLAGS) $(CXXFLAGS) -MT eChan-SqlChannel.obj -MD -MP -MF "$(DEPDIR)/eChan-SqlChannel.Tpo" -c -o eChan-SqlChannel.obj `if test -f 'cservice/SqlChannel.cpp'; then $(CYGPATH_W) 'cservice/SqlChannel.cpp'; else $(CYGPATH_W) '$(srcdir)/cservice/SqlChannel.cpp'; fi`; \
+@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/eChan-SqlChannel.Tpo" "$(DEPDIR)/eChan-SqlChannel.Po"; else rm -f "$(DEPDIR)/eChan-SqlChannel.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='cservice/SqlChannel.cpp' object='eChan-SqlChannel.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(eChan_CXXFLAGS) $(CXXFLAGS) -c -o eChan-SqlChannel.obj `if test -f 'cservice/SqlChannel.cpp'; then $(CYGPATH_W) 'cservice/SqlChannel.cpp'; else $(CYGPATH_W) '$(srcdir)/cservice/SqlChannel.cpp'; fi`
+
 eChan-Command.o: cservice/Command.cpp
 @am__fastdepCXX_TRUE@	if $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(eChan_CXXFLAGS) $(CXXFLAGS) -MT eChan-Command.o -MD -MP -MF "$(DEPDIR)/eChan-Command.Tpo" -c -o eChan-Command.o `test -f 'cservice/Command.cpp' || echo '$(srcdir)/'`cservice/Command.cpp; \
 @am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/eChan-Command.Tpo" "$(DEPDIR)/eChan-Command.Po"; else rm -f "$(DEPDIR)/eChan-Command.Tpo"; exit 1; fi
@@ -1104,6 +1159,34 @@ eChan-CommandDEVOICE.obj: cservice/CommandDEVOICE.cpp
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='cservice/CommandDEVOICE.cpp' object='eChan-CommandDEVOICE.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(eChan_CXXFLAGS) $(CXXFLAGS) -c -o eChan-CommandDEVOICE.obj `if test -f 'cservice/CommandDEVOICE.cpp'; then $(CYGPATH_W) 'cservice/CommandDEVOICE.cpp'; else $(CYGPATH_W) '$(srcdir)/cservice/CommandDEVOICE.cpp'; fi`
+
+eChan-CommandHELLO.o: cservice/CommandHELLO.cpp
+@am__fastdepCXX_TRUE@	if $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(eChan_CXXFLAGS) $(CXXFLAGS) -MT eChan-CommandHELLO.o -MD -MP -MF "$(DEPDIR)/eChan-CommandHELLO.Tpo" -c -o eChan-CommandHELLO.o `test -f 'cservice/CommandHELLO.cpp' || echo '$(srcdir)/'`cservice/CommandHELLO.cpp; \
+@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/eChan-CommandHELLO.Tpo" "$(DEPDIR)/eChan-CommandHELLO.Po"; else rm -f "$(DEPDIR)/eChan-CommandHELLO.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='cservice/CommandHELLO.cpp' object='eChan-CommandHELLO.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(eChan_CXXFLAGS) $(CXXFLAGS) -c -o eChan-CommandHELLO.o `test -f 'cservice/CommandHELLO.cpp' || echo '$(srcdir)/'`cservice/CommandHELLO.cpp
+
+eChan-CommandHELLO.obj: cservice/CommandHELLO.cpp
+@am__fastdepCXX_TRUE@	if $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(eChan_CXXFLAGS) $(CXXFLAGS) -MT eChan-CommandHELLO.obj -MD -MP -MF "$(DEPDIR)/eChan-CommandHELLO.Tpo" -c -o eChan-CommandHELLO.obj `if test -f 'cservice/CommandHELLO.cpp'; then $(CYGPATH_W) 'cservice/CommandHELLO.cpp'; else $(CYGPATH_W) '$(srcdir)/cservice/CommandHELLO.cpp'; fi`; \
+@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/eChan-CommandHELLO.Tpo" "$(DEPDIR)/eChan-CommandHELLO.Po"; else rm -f "$(DEPDIR)/eChan-CommandHELLO.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='cservice/CommandHELLO.cpp' object='eChan-CommandHELLO.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(eChan_CXXFLAGS) $(CXXFLAGS) -c -o eChan-CommandHELLO.obj `if test -f 'cservice/CommandHELLO.cpp'; then $(CYGPATH_W) 'cservice/CommandHELLO.cpp'; else $(CYGPATH_W) '$(srcdir)/cservice/CommandHELLO.cpp'; fi`
+
+eChan-CommandREGISTER.o: cservice/CommandREGISTER.cpp
+@am__fastdepCXX_TRUE@	if $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(eChan_CXXFLAGS) $(CXXFLAGS) -MT eChan-CommandREGISTER.o -MD -MP -MF "$(DEPDIR)/eChan-CommandREGISTER.Tpo" -c -o eChan-CommandREGISTER.o `test -f 'cservice/CommandREGISTER.cpp' || echo '$(srcdir)/'`cservice/CommandREGISTER.cpp; \
+@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/eChan-CommandREGISTER.Tpo" "$(DEPDIR)/eChan-CommandREGISTER.Po"; else rm -f "$(DEPDIR)/eChan-CommandREGISTER.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='cservice/CommandREGISTER.cpp' object='eChan-CommandREGISTER.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(eChan_CXXFLAGS) $(CXXFLAGS) -c -o eChan-CommandREGISTER.o `test -f 'cservice/CommandREGISTER.cpp' || echo '$(srcdir)/'`cservice/CommandREGISTER.cpp
+
+eChan-CommandREGISTER.obj: cservice/CommandREGISTER.cpp
+@am__fastdepCXX_TRUE@	if $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(eChan_CXXFLAGS) $(CXXFLAGS) -MT eChan-CommandREGISTER.obj -MD -MP -MF "$(DEPDIR)/eChan-CommandREGISTER.Tpo" -c -o eChan-CommandREGISTER.obj `if test -f 'cservice/CommandREGISTER.cpp'; then $(CYGPATH_W) 'cservice/CommandREGISTER.cpp'; else $(CYGPATH_W) '$(srcdir)/cservice/CommandREGISTER.cpp'; fi`; \
+@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/eChan-CommandREGISTER.Tpo" "$(DEPDIR)/eChan-CommandREGISTER.Po"; else rm -f "$(DEPDIR)/eChan-CommandREGISTER.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='cservice/CommandREGISTER.cpp' object='eChan-CommandREGISTER.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(eChan_CXXFLAGS) $(CXXFLAGS) -c -o eChan-CommandREGISTER.obj `if test -f 'cservice/CommandREGISTER.cpp'; then $(CYGPATH_W) 'cservice/CommandREGISTER.cpp'; else $(CYGPATH_W) '$(srcdir)/cservice/CommandREGISTER.cpp'; fi`
 
 eChan-SQL.o: cservice/SQL.cpp
 @am__fastdepCXX_TRUE@	if $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(eChan_CXXFLAGS) $(CXXFLAGS) -MT eChan-SQL.o -MD -MP -MF "$(DEPDIR)/eChan-SQL.Tpo" -c -o eChan-SQL.o `test -f 'cservice/SQL.cpp' || echo '$(srcdir)/'`cservice/SQL.cpp; \

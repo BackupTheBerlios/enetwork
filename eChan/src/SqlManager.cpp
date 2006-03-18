@@ -20,13 +20,23 @@
 */
 
 #include <string>
+#include <iostream>
 #include <mysql++.h>
 
 #include "debug.h"
 #include "SqlManager.h"
+#include "MsgTokenizer.h"
+#include "tools.h"
 
 using mysqlpp::Connection;
+using mysqlpp::Query;
+using mysqlpp::Result;
+using mysqlpp::Exception;
+using mysqlpp::BadQuery;
+using mysqlpp::Row;
 using std::string;
+using std::cout;
+using std::endl;
 
 namespace eNetworks
 {
@@ -41,6 +51,127 @@ void SqlManager::connect(const string& p_DB, const string& p_hostname, const str
    	exit(1);
    }
 }
+
+bool SqlManager::QueryDB(const std::string& table, const MsgTokenizer& variables, const MsgTokenizer& values, Result& p_result)
+{
+   // TODO: Take MsgTokenizer as parameter.
+   // MsgTokenizer l_TokenizedVars(variables);
+   // MsgTokenizer l_TokenizedValues(values);
+
+   if (variables.size() != values.size())
+        return false;
+
+   Query l_query = SqlManager::query();
+   l_query << "SELECT * FROM " << table << " WHERE";
+   for (unsigned int i = 0; i < variables.size(); i++)
+   {
+        l_query << " " << variables[i] << "=" << "%" << IntToString(i) << "q";
+        l_query.def[i] = values[i];
+        if (variables.size() > 1 && i < (variables.size() - 1))
+           l_query << " AND";
+   }
+   l_query.parse();
+
+   cout << "Query: " << l_query.preview() << endl;
+
+   try
+   {
+        p_result = l_query.store();
+   }
+   catch(const BadQuery& e_error)
+   {
+        debug << "Query Error: " << e_error.what() << endb;
+        // Try to reconnect to database server.
+        connect( ConfigFile.GetConfiguration("MYSQLDB"),
+                 ConfigFile.GetConfiguration("MYSQLHOST"),
+                 ConfigFile.GetConfiguration("MYSQLUSER"),
+                 ConfigFile.GetConfiguration("MYSQLPASS") );
+
+        // If we were to reconnect then we should be able to execute query now.
+        // create a new query with new connection.
+        Query l_copy = SqlManager::query();
+        // copy old query string.
+        l_copy << l_query.preview();
+        // run the query.
+        p_result = l_copy.store();
+   }
+   catch(const Exception& e_error)
+   {
+        debug << "Error: " << e_error.what() << endb;
+        return false;
+   }
+
+   return true;
+}
+
+unsigned int SqlManager::InsertDB(const std::string& table, const MsgTokenizer& variables, const MsgTokenizer& values)
+{
+   cout << "variables: " << variables.assamble(0) << endl;
+   cout << "values: " << values.assamble(0) << endl;
+   if (variables.size() != values.size())
+        return 0;
+
+   Query l_query = SqlManager::query();
+   l_query << "INSERT INTO " << table << " (" << variables.assamble(0, ',') << ") VALUES (";
+   for (unsigned int i = 0; i < values.size(); i++)
+   {
+        l_query << "%" << IntToString(i) << "q";
+        l_query.def[i] = values[i];
+        if (values.size() > 1 && i < (values.size() - 1))
+           l_query << ",";
+   }
+
+   l_query << ");";
+
+   l_query.parse();
+
+   cout << "Query: " << l_query.preview() << endl;
+
+   try
+   {
+        l_query.execute();
+   }
+   catch(const BadQuery& e_error)
+   {
+        debug << "Query Error: " << e_error.what() << endb;
+        // Try to reconnect to database server.
+        connect( ConfigFile.GetConfiguration("MYSQLDB"),
+                 ConfigFile.GetConfiguration("MYSQLHOST"),
+                 ConfigFile.GetConfiguration("MYSQLUSER"),
+                 ConfigFile.GetConfiguration("MYSQLPASS") );
+
+        // If we were to reconnect then we should be able to execute query now.
+        // create a new query with new connection.
+        Query l_copy = query();
+        // copy old query string.
+        l_copy << l_query.preview();
+        // run the query.
+        l_copy.execute();
+   }
+   catch(const Exception& e_error)
+   {
+        debug << "Error: " << e_error.what() << endb;
+        return false;
+   }
+
+   // Get ID.
+   Query l_queryID = query();
+   l_queryID << "select LAST_INSERT_ID();";
+   // We should have no problem this query.
+   // Also connection should still be active.
+   Result l_result = l_queryID.store();
+   unsigned int l_RowsCount = l_result.rows();
+   if (l_RowsCount > 0)
+   {
+   	Row l_row = l_result.fetch_row();
+   	// Row[] operator doesn't take const unsigned ints.
+   	unsigned int l_tmp = 0;
+   	return l_row[l_tmp];
+   }
+
+   return 0;
+}
+
 
 mysqlpp::Connection* SqlManager::M_Connection = NULL;
 

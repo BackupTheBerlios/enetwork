@@ -94,6 +94,17 @@ bool IsDigit(const string &str)
    return true;
 }
 
+/*
+inline bool StringCaseCompare(const std::string& str1, const std::string& str2)
+{
+#ifdef WIN32
+   return (_strcmpi( str1.c_str(), str2.c_str() ) < 0) ;
+#else
+   return (strcasecmp( str1.c_str(), str2.c_str() ) < 0) ;
+#endif
+}
+*/
+
 void login()
 {
    try

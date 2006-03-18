@@ -48,10 +48,6 @@ void Msg_Q::Parser()
    	{
    	   debug << "Could not delete user with numeric " << Source.GetNumeric() << endb;
    	} 
-   	else
-   	{
-   	   cout << "User " << name << " exited IRC." << endl;
-   	}
 }
 
 

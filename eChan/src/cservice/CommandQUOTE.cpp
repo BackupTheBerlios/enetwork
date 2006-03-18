@@ -27,6 +27,7 @@
 #include "Network.h"
 #include "Client.h"
 #include "SQL.h"
+#include "Command.h"
 
 using std::cout;
 using std::endl;
@@ -45,7 +46,7 @@ CommandQUOTE::CommandQUOTE(Bot* theBot, Client* theSource, const MsgTokenizer& r
 
 void CommandQUOTE::Parser()
 {
-   if (!SQL::Interface.HasEnoughAccess(Source, "*", 1000))
+   if (!SQL::Interface.HasEnoughAccess(Source, "*", Command::Level::QUOTE))
    {
    	LocalBot->SendNotice(Source, "You don't have enough access to perform this command.");
    	return;

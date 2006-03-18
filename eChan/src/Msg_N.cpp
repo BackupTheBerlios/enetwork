@@ -132,21 +132,9 @@ void Msg_N::Parser()
    if (!Network::Interface.AddClient(Numeric, NickName, Account, UserName, HostName, B64IP, Modes, UserInfo, TimeStamp, HopCount))
    {
 
-/*   	
-   	cout << "Numeric: " << Numeric << " NickName: " << NickName << " Account: " << Account <<
-                " UserName: " << UserName << " HostName: " << HostName << " B64IP: " << B64IP << " Modes: " << Modes
-                << " TimeStamp: " << TimeStamp << " HopCount: " << HopCount << endl << "UserInfo: " << UserInfo << endl;
-*/
-
         debug << "Could not add client " << NickName << " with Numeric " << Numeric << endb;
         exit(0);
    }
-
-/*
-   cout << "Added Client with Numeric: " << Numeric << " NickName: " << NickName << " Account: " << Account <<
-           " UserName: " << UserName << " HostName: " << HostName << " B6IP: " << B64IP << " Modes: " << Modes <<
-           " TimeStamp: " << TimeStamp << " HopCount: " << HopCount << endl << "UserInfo: " << UserInfo << endl;
-*/
 }
 
 } // namespace eNetworks

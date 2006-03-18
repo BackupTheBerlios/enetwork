@@ -50,7 +50,7 @@ void CommandWHOIS::Parser()
    	return;
    }
 
-   if (!SQL::Interface.HasEnoughAccess(Source, "*", 700))
+   if (!SQL::Interface.HasEnoughAccess(Source, "*", Command::Level::WHOIS))
    {
    	LocalBot->SendNotice(Source, "You don't have enough access to perform this command.");
    	return;

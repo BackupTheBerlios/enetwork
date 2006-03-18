@@ -23,6 +23,9 @@
 #define ELECTRONIC_NETWORKS__SQLMANAGER_H
 
 #include <mysql++.h>
+#include <string>
+
+#include "MsgTokenizer.h"
 
 namespace eNetworks
 {
@@ -32,6 +35,9 @@ class SqlManager
    public:
    	static void connect(const std::string& p_DB, const std::string& p_hostname, const std::string& p_username, const std::string& p_password);
    	static mysqlpp::Query query() { return SqlManager::M_Connection->query(); }
+   	static bool QueryDB(const std::string& table, const MsgTokenizer& variables, const MsgTokenizer& values, mysqlpp::Result& p_result);
+   	static unsigned int InsertDB(const std::string& table, const MsgTokenizer& variables, const MsgTokenizer& values);
+   	static bool UpdateDB(const std::string& table, const MsgTokenizer& variables, const MsgTokenizer& values);
 
    private:
    	static mysqlpp::Connection* M_Connection;

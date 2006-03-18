@@ -32,32 +32,49 @@ struct SqlChannelAccess
 {
    public:
 
-   	SqlChannelAccess(const unsigned int& username_id, const unsigned int& channel_id, 
+   	SqlChannelAccess(const unsigned int& id, const unsigned int& username_id, const unsigned int& channel_id, 
                          const unsigned short& level) :
-   	M_channel_id(channel_id), M_username_id(username_id), M_level(level)
+   	M_id(0), M_channel_id(channel_id), M_username_id(username_id), M_level(level)
    	{
    	}
 
-   	SqlChannelAccess() : M_modified(false)
+   	SqlChannelAccess() : M_id(0), M_username_id(0), M_channel_id(0), M_level(0)
    	{
    	}
 
+   	unsigned int getID() const { return M_id; }
    	unsigned int getUsernameID() const { return M_username_id; }
    	unsigned int getChannelID() const { return M_channel_id; }
    	unsigned short getLevel() const { return M_level; }
 
+
+   	void setID(const unsigned int& id)
+   	{
+   	   M_id = id;
+   	}
+
+   	void setUsernameID(const unsigned int& username_id)
+   	{
+   	   M_username_id = username_id;
+   	}
+
+   	void setChannelID(const unsigned int& channel_id)
+   	{
+   	   M_channel_id = channel_id;
+   	}
+
    	void setLevel(const unsigned  short& level)
    	{
    	   M_level = level;
-   	   M_modified = true;
    	}
 
+   	void update();
+
    private:
+   	unsigned int M_id;
    	unsigned int M_username_id;
    	unsigned int M_channel_id;
    	unsigned short M_level;
-
-   	bool M_modified;
 };
 
 } // namespace eNetworks

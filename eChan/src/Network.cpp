@@ -53,11 +53,9 @@ Network::Network() : Servers(), ClientNumerics(), ClientNickNames(), Channels()
 
    if (LocalServer == NULL)
    {
-   	cout << "Could not create server: " << ConfigFile.GetConfiguration("SERVERNAME") << endl;
+   	debug << "Could not create server: " << ConfigFile.GetConfiguration("SERVERNAME") << endb;
    	exit(0);
    }
-
-   cout << "Config File from Network: " << ConfigFile.GetConfiguration("UPLINK") << endl;
 
    try
    {
@@ -202,10 +200,6 @@ bool Network::AddClient(const std::string &aNumeric, const std::string &aNickNam
                         const std::string &aModes, const std::string &aUserInfo, const time_t &aTimeStamp,
                         const unsigned int &aHopCount)
 {
-
-   cout << "Numeric: " << aNumeric << " NickName: " << aNickName << " Account: " << aAccount <<
-           " UserName: " << aUserName << " HostName: " << aHostName << " B64IP: " << aB64IP << " Modes: " << aModes
-           << " TimeStamp: " << aTimeStamp << " HopCount: " << aHopCount << endl << "UserInfo: " << aUserInfo << endl;
 
    // Check we don't get bogus entries.
    if (aNickName.length() == 0 || aNickName.find(" ") != string::npos || aNumeric.length() != 5 ||

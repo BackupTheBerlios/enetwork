@@ -22,12 +22,10 @@
 #include <iostream>
 #include <string>
 
-#include "MsgTokenizer.h"
-#include "CommandLOGIN.h"
-#include "Client.h"
-#include "Crypto.h"
+#include "CommandHELLO.h"
 #include "SqlUser.h"
 #include "SQL.h"
+#include "Crypto.h"
 
 using std::cout;
 using std::endl;
@@ -39,14 +37,14 @@ namespace eNetworks
 namespace cservice
 {
 
-CommandLOGIN::CommandLOGIN(Bot* theBot, Client* theSource, const MsgTokenizer& refParameters) : Command(theBot, theSource, refParameters)
+CommandHELLO::CommandHELLO(Bot* theBot, Client* theSource, const MsgTokenizer& refParameters) : Command(theBot, theSource, refParameters)
 {
-   Syntax = "/msg " + LocalBot->theClient.GetNickName() + " login <username> <password>";
+   Syntax = "/msg " + LocalBot->theClient.GetNickName() + " hello <username> <password> <email>";
 }
 
-void CommandLOGIN::Parser()
+void CommandHELLO::Parser()
 {
-   if (Parameters.size() != 2)
+   if (Parameters.size() != 3)
    {
    	LocalBot->SendNotice(Source, "SYNTAX: " + Syntax);
    	return;
@@ -54,22 +52,27 @@ void CommandLOGIN::Parser()
 
    if (Source->HasAccount())
    {
-   	LocalBot->SendNotice(Source, "Sorry, you're already logged in as " + Source->GetAccount() + ".");
+   	LocalBot->SendNotice(Source, "You already have an account.");
    	return;
    }
 
-   SqlUser* l_SqlUser = SQL::Interface.login(Parameters[0], Parameters[1]);
-   if (NULL != l_SqlUser)
+   if (Parameters[2].find('@') == string::npos || Parameters[2].find('.') == string::npos)
    {
-   	Source->SetAccount(l_SqlUser->getUsername());
-   	Source->SetID(l_SqlUser->getID());
-   	Source->AddMode('r');
-   	LocalBot->RawMsg(LocalBot->theClient.GetNumeric().substr(0,2) + " AC " + Source->GetNumeric() + " " + l_SqlUser->getUsername());
-   	LocalBot->SendNotice(Source, "You are now logged in as " + l_SqlUser->getUsername() + ".");
+   	LocalBot->SendNotice(Source, "Bogus e-mail entry");
    	return;
    }
 
-   LocalBot->SendNotice(Source, "Failed to login as " + Parameters[0] + ".");
+   SqlUser* l_SqlUser = SQL::Interface.FindUser(Parameters[0]);
+   if (l_SqlUser != NULL)
+   {
+   	LocalBot->SendNotice(Source, "That username already exists");
+   	return;
+   }
+
+   l_SqlUser = new SqlUser(0, Parameters[0], Crypto::EncryptPassword(Parameters[1]), Parameters[2]);
+   l_SqlUser->update();
+
+   LocalBot->SendNotice(Source, "Created username " + Parameters[0] + ".");
 }
 
 } // namespace cservice

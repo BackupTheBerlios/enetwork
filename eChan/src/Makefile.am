@@ -41,6 +41,9 @@ eChan_SOURCES = main.cpp \
                 MD5.cpp \
                 Crypto.cpp \
                 SqlManager.cpp \
+                cservice/SqlChannelAccess.cpp \
+                cservice/SqlUser.cpp \
+                cservice/SqlChannel.cpp \
                 cservice/Command.cpp \
                 cservice/CommandWHOIS.cpp \
                 cservice/CommandQUOTE.cpp \
@@ -51,6 +54,8 @@ eChan_SOURCES = main.cpp \
                 cservice/CommandDEOP.cpp \
                 cservice/CommandVOICE.cpp \
                 cservice/CommandDEVOICE.cpp \
+                cservice/CommandHELLO.cpp \
+                cservice/CommandREGISTER.cpp \
                 cservice/SQL.cpp
 
 eChan_LDFLAGS = -L$(MYSQLPP_LIB) -lmysqlpp
@@ -66,6 +71,7 @@ EXTRA_DIST = cservice/include/Command.h \
              cservice/include/CommandDEOP.h \
              cservice/include/CommandVOICE.h \
              cservice/include/CommandDEVOICE.h \
+             cservice/include/CommandHELLO.h \
              cservice/include/SQL.h \
              cservice/include/SqlUser.h \
              cservice/include/SqlChannel.h \

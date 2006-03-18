@@ -107,10 +107,6 @@ void Msg_B::Parser()
    	}
    
   
-   	debug << "Added channel with Name: " << Name << " Modes: " << Modes << " Key: " << Key << " Limit: "
-             << Limit << " TimeStamp: " << TimeStamp << endb;
-  
-
    	ChannelPtr = Network::Interface.FindChannel(Name);
    	if (ChannelPtr == NULL)
    	{
@@ -169,7 +165,6 @@ void Msg_B::ParseBans(Channel *aChannelPtr, const std::string &BansParameters)
 
    for (unsigned int i = 0; i < Bans.size(); i++)
    {
-	debug << "Added Ban: " << Bans[i] << endb;
    	aChannelPtr->AddBan(Bans[i]);
    }
 }

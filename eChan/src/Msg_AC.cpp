@@ -49,6 +49,7 @@ void Msg_AC::Parser()
    	} 
 
    	l_Client->SetAccount(Parameters[1]);
+   	l_Client->AddMode('r');
 }
 
 

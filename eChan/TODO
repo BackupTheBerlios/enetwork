@@ -1,16 +1,23 @@
+- Timer calss
+  - do Cache clean_up().
 - Add update method for SqlUser, SqlChannel and SqlChannelAccess.
-- do Cache clean_up().
+  - add SqlManager::UpdateDB() method.
 
-*** Start Alpha  ***
+*** end of pre-alpha and start of alpha  ***
 
-- Add erase() method for Cache class.
+- Support new P10 Token destruct message.
 - Check issue with Crypto::MatchPassword().
 - Log how many bytes were sent to OutBuffer.
-- Test DelServer fix.
-- Imeplement the channel service bot.
 - Msgs to implement in the following order: (these are not really needed until we start working on the oper service bot)
   - JUPE
   - GLINE
-- FULLY test Network base.
-- Comment the code as needed.
 - Write an API documentation.
+
+*** end of alpha start of Beta ***
+
+-- Add support for Half-op.
+
+- Feature freeze.
+- Hunt bugs.
+
+*** RC 1 ***

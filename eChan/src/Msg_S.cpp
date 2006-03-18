@@ -110,9 +110,11 @@ void Msg_S::Parser()
         exit(0);
    }
  
+/*
    debug << "Added Server Name: " << Name << " Numeric: " << Numeric << " StartTime: " << IntToString(StartTime) <<
            " LinkTime: " << IntToString(LinkTime) << " HopCount: " << IntToString(HopCount) << " Uplink: " <<
            Source.GetNumeric() << endb <<  "Description: " << Description << endb;
+*/
 
 }
 

@@ -55,6 +55,8 @@ BotCService::BotCService() :
    cservice::Command::AddCommand("deop", cservice::Command::DEOP);
    cservice::Command::AddCommand("voice", cservice::Command::VOICE);
    cservice::Command::AddCommand("devoice", cservice::Command::DEVOICE);
+   cservice::Command::AddCommand("hello", cservice::Command::HELLO);
+   cservice::Command::AddCommand("register", cservice::Command::REGISTER);
 }
 
 void BotCService::onPRIVMSG(const MsgSource& Source, const MsgTokenizer& Parameters)
@@ -106,7 +108,7 @@ void BotCService::onMsgMonitor(const Tokens::Token& _Token, const MsgSource& Sou
    if (Network::Interface.FindServerByNumeric(Source.GetNumeric())->GetUpLink() != LocalServer->GetNumeric())
         return;
 
-   // Lets JOIN to all registered channels.
+   // Lets JOIN all registered channels.
    Query query = SqlManager::query();
    query << "SELECT SqlChannel.name FROM SqlChannel";
 
@@ -120,19 +122,7 @@ void BotCService::onMsgMonitor(const Tokens::Token& _Token, const MsgSource& Sou
    	if (strChannel[0] != '#') // Check for special channels.
    	   continue;
 
-   	theChannel = Network::Interface.FindChannel(strChannel);
-   	if (NULL == theChannel) // if channel doesn't exist, create it.
-   	{
-   	   RawMsg(theClient.GetNumeric() + " C " + strChannel + " " + IntToString(time(0)));
-   	   Network::Interface.AddChannel(strChannel, time(0));
-
-   	   Network::Interface.FindChannel(strChannel)->AddChannelClient(&theClient);
-   	}
-   	else
-   	{
-   	   RawMsg(theClient.GetNumeric() + " J " + strChannel + " " + IntToString(theChannel->GetTimeStamp()));
-   	   theChannel->AddChannelClient(&theClient);
-   	}
+   	Join(strChannel);
    	// OP the bot.
    	RawMsg(theClient.GetNumeric().substr(0,2) + " M " + strChannel + " +o " + theClient.GetNumeric());
    }

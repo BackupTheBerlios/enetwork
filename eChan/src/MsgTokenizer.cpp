@@ -35,7 +35,10 @@ namespace eNetworks
 // TODO: This algorithm needs to be improved...
 MsgTokenizer::MsgTokenizer(const std::string &aCommand, const char &Terminator, const char &Delimiter)
 {
+//   cout << "string aCommand: " << aCommand << endl;
 //   const char Delimiter = ' ';
+   if (aCommand == "")
+   	return;
 
    // If we don't find the delimiter just push back one string and return. if aCommand.length() == 0 just return.
    if (aCommand.find(Delimiter) == string::npos)
@@ -103,7 +106,6 @@ MsgTokenizer::MsgTokenizer(const std::string &aCommand, const char &Terminator, 
    	
    	Tokens[Tokens.size()-1] = LastString;
    }
-
 }
 
 } // namespace eNetworks

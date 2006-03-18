@@ -19,44 +19,31 @@
  *
 */
 
-#include <iostream>
+#ifndef ELECTRONIC_NETWORKS__CSERVICE_COMMANDREGISTER_H
+#define ELECTRONIC_NETWORKS__CSERVICE_COMMANDREGISTER_H
 
-#include "Msg_L.h"
-#include "debug.h"
-#include "Network.h"
-#include "Channel.h"
+#include <string>
 
-using std::cout;
-using std::endl;
+#include "Command.h"
 
 namespace eNetworks
 {
 
-void Msg_L::Parser()
+namespace cservice
 {
 
-   if (!Source.IsClient())
-   {
-   	debug << "Error: PART Message with no Client source." << endb;
-   }
+class CommandREGISTER : public Command
+{
+   public:
+   	CommandREGISTER(Bot* theBot, Client* theSource, const MsgTokenizer& refParameters);
+   	virtual ~CommandREGISTER() {}
+   	void Parser();
 
-   Channel* aChannelPtr = Network::Interface.FindChannel(Parameters[0]);
-
-   if (NULL != aChannelPtr)
-   {
-   	if (!aChannelPtr->DelChannelClient(Network::Interface.FindClientByNumeric(Source.GetNumeric())))
-   	{
-   	   debug << "Could not remove " << Source.GetName() << " from channel " << Parameters[0] << "." << endb;
-   	}
-   }
-   else
-   {
-   	debug << "Error: Could not remove user " << Source.GetName() << " from channel " << Parameters[0] << ". Channel Doesn't Exist" 
-              << endb;
-   }
-
-return;
-}
-
+   private:
+};
 
 } // namespace eNetworks
+
+} // namespace cservice
+
+#endif // ELECTRONIC_NETWORKS__CSERVICE_COMMANDREGISTER_H

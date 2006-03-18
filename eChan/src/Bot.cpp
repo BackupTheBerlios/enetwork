@@ -123,6 +123,25 @@ void Bot::ChangeChannelMode(Channel* p_channel, const MsgTokenizer& p_nicknames,
    }
 }
 
+void Bot::Join(const string& channel)
+{
+   Channel* l_channel = Network::Interface.FindChannel(channel);
+   if (NULL == l_channel) // if channel doesn't exist, create it.
+   {
+   	RawMsg(theClient.GetNumeric() + " C " + channel + " " + IntToString(time(0)));
+   	Network::Interface.AddChannel(channel, time(0));
+
+   	Network::Interface.FindChannel(channel)->AddChannelClient(&theClient);
+   }
+   else
+   	Join(l_channel);
+}
+
+void Bot::Join(Channel* channel)
+{
+   RawMsg(theClient.GetNumeric() + " J " + channel->GetName() + " " + IntToString(channel->GetTimeStamp()));
+   channel->AddChannelClient(&theClient);
+}
 
 map<string, Bot*> Bot::BotMap = BotMapType();
 

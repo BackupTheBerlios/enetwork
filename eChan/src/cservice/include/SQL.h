@@ -34,6 +34,7 @@
 #include "Client.h"
 #include "Channel.h"
 #include "SqlManager.h"
+#include "MsgTokenizer.h"
 
 namespace eNetworks
 {
@@ -46,50 +47,16 @@ class SQL
    public:
    	typedef Cache<unsigned int, SqlUser> UserCache;
    	typedef Cache<unsigned int, SqlChannel> ChannelCache;
-   	typedef std::pair<unsigned int, unsigned int> ChannelAccessCompare;
-   	typedef Cache<ChannelAccessCompare, SqlChannelAccess> ChannelAccessCache;
+   	typedef Cache<unsigned int, SqlChannelAccess> ChannelAccessCache;
 
    	// TODO: Get these values from configuration file.
    	SQL() : M_UserCache(50, 10000), M_ChannelCache(50, 10000), M_ChannelAccessCache(50, 10000)
    	{}
 
    	unsigned short GetAccessLevel(const unsigned int& username_id, const unsigned int& channel_id);
-   	unsigned short GetAccessLevel(const std::string& username, const std::string& channel)
-   	{
-   	   SqlUser* l_SqlUser = FindUser(username);
-   	   SqlChannel* l_SqlChannel = FindChannel(channel);
+   	unsigned short GetAccessLevel(const std::string& username, const std::string& channel);
 
-   	   if (NULL == l_SqlUser || NULL == l_SqlChannel)
-   	   	return 0;
-
-   	   return GetAccessLevel(l_SqlUser->getID(), l_SqlChannel->getID());
-   	}
-
-   	unsigned short GetAccessLevel(Client* p_Client, Channel* p_Channel)
-   	{
-   	   if (NULL == p_Client || NULL == p_Channel)
-   	   	return 0;
-
-   	   // If user hasn't logged in with us it has no id.
-   	   if (!p_Client->IsLogged())
-   	   {
-   	   	if (!p_Client->HasAccount())
-   	   	   return 0;
-
-   	   	SqlUser* l_SqlUser = FindUser(p_Client->GetAccount());
-   	   	if (NULL == l_SqlUser)
-   	  	   return 0;
-
-   	  	// Set user ID on client object.
-   	  	p_Client->SetID(static_cast<int>(l_SqlUser->getID()));
-   	   }
-
-   	   SqlChannel* l_SqlChannel = FindChannel(p_Channel->GetName());
-   	   if (NULL == l_SqlChannel)
-   	   	return 0;
-
-   	   return GetAccessLevel(p_Client->GetID(), l_SqlChannel->getID());
-   	}
+   	unsigned short GetAccessLevel(Client* p_Client, Channel* p_Channel);
 
    	unsigned short GetAccessLevel(const std::string& username, Channel* p_Channel)
    	{
@@ -99,31 +66,9 @@ class SQL
    	   return GetAccessLevel(username, p_Channel->GetName());
    	}
 
-   	unsigned short GetAccessLevel(Client* p_Client, const std::string& channel)
-   	{
-   	   if (p_Client == NULL)
-   	   	return 0;
+   	unsigned short GetAccessLevel(const unsigned int& id);
 
-           // If user hasn't logged in with us it has no id.
-           if (!p_Client->IsLogged())
-           {
-                if (!p_Client->HasAccount())
-                   return 0;
-
-                SqlUser* l_SqlUser = FindUser(p_Client->GetAccount());
-                if (NULL == l_SqlUser)
-                   return 0;
-
-                // Set user ID on client object.
-                p_Client->SetID(l_SqlUser->getID());
-           }
-
-   	   SqlChannel* l_SqlChannel = FindChannel(channel);
-   	   if (NULL == l_SqlChannel)
-   	   	return 0;
-   	   	
-   	   return GetAccessLevel(p_Client->GetID(), l_SqlChannel->getID());
-   	}
+   	unsigned short GetAccessLevel(Client* p_Client, const std::string& channel);
 
    	bool HasEnoughAccess(Client* p_Client, Channel* p_Channel, const unsigned int& level)
    	{
@@ -176,8 +121,24 @@ class SQL
 
    	static SQL Interface;
 
+   	void CacheInsert(const SqlUser& user)
+   	{
+   	   M_UserCache.insert(UserCache::value_type(user.getID(), user));
+   	}
+
+  	void CacheInsert(const SqlChannel& channel)
+   	{
+   	   M_ChannelCache.insert(ChannelCache::value_type(channel.getID(), channel));
+   	}
+
+   	void CacheInsert(const SqlChannelAccess& channelaccess)
+   	{
+   	   M_ChannelAccessCache.insert(ChannelAccessCache::value_type(channelaccess.getID(), channelaccess));
+   	}
+
    private:
-   	bool QueryDB(const std::string& table, const std::string& variables, const std::string& values, mysqlpp::Result& p_result);
+//   	bool QueryDB(const std::string& table, const MsgTokenizer& variables, const MsgTokenizer& values, mysqlpp::Result& p_result);
+//   	unsigned int InsertDB(const std::string& table, const MsgTokenizer& variables, const MsgTokenizer& values);
 
    	UserCache M_UserCache;
    	ChannelCache M_ChannelCache;

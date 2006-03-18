@@ -114,7 +114,7 @@ struct Client
    	void SetID(const int& theID) { id = theID; }
    	int GetID() { return id; }
    	bool HasAccount() const { return Account != ""; }
-   	bool IsLogged() const { return id != -1; }
+   	bool IsLogged() const { return id != 0; }
 
    private:
 
@@ -133,7 +133,7 @@ struct Client
                        const std::string &aModes, const std::string &aUserInfo, const time_t &aTimeStamp,
                        const unsigned int &aHopCount) :
         Numeric(aNumeric), NickName(aNickName), Account(aAccount), UserName(aUserName), HostName(aHostName),
-        B64IP(aB64IP), UserInfo(aUserInfo), TimeStamp(aTimeStamp), HopCount(aHopCount), Modes(aModes), ChannelMap(), id(-1)
+        B64IP(aB64IP), UserInfo(aUserInfo), TimeStamp(aTimeStamp), HopCount(aHopCount), Modes(aModes), ChannelMap(), id(0)
         {}
 
    	// Add a channel to this user's Channel list.
@@ -160,7 +160,7 @@ struct Client
    	
    	ChannelMapType ChannelMap; // Channels this user's on.
 
-   	int id;
+   	unsigned int id;
 
 };
 

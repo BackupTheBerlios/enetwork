@@ -55,7 +55,9 @@ class Command
    	   OP,
    	   DEOP,
    	   VOICE,
-   	   DEVOICE
+   	   DEVOICE,
+           HELLO,
+           REGISTER
    	};
 
 
@@ -70,6 +72,8 @@ class Command
    	   static const unsigned int DEOP;
    	   static const unsigned int VOICE;
    	   static const unsigned int DEVOICE;
+   	   static const unsigned int HELLO;
+   	   static const unsigned int REGISTER;
    	};
 
    	virtual void Parser() = 0;

@@ -44,6 +44,16 @@ bool IsDigit(const std::string &str);
 // Introduce Local Server to the uplink and IRC Network.
 void login();
 
+// Compare two std::string ignoring casing.
+inline bool StringCaseCompare(const std::string& str1, const std::string& str2)
+{
+#ifdef WIN32
+   return (_strcmpi( str1.c_str(), str2.c_str() ) == 0) ;
+#else
+   return (strcasecmp( str1.c_str(), str2.c_str() ) == 0) ;
+#endif
+}
+
 // structs
 
 /** This struct was made by Dan Karrels for the GNUworld project.
@@ -64,7 +74,6 @@ inline bool operator()( const std::string& lhs, const std::string& rhs ) const
 #endif
    	}
 } ;
-
 
 } // namespace eNetworks
 

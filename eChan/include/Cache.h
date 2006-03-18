@@ -237,6 +237,33 @@ class Cache
    	   return end();
    	}
 
+   	void erase(const iterator& Iter)
+   	{
+   	   if (Iter == end())
+   	   	return;
+
+   	   node* l_node = &Iter->second;
+
+   	   // Was this in front?
+   	   if (l_node == M_start)
+   	   {
+   	   	M_start = l_node->M_next;
+   	   	M_start->previous = NULL;
+   	   }
+   	   else if (l_node == M_end)
+   	   {
+   	   	M_end = l_node->M_previous;
+   	   	M_end->M_next = NULL;
+   	   }
+   	   else
+   	   {
+   	   	l_node->M_previous->M_next = l_node->M_next;
+   	   	l_node->M_next->M_previous = l_node->M_previous;
+   	   }
+
+   	   free_object(l_node);
+   	}
+
    	// Check for idling nodes.
    	void clean_up()
    	{
@@ -299,6 +326,7 @@ class Cache
    	   	M_end = object;
    	   	object->M_next = NULL;
    	   }
+
    	   object->M_previous = NULL;
    	   M_start = object;
    	   object->hit();

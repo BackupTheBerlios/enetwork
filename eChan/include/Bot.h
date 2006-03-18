@@ -118,6 +118,9 @@ class Bot
    	   TakeVoice(Network::Interface.FindChannel(channel), p_nicknames);
    	}
 
+   	virtual void Join(const std::string& channel);
+   	virtual void Join(Channel* channel);
+
    	// find a registered bot.
    	static Bot* FindBot(const std::string& Numeric)
    	{

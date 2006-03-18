@@ -60,8 +60,10 @@ void Msg_C::Parser()
    	   else
    	   {
    	   	Network::Interface.FindChannel(Channels[i])->AddChannelClient(Network::Interface.FindClientByNumeric(Source.GetNumeric()), "o");
+/*
    	   	cout << "Added Channel " << Channels[i] << " to db. And set client " << Source.GetName() << " as the creator "
    	   	     << "at TimeStamp " << Parameters[1] << endl;
+*/
    	   }
    	}
    	else

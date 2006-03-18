@@ -70,7 +70,7 @@ void MsgParseSystem::Execute()
    	MsgSource Source;
    	Msg* eMsg = NULL;
 
-   	debug << "[IN]: " << command << endb;
+   	cout << "[IN]: " << command << endb;
 
    	// Get the token & Source.
    	if (command.find(" ") == 2 || command.find(" ") == 5)

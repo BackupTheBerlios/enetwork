@@ -35,13 +35,21 @@ class MsgTokenizer
    public:
 
    	// Constructor.
-   	// aCommand = The IRC Message you want to tokenize.
+   	// aCommand   = The IRC Message you want to tokenize.
    	// Terminator = Normally Server<->Server messages use ':' 
    	//   	   	to specify that what follows is a string that 
    	//   	   	is to be treated as one token. Specify NULL to
         //              tell the parser to ignore this. 
-   	// Delimiter = The character that separates parameters.
+   	// Delimiter  = The character that separates parameters.
    	MsgTokenizer(const std::string &aCommand, const char &Terminator = ':', const char &Delimiter = ' ');
+
+/*
+   	MsgTokenizer(const char* aCommand, const char& Terminator = ':', const char& Delimiter = ' ')
+   	{
+   	   std::cout << "aCommand: " << std::string(aCommand) << std::endl;
+   	   MsgTokenizer(std::string(aCommand), Terminator, Delimiter);
+   	}
+*/
 
    	// returns how many tokens were collected.
    	unsigned int size() const { return Tokens.size(); }
@@ -49,13 +57,18 @@ class MsgTokenizer
    	// returns a reference to the token stored at position.
    	std::string operator[](const unsigned int &position) const { return Tokens[position]; }
 
-   	std::string assamble(const unsigned int& position)
+   	void push_back(const std::string& str)
+   	{
+   	   Tokens.push_back(str);
+   	}
+
+   	std::string assamble(const unsigned int& position, const char& delimiter = ' ') const
    	{
    	   std::string l_return("");
    	   for (unsigned int i = position; i < Tokens.size(); i++)
    	   {
    	   	l_return += Tokens[i];
-   	   	l_return += " ";
+   	   	l_return += delimiter;
    	   }
 
    	   if (l_return.length() > 0)
