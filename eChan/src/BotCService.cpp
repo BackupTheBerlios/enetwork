@@ -57,6 +57,7 @@ BotCService::BotCService() :
    cservice::Command::AddCommand("devoice", cservice::Command::DEVOICE);
    cservice::Command::AddCommand("hello", cservice::Command::HELLO);
    cservice::Command::AddCommand("register", cservice::Command::REGISTER);
+   cservice::Command::AddCommand("adduser", cservice::Command::ADDUSER);
 }
 
 void BotCService::onPRIVMSG(const MsgSource& Source, const MsgTokenizer& Parameters)

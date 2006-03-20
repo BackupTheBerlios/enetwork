@@ -68,7 +68,16 @@ class SQL
 
    	unsigned short GetAccessLevel(const unsigned int& id);
 
-   	unsigned short GetAccessLevel(Client* p_Client, const std::string& channel);
+   	unsigned short GetAccessLevel(Client* p_Client, const unsigned int& channel_id);
+
+   	unsigned short GetAccessLevel(Client* p_Client, const std::string& channel)
+   	{
+   	   SqlChannel* l_SqlChannel = FindChannel(channel);
+   	   if (NULL == l_SqlChannel)
+   	   	return 0;
+
+   	   return GetAccessLevel(p_Client, l_SqlChannel->getID());
+   	}
 
    	bool HasEnoughAccess(Client* p_Client, Channel* p_Channel, const unsigned int& level)
    	{

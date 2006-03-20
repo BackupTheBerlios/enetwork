@@ -37,7 +37,8 @@ class SqlManager
    	static mysqlpp::Query query() { return SqlManager::M_Connection->query(); }
    	static bool QueryDB(const std::string& table, const MsgTokenizer& variables, const MsgTokenizer& values, mysqlpp::Result& p_result);
    	static unsigned int InsertDB(const std::string& table, const MsgTokenizer& variables, const MsgTokenizer& values);
-   	static bool UpdateDB(const std::string& table, const MsgTokenizer& variables, const MsgTokenizer& values);
+   	static bool UpdateDB(const std::string& table, const MsgTokenizer& variables, const MsgTokenizer& values, const unsigned int& id);
+   	static bool DeleteDB(const std::string& table, const unsigned int& id);
 
    private:
    	static mysqlpp::Connection* M_Connection;

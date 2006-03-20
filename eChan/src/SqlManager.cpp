@@ -106,8 +106,6 @@ bool SqlManager::QueryDB(const std::string& table, const MsgTokenizer& variables
 
 unsigned int SqlManager::InsertDB(const std::string& table, const MsgTokenizer& variables, const MsgTokenizer& values)
 {
-   cout << "variables: " << variables.assamble(0) << endl;
-   cout << "values: " << values.assamble(0) << endl;
    if (variables.size() != values.size())
         return 0;
 
@@ -172,6 +170,38 @@ unsigned int SqlManager::InsertDB(const std::string& table, const MsgTokenizer& 
    return 0;
 }
 
+bool SqlManager::UpdateDB(const std::string& table, const MsgTokenizer& variables, const MsgTokenizer& values, const unsigned int& id)
+{
+   if (variables.size() != values.size())
+        return 0;
+
+   Query l_query = SqlManager::query();
+   l_query << "UPDATE " << table << " SET ";
+   for (unsigned int i = 0; i < values.size(); i++)
+   {
+   	l_query << variables[i] << " = ";
+        l_query << "%" << IntToString(i) << "q";
+        l_query.def[i] = values[i];
+        if (values.size() > 1 && i < (values.size() - 1))
+           l_query << ", ";
+   }
+
+   l_query << " WHERE id = " << id;
+
+   l_query.parse();
+
+   cout << "Query: " << l_query.preview() << endl;
+}
+
+bool SqlManager::DeleteDB(const std::string& table, const unsigned int& id)
+{
+   Query l_query = SqlManager::query();
+   l_query << "DELETE FROM " << table << " WHERE id = " << IntToString(id);
+
+   l_query.parse();
+
+   cout << "Query: " << l_query.preview() << endl;
+}
 
 mysqlpp::Connection* SqlManager::M_Connection = NULL;
 

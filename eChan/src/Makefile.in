@@ -75,7 +75,8 @@ am_eChan_OBJECTS = eChan-main.$(OBJEXT) eChan-Socket.$(OBJEXT) \
 	eChan-CommandDOWN.$(OBJEXT) eChan-CommandOP.$(OBJEXT) \
 	eChan-CommandDEOP.$(OBJEXT) eChan-CommandVOICE.$(OBJEXT) \
 	eChan-CommandDEVOICE.$(OBJEXT) eChan-CommandHELLO.$(OBJEXT) \
-	eChan-CommandREGISTER.$(OBJEXT) eChan-SQL.$(OBJEXT)
+	eChan-CommandREGISTER.$(OBJEXT) eChan-CommandADDUSER.$(OBJEXT) \
+	eChan-SQL.$(OBJEXT)
 eChan_OBJECTS = $(am_eChan_OBJECTS)
 eChan_LDADD = $(LDADD)
 DEFAULT_INCLUDES = -I. -I$(srcdir) -I$(top_builddir)
@@ -228,6 +229,7 @@ eChan_SOURCES = main.cpp \
                 cservice/CommandDEVOICE.cpp \
                 cservice/CommandHELLO.cpp \
                 cservice/CommandREGISTER.cpp \
+                cservice/CommandADDUSER.cpp \
                 cservice/SQL.cpp
 
 eChan_LDFLAGS = -L$(MYSQLPP_LIB) -lmysqlpp
@@ -243,6 +245,8 @@ EXTRA_DIST = cservice/include/Command.h \
              cservice/include/CommandVOICE.h \
              cservice/include/CommandDEVOICE.h \
              cservice/include/CommandHELLO.h \
+             cservice/include/CommandREGISTER.h \
+             cservice/include/CommandADDUSER.h \
              cservice/include/SQL.h \
              cservice/include/SqlUser.h \
              cservice/include/SqlChannel.h \
@@ -322,6 +326,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/eChan-Channel.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/eChan-Client.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/eChan-Command.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/eChan-CommandADDUSER.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/eChan-CommandDEOP.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/eChan-CommandDEVOICE.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/eChan-CommandDOWN.Po@am__quote@
@@ -1187,6 +1192,20 @@ eChan-CommandREGISTER.obj: cservice/CommandREGISTER.cpp
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='cservice/CommandREGISTER.cpp' object='eChan-CommandREGISTER.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(eChan_CXXFLAGS) $(CXXFLAGS) -c -o eChan-CommandREGISTER.obj `if test -f 'cservice/CommandREGISTER.cpp'; then $(CYGPATH_W) 'cservice/CommandREGISTER.cpp'; else $(CYGPATH_W) '$(srcdir)/cservice/CommandREGISTER.cpp'; fi`
+
+eChan-CommandADDUSER.o: cservice/CommandADDUSER.cpp
+@am__fastdepCXX_TRUE@	if $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(eChan_CXXFLAGS) $(CXXFLAGS) -MT eChan-CommandADDUSER.o -MD -MP -MF "$(DEPDIR)/eChan-CommandADDUSER.Tpo" -c -o eChan-CommandADDUSER.o `test -f 'cservice/CommandADDUSER.cpp' || echo '$(srcdir)/'`cservice/CommandADDUSER.cpp; \
+@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/eChan-CommandADDUSER.Tpo" "$(DEPDIR)/eChan-CommandADDUSER.Po"; else rm -f "$(DEPDIR)/eChan-CommandADDUSER.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='cservice/CommandADDUSER.cpp' object='eChan-CommandADDUSER.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(eChan_CXXFLAGS) $(CXXFLAGS) -c -o eChan-CommandADDUSER.o `test -f 'cservice/CommandADDUSER.cpp' || echo '$(srcdir)/'`cservice/CommandADDUSER.cpp
+
+eChan-CommandADDUSER.obj: cservice/CommandADDUSER.cpp
+@am__fastdepCXX_TRUE@	if $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(eChan_CXXFLAGS) $(CXXFLAGS) -MT eChan-CommandADDUSER.obj -MD -MP -MF "$(DEPDIR)/eChan-CommandADDUSER.Tpo" -c -o eChan-CommandADDUSER.obj `if test -f 'cservice/CommandADDUSER.cpp'; then $(CYGPATH_W) 'cservice/CommandADDUSER.cpp'; else $(CYGPATH_W) '$(srcdir)/cservice/CommandADDUSER.cpp'; fi`; \
+@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/eChan-CommandADDUSER.Tpo" "$(DEPDIR)/eChan-CommandADDUSER.Po"; else rm -f "$(DEPDIR)/eChan-CommandADDUSER.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='cservice/CommandADDUSER.cpp' object='eChan-CommandADDUSER.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(eChan_CXXFLAGS) $(CXXFLAGS) -c -o eChan-CommandADDUSER.obj `if test -f 'cservice/CommandADDUSER.cpp'; then $(CYGPATH_W) 'cservice/CommandADDUSER.cpp'; else $(CYGPATH_W) '$(srcdir)/cservice/CommandADDUSER.cpp'; fi`
 
 eChan-SQL.o: cservice/SQL.cpp
 @am__fastdepCXX_TRUE@	if $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(eChan_CXXFLAGS) $(CXXFLAGS) -MT eChan-SQL.o -MD -MP -MF "$(DEPDIR)/eChan-SQL.Tpo" -c -o eChan-SQL.o `test -f 'cservice/SQL.cpp' || echo '$(srcdir)/'`cservice/SQL.cpp; \

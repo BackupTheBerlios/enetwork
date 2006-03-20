@@ -35,6 +35,7 @@
 #include "CommandVOICE.h"
 #include "CommandDEVOICE.h"
 #include "CommandREGISTER.h"
+#include "CommandADDUSER.h"
 #include "tools.h"
 
 using std::map;
@@ -89,6 +90,10 @@ void Command::ParseCommands(Bot* theBot, Client* theSource, const std::string& s
    	   cmd = new CommandDOWN(theBot, theSource, mtTemp);
    	   break;
 
+   	case ADDUSER:
+   	   cmd = new CommandADDUSER(theBot, theSource, mtTemp);
+   	   break;
+
    	case HELLO:
    	   cmd = new CommandHELLO(theBot, theSource, mtTemp);
    	   break;
@@ -126,6 +131,7 @@ const unsigned int Command::Level::VOICE = 25;
 const unsigned int Command::Level::DEVOICE = 25;
 const unsigned int Command::Level::HELLO = 0;
 const unsigned int Command::Level::REGISTER = 700;
+const unsigned int Command::Level::ADDUSER = 400;
 
 map<string, Command::CommandName, noCaseCompare> Command::CommandMap = CommandMapType();
 } // namespace cservice

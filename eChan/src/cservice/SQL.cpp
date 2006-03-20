@@ -248,13 +248,13 @@ unsigned short SQL::GetAccessLevel(const unsigned int& username_id, const unsign
 
 unsigned short SQL::GetAccessLevel(const std::string& username, const std::string& channel)
 {
-   	SqlUser* l_SqlUser = FindUser(username);
-        SqlChannel* l_SqlChannel = FindChannel(channel);
+   SqlUser* l_SqlUser = FindUser(username);
+   SqlChannel* l_SqlChannel = FindChannel(channel);
 
-        if (NULL == l_SqlUser || NULL == l_SqlChannel)
-   	   return 0;
+   if (NULL == l_SqlUser || NULL == l_SqlChannel)
+   	return 0;
 
-        return GetAccessLevel(l_SqlUser->getID(), l_SqlChannel->getID());
+   return GetAccessLevel(l_SqlUser->getID(), l_SqlChannel->getID());
 }
 
 unsigned short SQL::GetAccessLevel(Client* p_Client, Channel* p_Channel)
@@ -283,16 +283,16 @@ unsigned short SQL::GetAccessLevel(Client* p_Client, Channel* p_Channel)
     return GetAccessLevel(p_Client->GetID(), l_SqlChannel->getID());
 }
 
-unsigned short SQL::GetAccessLevel(Client* p_Client, const std::string& channel)
+unsigned short SQL::GetAccessLevel(Client* p_Client, const unsigned int& channel_id)
 {
    if (p_Client == NULL)
-   	return 0;
+        return 0;
 
    // If user hasn't logged in with us it has no id.
    if (!p_Client->IsLogged())
    {
-   	if (!p_Client->HasAccount())
-   	   return 0;
+        if (!p_Client->HasAccount())
+           return 0;
 
         SqlUser* l_SqlUser = FindUser(p_Client->GetAccount());
         if (NULL == l_SqlUser)
@@ -302,15 +302,8 @@ unsigned short SQL::GetAccessLevel(Client* p_Client, const std::string& channel)
         p_Client->SetID(l_SqlUser->getID());
    }
 
-   SqlChannel* l_SqlChannel = FindChannel(channel);
-   if (NULL == l_SqlChannel)
-   	return 0;
-
-
-   return GetAccessLevel(p_Client->GetID(), l_SqlChannel->getID());
+   return GetAccessLevel(p_Client->GetID(), channel_id);
 }
-
-
 
 SQL SQL::Interface = SQL();
 
