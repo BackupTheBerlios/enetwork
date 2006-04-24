@@ -57,6 +57,8 @@ eChan_SOURCES = main.cpp \
                 cservice/CommandHELLO.cpp \
                 cservice/CommandREGISTER.cpp \
                 cservice/CommandADDUSER.cpp \
+                cservice/CommandMODINFO.cpp \
+                cservice/CommandREMUSER.cpp \
                 cservice/SQL.cpp
 
 eChan_LDFLAGS = -L$(MYSQLPP_LIB) -lmysqlpp
@@ -75,6 +77,8 @@ EXTRA_DIST = cservice/include/Command.h \
              cservice/include/CommandHELLO.h \
              cservice/include/CommandREGISTER.h \
              cservice/include/CommandADDUSER.h \
+             cservice/include/CommandMODINFO.h \
+             cservice/include/CommandREMUSER.h \
              cservice/include/SQL.h \
              cservice/include/SqlUser.h \
              cservice/include/SqlChannel.h \

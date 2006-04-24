@@ -49,6 +49,12 @@ void CommandDEVOICE::Parser()
    	return;
    }
 
+   if (!IsChannel(Parameters[0]))
+   {
+        LocalBot->SendNotice(Source, "Invalid channel");
+        return;
+   }
+
    // Is this channel registered?
    SqlChannel* l_SqlChannel = SQL::Interface.FindChannel(Parameters[0]);
    if (NULL == l_SqlChannel)

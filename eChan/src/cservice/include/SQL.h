@@ -66,6 +66,9 @@ class SQL
    	   return GetAccessLevel(username, p_Channel->GetName());
    	}
 
+   	SqlChannelAccess* FindChannelAccess(const unsigned int& id);
+   	SqlChannelAccess* FindChannelAccess(const unsigned int& username_id, const unsigned int& channel_id);
+
    	unsigned short GetAccessLevel(const unsigned int& id);
 
    	unsigned short GetAccessLevel(Client* p_Client, const unsigned int& channel_id);
@@ -135,14 +138,33 @@ class SQL
    	   M_UserCache.insert(UserCache::value_type(user.getID(), user));
    	}
 
+   	void CacheDelete(const SqlUser& user)
+   	{
+   	   M_UserCache.erase(user.getID());
+
+/*   	   UserCache::iterator Iter = M_UserCache.find(user.getID());
+   	   if (Iter != M_UserCache.end())
+   	   	M_UserCache.erase(Iter);
+*/
+   	}
   	void CacheInsert(const SqlChannel& channel)
    	{
    	   M_ChannelCache.insert(ChannelCache::value_type(channel.getID(), channel));
    	}
 
+   	void CacheDelete(const SqlChannel& channel)
+   	{
+   	   M_ChannelCache.erase(channel.getID());
+   	}
+
    	void CacheInsert(const SqlChannelAccess& channelaccess)
    	{
    	   M_ChannelAccessCache.insert(ChannelAccessCache::value_type(channelaccess.getID(), channelaccess));
+   	}
+
+   	void CacheDelete(const SqlChannelAccess& channelaccess)
+   	{
+   	   M_ChannelAccessCache.erase(channelaccess.getID());
    	}
 
    private:

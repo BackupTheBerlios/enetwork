@@ -40,11 +40,12 @@ struct node_base
    void hit() { M_idle = time(0); }
 };
 
+template<class Key, class Ty>
+class Cache;
 
 template<class value_type>
 class CacheIterator
 {
-
    typedef node_base<value_type> node;
    public:
         typedef value_type* pointer;
@@ -147,6 +148,7 @@ class CacheIterator
         }
 
    private:
+   	friend class Cache<typename value_type::first_type, typename value_type::second_type>;
         node* M_current;
 };
 
@@ -157,11 +159,11 @@ class CacheIterator
  *
  *  Data structure used is a double linked-list sorted by last hit object.
  *
- *  Once initialized this cache is intended very fast to maintain.
+ *  Once initialized this cache is intended to be very fast to maintain.
  *
  *  This class does no memory reallocation.
  *
- *  Search speed depends upon continuous calls of clean_up().
+ *  Search speed depends upon continuous calls to clean_up().
  *  Also on what the MaxSize is and How long MaxIdleTime is set to be.
  *
  */
@@ -237,18 +239,20 @@ class Cache
    	   return end();
    	}
 
-   	void erase(const iterator& Iter)
+   	void erase(iterator& Iter)
    	{
    	   if (Iter == end())
    	   	return;
 
-   	   node* l_node = &Iter->second;
+   	   node* l_node = Iter.M_current;
+   	   // invalidate iterator.
+   	   Iter.M_current = NULL;
 
    	   // Was this in front?
    	   if (l_node == M_start)
    	   {
    	   	M_start = l_node->M_next;
-   	   	M_start->previous = NULL;
+   	   	M_start->M_previous = NULL;
    	   }
    	   else if (l_node == M_end)
    	   {
@@ -262,6 +266,13 @@ class Cache
    	   }
 
    	   free_object(l_node);
+   	}
+
+   	void erase(const Key& key)
+   	{
+   	   iterator Iter = find(key);
+   	   if (Iter != end())
+   	   	erase(Iter);
    	}
 
    	// Check for idling nodes.

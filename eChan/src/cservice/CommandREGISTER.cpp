@@ -28,6 +28,7 @@
 #include "SqlChannel.h"
 #include "SqlChannelAccess.h"
 #include "SQL.h"
+#include "tools.h"
 
 using std::cout;
 using std::endl;
@@ -52,7 +53,7 @@ void CommandREGISTER::Parser()
    	return;
    }
 
-   if (Parameters[0][0] != '#')
+   if (IsChannel(Parameters[0]))
    {
    	LocalBot->SendNotice(Source, "Invalid channel");
    	return;

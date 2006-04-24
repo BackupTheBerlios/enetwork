@@ -58,7 +58,9 @@ class Command
    	   DEVOICE,
            HELLO,
            REGISTER,
-           ADDUSER
+           ADDUSER,
+   	   MODINFO,
+   	   REMUSER
    	};
 
 
@@ -76,6 +78,8 @@ class Command
    	   static const unsigned int HELLO;
    	   static const unsigned int REGISTER;
    	   static const unsigned int ADDUSER;
+   	   static const unsigned int MODINFO;
+   	   static const unsigned int REMUSER;
    	};
 
    	virtual void Parser() = 0;

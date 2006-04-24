@@ -67,6 +67,7 @@ struct SqlChannel
    	}
 
    	void update();
+   	void Delete();
 
    private:
    	unsigned int M_id;

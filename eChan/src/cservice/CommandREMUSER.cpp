@@ -22,13 +22,12 @@
 #include <iostream>
 #include <string>
 
-#include "Command.h"
-#include "CommandADDUSER.h"
+#include "CommandREMUSER.h"
+#include "tools.h"
+#include "SQL.h"
 #include "SqlUser.h"
 #include "SqlChannel.h"
 #include "SqlChannelAccess.h"
-#include "SQL.h"
-#include "tools.h"
 
 using std::cout;
 using std::endl;
@@ -40,14 +39,14 @@ namespace eNetworks
 namespace cservice
 {
 
-CommandADDUSER::CommandADDUSER(Bot* theBot, Client* theSource, const MsgTokenizer& refParameters) : Command(theBot, theSource, refParameters)
+CommandREMUSER::CommandREMUSER(Bot* theBot, Client* theSource, const MsgTokenizer& refParameters) : Command(theBot, theSource, refParameters)
 {
-   Syntax = "/msg " + LocalBot->theClient.GetNickName() + " adduser <#channel> <username> <level>";
+   Syntax = "/msg " + LocalBot->theClient.GetNickName() + " remuser <#channel> <username>";
 }
 
-void CommandADDUSER::Parser()
+void CommandREMUSER::Parser()
 {
-   if (Parameters.size() != 3)
+   if (Parameters.size() != 2)
    {
    	LocalBot->SendNotice(Source, "SYNTAX: " + Syntax);
    	return;
@@ -59,20 +58,6 @@ void CommandADDUSER::Parser()
    	return;
    }
 
-   if (!IsDigit(Parameters[2]))
-   {
-   	LocalBot->SendNotice(Source, "Bogus access level.");
-   	return;
-   }
-
-   unsigned int l_level = StringToInt(Parameters[2]);
-
-   if (l_level > 500 || l_level == 0)
-   {
-   	LocalBot->SendNotice(Source, "Bogus access level number.");
-   	return;
-   }
-
    SqlChannel* l_SqlChannel = SQL::Interface.FindChannel(Parameters[0]);
    if (NULL == l_SqlChannel)
    {
@@ -80,8 +65,8 @@ void CommandADDUSER::Parser()
         return;
    }
 
-   if (!SQL::Interface.HasEnoughAccess(Source, Parameters[0], Command::Level::ADDUSER) &&
-       !SQL::Interface.HasEnoughAccess(Source, "*", Command::Level::ADDUSER))
+   if (!SQL::Interface.HasEnoughAccess(Source, Parameters[0], Command::Level::REMUSER) &&
+       !SQL::Interface.HasEnoughAccess(Source, "*", Command::Level::REMUSER))
    {
            LocalBot->SendNotice(Source, "You don't have enough access to do that.");
            return;
@@ -90,20 +75,26 @@ void CommandADDUSER::Parser()
    SqlUser* l_SqlUser = SQL::Interface.FindUser(Parameters[1]);
    if (l_SqlUser == NULL)
    {
-   	LocalBot->SendNotice(Source, "I don't know who " + Parameters[1] + " is.");
-   	return;
+        LocalBot->SendNotice(Source, "I don't know who " + Parameters[2] + " is.");
+        return;
    }
-
-   if (SQL::Interface.GetAccessLevel(Source, l_SqlChannel->getID()) <= l_level)
+  
+   SqlChannelAccess* l_SqlChannelAccess = SQL::Interface.FindChannelAccess(l_SqlUser->getID(), l_SqlChannel->getID());
+   if (l_SqlChannelAccess == NULL)
    {
-   	LocalBot->SendNotice(Source, "Cannot add a user with equal or higher access than your own.");
+   	LocalBot->SendNotice(Source, "User " + Parameters[1] + " does not have access in " + Parameters[0] + ".");
    	return;
    }
 
-   SqlChannelAccess* l_SqlChannelAccess = new SqlChannelAccess(0, l_SqlUser->getID(), l_SqlChannel->getID(), l_level);
-   l_SqlChannelAccess->update();
+   if (SQL::Interface.GetAccessLevel(Source, l_SqlChannel->getID()) <= l_SqlChannelAccess->getLevel())
+   {
+        LocalBot->SendNotice(Source, "Cannot remove user with that has equal or higher access than you.");
+        return;
+   }
 
-   LocalBot->SendNotice(Source, "Added user " + l_SqlUser->getUsername() + " to channel " + l_SqlChannel->getName() + " with access level " + Parameters[2] + ".");
+   l_SqlChannelAccess->Delete();
+
+   LocalBot->SendNotice(Source, "Removed " + Parameters[1] + " from " + Parameters[0] + ".");
 }
 
 } // namespace cservice

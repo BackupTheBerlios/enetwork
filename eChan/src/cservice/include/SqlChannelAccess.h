@@ -34,7 +34,7 @@ struct SqlChannelAccess
 
    	SqlChannelAccess(const unsigned int& id, const unsigned int& username_id, const unsigned int& channel_id, 
                          const unsigned short& level) :
-   	M_id(0), M_channel_id(channel_id), M_username_id(username_id), M_level(level)
+   	M_id(id), M_channel_id(channel_id), M_username_id(username_id), M_level(level)
    	{
    	}
 
@@ -69,6 +69,7 @@ struct SqlChannelAccess
    	}
 
    	void update();
+   	void Delete();
 
    private:
    	unsigned int M_id;

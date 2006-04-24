@@ -5,7 +5,7 @@ This code currently has been tested to compile in the following operating system
  * Microsoft(r) Windows(tm) (using Microsoft Visual C++ 2005 (8.0) express).
 
 The code should compile on many other systems as well. If you get to compile it in 
-other systems you may e-mail me so I can add other operating systems to this list.
+other systems you may e-mail me so I can them to this list.
 
 NOTE: - You will need to have mysql and mysql++ installed on your system.
 
@@ -45,8 +45,13 @@ Compiling and running in Microsoft Windows:
  - run eChan.exe
 
 *** Post-Installation Notes ***
- - Make sure you add Ulines for eChan in your ircd configuration file.
- - Make sure you run the mysql scripts located at src/cservice/sql.
+
+ Before Running eChan make sure you:
+
+   - Add Ulines for eChan in your ircd configuration file.
+   - Create a database named eChan.
+   - Run the mysql scripts located at src/cservice/sql.
+   - Edit eChan.conf.
 
 NOTE: eChan is still in pre-alpha state and is not mature enough for a production network.
 

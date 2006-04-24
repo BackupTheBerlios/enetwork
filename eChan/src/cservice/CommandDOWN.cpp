@@ -51,6 +51,12 @@ void CommandDOWN::Parser()
    	return;
    }
 
+   if (!IsChannel(Parameters[0]))
+   {
+        LocalBot->SendNotice(Source, "Invalid channel");
+        return;
+   }
+
    // Does the channel exist?
    Channel* l_Channel = Network::Interface.FindChannel(Parameters[0]);
    if (NULL == l_Channel)

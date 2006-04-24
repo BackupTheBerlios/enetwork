@@ -190,6 +190,62 @@ SqlChannel* SQL::FindChannel(const std::string& channel)
    return NULL;
 }
 
+SqlChannelAccess* SQL::FindChannelAccess(const unsigned int& id)
+{
+   ChannelAccessCache::iterator l_Iter = M_ChannelAccessCache.find(id);
+   if (l_Iter != M_ChannelAccessCache.end())
+        return &l_Iter->second;
+
+   Result l_result;
+   SqlManager::QueryDB("SqlChannelAccess", string("id"), IntToString(id), l_result);
+
+   if (l_result.rows() > 0)
+   {
+        if (l_result.rows() != 1)
+        {
+           debug << "SqlChannelAccess: Found multiple channel access for some username_id on different channel_id" << endb;
+           return 0;
+        }
+
+        Row l_row = l_result.fetch_row();
+        SqlChannelAccess l_ChannelAccess(l_row["id"], l_row["username_id"], l_row["channel_id"], l_row["level"]);
+        M_ChannelAccessCache.insert(ChannelAccessCache::value_type(l_row["id"], l_ChannelAccess));
+
+        return &M_ChannelAccessCache.find(id)->second;
+   }
+
+   return NULL;
+}
+
+SqlChannelAccess* SQL::FindChannelAccess(const unsigned int& username_id, const unsigned int& channel_id)
+{
+   for(ChannelAccessCache::iterator l_Iter = M_ChannelAccessCache.begin(); l_Iter != M_ChannelAccessCache.end(); ++l_Iter)
+   {
+        if (l_Iter->second.getUsernameID() == username_id && l_Iter->second.getChannelID() == channel_id)
+           return &l_Iter->second;
+   }
+
+   Result l_result;
+   SqlManager::QueryDB("SqlChannelAccess", string("username_id channel_id"), IntToString(username_id) + " " + IntToString(channel_id), l_result);
+
+   if (l_result.rows() > 0)
+   {
+        if (l_result.rows() != 1)
+        {
+           debug << "SqlChannelAccess: Found multiple channel access for some username_id on different channel_id" << endb;
+           return 0;
+        }
+
+        Row l_row = l_result.fetch_row();
+        SqlChannelAccess l_ChannelAccess(l_row["id"], username_id, channel_id, l_row["level"]);
+        M_ChannelAccessCache.insert(ChannelAccessCache::value_type(l_row["id"], l_ChannelAccess));
+
+        return &M_ChannelAccessCache.find(l_row["id"])->second;
+   }
+
+   return NULL;
+}
+
 unsigned short SQL::GetAccessLevel(const unsigned int& id)
 {
    ChannelAccessCache::iterator l_Iter = M_ChannelAccessCache.find(id);

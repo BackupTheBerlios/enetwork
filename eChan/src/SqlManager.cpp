@@ -127,7 +127,7 @@ unsigned int SqlManager::InsertDB(const std::string& table, const MsgTokenizer& 
 
    try
    {
-        l_query.execute();
+        return l_query.execute().insert_id;
    }
    catch(const BadQuery& e_error)
    {
@@ -144,14 +144,15 @@ unsigned int SqlManager::InsertDB(const std::string& table, const MsgTokenizer& 
         // copy old query string.
         l_copy << l_query.preview();
         // run the query.
-        l_copy.execute();
+        l_copy.execute().insert_id;
    }
    catch(const Exception& e_error)
    {
         debug << "Error: " << e_error.what() << endb;
-        return false;
+        return 0;
    }
 
+/*
    // Get ID.
    Query l_queryID = query();
    l_queryID << "select LAST_INSERT_ID();";
@@ -166,7 +167,7 @@ unsigned int SqlManager::InsertDB(const std::string& table, const MsgTokenizer& 
    	unsigned int l_tmp = 0;
    	return l_row[l_tmp];
    }
-
+*/
    return 0;
 }
 
@@ -191,6 +192,33 @@ bool SqlManager::UpdateDB(const std::string& table, const MsgTokenizer& variable
    l_query.parse();
 
    cout << "Query: " << l_query.preview() << endl;
+
+   try
+   {
+        return l_query.execute();
+   }
+   catch(const BadQuery& e_error)
+   {
+        debug << "Query Error: " << e_error.what() << endb;
+        // Try to reconnect to database server.
+        connect( ConfigFile.GetConfiguration("MYSQLDB"),
+                 ConfigFile.GetConfiguration("MYSQLHOST"),
+                 ConfigFile.GetConfiguration("MYSQLUSER"),
+                 ConfigFile.GetConfiguration("MYSQLPASS") );
+
+        // If we were to reconnect then we should be able to execute query now.
+        // create a new query with new connection.
+        Query l_copy = query();
+        // copy old query string.
+        l_copy << l_query.preview();
+        // run the query.
+        return l_copy.execute();
+   }
+   catch(const Exception& e_error)
+   {
+        debug << "Error: " << e_error.what() << endb;
+        return false;
+   }
 }
 
 bool SqlManager::DeleteDB(const std::string& table, const unsigned int& id)
@@ -201,6 +229,34 @@ bool SqlManager::DeleteDB(const std::string& table, const unsigned int& id)
    l_query.parse();
 
    cout << "Query: " << l_query.preview() << endl;
+
+  try
+   {
+        return l_query.execute();
+   }
+   catch(const BadQuery& e_error)
+   {
+        debug << "Query Error: " << e_error.what() << endb;
+        // Try to reconnect to database server.
+        connect( ConfigFile.GetConfiguration("MYSQLDB"),
+                 ConfigFile.GetConfiguration("MYSQLHOST"),
+                 ConfigFile.GetConfiguration("MYSQLUSER"),
+                 ConfigFile.GetConfiguration("MYSQLPASS") );
+
+        // If we were to reconnect then we should be able to execute query now.
+        // create a new query with new connection.
+        Query l_copy = query();
+        // copy old query string.
+        l_copy << l_query.preview();
+        // run the query.
+        return l_copy.execute();
+   }
+   catch(const Exception& e_error)
+   {
+        debug << "Error: " << e_error.what() << endb;
+        return false;
+   }
+
 }
 
 mysqlpp::Connection* SqlManager::M_Connection = NULL;

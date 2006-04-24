@@ -1,11 +1,14 @@
 - Timer calss
   - do Cache clean_up().
-- Add update method for SqlUser, SqlChannel and SqlChannelAccess.
-  - add SqlManager::UpdateDB() method.
+
+- Add ShowCommands
 
 *** end of pre-alpha and start of alpha  ***
 
-- Support new P10 Token destruct message.
+- Add AUTOOP and AUTOVOICE support.
+
+
+- Support new P10 Token destruct message. (Is it still going to be present?)
 - Check issue with Crypto::MatchPassword().
 - Log how many bytes were sent to OutBuffer.
 - Msgs to implement in the following order: (these are not really needed until we start working on the oper service bot)

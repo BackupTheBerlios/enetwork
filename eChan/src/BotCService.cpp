@@ -58,6 +58,8 @@ BotCService::BotCService() :
    cservice::Command::AddCommand("hello", cservice::Command::HELLO);
    cservice::Command::AddCommand("register", cservice::Command::REGISTER);
    cservice::Command::AddCommand("adduser", cservice::Command::ADDUSER);
+   cservice::Command::AddCommand("modinfo", cservice::Command::MODINFO);
+   cservice::Command::AddCommand("remuser", cservice::Command::REMUSER);
 }
 
 void BotCService::onPRIVMSG(const MsgSource& Source, const MsgTokenizer& Parameters)

@@ -302,3 +302,11 @@ March 16, 2006 - clsk - Hello and Register commands.
 
 March 20, 2006 - clsk - Added Adduser command.
  * Added CommandADDUSER.h/cpp
+
+April 24, 2006 - clsk - Finished SQL::UpdateDB.
+ * Finished SQL::UpdateDB.
+ * Changed InsertDB to use MySql++'s ResNel::insert_id.
+ * Created SQL::FindChannelAccess().
+ * Created CommandMODINFO.
+ * Finished SQL::DeleteDB.
+ * Created CommandREMUSER.

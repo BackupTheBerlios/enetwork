@@ -26,6 +26,7 @@
 #include "Channel.h"
 #include "SqlChannel.h"
 #include "SQL.h"
+#include "tools.h"
 
 using std::cout;
 using std::endl;
@@ -47,6 +48,12 @@ void CommandDEOP::Parser()
    {
    	LocalBot->SendNotice(Source, "SYNTAX: " + Syntax);
    	return;
+   }
+
+   if (!IsChannel(Parameters[0]))
+   {
+        LocalBot->SendNotice(Source, "Invalid channel");
+        return;
    }
 
    // Is this channel registered?

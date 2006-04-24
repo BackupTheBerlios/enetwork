@@ -39,6 +39,10 @@ unsigned int b64Tob10(const std::string &b64);
 
 // Info functions
 bool IsDigit(const std::string &str);
+inline bool IsChannel(const std::string &str)
+{
+return str[0] == '#' ? true : false;
+}
 
 // misc functions.
 // Introduce Local Server to the uplink and IRC Network.
