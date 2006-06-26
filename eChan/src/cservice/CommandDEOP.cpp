@@ -88,8 +88,8 @@ void CommandDEOP::Parser()
    // If not nicks provided, up the source.
    if (Parameters.size() == 1)
    	LocalBot->TakeOP(l_Channel, Source->GetNickName());
-
-   LocalBot->TakeOP(l_Channel, Parameters.assamble(1));
+   else
+   	LocalBot->TakeOP(l_Channel, Parameters.assamble(1));
 }
 
 } // namespace cservice

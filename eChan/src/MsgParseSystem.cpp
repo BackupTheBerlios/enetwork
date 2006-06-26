@@ -121,6 +121,7 @@ void MsgParseSystem::Execute()
    	   }
    	   else if (command.length() > 6 && command.substr(0,6) == "PASS :")
    	   {
+   	   	// TODO: Confirm password.
    	   	continue;
    	   }
    	   else

@@ -53,7 +53,7 @@ void CommandADDUSER::Parser()
    	return;
    }
 
-   if (!IsChannel(Parameters[0]))
+   if (Parameters[0] != "*" && !IsChannel(Parameters[0]))
    {
    	LocalBot->SendNotice(Source, "Invalid channel");
    	return;
@@ -100,6 +100,11 @@ void CommandADDUSER::Parser()
    	return;
    }
 
+   if (SQL::Interface.GetAccessLevel(l_SqlUser->getID(), l_SqlChannel->getID()) != 0)
+   {
+   	LocalBot->SendNotice(Source, l_SqlUser->getUsername() + " already has access in " + l_SqlChannel->getName() + ".");
+   	return;
+   }
    SqlChannelAccess* l_SqlChannelAccess = new SqlChannelAccess(0, l_SqlUser->getID(), l_SqlChannel->getID(), l_level);
    l_SqlChannelAccess->update();
 

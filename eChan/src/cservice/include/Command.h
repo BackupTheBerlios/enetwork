@@ -60,7 +60,9 @@ class Command
            REGISTER,
            ADDUSER,
    	   MODINFO,
-   	   REMUSER
+   	   REMUSER,
+   	   PURGE,
+   	   DIE
    	};
 
 
@@ -80,6 +82,8 @@ class Command
    	   static const unsigned int ADDUSER;
    	   static const unsigned int MODINFO;
    	   static const unsigned int REMUSER;
+   	   static const unsigned int PURGE;
+   	   static const unsigned int DIE;
    	};
 
    	virtual void Parser() = 0;

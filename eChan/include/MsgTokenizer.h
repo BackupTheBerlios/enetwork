@@ -43,14 +43,6 @@ class MsgTokenizer
    	// Delimiter  = The character that separates parameters.
    	MsgTokenizer(const std::string &aCommand, const char &Terminator = ':', const char &Delimiter = ' ');
 
-/*
-   	MsgTokenizer(const char* aCommand, const char& Terminator = ':', const char& Delimiter = ' ')
-   	{
-   	   std::cout << "aCommand: " << std::string(aCommand) << std::endl;
-   	   MsgTokenizer(std::string(aCommand), Terminator, Delimiter);
-   	}
-*/
-
    	// returns how many tokens were collected.
    	unsigned int size() const { return Tokens.size(); }
 
@@ -62,6 +54,7 @@ class MsgTokenizer
    	   Tokens.push_back(str);
    	}
 
+   	// returns a string with all tokens delimited by delimiter.
    	std::string assamble(const unsigned int& position, const char& delimiter = ' ') const
    	{
    	   std::string l_return("");

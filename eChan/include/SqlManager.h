@@ -26,6 +26,7 @@
 #include <string>
 
 #include "MsgTokenizer.h"
+#include "tools.h"
 
 namespace eNetworks
 {
@@ -38,7 +39,11 @@ class SqlManager
    	static bool QueryDB(const std::string& table, const MsgTokenizer& variables, const MsgTokenizer& values, mysqlpp::Result& p_result);
    	static unsigned int InsertDB(const std::string& table, const MsgTokenizer& variables, const MsgTokenizer& values);
    	static bool UpdateDB(const std::string& table, const MsgTokenizer& variables, const MsgTokenizer& values, const unsigned int& id);
-   	static bool DeleteDB(const std::string& table, const unsigned int& id);
+   	static bool DeleteDB(const std::string& table, const MsgTokenizer& variables, const MsgTokenizer& values);
+   	static bool DeleteDB(const std::string& table, const unsigned int& id)
+   	{
+   	   DeleteDB(table, MsgTokenizer("id"), IntToString(id));
+   	}
 
    private:
    	static mysqlpp::Connection* M_Connection;

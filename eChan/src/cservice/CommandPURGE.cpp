@@ -22,7 +22,7 @@
 #include <iostream>
 #include <string>
 
-#include "CommandREMUSER.h"
+#include "CommandPURGE.h"
 #include "tools.h"
 #include "SQL.h"
 #include "SqlUser.h"
@@ -39,20 +39,20 @@ namespace eNetworks
 namespace cservice
 {
 
-CommandREMUSER::CommandREMUSER(Bot* theBot, Client* theSource, const MsgTokenizer& refParameters) : Command(theBot, theSource, refParameters)
+CommandPURGE::CommandPURGE(Bot* theBot, Client* theSource, const MsgTokenizer& refParameters) : Command(theBot, theSource, refParameters)
 {
-   Syntax = "/msg " + LocalBot->theClient.GetNickName() + " remuser <#channel> <username>";
+   Syntax = "/msg " + LocalBot->theClient.GetNickName() + " purge <#channel>";
 }
 
-void CommandREMUSER::Parser()
+void CommandPURGE::Parser()
 {
-   if (Parameters.size() != 2)
+   if (Parameters.size() < 1)
    {
    	LocalBot->SendNotice(Source, "SYNTAX: " + Syntax);
    	return;
    }
 
-   if (Parameters[0] != "*" && !IsChannel(Parameters[0]))
+   if (!IsChannel(Parameters[0]))
    {
    	LocalBot->SendNotice(Source, "Invalid channel");
    	return;
@@ -65,36 +65,15 @@ void CommandREMUSER::Parser()
         return;
    }
 
-   if (!SQL::Interface.HasEnoughAccess(Source, Parameters[0], Command::Level::REMUSER) &&
-       !SQL::Interface.HasEnoughAccess(Source, "*", Command::Level::REMUSER))
+   if (!SQL::Interface.HasEnoughAccess(Source, "*", Command::Level::PURGE))
    {
            LocalBot->SendNotice(Source, "You don't have enough access to do that.");
            return;
    }
 
-   SqlUser* l_SqlUser = SQL::Interface.FindUser(Parameters[1]);
-   if (l_SqlUser == NULL)
-   {
-        LocalBot->SendNotice(Source, "I don't know who " + Parameters[2] + " is.");
-        return;
-   }
-  
-   SqlChannelAccess* l_SqlChannelAccess = SQL::Interface.FindChannelAccess(l_SqlUser->getID(), l_SqlChannel->getID());
-   if (l_SqlChannelAccess == NULL)
-   {
-   	LocalBot->SendNotice(Source, "User " + Parameters[1] + " does not have access in " + Parameters[0] + ".");
-   	return;
-   }
+   l_SqlChannel->Delete();
 
-   if (SQL::Interface.GetAccessLevel(Source, l_SqlChannel->getID()) <= l_SqlChannelAccess->getLevel())
-   {
-        LocalBot->SendNotice(Source, "Cannot remove user with that has equal or higher access than you.");
-        return;
-   }
-
-   l_SqlChannelAccess->Delete();
-
-   LocalBot->SendNotice(Source, "Removed " + Parameters[1] + " from " + Parameters[0] + ".");
+   LocalBot->SendNotice(Source, "Removed channel " + Parameters[0] + " from database.");
 }
 
 } // namespace cservice

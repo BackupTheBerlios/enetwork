@@ -10,18 +10,13 @@ eChan_SOURCES = main.cpp \
                 Network.cpp \
                 Server.cpp \
                 SocketException.cpp \
-                Msg_S.cpp \
                 PreServerMsg.cpp \
+   	   	Msg_S.cpp \
                 Msg_B.cpp \
                 Msg_EB.cpp \
                 Msg_N.cpp \
                 Msg_G.cpp \
                 Msg_Q.cpp \
-                InBuffer.cpp \
-                OutBuffer.cpp \
-                MsgParseSystem.cpp \
-                OutMsgSystem.cpp \
-                P10Tokens.cpp \
                 Msg_AC.cpp \
                 Msg_J.cpp \
                 Msg_L.cpp \
@@ -35,6 +30,11 @@ eChan_SOURCES = main.cpp \
                 Msg_P.cpp \
                 Msg_D.cpp \
                 Msg_OM.cpp \
+                InBuffer.cpp \
+                OutBuffer.cpp \
+                MsgParseSystem.cpp \
+                OutMsgSystem.cpp \
+                P10Tokens.cpp \
                 Bot.cpp \
                 BotCService.cpp \
                 MsgMonitor.cpp \
@@ -59,6 +59,8 @@ eChan_SOURCES = main.cpp \
                 cservice/CommandADDUSER.cpp \
                 cservice/CommandMODINFO.cpp \
                 cservice/CommandREMUSER.cpp \
+                cservice/CommandPURGE.cpp \
+                cservice/CommandDIE.cpp \
                 cservice/SQL.cpp
 
 eChan_LDFLAGS = -L$(MYSQLPP_LIB) -lmysqlpp
@@ -79,6 +81,8 @@ EXTRA_DIST = cservice/include/Command.h \
              cservice/include/CommandADDUSER.h \
              cservice/include/CommandMODINFO.h \
              cservice/include/CommandREMUSER.h \
+             cservice/include/CommandPURGE.h \
+             cservice/include/CommandDIE.h \
              cservice/include/SQL.h \
              cservice/include/SqlUser.h \
              cservice/include/SqlChannel.h \

@@ -75,8 +75,6 @@ void Msg_CM::Parser()
    	   	break;
    	}
    }
-   cout << Source.GetName() << " performed a clearmode in channel " << Parameters[0] << " (" << Parameters[1] << ")." << endl;
-
 }
 
 } // namespace eNetworks

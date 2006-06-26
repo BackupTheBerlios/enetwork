@@ -38,6 +38,8 @@
 #include "CommandADDUSER.h"
 #include "CommandMODINFO.h"
 #include "CommandREMUSER.h"
+#include "CommandPURGE.h"
+#include "CommandDIE.h"
 #include "tools.h"
 
 using std::map;
@@ -112,12 +114,20 @@ void Command::ParseCommands(Bot* theBot, Client* theSource, const std::string& s
    	   cmd = new CommandREGISTER(theBot, theSource, mtTemp);
    	   break;
  
+   	case PURGE:
+   	   cmd = new CommandPURGE(theBot, theSource, mtTemp);
+   	   break;
+
    	case WHOIS:
    	   cmd = new CommandWHOIS(theBot, theSource, mtTemp);
    	   break;
 
    	case QUOTE:
    	   cmd = new CommandQUOTE(theBot, theSource, mtTemp);
+   	   break;
+
+   	case DIE:
+   	   cmd = new CommandDIE(theBot, theSource, mtTemp);
    	   break;
 
    	case NONE:
@@ -132,18 +142,20 @@ void Command::ParseCommands(Bot* theBot, Client* theSource, const std::string& s
    }
 }
 
-const unsigned int Command::Level::LOGIN = 0;
-const unsigned int Command::Level::WHOIS = 600;
-const unsigned int Command::Level::QUOTE = 1000;
-const unsigned int Command::Level::UP = 100;
-const unsigned int Command::Level::DOWN = 100;
-const unsigned int Command::Level::VOICE = 25;
-const unsigned int Command::Level::DEVOICE = 25;
-const unsigned int Command::Level::HELLO = 0;
+const unsigned int Command::Level::LOGIN    = 0;
+const unsigned int Command::Level::WHOIS    = 600;
+const unsigned int Command::Level::QUOTE    = 1000;
+const unsigned int Command::Level::UP       = 100;
+const unsigned int Command::Level::DOWN     = 100;
+const unsigned int Command::Level::VOICE    = 25;
+const unsigned int Command::Level::DEVOICE  = 25;
+const unsigned int Command::Level::HELLO    = 0;
 const unsigned int Command::Level::REGISTER = 700;
-const unsigned int Command::Level::ADDUSER = 400;
-const unsigned int Command::Level::MODINFO = 400;
-const unsigned int Command::Level::REMUSER = 400;
+const unsigned int Command::Level::ADDUSER  = 400;
+const unsigned int Command::Level::MODINFO  = 400;
+const unsigned int Command::Level::REMUSER  = 400;
+const unsigned int Command::Level::PURGE    = 700;
+const unsigned int Command::Level::DIE      = 900;
 
 map<string, Command::CommandName, noCaseCompare> Command::CommandMap = CommandMapType();
 } // namespace cservice

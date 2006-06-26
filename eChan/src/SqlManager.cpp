@@ -54,10 +54,6 @@ void SqlManager::connect(const string& p_DB, const string& p_hostname, const str
 
 bool SqlManager::QueryDB(const std::string& table, const MsgTokenizer& variables, const MsgTokenizer& values, Result& p_result)
 {
-   // TODO: Take MsgTokenizer as parameter.
-   // MsgTokenizer l_TokenizedVars(variables);
-   // MsgTokenizer l_TokenizedValues(values);
-
    if (variables.size() != values.size())
         return false;
 
@@ -221,11 +217,18 @@ bool SqlManager::UpdateDB(const std::string& table, const MsgTokenizer& variable
    }
 }
 
-bool SqlManager::DeleteDB(const std::string& table, const unsigned int& id)
+
+bool SqlManager::DeleteDB(const std::string& table, const MsgTokenizer& variables, const MsgTokenizer& values)
 {
    Query l_query = SqlManager::query();
-   l_query << "DELETE FROM " << table << " WHERE id = " << IntToString(id);
-
+   l_query << "DELETE FROM " << table << " WHERE";
+   for (unsigned int i = 0; i < variables.size(); i++)
+   {
+        l_query << " " << variables[i] << "=" << "%" << IntToString(i) << "q";
+        l_query.def[i] = values[i];
+        if (variables.size() > 1 && i < (variables.size() - 1))
+           l_query << " AND";
+   }
    l_query.parse();
 
    cout << "Query: " << l_query.preview() << endl;
@@ -256,7 +259,6 @@ bool SqlManager::DeleteDB(const std::string& table, const unsigned int& id)
         debug << "Error: " << e_error.what() << endb;
         return false;
    }
-
 }
 
 mysqlpp::Connection* SqlManager::M_Connection = NULL;

@@ -31,7 +31,7 @@ November 6th, 2003 - clsk - Almost finished Channel struct, ChanneClient struct 
 
 November 7th, 2003 - clsk - Some progress in Channels.
   * Fixed some bugs on Channels structs/class.
-  * There is still a bug. For some reason the Modes is "magically" emptied.
+  * There is still a bug. For some reason the Modes are "magically" emptied.
 
 November 8th, 2003 - clsk - Finished Channels base.
   * Fixed bugs on Channels base.
@@ -310,3 +310,7 @@ April 24, 2006 - clsk - Finished SQL::UpdateDB.
  * Created CommandMODINFO.
  * Finished SQL::DeleteDB.
  * Created CommandREMUSER.
+
+June 13, 2006 - clsk - Additions and fixes.
+ * When deleting channels or users from database, any ChannelAccess associated
+   with them will be deleted as well automatically by SqlUser::Delete() and SqlChannel::Delete()

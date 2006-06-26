@@ -53,7 +53,7 @@ void CommandREGISTER::Parser()
    	return;
    }
 
-   if (IsChannel(Parameters[0]))
+   if (!IsChannel(Parameters[0]))
    {
    	LocalBot->SendNotice(Source, "Invalid channel");
    	return;

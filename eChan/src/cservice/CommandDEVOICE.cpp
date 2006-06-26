@@ -87,8 +87,8 @@ void CommandDEVOICE::Parser()
    // If not nicks provided, up the source.
    if (Parameters.size() == 1)
    	LocalBot->TakeVoice(l_Channel, Source->GetNickName());
-
-   LocalBot->TakeVoice(l_Channel, Parameters.assamble(1));
+   else
+   	LocalBot->TakeVoice(l_Channel, Parameters.assamble(1));
 }
 
 } // namespace cservice

@@ -19,40 +19,31 @@
  *
 */
 
+#ifndef ELECTRONIC_NETWORKS__CSERVICE_COMMANDPURGE_H
+#define ELECTRONIC_NETWORKS__CSERVICE_COMMANDPURGE_H
+
 #include <string>
-#include <iostream>
 
-#include "Msg_SQ.h"
-#include "Network.h"
-#include "Server.h"
-#include "Client.h"
-#include "debug.h"
-#include "tools.h"
-
-using std::string;
-using std::cout;
-using std::endl;
+#include "Command.h"
 
 namespace eNetworks
 {
 
-void Msg_SQ::Parser()
+namespace cservice
 {
 
-   Server* ServerPtr = Network::Interface.FindServerByName(Parameters[0]);
+class CommandPURGE : public Command
+{
+   public:
+   	CommandPURGE(Bot* theBot, Client* theSource, const MsgTokenizer& refParameters);
+   	virtual ~CommandPURGE() {}
+   	void Parser();
 
-   if (NULL == ServerPtr)
-   {
-   	debug << "Error: Trying to SQ server " << Parameters[0] << ". Server doesn't exist in db." << endb;
-   	return;
-   }
-
-   if (Parameters[1] == IntToString(ServerPtr->GetLinkTime()) || Parameters[1] == "0")
-   {
-   	if (!Network::Interface.DelServerByNumeric(ServerPtr->GetNumeric()))
-   	   debug << "Could not delete server " << Parameters[0] << endb;
-   }
-}
-
+   private:
+};
 
 } // namespace eNetworks
+
+} // namespace cservice
+
+#endif // ELECTRONIC_NETWORKS__CSERVICE_COMMANDPURGE_H

@@ -60,13 +60,13 @@ int main()
 {
 #ifndef WIN32
 
-/*
+
    // Make a child, die and let initd take care of us. (send to background)
    if (0 == fork()) 
     setsid(); 
    else 
     exit(0);
-*/
+
 
 #else
 	{
@@ -93,8 +93,6 @@ int main()
    ConfigFile.InsertItem("MYSQLDB");
  
    ConfigFile.ParseConfigFile();
-
-   cout << "Config File from main: " << ConfigFile.GetConfiguration("UPLINK") << endl;
 
    // Connect to database server.
    SqlManager::connect( ConfigFile.GetConfiguration("MYSQLDB"),

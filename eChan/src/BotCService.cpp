@@ -46,6 +46,7 @@ BotCService::BotCService() :
     	   	 "DAqAoB", "idk", ConfigFile.GetConfiguration("CLIENTINFO"))
 {
    MsgMonitor::AddMonitor(Tokens::END_OF_BURST, this);
+
    cservice::Command::AddCommand("whois", cservice::Command::WHOIS);
    cservice::Command::AddCommand("quote", cservice::Command::QUOTE);
    cservice::Command::AddCommand("login", cservice::Command::LOGIN);
@@ -60,6 +61,8 @@ BotCService::BotCService() :
    cservice::Command::AddCommand("adduser", cservice::Command::ADDUSER);
    cservice::Command::AddCommand("modinfo", cservice::Command::MODINFO);
    cservice::Command::AddCommand("remuser", cservice::Command::REMUSER);
+   cservice::Command::AddCommand("purge", cservice::Command::PURGE);
+   cservice::Command::AddCommand("die", cservice::Command::DIE);
 }
 
 void BotCService::onPRIVMSG(const MsgSource& Source, const MsgTokenizer& Parameters)
@@ -81,7 +84,7 @@ void BotCService::onPRIVMSG(const MsgSource& Source, const MsgTokenizer& Paramet
    // Reply to CTCP messages.
    if (Parameters[Parameters.size()-1] == "\001VERSION\001")
    {
-   	SendNotice(Network::Interface.FindClientByNumeric(Source.GetNumeric()), "\001VERSION eChan v0.5.2 Alpha by Alan Alvarez (clsk@IRC).\001");
+   	SendNotice(Network::Interface.FindClientByNumeric(Source.GetNumeric()), "\001VERSION Electronic Channel Services (eChan) v0.5.2 Alpha by Alan Alvarez (clsk@IRC).\001");
    	return;
    }
 

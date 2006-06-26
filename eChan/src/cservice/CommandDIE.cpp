@@ -1,6 +1,6 @@
 /*
  * eChan - Electronic Channel Services.
- * Copyright (C) 2003-2006 Alan Alvarez.
+ * Copyright (C) 2003-2005 Alan Alvarez.
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -19,40 +19,47 @@
  *
 */
 
-#include <string>
 #include <iostream>
 
-#include "Msg_SQ.h"
-#include "Network.h"
+#include "CommandDIE.h"
 #include "Server.h"
-#include "Client.h"
-#include "debug.h"
-#include "tools.h"
+#include "Network.h"
+#include "Channel.h"
+#include "SqlChannel.h"
+#include "SQL.h"
 
-using std::string;
 using std::cout;
 using std::endl;
 
 namespace eNetworks
 {
 
-void Msg_SQ::Parser()
+namespace cservice
 {
 
-   Server* ServerPtr = Network::Interface.FindServerByName(Parameters[0]);
-
-   if (NULL == ServerPtr)
-   {
-   	debug << "Error: Trying to SQ server " << Parameters[0] << ". Server doesn't exist in db." << endb;
-   	return;
-   }
-
-   if (Parameters[1] == IntToString(ServerPtr->GetLinkTime()) || Parameters[1] == "0")
-   {
-   	if (!Network::Interface.DelServerByNumeric(ServerPtr->GetNumeric()))
-   	   debug << "Could not delete server " << Parameters[0] << endb;
-   }
+CommandDIE::CommandDIE(Bot* theBot, Client* theSource, const MsgTokenizer& refParameters) : Command(theBot, theSource, refParameters)
+{
+   Syntax = "/msg " + LocalBot->theClient.GetNickName() + " die [reason]";
 }
 
+void CommandDIE::Parser()
+{
+   if (!SQL::Interface.HasEnoughAccess(Source, "*", Command::Level::DIE))
+   {
+   	LocalBot->SendNotice(Source, "You don't have enough access to do that.");
+   	return;   	
+   }
+
+   string l_reason = "";
+   if (Parameters.size() > 0)
+   {
+   	l_reason = Parameters.assamble(0);
+   }
+   
+   LocalBot->RawMsg(LocalBot->theClient.GetNumeric() + " Q " + l_reason);
+   LocalBot->RawMsg(LocalServer->GetNumeric() + " SQ " + LocalServer->GetName() + " 0");
+}
+
+} // namespace cservice
 
 } // namespace eNetworks

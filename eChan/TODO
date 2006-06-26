@@ -1,19 +1,16 @@
-- Timer calss
-  - do Cache clean_up().
-
-- Add ShowCommands
-
 *** end of pre-alpha and start of alpha  ***
 
 - Add AUTOOP and AUTOVOICE support.
+-  AutoOP/VOICE
+- Add Commands:
+  - access
+  - showcommands
 
+- Timer calss
+  - do Cache clean_up().
 
 - Support new P10 Token destruct message. (Is it still going to be present?)
 - Check issue with Crypto::MatchPassword().
-- Log how many bytes were sent to OutBuffer.
-- Msgs to implement in the following order: (these are not really needed until we start working on the oper service bot)
-  - JUPE
-  - GLINE
 - Write an API documentation.
 
 *** end of alpha start of Beta ***
@@ -24,3 +21,4 @@
 - Hunt bugs.
 
 *** RC 1 ***
+

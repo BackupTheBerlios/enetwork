@@ -218,9 +218,9 @@ class Cache
    	// Insert an object to the list.
    	void insert(const value_type& object)
    	{
-   	   node* l_node = new_object();
-   	   l_node->M_object = value_type(object);
-   	   put_front(l_node);
+   	   node* l_node = new_object();              // Request new object.
+   	   l_node->M_object = value_type(object);    // Set values.
+   	   put_front(l_node);                        // Put in front of list.
    	}
 
    	// returns an iterator to an object if the object is in the cache.
@@ -304,11 +304,12 @@ class Cache
    	// Get a space from the allocated heap for a new object.
    	node* new_object()
    	{
+   	   // If list is full get rid of one object.
    	   if (size() >=  max_size())
    	   	pop_back();
    	  
-   	   node* l_node = M_free.back();
-   	   M_free.pop_back();
+   	   node* l_node = M_free.back(); // Get back.
+   	   M_free.pop_back();            // Pop back.
    	   return l_node;
    	}
 
@@ -328,8 +329,9 @@ class Cache
 
    	   if (M_start != NULL)
    	   {
+   	   	// Old start becomes second in list.
    	   	object->M_next = M_start;
-   	   	M_start->M_previous = object;
+   	   	M_start->M_previous = object;  
    	   }
    	   else
    	   {
@@ -338,27 +340,19 @@ class Cache
    	   	object->M_next = NULL;
    	   }
 
-   	   object->M_previous = NULL;
-   	   M_start = object;
-   	   object->hit();
-   	}
-
-   	// put a new object in the back of the list.
-   	void put_back(node* object)
-   	{
-   	   object->M_next = NULL;
-   	   object->M_previous = M_end;
-   	   M_start->next = object;
-   	   M_start = object;
+   	   object->M_previous = NULL;   // Nothing before this object.
+   	   M_start = object;            // Set object as new start.
+   	   object->hit();               // This object just recieved a hit.
    	}
 
    	// pop last object from list.
    	void pop_back()
    	{
-   	   node* l_node = M_end->M_previous;
-   	   free_object(M_end);
-   	   M_end = l_node;
-   	}
+   	   node* l_node = M_end->M_previous;   // Get previous object.
+   	   free_object(M_end);                 // Free last object.
+   	   M_end = l_node;                     // Set new end.
+   	   M_end->M_next = NULL;               // Nothing follows.
+ 	}
 
    	std::vector<node*> M_free; // vector of objects not on the list.
   	node* M_start; // Head of the used list.
