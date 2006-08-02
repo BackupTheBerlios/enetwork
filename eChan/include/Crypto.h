@@ -42,7 +42,8 @@ class Crypto
    	   {
    	   	if (tmp[i] != cyphertext[i])
    	   	{
-   	   	   std::cout << tmp[i] << " != " << cyphertext[i] << std::endl;
+   	   	   // std::cout << tmp[i] << " != " << cyphertext[i] << std::endl;
+   	   	   return false;
    	   	}
    	   }
 

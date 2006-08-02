@@ -314,3 +314,6 @@ April 24, 2006 - clsk - Finished SQL::UpdateDB.
 June 13, 2006 - clsk - Additions and fixes.
  * When deleting channels or users from database, any ChannelAccess associated
    with them will be deleted as well automatically by SqlUser::Delete() and SqlChannel::Delete()
+
+August 1st, 2006 - clsk - AUTOMODE Support.
+ * Added automode support.

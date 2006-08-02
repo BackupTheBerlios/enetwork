@@ -113,11 +113,6 @@ int main()
    // Add all the Tokens to the token map.
    eTokens = new Tokens();
 
-   if (NULL == eTokens)
-   {
-   	debug << "Could not allocate memory for tokens" << endb;
-   }
-
    // Register Server Messages (Tokens)
    eTokens->AddToken("S",      Tokens::SERVER); // Server introducing another server to the network.
    eTokens->AddToken("N",      Tokens::NICK);
@@ -175,8 +170,7 @@ int main()
   
 
    	// We're going to deal with timers here...
-   } 
-   while (Socket::eSock.is_valid());
+   } while (Socket::eSock.is_valid());
 
 return 0;
 }

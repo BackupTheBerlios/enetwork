@@ -68,6 +68,14 @@ class SQL
 
    	SqlChannelAccess* FindChannelAccess(const unsigned int& id);
    	SqlChannelAccess* FindChannelAccess(const unsigned int& username_id, const unsigned int& channel_id);
+   	SqlChannelAccess* FindChannelAccess(const unsigned int& username_id, const std::string& channel)
+   	{
+   	   SqlChannel* l_SqlChannel = FindChannel(channel);
+   	   if (NULL == l_SqlChannel)
+   	   	return NULL;
+
+   	   return FindChannelAccess(username_id, l_SqlChannel->getID());
+   	}
 
    	unsigned short GetAccessLevel(const unsigned int& id);
 

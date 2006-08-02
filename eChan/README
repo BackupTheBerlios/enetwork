@@ -15,24 +15,21 @@ NOTE: - You will need to have mysql and mysql++ installed on your system.
             to install the mysql-dev package too.
         For more info on mysql database system please visit http://www.mysql.com.
 
-        - mysql++ is a free c++ wrapper for MySQL's C API used to interact with
-          the MySQL database server.
+        - mysql++ is a free c++ wrapper for MySQL's C API used by eChan to interact
+          with the MySQL database server.
           - This library is released under the GPL license as this program is.
         For more info on mysql++ please visit http://tangentsoft.net/mysql++.
 
 Compiling and running in Unix-like systems:
  - You should've gotten the code-base by now from cvs.
  - Run the configure script (Type ./configure).
- - type make.
+ - Type make.
  - Type make install.
- - then go to the bin directory and edit the configuration file (eChan.conf).
- - then run by typing ./eChan inside the bin directory.
+ - Go to the bin directory and edit the configuration file (eChan.conf).
+ - Run by typing ./eChan inside the bin directory.
 
 Compiling and running in Microsoft Windows:
- - You're going to need Microsoft Visual C++ 2005 express and the Platform SDK. 
- - You'll also need to build mysql++. I know this is possible to do in windows.
-   I might provide instructions on how to do this at a later time. Look for
-   mysql++'s documentation.
+ - You're going to need Microsoft Visual C++ 2003 or later and the Platform SDK. 
  - Download the file from cvs. (I normally use TortoiseCVS for this).
  - Create a new Project from existing code.
  - set the project directory to where you downloaded the files from cvs.
@@ -53,6 +50,6 @@ Compiling and running in Microsoft Windows:
    - Run the mysql scripts located at src/cservice/sql.
    - Edit eChan.conf.
 
-NOTE: eChan is still in pre-alpha state and is not mature enough for a production network.
+NOTE: eChan is still in alpha state and is not mature enough for a production network.
 
 Please report bugs, feedback, patches, etc... to alan.alvarez@us.army.mil

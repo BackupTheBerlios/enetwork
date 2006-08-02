@@ -31,10 +31,9 @@ namespace cservice
 struct SqlChannelAccess
 {
    public:
-
    	SqlChannelAccess(const unsigned int& id, const unsigned int& username_id, const unsigned int& channel_id, 
-                         const unsigned short& level) :
-   	M_id(id), M_channel_id(channel_id), M_username_id(username_id), M_level(level)
+                         const unsigned short& level, const unsigned short& automode = 0) :
+   	M_id(id), M_channel_id(channel_id), M_username_id(username_id), M_level(level), M_automode(0)
    	{
    	}
 
@@ -42,11 +41,13 @@ struct SqlChannelAccess
    	{
    	}
 
+   	enum AutoMode { AUTOMODE_NONE, AUTOMODE_OP, AUTOMODE_VOICE };
+
    	unsigned int getID() const { return M_id; }
    	unsigned int getUsernameID() const { return M_username_id; }
    	unsigned int getChannelID() const { return M_channel_id; }
    	unsigned short getLevel() const { return M_level; }
-
+   	unsigned short getAutomode() const { return M_automode; }
 
    	void setID(const unsigned int& id)
    	{
@@ -68,6 +69,11 @@ struct SqlChannelAccess
    	   M_level = level;
    	}
 
+   	void setAutomode(const unsigned short& automode)
+   	{
+   	   M_automode = automode;
+   	}
+
    	void update();
    	void Delete();
 
@@ -76,6 +82,7 @@ struct SqlChannelAccess
    	unsigned int M_username_id;
    	unsigned int M_channel_id;
    	unsigned short M_level;
+   	unsigned short M_automode;
 };
 
 } // namespace eNetworks

@@ -41,7 +41,7 @@ namespace cservice
 
 CommandMODINFO::CommandMODINFO(Bot* theBot, Client* theSource, const MsgTokenizer& refParameters) : Command(theBot, theSource, refParameters)
 {
-   Syntax = "/msg " + LocalBot->theClient.GetNickName() + " modinfo <#channel> access <username> <value>";
+   Syntax = "/msg " + LocalBot->theClient.GetNickName() + " modinfo <#channel> <access|automode> <username> <value>";
 }
 
 void CommandMODINFO::Parser()
@@ -72,12 +72,6 @@ void CommandMODINFO::Parser()
            return;
    }
 
-   if (Parameters[1] != "access")
-   {
-   	LocalBot->SendNotice(Source, "SYNTAX: " + Syntax);
-   	return;
-   }
-
    SqlUser* l_SqlUser = SQL::Interface.FindUser(Parameters[2]);
    if (l_SqlUser == NULL)
    {
@@ -85,14 +79,6 @@ void CommandMODINFO::Parser()
         return;
    }
   
-   if (!IsDigit(Parameters[3]))
-   {
-        LocalBot->SendNotice(Source, "Bogus access level.");
-        return;
-   }
-
-   unsigned int l_level = StringToInt(Parameters[3]);
-
    SqlChannelAccess* l_SqlChannelAccess = SQL::Interface.FindChannelAccess(l_SqlUser->getID(), l_SqlChannel->getID());
    if (l_SqlChannelAccess == NULL)
    {
@@ -100,23 +86,73 @@ void CommandMODINFO::Parser()
    	return;
    }
 
-   if (l_level > 500 || l_level == 0)
+   if (SQL::Interface.GetAccessLevel(Source, l_SqlChannel->getID()) < l_SqlChannelAccess->getLevel())
    {
-        LocalBot->SendNotice(Source, "Bogus access level number.");
+        LocalBot->SendNotice(Source, "Cannot modify access of user that has equal or higher access than you.");
         return;
    }
 
-   if (SQL::Interface.GetAccessLevel(Source, l_SqlChannel->getID()) <= l_level)
+   if (Parameters[1] == "access")
    {
-        LocalBot->SendNotice(Source, "Access level needs to be less that yours.");
+   	if (SQL::Interface.GetAccessLevel(Source, l_SqlChannel->getID()) <= l_SqlChannelAccess->getLevel())
+   	{
+           LocalBot->SendNotice(Source, "Cannot modify access of user that has equal or higher access than you.");
+           return;
+   	}
+
+   	if (!IsDigit(Parameters[3]))
+   	{
+           LocalBot->SendNotice(Source, "Bogus access level.");
+           return;
+   	}
+
+   	unsigned int l_level = StringToInt(Parameters[3]);
+
+   	if (l_level > 500 || l_level == 0)
+   	{
+           LocalBot->SendNotice(Source, "Bogus access level number.");
+           return;
+   	}
+
+   	if (SQL::Interface.GetAccessLevel(Source, l_SqlChannel->getID()) <= l_level)
+   	{
+           LocalBot->SendNotice(Source, "Access level needs to be less that yours.");
+           return;
+   	}
+
+   	l_SqlChannelAccess->setLevel(l_level);
+
+   	LocalBot->SendNotice(Source, "Set access level of " + Parameters[2] + " to " + Parameters[3] + ".");
+   }
+   else if (Parameters[1] == "automode")
+   {
+   	if (SQL::Interface.GetAccessLevel(Source, l_SqlChannel->getID()) < l_SqlChannelAccess->getLevel())
+   	{
+           LocalBot->SendNotice(Source, "Cannot modify access of user that has higher access than you.");
+           return;
+   	}
+
+   	if (Parameters[3] == "op")
+   	   l_SqlChannelAccess->setAutomode(SqlChannelAccess::AUTOMODE_OP);
+   	else if (Parameters[3] == "voice")
+   	   l_SqlChannelAccess->setAutomode(SqlChannelAccess::AUTOMODE_VOICE);
+   	else if (Parameters[3] == "none")
+   	   l_SqlChannelAccess->setAutomode(SqlChannelAccess::AUTOMODE_NONE);
+   	else
+   	{
+   	   LocalBot->SendNotice(Source, "That's an invalid AutoMode");
+   	   return;
+   	}
+
+   	LocalBot->SendNotice(Source, "Set automode of " + Parameters[2] + " to " + Parameters[3] + ".");
+   }
+   else
+   {
+        LocalBot->SendNotice(Source, "SYNTAX: " + Syntax);
         return;
    }
 
-
-   l_SqlChannelAccess->setLevel(l_level);
    l_SqlChannelAccess->update();
-
-   LocalBot->SendNotice(Source, "Set access level of " + Parameters[2] + " to " + Parameters[3] + ".");
 }
 
 } // namespace cservice

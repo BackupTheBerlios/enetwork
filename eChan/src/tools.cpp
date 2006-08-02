@@ -119,7 +119,7 @@ void login()
             " J10 " << LocalServer->GetNumeric() << "AAC" << " +" << LocalServer->GetFlag() << " :" <<
             LocalServer->GetDescription() << "\r\n";
 
-       cout << "SERVER " << LocalServer->GetName() << " " << LocalServer->GetHopCount() <<
+       cout << "[OUT] SERVER " << LocalServer->GetName() << " " << LocalServer->GetHopCount() <<
             " " << LocalServer->GetStartTime() << " " << LocalServer->GetLinkTime() <<
             " J10 " << LocalServer->GetNumeric() << "AAC" << " +" << LocalServer->GetFlag() << " :" <<
             LocalServer->GetDescription() << endl;

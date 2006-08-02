@@ -1,7 +1,5 @@
 *** end of pre-alpha and start of alpha  ***
 
-- Add AUTOOP and AUTOVOICE support.
--  AutoOP/VOICE
 - Add Commands:
   - access
   - showcommands
@@ -9,16 +7,18 @@
 - Timer calss
   - do Cache clean_up().
 
-- Support new P10 Token destruct message. (Is it still going to be present?)
-- Check issue with Crypto::MatchPassword().
-- Write an API documentation.
-
 *** end of alpha start of Beta ***
 
--- Add support for Half-op.
+- (*Optional*) Add * channel access to ChannelAccessCache to simulate something like gnuworld's CS' force.
+- Support new P10 Token destruct message. (Is it still going to be present?)
+- Check issue with Crypto::MatchPassword().
+
+- Add support for Half-op.
 
 - Feature freeze.
 - Hunt bugs.
 
 *** RC 1 ***
+- Don't give Automode to users part of a netjoin.
 
+- Write an API documentation.

@@ -88,7 +88,7 @@ void CommandREMUSER::Parser()
 
    if (SQL::Interface.GetAccessLevel(Source, l_SqlChannel->getID()) <= l_SqlChannelAccess->getLevel())
    {
-        LocalBot->SendNotice(Source, "Cannot remove user with that has equal or higher access than you.");
+        LocalBot->SendNotice(Source, "Cannot remove user that has equal or higher access than you.");
         return;
    }
 

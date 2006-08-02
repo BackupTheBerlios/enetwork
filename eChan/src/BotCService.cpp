@@ -32,11 +32,17 @@
 #include "CommandWHOIS.h"
 #include "SqlManager.h"
 #include "ConfigParser.h"
+#include "Client.h"
+#include "debug.h"
+#include "SQL.h"
+#include "SqlChannelAccess.h"
 
 using std::cout;
 using std::endl;
 using mysqlpp::Query;
 using mysqlpp::Result;
+using eNetworks::cservice::SQL;
+using eNetworks::cservice::SqlChannelAccess;
 
 namespace eNetworks
 {
@@ -46,6 +52,7 @@ BotCService::BotCService() :
     	   	 "DAqAoB", "idk", ConfigFile.GetConfiguration("CLIENTINFO"))
 {
    MsgMonitor::AddMonitor(Tokens::END_OF_BURST, this);
+   MsgMonitor::AddMonitor(Tokens::JOIN, this);
 
    cservice::Command::AddCommand("whois", cservice::Command::WHOIS);
    cservice::Command::AddCommand("quote", cservice::Command::QUOTE);
@@ -108,29 +115,62 @@ void BotCService::onKICK(const MsgSource& Source, const MsgTokenizer& Parameters
 
 void BotCService::onMsgMonitor(const Tokens::Token& _Token, const MsgSource& Source, const MsgTokenizer& Parameters)
 {
-   // we only monitor END_OF_BURST message so don't worry about parsing other messages.
-
-   // Only join registered channels when recieving EB from uplink server.
-   if (Network::Interface.FindServerByNumeric(Source.GetNumeric())->GetUpLink() != LocalServer->GetNumeric())
-        return;
-
-   // Lets JOIN all registered channels.
-   Query query = SqlManager::query();
-   query << "SELECT SqlChannel.name FROM SqlChannel";
-
-   // TODO: Use a ResUse container here instead of Result.
-   Result result = query.store();
-
-   Channel* theChannel = NULL;
-   for (Result::iterator Iter = result.begin(); Iter != result.end(); Iter++)
+   switch(_Token)
    {
-   	string strChannel = (*Iter).at(0).c_str();
-   	if (strChannel[0] != '#') // Check for special channels.
-   	   continue;
+   	case Tokens::END_OF_BURST:
+   	{
+   	   if (Network::Interface.FindServerByNumeric(Source.GetNumeric())->GetUpLink() != LocalServer->GetNumeric())
+   	   	return;
 
-   	Join(strChannel);
-   	// OP the bot.
-   	RawMsg(theClient.GetNumeric().substr(0,2) + " M " + strChannel + " +o " + theClient.GetNumeric());
+   	   // Lets JOIN all registered channels.
+   	   Query query = SqlManager::query();
+   	   query << "SELECT SqlChannel.name FROM SqlChannel";
+
+   	   // TODO: Use a ResUse container here instead of Result.
+   	   Result result = query.store();
+
+   	   for (Result::iterator Iter = result.begin(); Iter != result.end(); Iter++)
+   	   {
+   	   	string strChannel = (*Iter).at(0).c_str();
+   	   	if (strChannel[0] != '#') // Check for special channels.
+   	   	   continue;
+
+   	   	Join(strChannel);
+   	   	// OP the bot.
+   	   	RawMsg(theClient.GetNumeric().substr(0,2) + " M " + strChannel + " +o " + theClient.GetNumeric());
+   	   }
+   	}
+   	break;
+
+   	case Tokens::JOIN:
+   	{
+   	   Client* l_client = Source.GetClient();
+   	   Channel* l_channel = Network::Interface.FindChannel(Parameters[0]);
+   	   if (l_channel->IsChannelClient(&theClient))
+   	   {
+   	   	if (l_client->IsLogged())
+   	   	{
+   	   	   SqlChannelAccess* l_SqlChannelAccess = SQL::Interface.FindChannelAccess((unsigned int)l_client->GetID(), Parameters[0]);
+   	   	   if (l_SqlChannelAccess == NULL)
+   	   	   	return;
+
+   	   	   switch(l_SqlChannelAccess->getAutomode())
+   	   	   {
+   	   	   	case SqlChannelAccess::AUTOMODE_OP:
+   	   	   	   GiveOP(Parameters[0], l_client->GetNickName());
+   	   	   	   break;
+
+   	   	   	case SqlChannelAccess::AUTOMODE_VOICE:
+   	   	   	   GiveVoice(Parameters[0], l_client->GetNickName());
+   	   	   	   break;
+   	   	   }
+   	   	}
+   	   }
+   	}
+   	break;
+
+   	default:
+   	   debug << "WARNING: Got Monitored not requested message in BotCService.cpp::onMsgMonitor()" << endb;
    }
 }
 

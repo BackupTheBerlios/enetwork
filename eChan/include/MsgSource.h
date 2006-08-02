@@ -64,6 +64,12 @@ class MsgSource
    	// returns the Name of the Source.
    	string GetName() const { return IsServer() ? aServer->GetName() : aClient->GetNickName(); }
 
+   	// returns a pointer to the Client Source.
+   	Client* GetClient() const { return aClient; }
+
+   	// returns a pointer to the Server Source.
+   	Server* GetServer() const { return aServer; }
+
    private:
    	Client* aClient;
    	Server* aServer;
