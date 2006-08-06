@@ -40,6 +40,7 @@
 #include "CommandREMUSER.h"
 #include "CommandPURGE.h"
 #include "CommandDIE.h"
+#include "CommandACCESS.h"
 #include "tools.h"
 
 using std::map;
@@ -66,10 +67,6 @@ void Command::ParseCommands(Bot* theBot, Client* theSource, const std::string& s
    Command* cmd = NULL;
    switch (GetCommand(theCommand))
    {
-   	case LOGIN:
-   	   cmd = new CommandLOGIN(theBot, theSource, mtTemp);
-   	   break;
-
    	case OP:
    	   cmd = new CommandOP(theBot, theSource, mtTemp);
    	   break;
@@ -94,6 +91,10 @@ void Command::ParseCommands(Bot* theBot, Client* theSource, const std::string& s
    	   cmd = new CommandDOWN(theBot, theSource, mtTemp);
    	   break;
 
+   	case ACCESS:
+   	   cmd = new CommandACCESS(theBot, theSource, mtTemp);
+   	   break;
+
    	case ADDUSER:
    	   cmd = new CommandADDUSER(theBot, theSource, mtTemp);
    	   break;
@@ -105,6 +106,10 @@ void Command::ParseCommands(Bot* theBot, Client* theSource, const std::string& s
    	case MODINFO:
    	   cmd = new CommandMODINFO(theBot, theSource, mtTemp);
    	   break;
+
+        case LOGIN:
+           cmd = new CommandLOGIN(theBot, theSource, mtTemp);
+           break;
 
    	case HELLO:
    	   cmd = new CommandHELLO(theBot, theSource, mtTemp);
@@ -156,6 +161,7 @@ const unsigned int Command::Level::MODINFO  = 400;
 const unsigned int Command::Level::REMUSER  = 400;
 const unsigned int Command::Level::PURGE    = 700;
 const unsigned int Command::Level::DIE      = 900;
+const unsigned int Command::Level::ACCESS   = 0;
 
 map<string, Command::CommandName, noCaseCompare> Command::CommandMap = CommandMapType();
 } // namespace cservice

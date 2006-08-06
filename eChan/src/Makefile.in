@@ -78,7 +78,7 @@ am_eChan_OBJECTS = eChan-main.$(OBJEXT) eChan-Socket.$(OBJEXT) \
 	eChan-CommandREGISTER.$(OBJEXT) eChan-CommandADDUSER.$(OBJEXT) \
 	eChan-CommandMODINFO.$(OBJEXT) eChan-CommandREMUSER.$(OBJEXT) \
 	eChan-CommandPURGE.$(OBJEXT) eChan-CommandDIE.$(OBJEXT) \
-	eChan-SQL.$(OBJEXT)
+	eChan-CommandACCESS.$(OBJEXT) eChan-SQL.$(OBJEXT)
 eChan_OBJECTS = $(am_eChan_OBJECTS)
 eChan_LDADD = $(LDADD)
 DEFAULT_INCLUDES = -I. -I$(srcdir) -I$(top_builddir)
@@ -236,6 +236,7 @@ eChan_SOURCES = main.cpp \
                 cservice/CommandREMUSER.cpp \
                 cservice/CommandPURGE.cpp \
                 cservice/CommandDIE.cpp \
+                cservice/CommandACCESS.cpp \
                 cservice/SQL.cpp
 
 eChan_LDFLAGS = -L$(MYSQLPP_LIB) -lmysqlpp
@@ -257,6 +258,7 @@ EXTRA_DIST = cservice/include/Command.h \
              cservice/include/CommandREMUSER.h \
              cservice/include/CommandPURGE.h \
              cservice/include/CommandDIE.h \
+             cservice/include/CommandACCESS.h \
              cservice/include/SQL.h \
              cservice/include/SqlUser.h \
              cservice/include/SqlChannel.h \
@@ -336,6 +338,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/eChan-Channel.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/eChan-Client.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/eChan-Command.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/eChan-CommandACCESS.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/eChan-CommandADDUSER.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/eChan-CommandDEOP.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/eChan-CommandDEVOICE.Po@am__quote@
@@ -1276,6 +1279,20 @@ eChan-CommandDIE.obj: cservice/CommandDIE.cpp
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='cservice/CommandDIE.cpp' object='eChan-CommandDIE.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(eChan_CXXFLAGS) $(CXXFLAGS) -c -o eChan-CommandDIE.obj `if test -f 'cservice/CommandDIE.cpp'; then $(CYGPATH_W) 'cservice/CommandDIE.cpp'; else $(CYGPATH_W) '$(srcdir)/cservice/CommandDIE.cpp'; fi`
+
+eChan-CommandACCESS.o: cservice/CommandACCESS.cpp
+@am__fastdepCXX_TRUE@	if $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(eChan_CXXFLAGS) $(CXXFLAGS) -MT eChan-CommandACCESS.o -MD -MP -MF "$(DEPDIR)/eChan-CommandACCESS.Tpo" -c -o eChan-CommandACCESS.o `test -f 'cservice/CommandACCESS.cpp' || echo '$(srcdir)/'`cservice/CommandACCESS.cpp; \
+@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/eChan-CommandACCESS.Tpo" "$(DEPDIR)/eChan-CommandACCESS.Po"; else rm -f "$(DEPDIR)/eChan-CommandACCESS.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='cservice/CommandACCESS.cpp' object='eChan-CommandACCESS.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(eChan_CXXFLAGS) $(CXXFLAGS) -c -o eChan-CommandACCESS.o `test -f 'cservice/CommandACCESS.cpp' || echo '$(srcdir)/'`cservice/CommandACCESS.cpp
+
+eChan-CommandACCESS.obj: cservice/CommandACCESS.cpp
+@am__fastdepCXX_TRUE@	if $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(eChan_CXXFLAGS) $(CXXFLAGS) -MT eChan-CommandACCESS.obj -MD -MP -MF "$(DEPDIR)/eChan-CommandACCESS.Tpo" -c -o eChan-CommandACCESS.obj `if test -f 'cservice/CommandACCESS.cpp'; then $(CYGPATH_W) 'cservice/CommandACCESS.cpp'; else $(CYGPATH_W) '$(srcdir)/cservice/CommandACCESS.cpp'; fi`; \
+@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/eChan-CommandACCESS.Tpo" "$(DEPDIR)/eChan-CommandACCESS.Po"; else rm -f "$(DEPDIR)/eChan-CommandACCESS.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='cservice/CommandACCESS.cpp' object='eChan-CommandACCESS.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(eChan_CXXFLAGS) $(CXXFLAGS) -c -o eChan-CommandACCESS.obj `if test -f 'cservice/CommandACCESS.cpp'; then $(CYGPATH_W) 'cservice/CommandACCESS.cpp'; else $(CYGPATH_W) '$(srcdir)/cservice/CommandACCESS.cpp'; fi`
 
 eChan-SQL.o: cservice/SQL.cpp
 @am__fastdepCXX_TRUE@	if $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(eChan_CXXFLAGS) $(CXXFLAGS) -MT eChan-SQL.o -MD -MP -MF "$(DEPDIR)/eChan-SQL.Tpo" -c -o eChan-SQL.o `test -f 'cservice/SQL.cpp' || echo '$(srcdir)/'`cservice/SQL.cpp; \

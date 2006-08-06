@@ -62,7 +62,8 @@ class Command
    	   MODINFO,
    	   REMUSER,
    	   PURGE,
-   	   DIE
+   	   DIE,
+           ACCESS
    	};
 
 
@@ -84,6 +85,7 @@ class Command
    	   static const unsigned int REMUSER;
    	   static const unsigned int PURGE;
    	   static const unsigned int DIE;
+  	   static const unsigned int ACCESS;
    	};
 
    	virtual void Parser() = 0;

@@ -317,3 +317,7 @@ June 13, 2006 - clsk - Additions and fixes.
 
 August 1st, 2006 - clsk - AUTOMODE Support.
  * Added automode support.
+
+August 6th, 2006 - clsk - Added Access Command.
+ * Added CommandACCESS.
+

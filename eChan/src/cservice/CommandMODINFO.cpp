@@ -122,7 +122,7 @@ void CommandMODINFO::Parser()
 
    	l_SqlChannelAccess->setLevel(l_level);
 
-   	LocalBot->SendNotice(Source, "Set access level of " + Parameters[2] + " to " + Parameters[3] + ".");
+   	LocalBot->SendNotice(Source, "Set access level of " + Parameters[2] + " to " + Parameters[3] + " in " + Parameters[0] + ".");
    }
    else if (Parameters[1] == "automode")
    {
@@ -144,7 +144,7 @@ void CommandMODINFO::Parser()
    	   return;
    	}
 
-   	LocalBot->SendNotice(Source, "Set automode of " + Parameters[2] + " to " + Parameters[3] + ".");
+   	LocalBot->SendNotice(Source, "Set automode of " + Parameters[2] + " to " + Parameters[3] + " in " + Parameters[0] + ".");
    }
    else
    {

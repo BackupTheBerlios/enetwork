@@ -208,7 +208,7 @@ SqlChannelAccess* SQL::FindChannelAccess(const unsigned int& id)
         }
 
         Row l_row = l_result.fetch_row();
-        SqlChannelAccess l_ChannelAccess(l_row["id"], l_row["username_id"], l_row["channel_id"], l_row["level"]);
+        SqlChannelAccess l_ChannelAccess(l_row["id"], l_row["username_id"], l_row["channel_id"], l_row["level"], l_row["automode"]);
         M_ChannelAccessCache.insert(ChannelAccessCache::value_type(l_row["id"], l_ChannelAccess));
 
         return &M_ChannelAccessCache.find(id)->second;
@@ -237,7 +237,7 @@ SqlChannelAccess* SQL::FindChannelAccess(const unsigned int& username_id, const 
         }
 
         Row l_row = l_result.fetch_row();
-        SqlChannelAccess l_ChannelAccess(l_row["id"], username_id, channel_id, l_row["level"]);
+        SqlChannelAccess l_ChannelAccess(l_row["id"], username_id, channel_id, l_row["level"], l_row["automode"]);
         M_ChannelAccessCache.insert(ChannelAccessCache::value_type(l_row["id"], l_ChannelAccess));
 
         return &M_ChannelAccessCache.find(l_row["id"])->second;
@@ -264,7 +264,7 @@ unsigned short SQL::GetAccessLevel(const unsigned int& id)
         }
 
         Row l_row = l_result.fetch_row();
-        SqlChannelAccess l_ChannelAccess(l_row["id"], l_row["username_id"], l_row["channel_id"], l_row["level"]);
+        SqlChannelAccess l_ChannelAccess(l_row["id"], l_row["username_id"], l_row["channel_id"], l_row["level"], l_row["automode"]);
         M_ChannelAccessCache.insert(ChannelAccessCache::value_type(l_row["id"], l_ChannelAccess));
 
         return l_ChannelAccess.getLevel();
@@ -293,7 +293,7 @@ unsigned short SQL::GetAccessLevel(const unsigned int& username_id, const unsign
    	}
 
    	Row l_row = l_result.fetch_row();
-   	SqlChannelAccess l_ChannelAccess(l_row["id"], username_id, channel_id, l_row["level"]);
+   	SqlChannelAccess l_ChannelAccess(l_row["id"], username_id, channel_id, l_row["level"], l_row["automode"]);
    	M_ChannelAccessCache.insert(ChannelAccessCache::value_type(l_row["id"], l_ChannelAccess));
 
    	return l_ChannelAccess.getLevel();

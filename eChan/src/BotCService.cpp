@@ -70,6 +70,7 @@ BotCService::BotCService() :
    cservice::Command::AddCommand("remuser", cservice::Command::REMUSER);
    cservice::Command::AddCommand("purge", cservice::Command::PURGE);
    cservice::Command::AddCommand("die", cservice::Command::DIE);
+   cservice::Command::AddCommand("access", cservice::Command::ACCESS);
 }
 
 void BotCService::onPRIVMSG(const MsgSource& Source, const MsgTokenizer& Parameters)
