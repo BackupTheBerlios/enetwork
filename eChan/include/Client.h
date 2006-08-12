@@ -128,10 +128,10 @@ struct Client
 
 
         // Make constructor private so that only Network class can create new instances.
-        Client::Client(const std::string &aNumeric, const std::string &aNickName, const std::string &aAccount,
-                       const std::string &aUserName, const std::string &aHostName, const std::string &aB64IP,
-                       const std::string &aModes, const std::string &aUserInfo, const time_t &aTimeStamp,
-                       const unsigned int &aHopCount) :
+        Client(const std::string &aNumeric, const std::string &aNickName, const std::string &aAccount,
+               const std::string &aUserName, const std::string &aHostName, const std::string &aB64IP,
+               const std::string &aModes, const std::string &aUserInfo, const time_t &aTimeStamp,
+               const unsigned int &aHopCount) :
         Numeric(aNumeric), NickName(aNickName), Account(aAccount), UserName(aUserName), HostName(aHostName),
         B64IP(aB64IP), UserInfo(aUserInfo), TimeStamp(aTimeStamp), HopCount(aHopCount), Modes(aModes), ChannelMap(), id(0)
         {}
