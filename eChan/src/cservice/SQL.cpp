@@ -230,17 +230,11 @@ SqlChannelAccess* SQL::FindChannelAccess(const unsigned int& username_id, const 
 
    if (l_result.rows() > 0)
    {
-        if (l_result.rows() != 1)
-        {
-           debug << "SqlChannelAccess: Found multiple channel access for some username_id on different channel_id" << endb;
-           return 0;
-        }
-
         Row l_row = l_result.fetch_row();
         SqlChannelAccess l_ChannelAccess(l_row["id"], username_id, channel_id, l_row["level"], l_row["automode"]);
-        M_ChannelAccessCache.insert(ChannelAccessCache::value_type(l_row["id"], l_ChannelAccess));
+        M_ChannelAccessCache.insert(ChannelAccessCache::value_type(l_ChannelAccess.getID(), l_ChannelAccess));
 
-        return &M_ChannelAccessCache.find(l_row["id"])->second;
+        return &M_ChannelAccessCache.find(l_ChannelAccess.getID())->second;
    }
 
    return NULL;
