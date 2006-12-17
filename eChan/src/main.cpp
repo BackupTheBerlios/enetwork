@@ -160,7 +160,6 @@ int main()
 		   return 0;	
 	   } 
 
-	   static string inbuffer; // inbuffer needs a little bit of more global scope
 	   if (FD_ISSET(Socket::eSock.GetSocket(), &Ofds))
 	   {
 		   InBuffer::ibInstance.insert(Socket::eSock.recv());
