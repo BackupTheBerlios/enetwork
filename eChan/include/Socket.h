@@ -29,6 +29,7 @@
 #include <sys/types.h>
 #include <netinet/in.h>
 #include <errno.h>
+#include <unistd.h>
 #endif
 
 #include <string>

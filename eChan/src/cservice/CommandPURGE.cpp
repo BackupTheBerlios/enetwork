@@ -72,7 +72,7 @@ void CommandPURGE::Parser()
    }
 
    l_SqlChannel->Delete();
-
+   LocalBot->Part(Parameters[0]); // Leave the channel;
    LocalBot->SendNotice(Source, "Removed channel " + Parameters[0] + " from database.");
 }
 

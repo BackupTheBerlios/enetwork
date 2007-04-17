@@ -5489,7 +5489,7 @@ fi;
 echo "$as_me:$LINENO: checking for mysql.h" >&5
 echo $ECHO_N "checking for mysql.h... $ECHO_C" >&6
 if test -f "$MYSQL_INCLUDE/mysql.h"; then
-	/bin/true
+	/usr/bin/true
 elif test -f "/usr/local/include/mysql/mysql.h"; then
 	MYSQL_INCLUDE=/usr/local/include/mysql
 elif test -f "/usr/local/include/mysql.h"; then
@@ -5509,7 +5509,7 @@ echo "${ECHO_T}yes" >&6
 echo "$as_me:$LINENO: checking for mysql++.h" >&5
 echo $ECHO_N "checking for mysql++.h... $ECHO_C" >&6
 if test -f "$MYSQLPP_INCLUDE/mysql++.h"; then
-	/bin/true
+	/usr/bin/true
 elif test -f "/usr/local/include/mysql++.h"; then
 	MYSQLPP_INCLUDE=/usr/local/include
 elif test -f "/usr/include/mysql++.h"; then
@@ -5527,7 +5527,7 @@ echo "${ECHO_T}yes" >&6
 echo "$as_me:$LINENO: checking for libmysqlpp.so" >&5
 echo $ECHO_N "checking for libmysqlpp.so... $ECHO_C" >&6
 if test -f "$MYSQLPP_LIB/libmysqlpp.so"; then
-	/bin/true
+	/usr/bin/true
 elif test -f "/usr/lib/libmysqlpp.so"; then
 	MYSQLPP_LIB=/usr/lib
 elif test -f "/usr/lib/mysql++/libmysqlpp.so"; then

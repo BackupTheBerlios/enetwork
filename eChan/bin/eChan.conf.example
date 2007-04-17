@@ -1,27 +1,15 @@
 NICK = "E"; IRC Nick of the channel services bot.
-
 NUMERIC = "4f"; Server Numeric.
-
 USERNAME = "cservice"; IRC UserName. Cannot be more than 10 chars long and cannot have spaces.
-
 SERVERNAME = "eChan.electronicnetwork.org"; The name of the pseudo-server.
-
 CLIENTINFO = "eChan 0.5.1"; Client's User Info.
-
 HOSTNAME = "electronicnetwork.org";
-
 SERVERINFO = "Electronic Channel Services"; Server Description.
-
 UPLINK = "127.0.0.1"; IRC Server. Ip of the uplink. * Provide Ip. *
-
 PORT = "4400"; IRC Port. Port to connect to. Cannot have spaces. Only numbers accepted.
-
 LINKPASS = "linkpass"; Linking Password.
-
 MYSQLHOST = "localhost"; IP Address of where mysql server is.
-
-MYSQLUSER = "root"; MySQL username to use to connect the mysql server.
-
+MYSQLUSER = "sqluser"; MySQL username to use to connect the mysql server.
 MYSQLPASS = ""; MySQL password to use to connect to mysql server.
-
 MYSQLDB = "eChan"; Name of the MySQL database.
+

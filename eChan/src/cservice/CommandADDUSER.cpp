@@ -67,10 +67,10 @@ void CommandADDUSER::Parser()
 
    unsigned int l_level = StringToInt(Parameters[2]);
 
-   if (l_level > 500 || l_level == 0)
+   if ((l_level > 500 && Parameters[0] != "*") || l_level < 1)
    {
-   	LocalBot->SendNotice(Source, "Bogus access level number.");
-   	return;
+        LocalBot->SendNotice(Source, "Bogus access level number.");
+        return;
    }
 
    SqlChannel* l_SqlChannel = SQL::Interface.FindChannel(Parameters[0]);

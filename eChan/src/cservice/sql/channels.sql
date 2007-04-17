@@ -1,4 +1,4 @@
-USE eChan;
+USE clsk;
 
 CREATE TABLE SqlChannel (
 id INT NOT NULL AUTO_INCREMENT,

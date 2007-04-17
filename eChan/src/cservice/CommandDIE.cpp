@@ -55,8 +55,10 @@ void CommandDIE::Parser()
    {
    	l_reason = Parameters.assamble(0);
    }
-   
-   LocalBot->RawMsg(LocalBot->theClient.GetNumeric() + " Q " + l_reason);
+
+   l_reason += " (By request of " + Source->GetNickName() + ")";   
+
+   LocalBot->RawMsg(LocalBot->theClient.GetNumeric() + " Q :" + l_reason);
    LocalBot->RawMsg(LocalServer->GetNumeric() + " SQ " + LocalServer->GetName() + " 0");
 }
 

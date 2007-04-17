@@ -1,7 +1,8 @@
-This code currently has been tested to compile in the following operating systems:
+This code has been tested to compile in the following operating systems:
 
  * Linux
  * FreeBSD
+ * OpenBSD
  * Microsoft(r) Windows(tm) (using Microsoft Visual C++ 2005 (8.0) express).
 
 The code should compile on many other systems as well. If you get to compile it in 

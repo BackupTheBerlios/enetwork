@@ -139,8 +139,26 @@ void Bot::Join(const string& channel)
 
 void Bot::Join(Channel* channel)
 {
-   RawMsg(theClient.GetNumeric() + " J " + channel->GetName() + " " + IntToString(channel->GetTimeStamp()));
-   channel->AddChannelClient(&theClient);
+   if (channel != NULL)
+   {
+   	RawMsg(theClient.GetNumeric() + " J " + channel->GetName() + " " + IntToString(channel->GetTimeStamp()));
+   	channel->AddChannelClient(&theClient);
+   }
+}
+
+void Bot::Part(const string &channel)
+{
+   Channel* l_channel = Network::Interface.FindChannel(channel);
+   Part(l_channel);   	
+}
+
+void Bot::Part(Channel* channel)
+{
+   if (NULL != channel)
+   {
+   	RawMsg(theClient.GetNumeric() + " J " + channel->GetName());
+   	channel->DelChannelClient(&theClient);
+   }
 }
 
 map<string, Bot*> Bot::BotMap = BotMapType();

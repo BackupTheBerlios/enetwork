@@ -120,6 +120,8 @@ class Bot
 
    	virtual void Join(const std::string& channel);
    	virtual void Join(Channel* channel);
+	virtual void Part(const std::string& channel);
+	virtual void Part(Channel* channel);
 
    	// find a registered bot.
    	static Bot* FindBot(const std::string& Numeric)
